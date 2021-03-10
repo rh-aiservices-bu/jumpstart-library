@@ -10,10 +10,10 @@ This library currently presents two patterns.
 
 include::./pattern1-xray-pipeline/README.adoc[tag=description]
 
-link:./pattern1-xray-pipelines/README.adoc[Go to this pattern]
+link:pattern1-xray-pipeline/README.adoc[Go to this pattern]
 
 === Pattern 2 - Licence plates edge-to-core scenario
 
-include::./pattern2-licence-plates/README.adoc[tag=description]
+include::pattern2-licence-plates/README.adoc[tag=description]
 
-link:./pattern2-licence-plates/README.adoc[Go to this pattern]
+link:pattern2-licence-plates/README.adoc[Go to this pattern]
