@@ -1,5 +1,3 @@
-:safe
-
 == Jumpstart Library
 
 This repo contains documentation, source code, workshop contents, HowTos... for different use cases (aka "patterns") of Data Science, Data Engineering, AI/ML, Analytics...
