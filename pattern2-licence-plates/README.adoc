@@ -12,3 +12,5 @@ In this pattern, we show how to implement this scenario:
 * Data analysis leveraging Presto and Superset is done against stored data.
 
 // end::description[]
+
+link:doc/full-desciption.adoc[Full scenario description and architecture]

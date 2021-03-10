@@ -8,12 +8,25 @@ This library currently presents two patterns.
 
 === Pattern 1 - XRay analysis automated pipeline
 
-include::./pattern1-xray-pipeline/README.adoc[tag=description]
+In this pattern, we show how to implement an automated data pipeline for chest Xray analysis:
 
-link:./pattern1-xray-pipelines/README.adoc[Go to this pattern]
+* Ingest chest Xrays into an object store based on Ceph.
+* The Object store sends notifications to a Kafka topic.
+* A KNative Eventing Listener to the topic triggers a KNative Serving function.
+* An ML-trained model running in a container makes a risk of Pneumonia assessment for incoming images.
+* A Grafana dashboard displays the pipeline in real time, along with images incoming, processed and anonymized, as well as full metrics.
+
+link:pattern1-xray-pipeline/README.adoc[See this pattern]
 
 === Pattern 2 - Licence plates edge-to-core scenario
 
-include::./pattern2-licence-plates/README.adoc[tag=description]
+In this pattern, we show how to implement this scenario:
 
-link:./pattern2-licence-plates/README.adoc[Go to this pattern]
+* Using a trained ML model, licence plates are recognized at toll location.
+* Data (plate number, location, timestamp) is send from toll locations (edge) to the core using Kafka mirroring to handle communication issues and recovery.
+* Incoming data is screened real-time to trigger alerts for wanted vehicles (Amber Alert).
+* In another pipe, incoming data is enriched with other information coming from licence registry system: car model, color,...
+* Data is aggregated and stored into object storage.
+* Data analysis leveraging Presto and Superset is done against stored data.
+
+link:pattern2-licence-plates/README.adoc[See this pattern]
