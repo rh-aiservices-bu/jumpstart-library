@@ -1,0 +1,67 @@
+== Pattern #2 - Licence plate
+
+=== Summary
+This scenario takes place in a highway environment: cars’ license plates are identified at toll booths, information is enriched at a central location, and used both for real-time alerting and offline analysis.
+
+=== Detailed Scenario
+
+* A network of toll road access points capture images of vehicles as they enter. Local inference is performed on vehicle imagery at the toll road access point (edge), including: 
+    ** Vehicle and license plate detection
+        *** Vehicle bounding box
+        *** License plate bounding box
+    ** Vehicle attribute recognition
+        *** Vehicle type: car, bus, truck, van
+        *** Vehicle color: blue, gray, yellow, green, black, white, red
+    ** Vehicle license plate recognition
+        *** Vehicle plate state or province
+        *** Vehicle plate identifier
+* The plate identifier, along with location (Longitude/Latitude or Toll booth ID) and timestamp data is sent to a central facility.
+* At the central facility, information is enriched with car information from the license plate (model, color, owner(maybe)), and information is aggregated by hour/day and stored in a repository.
+* Real-time analysis of the data stream can be used by systems like Amber alerts to quickly locate a wanted car.
+* Other types of offline analysis or dashboards can be created from the data repository.
+
+=== Technical Implementation
+
+.Information extraction from image
+image::img/recognition.png[]
+
+.Overall Architecture and example dashboard
+image::img/architecture.png[]
+
+==== Implementation
+
+===== At Toll booth (Edge setup, replicate at each site):
+* Minimal OpenShift installation
+* Inference container with license plate recognition model. Images are sent, plate numbers are returned.
+* Local Kafka deployment to store incoming data: `{“plate number”: str, “location”: str, “timestamp”: date-time}`
+* Data retention: up to x days in case of network to central failure.
+
+==== At Central (core):
+* Main Kafka deployment:
+    ** Mirror maker instances to replicate data from various locations
+    ** Aggregate multiple feeds into one topic
+* Listener 1 - Amber alert:
+    ** Monitor streams, looking for specific plate numbers. Triggers an alert on dashboard when found.
+    ** Variation: New Kafka topic after data enrichment to look for specific model/color in the stream.
+* Listener 2 - Data Enrichment:
+    ** Retrieves number, checks correspondence into registration system -> implement into DataGrid for maximum speed
+    ** Aggregate data per mn/hr/day, and store into bucket
+* Analytics:
+    ** Presto query engine plugged to object store
+    ** Superset uses Presto DB to produce dashboards
+
+==== Demo specific:
+* Grafana dashboard to visualize to workflow:
+    **Last licence plate image with identified number for each tollbooth (5?)
+    ** Kafka streams (messages/second)
+    ** Amber Alert display when wanted plate found: number, timestamp, location.
+    ** Aggregation metrics
+
+=== Red Hat technologies included in this pattern
+
+* OpenShift
+* AMQ Streams
+* Data Grid
+* OCS/RHCS
+* ODH (Superset)
+* ODH Partner : Presto

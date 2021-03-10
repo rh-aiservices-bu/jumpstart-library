@@ -1,0 +1,19 @@
+== Jumpstart Library
+
+This repo contains documentation, source code, workshop contents, HowTos... for different use cases (aka "patterns") of Data Science, Data Engineering, AI/ML, Analytics...
+
+The goal is to provide users with concrete elements that they will be able to learn from, reproduce, adapt and modify to fit their own needs and requirements.
+
+This library currently presents two patterns.
+
+=== Pattern 1 - XRay analysis automated pipeline
+
+include::./pattern1-xray-pipeline/README.adoc[tag=description]
+
+link:./pattern1-xray-pipelines/README.adoc[Go to this pattern]
+
+=== Pattern 2 - Licence plates edge-to-core scenario
+
+include::./pattern2-licence-plates/README.adoc[tag=description]
+
+link:./pattern2-licence-plates/README.adoc[Go to this pattern]
