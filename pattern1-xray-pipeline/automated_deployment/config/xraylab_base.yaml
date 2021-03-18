@@ -1,0 +1,107 @@
+---
+# MERGED:
+# common.yaml
+# xraylab/account.yaml
+# xraylab/BASE/common.yaml
+# xraylab/BASE/dev.yaml
+__meta__:
+  catalog:
+    description: 'Hands on data pipelines: automated X-Ray images analysis!'
+    namespace: rhtr
+    tags:
+    - babylon
+  deployer:
+    scm_ref: development
+    scm_type: git
+    scm_url: https://github.com/redhat-cop/agnosticd
+    type: agnosticd
+  secrets:
+  - name: gpte-db
+    namespace: gpte
+    var: gpte_db
+  tower:
+    organization: gpte
+agnosticv_meta:
+  babylon:
+    kubeconfig: babylon-prod.kubeconfig
+  deploy_with: babylon
+  idle_after_deploy: 9999
+  idle_after_start: 9999
+  params_to_variables:
+    guid: guid
+    user: ocp_username
+  virtualenv: babylon
+cloud_provider: none
+cloud_tags:
+  course_name: '{{ course_name | default(course_id) | default(''unknown'') }}'
+  env_type: '{{ env_type }}'
+  guid: '{{ guid }}'
+  platform: '{{ platform | default(''unknown'') }}'
+  purpose: '{{ purpose | default(''unknown'') }}'
+  uuid: '{{ uuid | default(''unknown'') }}'
+email: gpte-devops-automation@redhat.com
+env_type: ocp-workloads
+key_name: opentlc_admin_backdoor
+ocp_workloads:
+- ocp4_workload_bookbag_setup
+ocp4_workload_bookbag_setup_git_repo: https://github.com/guimou/rhtr2020_xraylab.git
+ocp4_workload_bookbag_setup_git_version: main
+ocp4_workload_bookbag_setup_image_name: rhtr2020xraylabbookbag
+ocp4_workload_bookbag_setup_project: bookbag
+ocp4_workload_bookbag_setup_project_display: Bookbag RHTR2020 XRay Lab
+ocp4_workload_rhtr_xraylab_catalogsources:
+- image: quay.io/gpte-devops-automation/olm_snapshot_redhat_catalog
+  name: redhat-operators-snapshot-xraylab
+  namespace: openshift-marketplace
+  tag: v4.5_2020_10_01
+- image: quay.io/gpte-devops-automation/olm_snapshot_community_catalog
+  name: community-operators-snapshot-xraylab
+  namespace: openshift-marketplace
+  tag: v4.5_2020_10_01
+ocp4_workload_rhtr_xraylab_install_amqstreams_operator: false
+ocp4_workload_rhtr_xraylab_install_kafkasource: false
+ocp4_workload_rhtr_xraylab_install_odh_operator: false
+ocp4_workload_rhtr_xraylab_install_storage: false
+ocp4_workload_rhtr_xraylab_kafkasource: v0.17.2
+ocp4_workload_rhtr_xraylab_ocs_ceph_mds_cpu: 3
+ocp4_workload_rhtr_xraylab_ocs_ceph_mds_mem: 8Gi
+ocp4_workload_rhtr_xraylab_ocs_ceph_mgr_cpu: 1
+ocp4_workload_rhtr_xraylab_ocs_ceph_mgr_mem: 3Gi
+ocp4_workload_rhtr_xraylab_ocs_ceph_mon_cpu: 1
+ocp4_workload_rhtr_xraylab_ocs_ceph_mon_mem: 2Gi
+ocp4_workload_rhtr_xraylab_ocs_ceph_osd_cpu: 2
+ocp4_workload_rhtr_xraylab_ocs_ceph_osd_mem: 5Gi
+ocp4_workload_rhtr_xraylab_ocs_ceph_storage_class_name: gp2
+ocp4_workload_rhtr_xraylab_ocs_ceph_storage_osd_size: 2Ti
+ocp4_workload_rhtr_xraylab_ocs_channel: stable-4.5
+ocp4_workload_rhtr_xraylab_ocs_expected_crds:
+- backingstores.noobaa.io
+- bucketclasses.noobaa.io
+- noobaas.noobaa.io
+- objectbucketclaims.objectbucket.io
+ocp4_workload_rhtr_xraylab_ocs_install_mcg: false
+ocp4_workload_rhtr_xraylab_ocs_install_rgw: true
+ocp4_workload_rhtr_xraylab_ocs_mcg_core_cpu: 1
+ocp4_workload_rhtr_xraylab_ocs_mcg_core_mem: 4Gi
+ocp4_workload_rhtr_xraylab_ocs_mcg_db_cpu: 1
+ocp4_workload_rhtr_xraylab_ocs_mcg_db_mem: 4Gi
+ocp4_workload_rhtr_xraylab_ocs_mcg_pv_pool: false
+ocp4_workload_rhtr_xraylab_ocs_mcg_pv_pool_bucket_name: mcg
+ocp4_workload_rhtr_xraylab_ocs_mcg_pv_pool_pv_quantity: 3
+ocp4_workload_rhtr_xraylab_ocs_mcg_pv_pool_pv_size: 50Gi
+ocp4_workload_rhtr_xraylab_ocs_mcg_pv_pool_pv_storageclass: gp2
+ocp4_workload_rhtr_xraylab_ocs_namespace: openshift-storage
+ocp4_workload_rhtr_xraylab_ocs_operator_workload_destroy: '{{ False if (ACTION==''create''
+  or ACTION==''provision'') else True }}'
+ocp4_workload_rhtr_xraylab_ocs_release: v4.5.0
+ocp4_workload_rhtr_xraylab_use_catalog_snapshot: true
+ocp4_workload_serverless_catalog_snapshot_image: quay.io/gpte-devops-automation/olm_snapshot_redhat_catalog
+ocp4_workload_serverless_catalog_snapshot_image_tag: v4.5_2020_10_01
+ocp4_workload_serverless_channel: "4.5"
+ocp4_workload_serverless_install_eventing: true
+ocp4_workload_serverless_starting_csv: serverless-operator.v1.9.0
+ocp4_workload_serverless_use_catalog_snapshot: true
+output_dir: /tmp/output_dir/{{ env_type }}-{{ guid }}
+own_repo_path: http://d3s3zqyaz8cp2d.cloudfront.net/repos/ocp/{{osrelease}}
+owner: gpte-devops-automation@redhat.com
+platform: opentlc

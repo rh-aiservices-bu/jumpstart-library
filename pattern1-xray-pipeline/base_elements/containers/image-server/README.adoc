@@ -1,0 +1,24 @@
+= Image server
+
+This container image is used to display the last image uploaded into a bucket, according to the helper database.
+It implements a webserver with a REST API that you can query like this: +
+`http(s)://<webserver.address>/last_image_small/<bucket_name>` +
+or +
+`http(s)://<webserver.address>/last_image_big/<bucket_name>` +
+depending on the size of the image you want. + 
+
+It will return something like: +
+`<img src="<service_point>/<bucket_name>/<image_name>" style="width:260px;"></img>` +
+that you can embed in a web page (in the case of this lab a Grafana dashboard).
+
+Required environment variables are: +
+*Object storage*
+
+* `service_point`: S3 storage endpoint, http(s)://myendpoint.address
+
+*Helper database*
+
+* `db_user`: database user name
+* `db_password`: database password
+* `db_host`: database host
+* `db_db`: database name

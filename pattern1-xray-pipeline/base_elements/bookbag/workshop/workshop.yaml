@@ -1,0 +1,28 @@
+---
+name: Bookbag Template
+modules:
+  activate:
+    - overview
+    - bookbag
+    - environment
+    - opendatahub
+    - envvar
+    - database
+    - imagestreams
+    - kafkacluster
+    - topic
+    - kafdrop
+    - imageserver
+    - service
+    - kafkasource
+    - imagegenerator
+    - grafanamysql
+    - grafanaimages
+    - grafanadashboard
+    - grafana
+    - buckets
+    - rundemo
+    - imagesrate
+    - changeversion
+    - stopdemo
+    - review

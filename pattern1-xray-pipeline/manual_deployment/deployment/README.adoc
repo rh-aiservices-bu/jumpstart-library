@@ -1,0 +1,261 @@
+== XRay Demo deployment
+
+Follow the different steps below to deploy the demo. If you want to have more details or explanations, you can deploy the automated version and follow the full workshop. For something in between, look link:../../base_elements/bookbag/workshop/content[into this folder] for the different workshop pages. Unfortunately they are not ordered, but by the names you should figure out which one corresponds to each step.
+
+=== OpenDataHub
+
+We will use ODH to launch a notebook that will help us configure the notifications. 
+
+* Create a project named `opendatahub` and make sure your oc client is using this project.
+
+[bash]
+----
+oc new-project opendatahub
+----
+
+* Deploy odh by applying `01_odh.yaml` file.
+
+[bash]
+----
+oc apply -f 01_odh.yaml
+----
+
+=== ConfigMaps and Secrets
+
+IMPORTANT: Do not miss next step, otherwise deployments will fail as ODH must be alone in its own project.
+
+* Create a project named `xraylab-0001` and make sure your oc client is using this project.
+
+[bash]
+----
+oc new-project xraylab-0001
+----
+
+==== Config Maps
+* Edit the file `02_config-maps.yaml` and replace all the `replace_me` handlers with the following information:
+    ** `service-point`: `url` and `external-url` are the urls of the RGW, internally (Service) and externally (Route). You can find those information in the `openshift-storage` project. Normally the Service should look like `http://rook-ceph-rgw-s3a.openshift-storage.svc.cluster.local`, and the Route like `https://rgw-openshift-storage.your-cluster-name`.
+    ** `bucket-base-name`: you can enter any value, but it must be the same all throughout the demo. To match names with the automated version, I suggest to use `xraylab-0001`.
+* Apply the `02_config-maps.yaml` file.
+
+==== Secrets
+
+* Edit the file `03_secrets.yaml` and  replace all the `replace_me` handlers with the following information:
+    ** `AWS_ACCESS_KEY_ID` and `AWS_SECRET_ACCESS_KEY`: values you've noted when creating a user in the RGW.
+    ** `database-user/password/root-password`: you can enter any values, but they must be the same all throughout the demo. For simplicity, I suggest using `xraylab` for everything.
+* Apply the `03_secrets.yaml` file.
+
+=== Helper database deployment
+
+This is a small database needed to hold values used in the Grafana Dashboard later on.
+
+* Apply the `04_dc-xraydb.yaml` file.
+
+=== Database initialization
+
+To configure the database, follow these steps. You can copy/paste the blocks from each step.
+
+.Connect to the database pod
+[bash]
+----
+oc rsh `oc get pods | grep xraylabdb | grep Running | awk '{print $1}'`
+----
+
+.Connect to MariaDB
+[bash]
+----
+mysql -u root
+----
+
+.Select the xraylabdb database
+[sql]
+----
+USE xraylabdb;
+----
+
+For the following commands, you can copy/paste all lines at once in the mysql prompt. Don't forget the blank line at the end if you want to run the last command automatically!
+
+.Initialize tables
+[sql]
+----
+DROP TABLE images_uploaded;
+DROP TABLE images_processed;
+DROP TABLE images_anonymized;
+
+CREATE TABLE images_uploaded(time TIMESTAMP, name VARCHAR(255));
+CREATE TABLE images_processed(time TIMESTAMP, name VARCHAR(255), model VARCHAR(10), label VARCHAR(20));
+CREATE TABLE images_anonymized(time TIMESTAMP, name VARCHAR(255));
+
+INSERT INTO images_uploaded(time,name) SELECT CURRENT_TIMESTAMP(), '';
+INSERT INTO images_processed(time,name,model,label) SELECT CURRENT_TIMESTAMP(), '', '','';
+INSERT INTO images_anonymized(time,name) SELECT CURRENT_TIMESTAMP(), '';
+
+----
+
+.Exit mysql prompt
+[sql]
+----
+exit;
+----
+
+.Exit database pod
+[bash]
+----
+exit
+----
+
+=== Image Streams
+
+Those are different Image Streams that will be used by the containers in the project.
+
+* Apply the `05_image-streams.yaml` file.
+
+=== Kafka
+
+With the AMQ Streams operator already present, you can deploy the *Kafka cluster* by just applying the `06_kafka_cluster.yaml` file. This will be a very simple Kafka cluster with ephemeral storage and no repliation (1 node). This is definitely not an example of a production deployment, but will be enough for the demo.
+
+Optionnaly, if you want to have a UI over Kafka to inspect the topics and messages, you can deploy the Kafdrop tool by applying the file `07_kafdrop.yaml`. This will also create a Service and a Route to access it.
+
+Finally, create a *Kafka topic* that will be called `xray-images` by applying the file `08_topics.yaml`.
+
+=== Image Server
+
+This is a little helper that will present an API. When queried, this API will retrieve and send information in the form of an HTML insert about the last uploaded image, the last processed one, and the last anonymized one. This HTML insert will be used in an iframe in the Grafana dashboard to display the images.
+
+* Apply the `09_dc-image-server.yaml` file.
+
+=== Serverless function
+
+There are 2 parts to this:
+
+* The *KNative Serving* Service that will spawn the risk-assessment container. Deploy it by appplying the `10_service-risk-assessment.yaml` file. +
+Monitor the deployment in the OpenShift console under the Severless->Service menu (don't confuse it with Service under Netwoking!). It must reach the 4/4 or 3/4 state (last one meanining it's ready but scaled down to zero as there is nothing to process).
+* The *KNative Eventing* component that will listen to our Kafka Topic, and call the previously defined Service when there is something to process. Deploy it by appplying the `11_kafkasource-risk-assessment.yaml` file.
+
+=== Image "generator"
+
+This component is used to send images to the incoming bucket. Obviously we won't generate XRay images. This component simply randomly copies images from a source (a bucket in AWS S3) to our incoming bucket. It features a parameter, `seconds_wait`, that allows to change the wait time between each image. In the intial deploymment, this parameter is set to zero (nothing is copied). Later on, we'll change it to 1 to start the process.
+
+* Apply the `12_dc-image-generator.yaml` file.
+
+=== Grafana
+
+* First, from OperatorHub, deploy the *Grafana operator* into your xraylab-0001 project.
+* You can now deploy the Grafana instance itself by applying the file `13_grafana-xraylab.yaml`.
+
+Our Grafana dashboard wil connect to the main OpenShift Prometheus instance to retrieve CPU and RAM information. To enable this, follow those steps:
+* Grant the Grafana Service Account the cluster-monitoring-view cluster role:
+[bash]
+----
+oc adm policy add-cluster-role-to-user cluster-monitoring-view -z grafana-serviceaccount
+----
+
+* Retriev the bearer token used to authenticate to Prometheus. You can display it with this command:
+[bash]
+----
+oc serviceaccounts get-token grafana-serviceaccount
+----
+
+* Edit the file `14_grafana-prometheus-datasource.yaml` and replace the BEARER_TOKEN placeholder with the value you obtained.
+* Apply the `14_grafana-prometheus-datasource.yaml` file.
+* Also Apply the `15_grafana-mysql-datasource.yaml` file. This will create a DataSource in Grafana connected to the MariaDB database that we have deployed.
+
+IMPORTANT: if you have modified the database parameters when configuring the secrets (file 03), you must modify file 13 to reflect those changes.
+
+Now that we have the Data Sources we can create the dashboards.
+
+* Files 16 and 17 are templates to create the dashboards, so you cannot use them directly. Instead you must:
+    ** Retrieve the route to the image server you have created before (file 09).
+    ** Retrieve the bucket_base_name value you have entered in the Config Map in file 02. If you have followed suggestions, it should be `xraylab-0001`
+
+* In the following command, replace the placeholders with the image server URL and bucket_base_name, and run the command:
+[bash]
+----
+oc process -f 16_grafana-xraylab-images-dashboard-template.yaml -p image_server_url=image_server_url -p bucket_base_name=bucket_base_name | oc apply -f -
+----
+
+* Do the same for file 17, this time also with the namespace you're working in, which should be `xraylab-0001`:
+[bash]
+----
+oc process -f 17_grafana-xraylab-dashboard-template.yaml -p image_server_url=image_server_url -p bucket_base_name=bucket_base_name -p namespace=your_namespace | oc apply -f -
+----
+
+
+=== Bucket notifications
+
+For this last preparation step, we will use a Jupyer Notebook. Remember what we have deployed at the begining? It's time to use it!
+
+==== Connect to JupyterHub
+
+In the opendatahub project, find the Route to the Dashboard, and open it. From there, click on the JupyterHub icon to launch it.
+
+A new tab will open. Click on the button *Sign in with OpenShift*, and use your OpenShift credentials to connect.+
+On the first connection, OpenShift will ask to authorize the application to access your username just click *Allow selected permissions*.
+
+==== Launch Jupyter
+
+On the *Spawner Options* page select the *s2i-minimal-notebook* image from the first dropdown (it's tagged v0.0.7 at the time of this wrting), and click *Spawn* at the bottom.
+
+Your Jupyter environment will take 15-20 seconds to launch.
+
+It will display a _File Explore like_ interface. Click on the *xraylab_notebooks.git* folder, then on the *create_notifications.ipynb* file, which will launch the notebook. You can directly follow the rest of the instructions there.
+
+IMPORTANT: At the begining of the notebook, don't forget to enter the parameters! You will need the following info:
+
+* bucket_base_name: this is the SAME one you have entered in the config map step. If you have followed my recommandation, this should be `xraylab-0001`.
+* AWS_ACCESS_KEY and AWS_SECRET_ACCESS_KEY: those are the credentials you have created at the beginning and used in the secrets.
+
+NOTE: If you have forgotten the credentials, you can always get them by running the following command.
+
+[source,bash]
+----
+oc exec -n openshift-storage `oc get pods -n openshift-storage | grep rook-ceph-tools | grep Running | awk '{print $1}'` -- radosgw-admin user info --uid="xraylab"
+----
+
+=== Running the demo!
+
+It's now time to launch our demo!
+
+As explained before, the only thing we have to do is to change the `seconds_wait` parameter in the image-generator, and it will begin to copy images in our base bucket, which will start the pipeline. +
+There are two ways to do that.
+
+==== Through the console
+
+On the console, in your main project (xraylab-0001), navigate to Workloads->Deployment Configs, select `image-generator`, and go to the Environment tab.
+
+Change the `SECONDS_WAIT` parameter from 0 to 1, and click *Save* at the bottom.
+
+This will redeploy the image generator pod with the new configuration.
+
+==== Through the CLI
+
+You can directly patch the Deployment Config with this command:
+
+[source,bash]
+----
+oc patch dc image-generator --type=json -p '[{"op":"replace","path":"/spec/template/spec/containers/0/env/0/value","value":"1"}]'
+----
+
+=== Changing parameters
+
+If you want to *increase the number of images* being sent by the generator, therefore forcing the Serverless function to scale up, you can increase the number of instances in the image-generator Deployment Configuration. Don't go over 5 though. There is a scale limit in the function anyway, so it won't do much.
+
+If you want to *change the version of the model used to do the assessment*, you must modify an environment variable in the Serverless Service definition. The easiest way to do this.
+
+
+=== And now?
+
+Just go to the Grafana dashboard (you can find the Route in the Network->Route section of the OpenShift Console, it should be in the form `https://grafana-route-xraylab-project.cluster-name`), go to the XRay-Lab dashboard and you should see the pipeline running! +
+
+If it's your first time with Grafana you may have difficulties to find the dashboard:
+
+* On the left side, hover on the icon with the four squares (Dashboards) and select *Manage*.
+* Click on the *xraylab-0001* folder.
+* Select the *XRay Lab* dashboard.
+
+IMPORTANT: When your demo or your test is finished, scale down the `image-generator` deployment to 0. Otherwise it will just keep copying images indefinitely, filling up the storage, and ultimately crashing the cluster... You've been warned.
+
+Happy demo!
+
+
+
+

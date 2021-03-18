@@ -1,0 +1,18 @@
+---
+# ---------------------------------------------------------
+# AgnosticV Metadata
+# ---------------------------------------------------------
+agnosticv_meta:
+  idle_after_deploy: 9999
+  idle_after_start: 9999
+
+__meta__:
+  deployer:
+    scm_url: https://github.com/redhat-cop/agnosticd
+    scm_ref: development
+
+
+ocp4_workload_rhtr_xraylab_install_storage: false
+ocp4_workload_rhtr_xraylab_install_amqstreams_operator: false
+ocp4_workload_rhtr_xraylab_install_odh_operator: false
+ocp4_workload_rhtr_xraylab_install_kafkasource: false

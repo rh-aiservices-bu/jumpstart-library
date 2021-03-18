@@ -1,0 +1,27 @@
+= Image generator container
+
+This container image is used to randomly select *normal* (80%) and *pneumonia risk* (20%) images from a *source* bucket, and copy them to a *destination* bucket. 
+A small mysql-compatible database instance is used to keep track of the images uploaded.
+
+Required environment variables are: +
+*Object storage*
+
+* `access_key`: S3 storage access key
+* `secret_key`: S3 storage secret key
+* `service_point`: S3 storage endpoint, http(s)://myendpoint.address
+
+*Buckets*
+
+* `bucket_source`: name of the source bucket
+* `bucket_destination`: name of the destination bucket
+
+*Helper database*
+
+* `db_user`: database user name
+* `db_password`: database password
+* `db_host`: database host
+* `db_db`: database name
+
+*Delay between images*
+
+* `seconds_wait`: number of seconds to wait between each image. This can be less than 1 second, e.g. `0.2`

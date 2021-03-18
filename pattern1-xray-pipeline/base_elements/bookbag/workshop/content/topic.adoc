@@ -1,0 +1,21 @@
+:GUID: %guid%
+:OCP_USERNAME: %ocp_username%
+:markup-in-source: verbatim,attributes,quotes
+
+== Kafka Topic
+
+This is the "channel" where our bucket notifications will be sent. We will still use the AMQ Streans operator to easily create it.
+
+=== Creation
+
+Still nothing to modify here. Have a look at the file, and apply it:
+
+[source,bash,subs="{markup-in-source}",role=execute]
+----
+oc apply -f 07_topics.yaml
+----
+
+=== Verification
+
+In the Console, you can navigate to Operators->Installed Operators->Red Hat Integration - AMQ streams, and select the Kafka Topic tab. `xray-images` should be listed. +
+We will also see another method in the next step.

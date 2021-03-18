@@ -1,0 +1,19 @@
+:markup-in-source: verbatim,attributes,quotes
+
+== Review
+
+Normally you should have learned a few things in this Lab:
+
+* Create Ceph buckets
+* Create bucket notifications
+* Deploy and use Kafka
+* Deploy and use Serverless functions
+* ...
+
+But more importantly, you have seen how you can connect all those components together to create a data pipeline. This example is applied to healthcare, and uses an AI/ML model, but the underlying architecture pattern can be applied anywhere, in a lot of situations. 
+
+If you want to have a look at the code running inside the different containers, head out to the https://github.com/guimou/datapipelines/tree/main/demos/xray-pipeline-lab[original repo] for this demo, in the containers folder.
+
+And if you have further questions, please contact me: gmoutier@redhat.com
+
+Thank you!

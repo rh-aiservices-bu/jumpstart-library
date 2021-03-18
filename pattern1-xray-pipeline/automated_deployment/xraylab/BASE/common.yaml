@@ -1,0 +1,157 @@
+---
+# Red Hat RHTR 2020 - Hands on data pipelines: automated X-Ray images analysis!
+# platform: babylon
+# course_id: XRAY_DATA_PIPELINE
+
+# The name of the agnosticd config to deploy
+# env_type: ocp4-cluster
+# software_to_deploy: openshift4
+# bastion_instance_image: RHEL82
+
+# OpenShift Installer Version
+# ocp4_installer_version: "4.5.13"
+
+# Enable this if you want to create a user on the bastion
+# install_student_user: false
+
+# What we use in this environment to get the packages we need
+# repo_method: satellite
+
+# Platform
+platform: opentlc
+
+# Cloud Provider
+cloud_provider: none
+
+# Config
+env_type: ocp-workloads
+
+# --- Infra Workloads (YAML List)
+# infra_workloads:
+# - ocp4_workload_authentication
+# - ocp4_workload_opentlc_production
+# - ocp4_workload_le_certificates
+
+ocp_workloads:
+#- ocp4_workload_serverless
+#- ocp4_workload_rhtr_xraylab
+- ocp4_workload_bookbag_setup
+
+# ---------------------------------------------------------
+# Authentication
+# ---------------------------------------------------------
+# ocp4_workload_authentication_idm_type: ldap
+# ocp4_workload_authentication_admin_user: gmoutier-redhat.com
+# ocp4_workload_authentication_remove_kubeadmin: true
+
+# ---------------------------------------------------------
+# OpenTLC Production
+# ---------------------------------------------------------
+# ocp4_workload_opentlc_production_remove_self_provisioner: true
+# ocp4_workload_opentlc_production_expose_registry_route: false
+# ocp4_workload_opentlc_production_set_build_defaults: true
+
+# ---------------------------------------------------------
+# Serverless Setup
+# ---------------------------------------------------------
+ocp4_workload_serverless_channel: "4.5"
+ocp4_workload_serverless_install_eventing: true
+ocp4_workload_serverless_use_catalog_snapshot: true
+ocp4_workload_serverless_catalog_snapshot_image: quay.io/gpte-devops-automation/olm_snapshot_redhat_catalog
+ocp4_workload_serverless_catalog_snapshot_image_tag: v4.5_2020_10_01
+ocp4_workload_serverless_starting_csv: "serverless-operator.v1.9.0"
+
+# ---------------------------------------------------------
+# XRay Lab components to install
+# ---------------------------------------------------------
+ocp4_workload_rhtr_xraylab_install_storage: true
+ocp4_workload_rhtr_xraylab_install_amqstreams_operator: true
+ocp4_workload_rhtr_xraylab_install_odh_operator: true
+ocp4_workload_rhtr_xraylab_install_kafkasource: true
+
+# --------------------------------
+# Operator Catalog Snapshot Settings
+# --------------------------------
+
+# Use a catalog snapshot
+ocp4_workload_rhtr_xraylab_use_catalog_snapshot: true
+ocp4_workload_rhtr_xraylab_catalogsources:
+- name: redhat-operators-snapshot-xraylab
+  namespace: openshift-marketplace
+  image: quay.io/gpte-devops-automation/olm_snapshot_redhat_catalog
+  tag: "v4.5_2020_10_01"
+- name: community-operators-snapshot-xraylab
+  namespace: openshift-marketplace
+  image: quay.io/gpte-devops-automation/olm_snapshot_community_catalog
+  tag: "v4.5_2020_10_01"
+
+# ---------------------------------------------------------
+# XRay Lab OCS Setup
+# ---------------------------------------------------------
+# OCS vars
+ocp4_workload_rhtr_xraylab_ocs_expected_crds:
+- backingstores.noobaa.io
+- bucketclasses.noobaa.io
+- noobaas.noobaa.io
+- objectbucketclaims.objectbucket.io
+ocp4_workload_rhtr_xraylab_ocs_channel: stable-4.5
+ocp4_workload_rhtr_xraylab_ocs_install_mcg: false
+ocp4_workload_rhtr_xraylab_ocs_install_rgw: true
+ocp4_workload_rhtr_xraylab_ocs_mcg_core_cpu: 1
+ocp4_workload_rhtr_xraylab_ocs_mcg_core_mem: 4Gi
+ocp4_workload_rhtr_xraylab_ocs_mcg_db_cpu: 1
+ocp4_workload_rhtr_xraylab_ocs_mcg_db_mem: 4Gi
+ocp4_workload_rhtr_xraylab_ocs_ceph_mds_cpu: 3
+ocp4_workload_rhtr_xraylab_ocs_ceph_mds_mem: 8Gi
+ocp4_workload_rhtr_xraylab_ocs_ceph_mon_cpu: 1
+ocp4_workload_rhtr_xraylab_ocs_ceph_mon_mem: 2Gi
+ocp4_workload_rhtr_xraylab_ocs_ceph_mgr_cpu: 1
+ocp4_workload_rhtr_xraylab_ocs_ceph_mgr_mem: 3Gi
+ocp4_workload_rhtr_xraylab_ocs_ceph_osd_cpu: 2
+ocp4_workload_rhtr_xraylab_ocs_ceph_osd_mem: 5Gi
+ocp4_workload_rhtr_xraylab_ocs_ceph_storage_class_name: gp2
+ocp4_workload_rhtr_xraylab_ocs_ceph_storage_osd_size: 2Ti
+ocp4_workload_rhtr_xraylab_ocs_mcg_pv_pool: false
+ocp4_workload_rhtr_xraylab_ocs_mcg_pv_pool_bucket_name: mcg
+ocp4_workload_rhtr_xraylab_ocs_mcg_pv_pool_pv_size: 50Gi
+ocp4_workload_rhtr_xraylab_ocs_mcg_pv_pool_pv_quantity: 3
+ocp4_workload_rhtr_xraylab_ocs_mcg_pv_pool_pv_storageclass: gp2
+ocp4_workload_rhtr_xraylab_ocs_namespace: openshift-storage
+ocp4_workload_rhtr_xraylab_ocs_release: v4.5.0
+ocp4_workload_rhtr_xraylab_ocs_operator_workload_destroy: "{{ False if (ACTION=='create' or ACTION=='provision') else True }}"
+
+# ---------------------------------------------------------
+# XRay Lab AMQ Streams Operator Setup
+# ---------------------------------------------------------
+
+
+# ---------------------------------------------------------
+# XRay Lab Open Data Hub Operator Setup
+# ---------------------------------------------------------
+
+
+# ---------------------------------------------------------
+# XRay Lab Kafkasource Setup
+# ---------------------------------------------------------
+ocp4_workload_rhtr_xraylab_kafkasource: "v0.17.2"
+
+# ---------------------------------------------------------
+# XRay Lab Bookbag image Setup
+# ---------------------------------------------------------
+ocp4_workload_bookbag_setup_project: "bookbag"
+ocp4_workload_bookbag_setup_project_display: "Bookbag RHTR2020 XRay Lab"
+ocp4_workload_bookbag_setup_git_repo: https://github.com/guimou/rhtr2020_xraylab.git
+ocp4_workload_bookbag_setup_git_version: main
+ocp4_workload_bookbag_setup_image_name: rhtr2020xraylabbookbag
+
+# ---------------------------------------------------------
+# AgnosticV Metadata
+# ---------------------------------------------------------
+agnosticv_meta:
+  idle_after_deploy: 2
+
+# AgnosticV / Babylon Metadata
+__meta__:
+  catalog:
+    description: >-
+      Hands on data pipelines: automated X-Ray images analysis!

@@ -1,0 +1,15 @@
+---
+purpose: rhtr2020
+
+agnosticv_meta:
+  idle_after_deploy: 6
+  idle_after_start: 6
+
+__meta__:
+  deployer:
+    scm_ref: rhtr-2020-xray-data-pipelines-student-prod-0.2
+
+  secrets:
+    # Sets target_host
+    - name: rhtr-xray-data-pipelines-prod
+      namespace: gpte

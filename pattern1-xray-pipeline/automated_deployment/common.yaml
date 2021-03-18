@@ -1,0 +1,48 @@
+---
+key_name: opentlc_admin_backdoor
+output_dir: /tmp/output_dir/{{ env_type }}-{{ guid }}
+own_repo_path: http://d3s3zqyaz8cp2d.cloudfront.net/repos/ocp/{{osrelease}}
+owner: gpte-devops-automation@redhat.com
+email: gpte-devops-automation@redhat.com
+platform: babylon
+cloud_tags:
+  env_type: "{{ env_type }}"
+  guid: "{{ guid }}"
+  course_name: "{{ course_name | default(course_id) | default('unknown') }}"
+  platform: "{{ platform | default('unknown') }}"
+  purpose: "{{ purpose | default('unknown') }}"
+  uuid: "{{ uuid | default('unknown') }}"
+
+agnosticv_meta:
+  babylon:
+    # This file lives in ~/secrets on the deploy host
+    kubeconfig: babylon-prod.kubeconfig
+
+  # Instead of running ansible-playbook from the admin host,
+  # tell ALL_agnosticv.sh to use babylon to deploy.
+  deploy_with: babylon
+
+  # Use a specific virtualenv that has all the k8s modules
+  virtualenv: babylon
+
+  # Pass through guid to use in ResourceClaim name
+  params_to_variables:
+    guid: guid
+
+__meta__:
+  catalog:
+    namespace: rhtr
+    tags:
+      - babylon
+  deployer:
+    scm_url: https://github.com/redhat-cop/agnosticd.git
+    scm_type: git
+    type: agnosticd
+  # Enable GPTE reporting to the Provisions DB, for cost management
+  secrets:
+    # Enable GPTE reporting to the Provisions DB, for cost management
+    - name: gpte-db
+      namespace: gpte
+      var: gpte_db
+  tower:
+    organization: gpte

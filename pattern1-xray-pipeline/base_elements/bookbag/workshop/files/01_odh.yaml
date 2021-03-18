@@ -1,0 +1,57 @@
+kind: ConfigMap
+apiVersion: v1
+metadata:
+  name: additional-profiles
+  labels:
+    jupyterhub: singleuser-profiles
+data:
+  jupyterhub-singleuser-profiles.yaml: |-
+    profiles:
+    - name: preload repos
+      env:
+        - name: JUPYTER_PRELOAD_REPOS
+          value: https://github.com/guimou/xraylab_notebooks.git
+    - name: globals
+      resources:
+        requests:
+          memory: 500m
+          cpu: 500m
+        limits:
+          memory: 1Gi
+          cpu: 1
+---
+apiVersion: kfdef.apps.kubeflow.org/v1
+kind: KfDef
+metadata:
+  annotations:
+    kfctl.kubeflow.io/force-delete: 'false'
+  name: opendatahub
+spec:
+  applications:
+    - kustomizeConfig:
+        repoRef:
+          name: manifests
+          path: odh-common
+      name: odh-common
+    - kustomizeConfig:
+        parameters:
+          - name: s3_endpoint_url
+            value: rook-ceph-rgw-s3a.openshift-storage.svc.cluster.local
+        repoRef:
+          name: manifests
+          path: jupyterhub/jupyterhub
+      name: jupyterhub
+    - kustomizeConfig:
+        overlays:
+          - additional
+        repoRef:
+          name: manifests
+          path: jupyterhub/notebook-images
+      name: notebook-images
+  repos:
+    - name: kf-manifests
+      uri: >-
+        https://github.com/opendatahub-io/manifests/tarball/v1.0-branch-openshift
+    - name: manifests
+      uri: 'https://github.com/opendatahub-io/odh-manifests/tarball/v1.0.4'
+  version: v1.0.4

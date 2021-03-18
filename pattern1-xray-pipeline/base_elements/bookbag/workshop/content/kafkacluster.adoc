@@ -1,0 +1,21 @@
+:GUID: %guid%
+:OCP_USERNAME: %ocp_username%
+:markup-in-source: verbatim,attributes,quotes
+
+== Kafka Cluster
+
+This is where our bucket notifications will be sent and made available to the KafkaSource subscriber. We will use the AMQ Streans operator that is installed on the cluster to easily deploy our Kafka cluster. +
+This is a very simple deployment, with no redundancy to save on resources for this Lab. So don't do this at home (read: production)! Don't use this config outside this Lab.
+
+=== Creation
+
+Again, nothing to modify here. Have a look at the file, and apply it:
+
+[source,bash,subs="{markup-in-source}",role=execute]
+----
+oc apply -f 06_kafka_cluster.yaml
+----
+
+=== Verification
+
+From the Console menu, navigate to Workloads->Pods and wait for the pods `my-cluster-zookeeper-0`, `my-cluster-kafka-0` and `my-cluster-entity-operator-xxxxx` to be in the Running state. This should take less than a minute.

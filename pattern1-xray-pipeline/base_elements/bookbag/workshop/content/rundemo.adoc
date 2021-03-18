@@ -1,0 +1,32 @@
+:GUID: %guid%
+:OCP_USERNAME: %ocp_username%
+:markup-in-source: verbatim,attributes,quotes
+:CLUSTER_SUBDOMAIN: %CLUSTER_SUBDOMAIN%
+
+== Let's go...
+
+It's now time to launch our demo!
+
+As explained before, the only thing we have to do is to change the `seconds_wait` parameter in the image-generator, and it will begin to copy images in our base bucket, which will start the pipeline. +
+There are two ways to do that.
+
+=== Through the console
+
+On the console, in your main project (xraylab-{GUID}), navigate to Workloads->Deployment Configs, select `image-generator`, and go to the Environment tab.
+
+Change the `SECONDS_WAIT` parameter from 0 to 1, and click *Save* at the bottom.
+
+This will redeploy the image generator pod with the new configuration.
+
+=== Through the CLI
+
+You can directly patch the Deployment Config with this command:
+
+[source,bash,subs="{markup-in-source}",role=execute]
+----
+oc patch dc image-generator --type=json -p '[{"op":"replace","path":"/spec/template/spec/containers/0/env/0/value","value":"1"}]'
+----
+
+=== And now?
+
+Just go to the Grafana dashboard which should still be opened on one of your browser tab (it should be `https://grafana-route-xraylab-{GUID}.{CLUSTER_SUBDOMAIN}`), and you should see the pipeline running!

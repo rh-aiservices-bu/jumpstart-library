@@ -1,0 +1,68 @@
+:GUID: %guid%
+:OCP_USERNAME: %ocp_username%
+:markup-in-source: verbatim,attributes,quotes
+
+== Open Data Hub deployment
+
+We'll start by deploying an Open Data Hub (ODH) instance. +
+
+If you don't know what ODH is, head https://opendatahub.io/[here] (well, maybe not now, later will be ok!).
+
+Basically, ODH is a meta-operator that will deploy for you carefully curated and tested Data Science tools. One of them is JupyterHub, that will allow us to use Jupyter Notebooks to interact with our Object Storage through the S3 API.
+
+=== Step 1: Change project
+
+As installation files are generic, we must make sure to be in the right project when deploying anything. ODH must be deployed in its own project, which has already been created for you: `odh-{GUID}`
+
+On the Terminal window, enter this command (type it, copy/paste, or just click on it!):
+
+[source,bash,subs="{markup-in-source}",role=execute]
+----
+oc project odh-{GUID}
+----
+
+You should normally get this:
+[source,bash,subs="{markup-in-source}"]
+----
+Now using project "odh-{GUID}" on server ...
+----
+
+=== Step 2: Deploy ODH
+
+Change your directory to where the installation files are:
+
+[source,bash,subs="{markup-in-source}",role=execute]
+----
+cd /opt/app-root/workshop/files
+----
+
+Take a look at the ODH deployment file:
+
+[source,bash,subs="{markup-in-source}",role=execute]
+----
+cat 01_odh.yaml
+----
+
+You will see from the *spec* section that it will deploy 3 components:
+
+* Some common files
+* JupyterHub, which will act as a "launcher" for notebook environments.
+* Notebooks images
+
+Let's deploy it!
+[source,bash,subs="{markup-in-source}",role=execute]
+----
+oc apply -f 01_odh.yaml
+----
+
+=== Step 3: Verification
+
+* Change your workspace to the Console, navigate to Projects and select `odh-{GUID}`.
+
+* From the Console menu, navigate to Workloads->Pods.
+
+* After a few seconds, you should see 2 pods running, `jupyterhub` and `jupyterhub-db`.
+
+We'll come back to this later to create and configure our buckets.
+
+

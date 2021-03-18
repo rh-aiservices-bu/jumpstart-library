@@ -1,0 +1,29 @@
+:GUID: %guid%
+:OCP_USERNAME: %ocp_username%
+:markup-in-source: verbatim,attributes,quotes
+
+== Kafdrop
+
+Kafdrop is a Web UI tool to see what's going on in your Kafka cluster. It will be useful to look at the messages we are sending from the storage. Also to debug if it comes to that... +
+Our configuration file will deploy Kafdrop and create a Service and a Route to access it externally.
+
+=== Creation
+
+Have a look at the file, and apply it:
+
+[source,bash,subs="{markup-in-source}",role=execute]
+----
+oc apply -f 08_kafdrop.yaml
+----
+
+=== Verification
+
+In the Console, navigate to Workloads->Pods, and wait for the pod `kafdrop-xxxxx` to be in the Running state.
+
+Then navigate to Networking->Routes. The URL for Kafdrop is in the Location column for the Route named `kafdrop`. Just click on this URL, and it will open a new tab in your browser to the Kafdrop UI.
+
+Note that you may have to wait 30-45 seconds after the Pod is in the running state for Kafdrop to answer as it is a slow starting Java application... Just refresh the browser tab a few times and it should come up.
+
+In this UI, you should see the topic we previsouly created, `xray-images`, listed. You can click on it and get more information on the topic, and even view the messages.
+
+I won't say anything more here about Kafdrop, but you can leave the tab open and come back when the demo is running to have a look at the messages if you want.

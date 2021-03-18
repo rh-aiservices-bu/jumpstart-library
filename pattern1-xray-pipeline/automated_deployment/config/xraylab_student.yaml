@@ -1,0 +1,91 @@
+---
+# MERGED:
+# common.yaml
+# xraylab/account.yaml
+# xraylab/STUDENT/common.yaml
+# xraylab/STUDENT/dev.yaml
+__meta__:
+  catalog:
+    namespace: rhtr
+    tags:
+    - babylon
+  deployer:
+    scm_ref: development
+    scm_type: git
+    scm_url: https://github.com/guimou/agnosticd.git
+    type: agnosticd
+  secrets:
+  - name: gpte-db
+    namespace: gpte
+    var: gpte_db
+  tower:
+    organization: gpte
+agnosticv_meta:
+  babylon:
+    kubeconfig: babylon-prod.kubeconfig
+  deploy_with: babylon
+  idle_after_deploy: 2
+  idle_after_start: 2
+  params_to_variables:
+    guid: guid
+    user: ocp_username
+  virtualenv: babylon
+cloud_provider: none
+cloud_tags:
+  course_name: '{{ course_name | default(course_id) | default(''unknown'') }}'
+  env_type: '{{ env_type }}'
+  guid: '{{ guid }}'
+  platform: '{{ platform | default(''unknown'') }}'
+  purpose: '{{ purpose | default(''unknown'') }}'
+  uuid: '{{ uuid | default(''unknown'') }}'
+email: gpte-devops-automation@redhat.com
+env_type: ocp-workloads
+key_name: opentlc_admin_backdoor
+ocp_workloads:
+- ocp4_workload_rhtr_xraylab_user
+- ocp4_workload_bookbag_user
+ocp4_workload_bookbag_user_auth_username: '*'
+ocp4_workload_bookbag_user_console_branding: openshift
+ocp4_workload_bookbag_user_console_deploy: true
+ocp4_workload_bookbag_user_create_pvc: false
+ocp4_workload_bookbag_user_deployment_name: bookbag
+ocp4_workload_bookbag_user_image_name: image-registry.openshift-image-registry.svc:5000/{{
+  ocp4_workload_bookbag_user_image_namespace }}/rhtr2020xraylabbookbag
+ocp4_workload_bookbag_user_image_namespace: bookbag
+ocp4_workload_bookbag_user_image_tag: latest
+ocp4_workload_bookbag_user_project: bookbag-{{ guid }}
+ocp4_workload_bookbag_user_project_display: Bookbag for user {{ ocp_username }}
+ocp4_workload_bookbag_user_role: admin
+ocp4_workload_rhtr_xraylab_install_grafana_operator: true
+ocp4_workload_rhtr_xraylab_user_create_quota: false
+ocp4_workload_rhtr_xraylab_user_limits:
+- default:
+    cpu: 500m
+    memory: 512Mi
+  defaultRequest:
+    cpu: 100m
+    memory: 256Mi
+  type: Container
+ocp4_workload_rhtr_xraylab_user_project_permissions:
+- project: openshift-storage
+  role: view
+ocp4_workload_rhtr_xraylab_user_projects:
+- xraylab-{{ guid }}
+- odh-{{ guid }}
+ocp4_workload_rhtr_xraylab_user_quota:
+  hard:
+    configmaps: "100"
+    limits.cpu: "100"
+    limits.memory: 75Gi
+    persistentvolumeclaims: "50"
+    pods: "100"
+    requests.cpu: "50"
+    requests.memory: 50Gi
+    requests.storage: 500Gi
+    secrets: "100"
+    services: "100"
+output_dir: /tmp/output_dir/{{ env_type }}-{{ guid }}
+own_repo_path: http://d3s3zqyaz8cp2d.cloudfront.net/repos/ocp/{{osrelease}}
+owner: gpte-devops-automation@redhat.com
+platform: opentlc
+purpose: xraylab-development

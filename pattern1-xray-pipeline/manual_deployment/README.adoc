@@ -1,0 +1,9 @@
+== XRay pipeline manual deployment
+
+=== Content
+
+In this folder you'll find:
+
+* link:prerequisites[*prerequisites*]: steps you have to follow to install the base elements in your environment like operators. They were separated from the main deployment as you may already have them installed.
+* link:deployment[*deployment*]: steps to follow to fully deploy the demo.
+* link:tools[*tools*]: notebooks and scripts used to configure some elements or work with the demo. They are not required to deploy or run it.

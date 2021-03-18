@@ -1,0 +1,32 @@
+:GUID: %guid%
+:OCP_USERNAME: %ocp_username%
+:ACCESS_KEY: %S3_access_key%
+:SECRET_KEY: %S3_secret_key%
+:markup-in-source: verbatim,attributes,quotes
+
+== Your shared cluster environment
+
+Some more information before we start. +
+You Lab has been deployed on a shared cluster, where the following components or applications have been deployed.
+
+=== OpenShift Container Storage
+
+OCS provides the object storage needed for this demo. A user account in the ObjectStore (the Rados Gateway, or RGW) has already been provisioned for you. It will allow you to interact with the RGW through the S3 API to create Object Buckets, and configure notifications. +
+Your credentials for this access are:
+
+- AWS_ACCESS_KEY: `{ACCESS_KEY}`
+- AWS_SECRET_ACCESS_KEY: `{SECRET_KEY}`
+
+Those credentials will be used at various steps, but don't worry, they will be displayed again when needed.
+
+=== Open Data Hub
+
+The Open Data Hub operator has been deployed on the cluster, which will allow an easy deployment of JupyterHub to use Jupyter Notebooks.
+
+=== AMQ Streams
+
+The AMQ Streams operator has been deployed on the cluster, which will allow an easy deployment of a Kafka Cluster.
+
+=== OpenShift Serverless
+
+The OpenShift Serverless operator has been deployed on the cluster, which will allow an easy deployment of Eventing and Serving components.

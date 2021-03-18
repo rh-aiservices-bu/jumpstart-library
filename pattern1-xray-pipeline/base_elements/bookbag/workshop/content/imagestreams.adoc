@@ -1,0 +1,20 @@
+:GUID: %guid%
+:OCP_USERNAME: %ocp_username%
+:markup-in-source: verbatim,attributes,quotes
+
+== Image Streams
+
+These Image Streams will be used to abstract the different container images we will use from their actual source.
+
+=== Creation
+
+Nothing to modify here. Have a look at the file, and apply it:
+
+[source,bash,subs="{markup-in-source}",role=execute]
+----
+oc apply -f 05_image-streams.yaml
+----
+
+=== Verification
+
+From the Console menu, navigate to Builds->Image Streams and verify that `image-generator`, `image-server` and `risk-assessment` have been created.

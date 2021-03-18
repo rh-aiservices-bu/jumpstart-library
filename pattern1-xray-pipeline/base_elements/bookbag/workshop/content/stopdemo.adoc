@@ -1,0 +1,31 @@
+:GUID: %guid%
+:OCP_USERNAME: %ocp_username%
+:markup-in-source: verbatim,attributes,quotes
+:CLUSTER_SUBDOMAIN: %CLUSTER_SUBDOMAIN%
+
+== This is the end...
+
+To stop the demo, we just have to patch the image-generator back to its idle state.
+
+IMPORTANT: Please stop the demo after a few minutes to make sure you don't fill up the cluster with thousands of copies of images... Ceph can https://www.redhat.com/en/blog/scaling-ceph-billion-objects-and-beyond[scale to a billion objects and beyond], but unfortunately we don't have enough storage to do that. 
+
+=== Through the console
+
+On the console, in your main project (xraylab-{GUID}), navigate to Workloads->Deployment Configs, select `image-generator`, and go to the Environment tab.
+
+Change the `SECONDS_WAIT` parameter from 1 to 0, and click *Save* at the bottom.
+
+This will redeploy the image generator pod with the new configuration.
+
+=== Through the CLI
+
+You can directly patch the Deployment Config with this command:
+
+[source,bash,subs="{markup-in-source}",role=execute]
+----
+oc patch dc image-generator --type=json -p '[{"op":"replace","path":"/spec/template/spec/containers/0/env/0/value","value":"0"}]'
+----
+
+=== And now?
+
+Just go to the Grafana dashboard which should still be opened on one of your browser tab (it should be `https://grafana-route-xraylab-{GUID}.{CLUSTER_SUBDOMAIN}`), and you should see the pipeline stopping (no new images coming in)!

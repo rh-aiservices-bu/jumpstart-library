@@ -1,0 +1,22 @@
+:GUID: %guid%
+:OCP_USERNAME: %ocp_username%
+:markup-in-source: verbatim,attributes,quotes
+
+== KNative Eventing
+
+Our next component is the one that will subscribe to the Kafka Topic, and forward the messages to the Service we just created. +
+
+If you look at the definition file (you should!), it basically says: subscribe to this topic from this Kafka cluster, and send events to this Service.
+
+=== Creation
+
+Have a look at the file, and apply it:
+
+[source,bash,subs="{markup-in-source}",role=execute]
+----
+oc apply -f 11_kafkasource-risk-assessment.yaml
+----
+
+=== Verification
+
+In the Console, navigate to Workloads->Pods, and wait for the pod `kafkasource-xray-images-xxxx` to be in the Running state.

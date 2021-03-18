@@ -1,0 +1,20 @@
+:GUID: %guid%
+:OCP_USERNAME: %ocp_username%
+:markup-in-source: verbatim,attributes,quotes
+
+== Changing the model version
+
+In this demo, we are using only one AI/ML model to infer the risk of pneumonia on the images. It is called *v1*, as displayed on the dasboard. We cannot implement the full scenario with model retraining because it would simply take too much time.
+
+Instead, we can simulate that a new model, *v2* has been deployed, and see the change on the dashboard (middle panel).
+
+So, in a production environment we would have a CI/CD pipeline deploying a new Revision of our risk-assesment Service. Here we will just patch this Service with a new environment value that represents the model used. This will be written in the database when the image is processed, and then displayed on the dashboad.
+
+To do that, you can just apply this command:
+
+[source,bash,subs="{markup-in-source}",role=execute]
+----
+oc patch service.serving.knative.dev/risk-assessment --type=json -p '[{"op":"replace","path":"/spec/template/metadata/annotations/revisionTimestamp","value":"'"$(date +%F_%T)"'"},{"op":"replace","path":"/spec/template/spec/containers/0/env/0/value","value":"v2"}]'
+----
+
+You can then go the dashboard and see the effect.
