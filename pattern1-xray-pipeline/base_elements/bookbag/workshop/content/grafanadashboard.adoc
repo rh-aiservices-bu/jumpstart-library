@@ -1,0 +1,34 @@
+:GUID: %guid%
+:OCP_USERNAME: %ocp_username%
+:markup-in-source: verbatim,attributes,quotes
+:CLUSTER_SUBDOMAIN: %CLUSTER_SUBDOMAIN%
+
+== Grafana Main Dashboard
+
+This is the definition of the main dashboard. +
+
+The same method will be applied to process the template and apply the result.
+
+=== Creation
+
+Have a look at the file (if you want, this one is pretty long and complicated), and process/apply it. The now three parameters that have to be processed in the template are:
+
+* image_server_url: the route to the image server deployment. It’s the external route that your browser will directly connect to, to retrieve and display the images.
+
+* bucket_base_name: the bucket base name you are using for this lab. It’s used to form the location of the image to retrieve.
+
+* namespace: the name of you project. It’s used to query the right metrics from Prometheus (Pods, CPU,…​)
+
+Originally the command would look like:
+`oc process -f 15_grafana-xraylab-dashboard-template.yaml -p image_server_url=<replace_me> -p bucket_base_name=<replace_me> -p namespace=<replace_me> | oc apply -f -`
+
+But again, if you have followed my instructions and kept the bucket_base_name to be your main project name, `xraylab-{GUID}`, the command should directly be:
+
+[source,bash,subs="{markup-in-source}",role=execute]
+----
+oc process -f 15_grafana-xraylab-dashboard-template.yaml -p image_server_url=https://image-server-xraylab-{GUID}.{CLUSTER_SUBDOMAIN} -p bucket_base_name=xraylab-{GUID} -p namespace=xraylab-{GUID} | oc apply -f -
+----
+
+=== Verification
+
+In the Console, you can navigate to Operators->Installed Operators->Grafana Operator, and select the Grafana Dashboard tab. `xraylab-dashboard` should be listed.

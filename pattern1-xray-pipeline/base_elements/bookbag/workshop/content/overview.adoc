@@ -1,0 +1,24 @@
+:GUID: %guid%
+:OCP_USERNAME: %ocp_username%
+:markup-in-source: verbatim,attributes,quotes
+
+== Welcome!
+
+Welcome to the automated Xray images analysis pipeline Lab! +
+
+In this Lab you will learn how to create, configure, and deploy an automated pipeline that will analyze incoming Xray images, make an assessement of the risk of pneumonia, and optionally anonymize some images based on the certainty of this assessment. +
+
+This pipeline uses several tools and features, and we'll learn together how to:
+
+- Deploy a minimal installation of *Open Data Hub* and use *Jupyter Notebooks*.
+- Deploy a minimal *Kafka Cluster* and create a *Kafka Topic* with the *AMQ Streams* operator.
+- Create object buckets in *OpenShift Container Storage* (using the Rados Gateway), and configure *Bucket notifications* to the Kafka topic.
+- Create a *Serverless Service* and a *KafkaSource* listener to process events from the Kafka topic.
+- Create *Grafana* Data Sources and Dashboards to monitor our pipeline.
+- Run the demo!
+
+If at this point you have no idea of what I am talking about, I *strongly* suggest that you watch this introduction video (~15mn) that will explain the use case, and how this demo works: +
+
+video::yX8gCiZvOqU[youtube]
+
+Now you should know what you will do in this Lab: reproduce this demo yourself!

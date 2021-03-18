@@ -1,0 +1,121 @@
+:GUID: %guid%
+:OCP_USERNAME: %ocp_username%
+:markup-in-source: verbatim,attributes,quotes
+:CLUSTER_SUBDOMAIN: %CLUSTER_SUBDOMAIN%
+:ACCESS_KEY: %S3_access_key%
+:SECRET_KEY: %S3_secret_key%
+
+== Config Maps and Secrets
+
+We will obviously need some parameters that our different application will need to work.
+
+=== Step 1: Change project
+
+IMPORTANT: Don't forget this step!
+
+We can now come back to the main project that has been created for you for this: `xraylab-{GUID}`
+
+On the Terminal window, enter this command (type it, copy/paste, or just click on it, this is the last time I'll put this notice...):
+
+[source,bash,subs="{markup-in-source}",role=execute]
+----
+oc project xraylab-{GUID}
+----
+
+You should normally get this:
+[source,bash,subs="{markup-in-source}"]
+----
+Now using project "xraylab-{GUID}" on server ...
+----
+
+
+=== Step 2: Edit Config Maps
+
+You should still be in the `files` directory in the Terminal (full path `/opt/app-root/workshop/files`). +
+If not change your directory to where the installation files are:
+
+[source,bash,subs="{markup-in-source}",role=execute]
+----
+cd /opt/app-root/workshop/files
+----
+
+Then take a look at the config maps file:
+
+[source,bash,subs="{markup-in-source}",role=execute]
+----
+cat 02_config-maps.yaml
+----
+
+You can see that there are 3 config maps that will be created, and that two values must be edited, `bucket-base-name` and `url-external`.
+
+* The first one is your choice, but I *strongly* recommend that you use the same name as your main project, `xraylab-{GUID}`. It will be easier to help you in case of problems, and it has to be *unique in the whole cluster*. +
+You can edit the file `02_config-maps.yaml` with your favorite editor (vi and nano are available), or simply do:
+
+[source,bash,subs="{markup-in-source}",role=execute]
+----
+sed -i 's/bucket-base-name_replace_me/xraylab-{GUID}/g' 02_config-maps.yaml
+----
+
+* The second one is the external route to the RGW. It will be used to directly display images from the different buckets into our Grafana dashboard. +
+This route is: `http://rgw-openshift-storage.{CLUSTER_SUBDOMAIN}` +
+Again, you can edit the file `02_config-maps.yaml` or simply do:
+
+[source,bash,subs="{markup-in-source}",role=execute]
+----
+sed -i 's/url-external_replace_me/https:\/\/rgw-openshift-storage.{CLUSTER_SUBDOMAIN}/g' 02_config-maps.yaml
+----
+
+=== Step 3: Create Config Maps
+
+Now that our file is ready, we can create the Config Maps:
+
+[source,bash,subs="{markup-in-source}",role=execute]
+----
+oc apply -f 02_config-maps.yaml
+----
+
+=== Step 4: Edit the Secrets
+
+It's the same process that we will follow, but this time for the secrets. +
+Take a look at the secrets file:
+
+[source,bash,subs="{markup-in-source}",role=execute]
+----
+cat 03_secrets.yaml
+----
+
+The values to replace here are you S3 Access Key and Secret. Here they are again: +
+
+* AWS_ACCESS_KEY: `{ACCESS_KEY}`
+* AWS_SECRET_ACCESS_KEY: `{SECRET_KEY}`
+
+You can edit the file and replace the value, or simply do:
+
+[source,bash,subs="{markup-in-source}",role=execute]
+----
+sed -i 's/AWS_ACCESS_KEY_ID_replace_me/{ACCESS_KEY}/g' 03_secrets.yaml
+----
+
+and
+
+[source,bash,subs="{markup-in-source}",role=execute]
+----
+sed -i 's/AWS_SECRET_ACCESS_KEY_replace_me/{SECRET_KEY}/g' 03_secrets.yaml
+----
+
+=== Step 5: Create the Secrets
+
+Now that our file is ready, we can create the Secrets:
+
+[source,bash,subs="{markup-in-source}",role=execute]
+----
+oc apply -f 03_secrets.yaml
+----
+
+=== Step 5: Verification
+
+* Change your workspace to the Console, navigate to Projects and select `xraylab-{GUID}`.
+
+* From the Console menu, navigate to Workloads->Config Maps and check that `buckets-config`, `database-host` and `service-point` have been created.
+
+* Navigate to Workloads->Secrets and check that `s3-secret` and `db-secret` have been created.

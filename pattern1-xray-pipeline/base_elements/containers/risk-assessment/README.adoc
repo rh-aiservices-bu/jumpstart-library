@@ -1,0 +1,15 @@
+= Risk assessment
+
+
+
+Required environment variables are: +
+*Object storage*
+
+* `service_point`: S3 storage endpoint, http(s)://myendpoint.address
+
+*Helper database*
+
+* `db_user`: database user name
+* `db_password`: database password
+* `db_host`: database host
+* `db_db`: database name

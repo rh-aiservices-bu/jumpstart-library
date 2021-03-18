@@ -1,0 +1,77 @@
+---
+# Catalog Item: Student XRAY Data Pipeline
+# Catalog: RHTR 2020 - DEV
+# Platform
+platform: opentlc
+
+# Cloud Provider
+cloud_provider: none
+
+# Config
+env_type: ocp-workloads
+
+# The workloads
+ocp_workloads:
+- ocp4_workload_rhtr_xraylab_user
+# Run Bookbag User workload last to pick up user.info from previous roles
+- ocp4_workload_bookbag_user
+
+# ---------------------------------------------------------
+# RHTR XRayLab User
+# ---------------------------------------------------------
+ocp4_workload_rhtr_xraylab_user_create_quota: true
+ocp4_workload_rhtr_xraylab_user_quota:
+  hard:
+    requests.cpu: "50"
+    limits.cpu: "100"
+    requests.memory: 50Gi
+    limits.memory: 75Gi
+    pods: "100"
+    configmaps: "100"
+    secrets: "100"
+    services: "100"
+    persistentvolumeclaims: "50"
+    requests.storage: 500Gi
+ocp4_workload_rhtr_xraylab_user_limits:
+- type: Container
+  default:
+    cpu: 500m
+    memory: 512Mi
+  defaultRequest:
+    cpu: 100m
+    memory: 256Mi
+ocp4_workload_rhtr_xraylab_user_project_permissions:
+- project: openshift-storage
+  role: view
+ocp4_workload_rhtr_xraylab_user_projects:
+- "xraylab-{{ guid }}"
+- "odh-{{ guid }}"
+ocp4_workload_rhtr_xraylab_install_grafana_operator: false
+
+# ---------------------------------------------------------
+# Bookbag User
+# ---------------------------------------------------------
+# Project in which to deploy the bookbag deployment
+ocp4_workload_bookbag_user_project: "bookbag-{{ guid }}"
+ocp4_workload_bookbag_user_project_display: "Bookbag for user {{ ocp_username }}"
+
+# Name of bookbag deployment
+ocp4_workload_bookbag_user_deployment_name: bookbag
+
+# Bookbag Image
+ocp4_workload_bookbag_user_image_tag: latest
+ocp4_workload_bookbag_user_image_namespace: bookbag
+ocp4_workload_bookbag_user_image_name: "image-registry.openshift-image-registry.svc:5000/{{ ocp4_workload_bookbag_user_image_namespace }}/rhtr2020xraylabbookbag"
+
+# For LDAP the Console doesn't make much sense because it authenticates as the `bookbag` service account
+# Can't pre-authenticate the console because user passwords are in LDAP
+ocp4_workload_bookbag_user_console_deploy: true
+ocp4_workload_bookbag_user_console_branding: openshift
+# Role to grant to the service account
+ocp4_workload_bookbag_user_role: admin
+
+# Bookbag authentication - Use OpenShift auth
+ocp4_workload_bookbag_user_auth_username: "*"
+
+# Bookbag PVC
+ocp4_workload_bookbag_user_create_pvc: false

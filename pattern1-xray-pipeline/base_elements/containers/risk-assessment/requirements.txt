@@ -1,0 +1,8 @@
+tensorflow==2.1.*
+boto3==1.14.*
+pillow==7.2.*
+cloudevents==1.2.*
+mysql-connector-python==8.0.*
+Flask==1.1.*
+flask-cors==3.0.*
+h5py==2.10.0

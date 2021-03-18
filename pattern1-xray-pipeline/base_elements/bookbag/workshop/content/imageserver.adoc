@@ -1,0 +1,29 @@
+:GUID: %guid%
+:OCP_USERNAME: %ocp_username%
+:markup-in-source: verbatim,attributes,quotes
+
+== Image Server
+
+This is a very simple Web server implementing an API which when queried for the last image from a category will query the database and return an HTML Tag that will be used in an iframe in the Grafana dashboard. The API implements two different formats for the images. +
+
+For example, when queried for `/last_image_small/<bucket_name>`, the server returns:
+
+[source,html,subs="{markup-in-source}"]
+----
+<img src="<storage_url>/<bucket_name>/<image_name>" style="width:260px;"></img>
+----
+
+I told you, nothing terrific here...
+
+=== Creation
+
+Have a look at the file, and apply it:
+
+[source,bash,subs="{markup-in-source}",role=execute]
+----
+oc apply -f 09_dc-image-server.yaml
+----
+
+=== Verification
+
+In the Console, navigate to Workloads->Pods, and wait for the pod `image-server-xxxxx` to be in the Running state.

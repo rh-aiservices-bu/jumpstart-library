@@ -1,0 +1,32 @@
+:GUID: %guid%
+:OCP_USERNAME: %ocp_username%
+:markup-in-source: verbatim,attributes,quotes
+:CLUSTER_SUBDOMAIN: %CLUSTER_SUBDOMAIN%
+
+== Grafana Images Dashboard
+
+This is the definition of the dashboard that displays the large versions of the images. +
+
+And this is a little bit tricky... With the Grafana operator, dasboard definitions are stored in a JSON string where it's not easy to use variables or parameters, like the namespace we are in. So this time our source file is a template that must be first processed before being applied.
+
+=== Creation
+
+Have a look at the file (if you want, this one is pretty long and complicated), and process/apply it. The two parameters that have to be processed in the template are:
+
+* image_server_url: the route to the image server deployment. It’s the external route that your browser will directly connect to, to retrieve and display the images.
+
+* bucket_base_name: the bucket base name you are using for this lab. It’s used to form the location of the image to retrieve.
+
+Originally the command would look like:
+`oc process -f 14_grafana-xraylab-images-dashboard-template.yaml -p image_server_url=<replace_me> -p bucket_base_name=<replace_me> | oc apply -f -`
+
+But if you have followed my instructions and kept the bucket_base_name to be your main project name, `xraylab-{GUID}`, the command should directly be:
+
+[source,bash,subs="{markup-in-source}",role=execute]
+----
+oc process -f 14_grafana-xraylab-images-dashboard-template.yaml -p image_server_url=https://image-server-xraylab-{GUID}.{CLUSTER_SUBDOMAIN} -p bucket_base_name=xraylab-{GUID} | oc apply -f -
+----
+
+=== Verification
+
+In the Console, you can navigate to Operators->Installed Operators->Grafana Operator, and select the Grafana Dashboard tab. `xraylab-images-dashboard` should be listed.

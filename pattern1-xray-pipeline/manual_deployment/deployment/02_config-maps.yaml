@@ -1,0 +1,22 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: service-point
+data:
+  url: 'replace_me' # No trailing /
+  url-external: 'replace_me' # No trailing /
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: database-host
+data:
+  url: xraylabdb
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: buckets-config
+data:
+  bucket-source: 'https://s3.us-east-1.amazonaws.com/com.redhat.csds.guimou.xray-source'
+  bucket-base-name: 'replace_me'

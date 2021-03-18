@@ -1,0 +1,35 @@
+:GUID: %guid%
+:OCP_USERNAME: %ocp_username%
+:markup-in-source: verbatim,attributes,quotes
+:CLUSTER_SUBDOMAIN: %CLUSTER_SUBDOMAIN%
+:ACCESS_KEY: %S3_access_key%
+:SECRET_KEY: %S3_secret_key%
+
+== Buckets and Bucket Notifications creation
+
+For this last preparation step, we will use a Jupyer Notebook. Remember what we have deployed in the very first module? It's time to use it!
+
+=== Connect to JupyterHub
+
+As ODH has been deployed in the *odh-{GUID}* project, the Route to access it will be: +
+
+https://jupyterhub-odh-{GUID}.{CLUSTER_SUBDOMAIN}/[https://jupyterhub-odh-{GUID}.{CLUSTER_SUBDOMAIN}/,window=_blank]
+
+Just click on this link, a new tab will open. Click on the button *Sign in with OpenShift*, and use your OpenTLC credentials to connect.+
+On the first connection, OpenShift will ask to authorize the application to access your username just click *Allow selected permissions*.
+
+=== Launch Jupyter
+
+On the *Spawner Options* page select the *s2i-minimal-notebook:3.6* image from the first dropdown (this should be the default image), and click *Spawn* at the bottom.
+
+Your Jupyter environment will take 15-20 seconds to launch.
+
+It will display a _File Explore like_ interface. Click on the *xraylab_notebooks.git* folder, then on the *create_notifications.ipynb* file, which will launch the notebook. You can directly follow the rest of the instructions there.
+
+IMPORTANT: At the begining of the notebook, don't forget to enter the parameters! You will need the following info:
+
+* bucket_base_name: this is the SAME one you have entered in the config map module. If you have followed my recommandation, this should be `xraylab-{GUID}`.
+* AWS_ACCESS_KEY: `{ACCESS_KEY}`
+* AWS_SECRET_ACCESS_KEY: `{SECRET_KEY}`
+
+

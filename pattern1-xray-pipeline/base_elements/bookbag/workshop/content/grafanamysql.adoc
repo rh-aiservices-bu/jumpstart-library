@@ -1,0 +1,23 @@
+:GUID: %guid%
+:OCP_USERNAME: %ocp_username%
+:markup-in-source: verbatim,attributes,quotes
+
+== Grafana MySQL Data Source
+
+Don't worry, we're almost there... +
+As the Grafana dashboard will retrieve data from our helper database (last 10 images,...), it must be able to connect to it. +
+The Grafana Operator has already been deployed in your project. So creating this datasource is as simple as applying its definition, and the operator will take care of the rest!
+
+=== Creation
+
+Have a look at the file, and apply it:
+
+[source,bash,subs="{markup-in-source}",role=execute]
+----
+oc apply -f 13_grafana-mysql-datasource.yaml
+----
+
+=== Verification
+
+In the Console, you can navigate to Operators->Installed Operators->Grafana Operator, and select the Grafana Data Source tab. `mysql-grafana-datasource` should be listed. +
+You will notice that there already is another Data Source here, `prometheus-grafana-datasource`. This has been created as part of you Lab deployment as it involved copying secrets to access the cluster Prometheus instance. Believe me, it was easier this way. This other datasource will allow us to display stats on CPU/RAM usage and Pods deployments.

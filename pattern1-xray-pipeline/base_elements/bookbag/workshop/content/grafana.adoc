@@ -1,0 +1,25 @@
+:GUID: %guid%
+:OCP_USERNAME: %ocp_username%
+:markup-in-source: verbatim,attributes,quotes
+
+== The Grafana instance
+
+Finally, we can create the Grafana instance itself. The operator will pick up our Data Sources and Dashboards defintions, and merge them automatically into the deployment!
+
+=== Creation
+
+Have a look at the file, and apply it:
+
+[source,bash,subs="{markup-in-source}",role=execute]
+----
+oc apply -f 16_grafana-xraylab.yaml
+----
+
+=== Verification
+
+In the Console, navigate to Workloads->Pods, and wait for the pod `grafana-deployment-xxxxx` to be in the Running state. +
+
+You can then navigate to Networking->Routes, click on the location (URL) for the `grafana-route` route. This will open a new tab in your browser. +
+You may have to wait a little bit and refresh though as Grafana is sometimes slow to start and serve requests.
+
+In Grafana, hover on the left on the "four squares" icon, and select *Manage*. Then click on the folder which should have the name of your project, and click on *XRay Lab*. The dashboard is displayed! Although of course there is nothing happening yet...

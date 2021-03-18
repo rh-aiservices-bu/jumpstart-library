@@ -1,0 +1,24 @@
+:GUID: %guid%
+:OCP_USERNAME: %ocp_username%
+:markup-in-source: verbatim,attributes,quotes
+
+== KNative Serving
+
+Now it begins to get interesting... We will deploy here the Serverless Service that will receive the bucket notifications. When there are messages coming in, our processing pod will be scaled up from zero instances to whatever number is necessary to handle the load (don't worry or try to break everything, there are some limits). +
+
+As the OpenShift Serverless operator is already deployed on the cluster, it's really easy to create the Service!
+
+=== Creation
+
+Have a look at the file, and apply it:
+
+[source,bash,subs="{markup-in-source}",role=execute]
+----
+oc apply -f 10_service-risk-assessment.yaml
+----
+
+=== Verification
+
+In the Console, navigate to Serverless->Services (don't be confused with Networking->Services!!!), and wait for the Service `risk-assessment` Conditions column display `3 OK/3`. This should take about one minute as the operator creates all the necessary components. +
+
+If you want to know more about Serverless, head for the https://access.redhat.com/documentation/en-us/openshift_container_platform/4.5/html/serverless_applications/index[OpenShift documentation].

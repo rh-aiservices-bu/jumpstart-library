@@ -1,0 +1,92 @@
+:GUID: %guid%
+:OCP_USERNAME: %ocp_username%
+:markup-in-source: verbatim,attributes,quotes
+
+== Helper Database Setup
+
+This database will hold some information on the images being uploaded, processed, and anonymized. This is basically their names, the model version with which they are analyzed, and a timestamp. +
+All these information will be used on our Grafana Dashboard that displays last ten images from each category.
+
+=== Database Installation
+
+Everything is defined in the file `04_dc-xrayedgedb.yaml`:
+
+* The *Persistent Volume Claim* on OCS block storage class, where the data will be physically stored.
+* The *Deployment Configuration* that will deploy a simple MariaDB database (using the previsously created Config Maps and Secrets).
+* The *Service* that will expose the database internally so that the Grafana instance can retrieve the data.
+
+Deploy all those components with:
+
+[source,bash,subs="{markup-in-source}",role=execute]
+----
+oc apply -f 04_dc-xrayedgedb.yaml
+----
+
+=== Verification
+
+From the Console menu (you must still be in the `xraylab-{GUID}` project), navigate to Workloads->Pods and wait for the `xraylabdb-x-xxxx` Pod to be in the Running state.
+
+=== Database configuration
+
+We now have a database and a schema, but we must initialize it with some tables. +
+To configure the database, follow these steps.
+
+.Connect to the database pod
+[source,bash,subs="{markup-in-source}",role=execute]
+----
+oc rsh $(oc get pods | grep xraylabdb | grep Running | awk '{print $1}')
+----
+
+Your Terminal prompt is now the one from the database Pod! It should display:
+[source,bash,subs="{markup-in-source}"]
+----
+sh-4.2$
+----
+
+.Connect to MariaDB
+[source,bash,subs="{markup-in-source}",role=execute]
+----
+mysql -u root
+----
+
+Your Terminal prompt is now the one from the MySQL engine! Inception...
+
+.Select the xraylabdb database
+[source,sql,subs="{markup-in-source}",role=execute]
+----
+USE xraylabdb;
+----
+
+For the following commands, you can copy/paste all lines at once in the mysql prompt. 
+
+.Initialize tables
+[source,sql,subs="{markup-in-source}",role=execute]
+----
+DROP TABLE images_uploaded;
+DROP TABLE images_processed;
+DROP TABLE images_anonymized;
+
+CREATE TABLE images_uploaded(time TIMESTAMP, name VARCHAR(255));
+CREATE TABLE images_processed(time TIMESTAMP, name VARCHAR(255), model VARCHAR(10), label VARCHAR(20));
+CREATE TABLE images_anonymized(time TIMESTAMP, name VARCHAR(255));
+
+INSERT INTO images_uploaded(time,name) SELECT CURRENT_TIMESTAMP(), '';
+INSERT INTO images_processed(time,name,model,label) SELECT CURRENT_TIMESTAMP(), '', '','';
+INSERT INTO images_anonymized(time,name) SELECT CURRENT_TIMESTAMP(), '';
+----
+
+.Exit mysql prompt
+[source,sql,subs="{markup-in-source}",role=execute]
+----
+exit;
+----
+
+Your Terminal prompt is now the one from the database Pod!
+
+.Exit database pod
+[source,bash,subs="{markup-in-source}",role=execute]
+----
+exit
+----
+
+Your Terminal prompt is now the one from Bookbag, you have escaped this Matryoshka dolls prompts nightmare!

@@ -1,0 +1,30 @@
+:GUID: %guid%
+:OCP_USERNAME: %ocp_username%
+:markup-in-source: verbatim,attributes,quotes
+
+== How to increase the image production rate
+
+If we want to load the pipeline some more and make our Service scale up, we just have to patch the image-generator with a lower value of seconds_wait. We can double the rate for example by setting it to 0.5.
+
+IMPORTANT: Please do not leave this setting more than a few minutes to make sure you don't fill up the cluster with thousands of copies of images... Please revert to the initial setting or stop the demo (last module). 
+
+=== Through the console
+
+On the console, in your main project (xraylab-{GUID}), navigate to Workloads->Deployment Configs, select `image-generator`, and go to the Environment tab.
+
+Change the `SECONDS_WAIT` parameter from 1 to 0.5, and click *Save* at the bottom.
+
+This will redeploy the image generator pod with the new configuration.
+
+=== Through the CLI
+
+You can directly patch the Deployment Config with this command:
+
+[source,bash,subs="{markup-in-source}",role=execute]
+----
+oc patch dc image-generator --type=json -p '[{"op":"replace","path":"/spec/template/spec/containers/0/env/0/value","value":"0.5"}]'
+----
+
+=== And now?
+
+Just go to the Grafana dashboard which should still be opened on one of your browser tab (it should be `https://grafana-route-xraylab-{GUID}.{CLUSTER_SUBDOMAIN}`), and see the change!

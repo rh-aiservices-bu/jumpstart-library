@@ -1,0 +1,27 @@
+:GUID: %guid%
+:OCP_USERNAME: %ocp_username%
+:markup-in-source: verbatim,attributes,quotes
+
+== The bookbag environment
+
+In case you've never used Bookbag before (that's where you are now), a few things that can help you.
+
+* On this *left side*, you have the *instructions* needed to complete the Lab. They are split into different modules. Please respect the order of those modules, as some steps are interdependant.
+
+* On the *right side*, you have your *workspace*, where you can switch between two views:
+
+** *Terminal* view: that's where you'll directly enter commands using mainly the *oc* client.
+
+NOTE: Cool stuff! When you click on a command in the instructions, it gets automatically copied in the Terminal view. No need to type or copy-paste.
+
+** *Console* view: this is the OpenShift Console that will be mostly used to see what's happening, verify the deployments,...
+
+//-
+* Both Terminal and Console view are already logged in into OpenShift as the bookbag user. +
+Although this is not your own account (the OpenTLC one), it has exactly the same rights and can perform the same actions. So you can do everything directly from Bookbag as it is. +
+If you don't want to use this Terminal and this Console view and use you own environment, you can also login direcly with those commands (of course you'll then have to type or copy/paste things, so be careful...):
+
+** Terminal (oc client needed): `%login_command%`
+** OCP Console address: `%web_console_url%`
+
+NOTE: if you are using your own command-line environment, you'll need some source files to complete the Lab. They are accessible https://github.com/guimou/rhtr2020_xraylab/tree/main/workshop/files[here].

@@ -1,0 +1,4 @@
+boto3==1.14.*
+botocore==1.17.*
+mysql-connector-python==8.0.*
+requests==2.24.*

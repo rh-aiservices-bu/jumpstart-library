@@ -1,0 +1,24 @@
+:GUID: %guid%
+:OCP_USERNAME: %ocp_username%
+:markup-in-source: verbatim,attributes,quotes
+
+== Image Generator
+
+Of course, we won't _generate_ XRay images for this demo. +
+Instead, this component will copy randomly chosen source XRay images hosted in a public AWS bucket (around 600 images) to our Ceph incoming bucket. +
+
+The generator features an environment variable, called `seconds_wait`, that sets a waiting time between every images. +
+And when you set this parameter to 0, which is the initial state, our process stays idle! That's our on/off button to launch and stop the demo.
+
+=== Creation
+
+Have a look at the file, and apply it:
+
+[source,bash,subs="{markup-in-source}",role=execute]
+----
+oc apply -f 12_dc-image-generator.yaml
+----
+
+=== Verification
+
+In the Console, navigate to Workloads->Pods, and wait for the pod `image-generator-xxxxx` to be in the Running state.

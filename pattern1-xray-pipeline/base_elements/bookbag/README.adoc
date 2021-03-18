@@ -1,0 +1,94 @@
+:markup-in-source: verbatim,attributes,quotes
+
+= Bookbag Template
+
+NOTE: This project is based on OpenShift Homeroom: https://github.com/openshift-homeroom.
+This repository is based on https://github.com/openshift-homeroom/lab-asciidoc-sample.
+If you are using OpenShift Homeroom project already, please continue using it.
+If you want to integrate it with AgnosticD, follow the instructions in 
+<<If you Deploy Homeroom Directly from Agnosticd>>
+
+This repository should be used as a template for creating (converting) lab content to
+be used in Bookbag environments. 
+
+== Using this Template
+
+Instructions on how to use this Template are describe in [https://github.com/redhat-gpte-labs/bookbag-demo
+
+In short, the steps are:
+
+. Create a new repository using this one as a GitHub template.
+
+. Update the `build-template.yaml` to point to your repository.
+
+. Select your deployment template, with our without OpenShift console access.
+
+. Customize terminal settings in `envvars/gateway.sh` if desired.
+
+. Define which modules you want to include in your lab.
+
+. List the modules in the `workshop.yaml` file.
+
+. Edit the `modules.yaml` file to specify modules names and transitions.
+
+. Create the modules Asciidoc files (`workshop/content/*.adoc`).
+
+. Build and test your lab instructions
+
+== Building the Bookbag Image
+
+. Create the bookbag BuildConfig and ImageStream:
++
+[source,subs="{markup-in-source}"]
+----
+$ *oc process -f build-template.yaml | oc apply -f -*
+----
+
+. Build your image from local source or directly from Git source.
++
+To build from local source (aka "binary build"):
++
+[source,subs="{markup-in-source}"]
+----
+$ *oc start-build bookbag --follow --from-dir=.*
+----
++
+Build your Bookbag Image from Git (make sure you have set `GIT_REPO` in your build template!):
++
+[source,subs="{markup-in-source}"]
+----
+$ *oc start-build bookbag --follow*
+----
+
+== Test Deploy of the Bookbag image
+
+. Define a variables file, `workshop-vars.js`, to define variables for testing  your lab content:
++
+----
+{
+    "guid": "abcde",
+    "example_var": 42,
+    "ssh_command": "ssh lab-user@bastion.abcde.example.com",
+    "ssh_password": "p4ssword!1",
+    "user": "lab-user",
+    "user_info_messages": "Example workshop messages:\nHello, World"
+}
+----
+
+. Process the deploy template with your `workshop-vars.json`:
++
+[source,subs="{markup-in-source}"]
+----
+$ *oc process -f deploy-template.yaml -p WORKSHOP_VARS="$(cat workshop-vars.json)" | oc apply -f -*
+----
+
+. Get the Bookbag's Route:
++
+[source,subs="{markup-in-source}"]
+----
+$ *oc get route bookbag*
+NAME     HOST/PORT                                  PATH  SERVICES  PORT       TERMINATION    WILDCARD
+bookbag  bookbag-bookbag-demo.apps.ocp.example.com        bookbag   10080-tcp  edge/Redirect  None
+----
+
+. Use the Route hostname to open the Bookbag page in your browser.
