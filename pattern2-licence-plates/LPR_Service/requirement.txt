@@ -7,4 +7,5 @@ Keras
 fastapi
 uvicorn
 python-multipart
+gsutil
 

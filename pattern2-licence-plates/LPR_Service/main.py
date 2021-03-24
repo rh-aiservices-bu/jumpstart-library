@@ -16,6 +16,8 @@ import glob
 import os
 import json
 from fastapi import FastAPI, File, UploadFile
+import base64
+
 
 
 def save_model_h5_to_tf_format(path):
@@ -47,14 +49,15 @@ def get_plate(image_path, Dmax=608, Dmin = 608):
     return vehicle, LpImg, cor
 
 def preprocess_image(image_path,resize=False):
-    img = cv2.imread(image_path)
+    nparr = np.frombuffer(base64.decodebytes(image_path), dtype=np.uint8)
+    img = cv2.imdecode(nparr, -1)
     img = cv2.cvtColor(img, cv2.COLOR_BGR2RGB)
     img = img / 255
     if resize:
         img = cv2.resize(img, (224,224))
     return img
 
-# Create sort_contours() function to grab the contour of each digit from left to right
+# Create sort_contours() function to grab the contour of each digit from left to right 
 def sort_contours(cnts,reverse = False):
     i = 0
     boundingBoxes = [cv2.boundingRect(c) for c in cnts]
@@ -80,50 +83,54 @@ def predict_characters_from_model(image):
     prediction = labels.inverse_transform([np.argmax(model.predict(image[np.newaxis,:]))])
     return prediction
 
+
 def  lpr_process(input_image_path):
-    vehicle, LpImg, cor = get_plate(input_image_path)
-    plate_image = cv2.convertScaleAbs(LpImg[0], alpha=(255.0))
-    gray = cv2.cvtColor(plate_image, cv2.COLOR_BGR2GRAY)
-    blur = cv2.GaussianBlur(gray,(7,7),0)
-     # Applied inversed thresh_binary 
-    binary = cv2.threshold(blur, 180, 255,cv2.THRESH_BINARY_INV + cv2.THRESH_OTSU)[1]
-    kernel3 = cv2.getStructuringElement(cv2.MORPH_RECT, (3, 3))
-    thre_mor = cv2.morphologyEx(binary, cv2.MORPH_DILATE, kernel3)
-    
-    cont, _  = cv2.findContours(binary, cv2.RETR_EXTERNAL, cv2.CHAIN_APPROX_SIMPLE)
-    # creat a copy version "test_roi" of plat_image to draw bounding box
-    test_roi = plate_image.copy()
-    # Initialize a list which will be used to append charater image
-    crop_characters = []
-    
-    # define standard width and height of character
-    digit_w, digit_h = 30, 60
-    
-    for c in sort_contours(cont):
-        (x, y, w, h) = cv2.boundingRect(c)
-        ratio = h/w
-        if 1<=ratio<=3.5: # Only select contour with defined ratio
-            if h/plate_image.shape[0]>=0.5: # Select contour which has the height larger than 50% of the plate
-                # Draw bounding box arroung digit number
-                cv2.rectangle(test_roi, (x, y), (x + w, y + h), (0, 255,0), 2)
-                # Sperate number and gibe prediction
-                curr_num = thre_mor[y:y+h,x:x+w]
-                curr_num = cv2.resize(curr_num, dsize=(digit_w, digit_h))
-                _, curr_num = cv2.threshold(curr_num, 220, 255, cv2.THRESH_BINARY + cv2.THRESH_OTSU)
-                crop_characters.append(curr_num)
-    
-    cols = len(crop_characters)
-    
     license_plate_string =  ""
-    for i,character in enumerate(crop_characters):
-        title = np.array2string(predict_characters_from_model(character))
-        license_plate_string+=title.strip("'[]")
-    
+    vehicle, LpImg, cor = get_plate(input_image_path)
+    if  len(LpImg) > 0:
+        plate_image = cv2.convertScaleAbs(LpImg[0], alpha=(255.0))
+        gray = cv2.cvtColor(plate_image, cv2.COLOR_BGR2GRAY)
+        blur = cv2.GaussianBlur(gray,(7,7),0)
+         # Applied inversed thresh_binary 
+        binary = cv2.threshold(blur, 180, 255,cv2.THRESH_BINARY_INV + cv2.THRESH_OTSU)[1]
+        kernel3 = cv2.getStructuringElement(cv2.MORPH_RECT, (3, 3))
+        thre_mor = cv2.morphologyEx(binary, cv2.MORPH_DILATE, kernel3)
+        
+        cont, _  = cv2.findContours(binary, cv2.RETR_EXTERNAL, cv2.CHAIN_APPROX_SIMPLE)
+        # creat a copy version "test_roi" of plat_image to draw bounding box
+        test_roi = plate_image.copy()
+        # Initialize a list which will be used to append charater image
+        crop_characters = []
+        
+        # define standard width and height of character
+        digit_w, digit_h = 30, 60
+        
+        for c in sort_contours(cont):
+            (x, y, w, h) = cv2.boundingRect(c)
+            ratio = h/w
+            if 1<=ratio<=3.5: # Only select contour with defined ratio
+                if h/plate_image.shape[0]>=0.5: # Select contour which has the height larger than 50% of the plate
+                    # Draw bounding box arroung digit number
+                    cv2.rectangle(test_roi, (x, y), (x + w, y + h), (0, 255,0), 2)
+                    # Sperate number and gibe prediction
+                    curr_num = thre_mor[y:y+h,x:x+w]
+                    curr_num = cv2.resize(curr_num, dsize=(digit_w, digit_h))
+                    _, curr_num = cv2.threshold(curr_num, 220, 255, cv2.THRESH_BINARY + cv2.THRESH_OTSU)
+                    crop_characters.append(curr_num)
+        
+        cols = len(crop_characters)
+        
+        for i,character in enumerate(crop_characters):
+            title = np.array2string(predict_characters_from_model(character))
+            license_plate_string+=title.strip("'[]")
+
+    else:
+        license_plate_string =  ""
+        
     if len(license_plate_string) >= 3 :
         result = {
             "license_plate_number_detection_status": "Successful",
-            "detected_license_plate_number": license_plate_string,
-            "input_image_name": input_image_path
+            "detected_license_plate_number": license_plate_string
         }
         #print(json.dumps(result))
         #print("mv "+ input_image_path +" dataset/images/success")
@@ -131,8 +138,7 @@ def  lpr_process(input_image_path):
     else:
         result = {
             "license_plate_number_detection_status": "Failed",
-            "reason": "Not able to read license plate, it could be blur or complex image",
-            "input_image_name": input_image_path
+            "reason": "Not able to read license plate, it could be blur or complex image"
         }
         #print(json.dumps(result))
         return result
@@ -170,22 +176,17 @@ tf_model = keras.models.load_model('models')
 async def root():
     return {"message": "Hello World ! Welcome to License Plate Recoginition Service.."}
 
-@app.get("/DetectPlate")
-async def detect_plate():
-    input_image_path = "dataset/images/Cars0.png"
-    license_plate_string = lpr_process(input_image_path)
-    return  license_plate_string
-
-# import base64
-# from base64 import decodestring
-
-# @app.post("/DetectPlate")
-# async def detect_plate(image: UploadFile = File(...)):
-#     input_imag_bytes = image.file.read()
-#     im_b64 = base64.b64encode(input_imag_bytes).decode("utf8")
-#     #return {"filename": image.file}
-#     with open("image.png","wb") as f:
-#         f.write(decodestring(im_b64))
-#     license_plate_string = lpr_process("image.png")
+# @app.get("/DetectPlate")
+# async def detect_plate():
+#     input_image_path = "dataset/images/Cars0.png"
+#     license_plate_string = lpr_process(input_image_path)
 #     return  license_plate_string
+
+
+
+@app.post("/DetectPlate")
+async def detect_plate(image: UploadFile = File(...)):
+    input_imag_bytes =base64.encodebytes(image.file.read())
+    license_plate_string = lpr_process(input_imag_bytes)
+    return  license_plate_string
 

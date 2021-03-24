@@ -194,6 +194,11 @@ def reconstruct(I, Iresized, Yr, lp_threshold):
             Ilp = cv2.warpPerspective(I, H, out_size, borderValue=0)
             TLp.append(Ilp)
             Cor.append(ptsh)
+    print("values")
+    print(type(final_labels))
+    print(type(TLp))
+    print(type(lp_type))
+    print(type(Cor))
     return final_labels, TLp, lp_type, Cor
 
 def detect_lp(model, I, max_dim, lp_threshold):
