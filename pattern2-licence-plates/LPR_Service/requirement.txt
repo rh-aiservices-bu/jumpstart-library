@@ -1,0 +1,10 @@
+tf-nightly
+opencv-python
+numpy
+matplotlib
+sklearn2
+Keras
+fastapi
+uvicorn
+python-multipart
+
