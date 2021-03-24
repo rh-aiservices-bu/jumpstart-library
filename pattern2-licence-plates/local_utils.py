@@ -83,10 +83,14 @@ def nms(Labels, iou_threshold=0.5):
         non_overlap = True
         for sel_label in SelectedLabels:
             if IOU_labels(label, sel_label) > iou_threshold:
+               # print(label)
+                #print(sel_label)
                 non_overlap = False
                 break
-
         if non_overlap:
+            #print(label)
+            #error_handle = 'Class: 0, top left(x: 0.158664, y: 0.906874), bottom right(x: 0.402618, y: 0.975783)'
+            #SelectedLabels.append(error_handle)
             SelectedLabels.append(label)
     return SelectedLabels
 
@@ -169,11 +173,15 @@ def reconstruct(I, Iresized, Yr, lp_threshold):
     final_labels = nms(labels, 0.1)
     final_labels_frontal = nms(labels_frontal, 0.1)
 
-    #print(final_labels_frontal)
+    # print(final_labels_frontal[0])
+    # print(final_labels_frontal[1])
+    #print(type(final_labels_frontal))
     assert final_labels_frontal, "No License plate is founded!"
 
     # LP size and type
     out_size, lp_type = (two_lines, 2) if ((final_labels_frontal[0].wh()[0] / final_labels_frontal[0].wh()[1]) < 1.7) else (one_line, 1)
+
+    #out_size, lp_type = (one_line, 1)
 
     TLp = []
     Cor = []

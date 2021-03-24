@@ -1,1 +1,3 @@
 *.env
+pattern2-license-plates/dataset/images-corpus/*
+pattern2-license-plates/dataset/images-not-detecting/*
