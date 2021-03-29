@@ -156,6 +156,9 @@ oc serviceaccounts get-token grafana-serviceaccount
 ----
 
 * Edit the file `14_grafana-prometheus-datasource.yaml` and replace the BEARER_TOKEN placeholder with the value you obtained.
+
+IMPORTANT: Do not remove `Bearer` from the string, only replace the `BEARER_TOKEN` word with the value!
+
 * Apply the `14_grafana-prometheus-datasource.yaml` file.
 * Also Apply the `15_grafana-mysql-datasource.yaml` file. This will create a DataSource in Grafana connected to the MariaDB database that we have deployed.
 
