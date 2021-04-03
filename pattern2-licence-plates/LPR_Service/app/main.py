@@ -17,6 +17,7 @@ import os
 import json
 from fastapi import FastAPI, File, UploadFile
 import base64
+import requests
 
 
 
@@ -183,11 +184,14 @@ async def root():
 #     license_plate_string = lpr_process(input_image_path)
 #     return  license_plate_string
 
-
-
 @app.post("/DetectPlate")
 async def detect_plate(image: UploadFile = File(...)):
     input_imag_bytes =base64.encodebytes(image.file.read())
     license_plate_string = lpr_process(input_imag_bytes)
     return  license_plate_string
 
+@app.post("/DetectPlateFromUrl/")
+async def DetectPlateFromUrl(url: str):    
+    input_imag_bytes = base64.encodebytes(requests.get(url).content)
+    license_plate_string = lpr_process(input_imag_bytes)
+    return  license_plate_string
