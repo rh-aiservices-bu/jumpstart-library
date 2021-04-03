@@ -67,17 +67,6 @@ def sort_contours(cnts,reverse = False):
 
 # pre-processing input images and pedict with model
 def predict_characters_from_model(image):
-    # Load model architecture, weight and labels
-    json_file = open('models/character_recoginition/MobileNets_character_recognition.json', 'r')
-    loaded_model_json = json_file.read()
-    json_file.close()
-    model = model_from_json(loaded_model_json)
-    model.load_weights("models/character_recoginition/License_character_recognition_weight.h5")
-    #print("[INFO] Model loaded successfully...")
-    labels = LabelEncoder()
-    labels.classes_ = np.load('models/character_recoginition/license_character_classes.npy')
-    #print("[INFO] Labels loaded successfully...")
-
     image = cv2.resize(image,(80,80))
     image = np.stack((image,)*3, axis=-1)
     prediction = labels.inverse_transform([np.argmax(model.predict(image[np.newaxis,:]))])
@@ -168,9 +157,21 @@ def  lpr_process(input_image_path):
 
 
 app = FastAPI()
+
+## Model for LP detection
 wpod_net_path = "models/wpod-net.json"
 save_model_h5_to_tf_format(wpod_net_path)
 tf_model = keras.models.load_model('models')
+
+## Model for character recoginition
+json_file = open('models/character_recoginition/MobileNets_character_recognition.json', 'r')
+loaded_model_json = json_file.read()
+json_file.close()
+model = model_from_json(loaded_model_json)
+model.load_weights("models/character_recoginition/License_character_recognition_weight.h5")
+labels = LabelEncoder()
+labels.classes_ = np.load('models/character_recoginition/license_character_classes.npy')
+
 
 @app.get("/")
 async def root():

@@ -1,6 +1,8 @@
 # pylint: disable=invalid-name, redefined-outer-name, missing-docstring, non-parent-init-called, trailing-whitespace, line-too-long
 import cv2
 import numpy as np
+import sys
+
 
 
 class Label:
@@ -130,6 +132,7 @@ def reconstruct(I, Iresized, Yr, lp_threshold):
     # one line and two lines license plate size
     one_line = (470, 110)
     two_lines = (280, 200)
+    custom_size=(470, 200)
 
     Probs = Yr[..., 0]
     Affines = Yr[..., 2:]
@@ -173,15 +176,14 @@ def reconstruct(I, Iresized, Yr, lp_threshold):
     final_labels = nms(labels, 0.1)
     final_labels_frontal = nms(labels_frontal, 0.1)
 
-    # print(final_labels_frontal[0])
-    # print(final_labels_frontal[1])
-    #print(type(final_labels_frontal))
-    assert final_labels_frontal, "No License plate is founded!"
+    #assert final_labels_frontal, "No License plate is founded!, Exiting the program "
+
+
 
     # LP size and type
-    out_size, lp_type = (two_lines, 2) if ((final_labels_frontal[0].wh()[0] / final_labels_frontal[0].wh()[1]) < 1.7) else (one_line, 1)
+    #out_size, lp_type = (two_lines, 2) if ((final_labels_frontal[0].wh()[0] / final_labels_frontal[0].wh()[1]) < 1.7) else (one_line, 1)
 
-    #out_size, lp_type = (one_line, 1)
+    out_size, lp_type = (one_line, 1)
 
     TLp = []
     Cor = []
@@ -194,11 +196,6 @@ def reconstruct(I, Iresized, Yr, lp_threshold):
             Ilp = cv2.warpPerspective(I, H, out_size, borderValue=0)
             TLp.append(Ilp)
             Cor.append(ptsh)
-    print("values")
-    print(type(final_labels))
-    print(type(TLp))
-    print(type(lp_type))
-    print(type(Cor))
     return final_labels, TLp, lp_type, Cor
 
 def detect_lp(model, I, max_dim, lp_threshold):

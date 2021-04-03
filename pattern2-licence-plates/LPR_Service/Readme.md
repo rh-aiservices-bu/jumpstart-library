@@ -44,4 +44,20 @@ Sample Response
 {"license_plate_number_detection_status":"Successful","detected_license_plate_number":"LCA2555"}
 ```
 
-## 
+### Local Testing (for development)
+
+```
+cd jumpstart-library/pattern2-licence-plates/LPR_Service
+docker run  -d -p 80:80 lpr-service
+time curl -X 'POST' http://127.0.0.1/DetectPlate -F 'image=@dataset/images/Cars0.png'
+```
+
+```
+### Local Testing
+before : 0.00s user 0.00s system 0% cpu 24.580 total
+after : 0.00s user 0.00s system 1% cpu 0.562 total
+
+### Server Testing
+before : 0.01s user 0.01s system 0% cpu 24.508 total
+after : 
+```
