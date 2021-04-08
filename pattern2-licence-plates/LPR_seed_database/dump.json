@@ -1,0 +1,430 @@
+{
+  "uuid": "",
+  "data_type": "alpr_results",
+  "epoch_time": 1617614680747,
+  "processing_time": {
+    "total": 119.79100000462495,
+    "plates": 32.72626495361328,
+    "vehicles": 81.93700000992976
+  },
+  "vehicles": [
+    {
+      "y": 11,
+      "x": 83,
+      "height": 278,
+      "details": {
+        "orientation": [
+          {
+            "confidence": 99.74584197998047,
+            "name": "0"
+          },
+          {
+            "confidence": 0.18475881218910217,
+            "name": "45"
+          },
+          {
+            "confidence": 0.061362579464912415,
+            "name": "315"
+          },
+          {
+            "confidence": 0.00413277093321085,
+            "name": "135"
+          },
+          {
+            "confidence": 0.0018003894947469234,
+            "name": "225"
+          }
+        ],
+        "color": [
+          {
+            "confidence": 99.84101104736328,
+            "name": "black"
+          },
+          {
+            "confidence": 0.06472652405500412,
+            "name": "blue"
+          },
+          {
+            "confidence": 0.029992245137691498,
+            "name": "brown"
+          },
+          {
+            "confidence": 0.01997196301817894,
+            "name": "red"
+          },
+          {
+            "confidence": 0.016227182000875473,
+            "name": "white"
+          }
+        ],
+        "make": [
+          {
+            "confidence": 99.99407196044922,
+            "name": "toyota"
+          },
+          {
+            "confidence": 0.005325728096067905,
+            "name": "ford"
+          },
+          {
+            "confidence": 0.00025749794440343976,
+            "name": "honda"
+          },
+          {
+            "confidence": 0.00010338617721572518,
+            "name": "mitsubishi"
+          },
+          {
+            "confidence": 0.00010046672832686454,
+            "name": "bmw"
+          }
+        ],
+        "is_vehicle": [
+          {
+            "confidence": 99.9998779296875,
+            "name": "yes"
+          },
+          {
+            "confidence": 0.00012145627260906622,
+            "name": "no"
+          }
+        ],
+        "body_type": [
+          {
+            "confidence": 41.02384567260742,
+            "name": "sedan-wagon"
+          },
+          {
+            "confidence": 37.83381271362305,
+            "name": "suv-crossover"
+          },
+          {
+            "confidence": 15.013882637023926,
+            "name": "truck-standard"
+          },
+          {
+            "confidence": 4.96583366394043,
+            "name": "sedan-standard"
+          },
+          {
+            "confidence": 0.45786207914352417,
+            "name": "suv-standard"
+          }
+        ],
+        "missing_plate": [
+          {
+            "confidence": 99.99990844726562,
+            "name": "no"
+          },
+          {
+            "confidence": 9.286755812354386e-05,
+            "name": "yes"
+          }
+        ],
+        "year": [
+          {
+            "confidence": 99.37834930419922,
+            "name": "2010-2014"
+          },
+          {
+            "confidence": 0.37621238827705383,
+            "name": "2015-2019"
+          },
+          {
+            "confidence": 0.24127322435379028,
+            "name": "2005-2009"
+          },
+          {
+            "confidence": 0.0032110249157994986,
+            "name": "2000-2004"
+          },
+          {
+            "confidence": 0.000410710257710889,
+            "name": "1990-1994"
+          }
+        ],
+        "make_model": [
+          {
+            "confidence": 56.430625915527344,
+            "name": "toyota_land-cruiser"
+          },
+          {
+            "confidence": 22.476337432861328,
+            "name": "toyota_avalon"
+          },
+          {
+            "confidence": 13.415661811828613,
+            "name": "toyota_tundra"
+          },
+          {
+            "confidence": 2.8765769004821777,
+            "name": "toyota_highlander"
+          },
+          {
+            "confidence": 1.718475103378296,
+            "name": "toyota_sequoia"
+          }
+        ]
+      },
+      "width": 348
+    }
+  ],
+  "img_height": 290,
+  "img_width": 435,
+  "results": [
+    {
+      "plate": "CHIAN000",
+      "confidence": 59.67612838745117,
+      "region_confidence": 69,
+      "vehicle_region": {
+        "y": 11,
+        "x": 83,
+        "height": 278,
+        "width": 348
+      },
+      "region": "us-tx",
+      "vehicle": {
+        "orientation": [
+          {
+            "confidence": 99.74584197998047,
+            "name": "0"
+          },
+          {
+            "confidence": 0.18475881218910217,
+            "name": "45"
+          },
+          {
+            "confidence": 0.061362579464912415,
+            "name": "315"
+          },
+          {
+            "confidence": 0.00413277093321085,
+            "name": "135"
+          },
+          {
+            "confidence": 0.0018003894947469234,
+            "name": "225"
+          }
+        ],
+        "color": [
+          {
+            "confidence": 99.84101104736328,
+            "name": "black"
+          },
+          {
+            "confidence": 0.06472652405500412,
+            "name": "blue"
+          },
+          {
+            "confidence": 0.029992245137691498,
+            "name": "brown"
+          },
+          {
+            "confidence": 0.01997196301817894,
+            "name": "red"
+          },
+          {
+            "confidence": 0.016227182000875473,
+            "name": "white"
+          }
+        ],
+        "make": [
+          {
+            "confidence": 99.99407196044922,
+            "name": "toyota"
+          },
+          {
+            "confidence": 0.005325728096067905,
+            "name": "ford"
+          },
+          {
+            "confidence": 0.00025749794440343976,
+            "name": "honda"
+          },
+          {
+            "confidence": 0.00010338617721572518,
+            "name": "mitsubishi"
+          },
+          {
+            "confidence": 0.00010046672832686454,
+            "name": "bmw"
+          }
+        ],
+        "is_vehicle": [
+          {
+            "confidence": 99.9998779296875,
+            "name": "yes"
+          },
+          {
+            "confidence": 0.00012145627260906622,
+            "name": "no"
+          }
+        ],
+        "body_type": [
+          {
+            "confidence": 41.02384567260742,
+            "name": "sedan-wagon"
+          },
+          {
+            "confidence": 37.83381271362305,
+            "name": "suv-crossover"
+          },
+          {
+            "confidence": 15.013882637023926,
+            "name": "truck-standard"
+          },
+          {
+            "confidence": 4.96583366394043,
+            "name": "sedan-standard"
+          },
+          {
+            "confidence": 0.45786207914352417,
+            "name": "suv-standard"
+          }
+        ],
+        "missing_plate": [
+          {
+            "confidence": 99.99990844726562,
+            "name": "no"
+          },
+          {
+            "confidence": 9.286755812354386e-05,
+            "name": "yes"
+          }
+        ],
+        "year": [
+          {
+            "confidence": 99.37834930419922,
+            "name": "2010-2014"
+          },
+          {
+            "confidence": 0.37621238827705383,
+            "name": "2015-2019"
+          },
+          {
+            "confidence": 0.24127322435379028,
+            "name": "2005-2009"
+          },
+          {
+            "confidence": 0.0032110249157994986,
+            "name": "2000-2004"
+          },
+          {
+            "confidence": 0.000410710257710889,
+            "name": "1990-1994"
+          }
+        ],
+        "make_model": [
+          {
+            "confidence": 56.430625915527344,
+            "name": "toyota_land-cruiser"
+          },
+          {
+            "confidence": 22.476337432861328,
+            "name": "toyota_avalon"
+          },
+          {
+            "confidence": 13.415661811828613,
+            "name": "toyota_tundra"
+          },
+          {
+            "confidence": 2.8765769004821777,
+            "name": "toyota_highlander"
+          },
+          {
+            "confidence": 1.718475103378296,
+            "name": "toyota_sequoia"
+          }
+        ]
+      },
+      "plate_index": 0,
+      "processing_time_ms": 11.261116027832031,
+      "candidates": [
+        {
+          "matches_template": 0,
+          "plate": "CHIAN000",
+          "confidence": 59.67612838745117
+        },
+        {
+          "matches_template": 0,
+          "plate": "CH1AN000",
+          "confidence": 58.80083084106445
+        },
+        {
+          "matches_template": 0,
+          "plate": "CH0AN000",
+          "confidence": 58.425113677978516
+        },
+        {
+          "matches_template": 0,
+          "plate": "CHYAN000",
+          "confidence": 57.68471145629883
+        },
+        {
+          "matches_template": 0,
+          "plate": "CHAN000",
+          "confidence": 56.69685745239258
+        },
+        {
+          "matches_template": 0,
+          "plate": "CHOAN000",
+          "confidence": 56.643375396728516
+        },
+        {
+          "matches_template": 0,
+          "plate": "CHTAN000",
+          "confidence": 56.569339752197266
+        },
+        {
+          "matches_template": 0,
+          "plate": "CHIN000",
+          "confidence": 52.2219352722168
+        },
+        {
+          "matches_template": 0,
+          "plate": "CHIANO00",
+          "confidence": 52.151248931884766
+        },
+        {
+          "matches_template": 0,
+          "plate": "CHIAN00",
+          "confidence": 51.9705810546875
+        }
+      ],
+      "coordinates": [
+        {
+          "y": 251,
+          "x": 281
+        },
+        {
+          "y": 239,
+          "x": 433
+        },
+        {
+          "y": 272,
+          "x": 430
+        },
+        {
+          "y": 285,
+          "x": 278
+        }
+      ],
+      "vehicle_detected": true,
+      "matches_template": 0,
+      "requested_topn": 10
+    }
+  ],
+  "credits_monthly_used": 6,
+  "version": 3,
+  "credits_monthly_total": 50,
+  "error": false,
+  "regions_of_interest": [
+    {
+      "y": 0,
+      "x": 0,
+      "height": 290,
+      "width": 435
+    }
+  ],
+  "credit_cost": 1
+}

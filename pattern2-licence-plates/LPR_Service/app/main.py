@@ -18,6 +18,9 @@ import json
 from fastapi import FastAPI, File, UploadFile
 import base64
 import requests
+import datetime
+import random
+from faker import Faker
 
 
 
@@ -118,12 +121,24 @@ def  lpr_process(input_image_path):
         license_plate_string =  ""
         
     if len(license_plate_string) >= 3 :
+        fake = Faker(['en-US', 'en_US', 'en_US', 'en-US'])
+        fake_lat_long = fake.local_latlng()
+        print(fake_lat_long[0])
         result = {
-            "license_plate_number_detection_status": "Successful",
-            "detected_license_plate_number": license_plate_string
+            "event_timestamp": str(datetime.datetime.now()),
+            "event_id": str(random.randint(99,99999)),
+             "event_vehicle_detected_plate_number": license_plate_string,
+            "event_vehicle_detected_lat": str(fake_lat_long[0]),
+            "event_vehicle_detected_long": str(fake_lat_long[1]),
+            "event_vehicle_lpn_detection_status": "Successful"
         }
         #print(json.dumps(result))
         #print("mv "+ input_image_path +" dataset/images/success")
+
+
+# event_vehicle_captured_image
+# event_vehicle_detected_geo_location
+
         return result
     else:
         result = {
