@@ -21,7 +21,9 @@ import requests
 import datetime
 import random
 from faker import Faker
-
+from aiokafka import AIOKafkaProducer
+import asyncio
+from loguru import logger
 
 
 def save_model_h5_to_tf_format(path):
@@ -134,11 +136,8 @@ def  lpr_process(input_image_path):
         }
         #print(json.dumps(result))
         #print("mv "+ input_image_path +" dataset/images/success")
-
-
-# event_vehicle_captured_image
-# event_vehicle_detected_geo_location
-
+        # event_vehicle_captured_image
+        # event_vehicle_detected_geo_location
         return result
     else:
         result = {
@@ -188,6 +187,23 @@ model.load_weights("models/character_recoginition/License_character_recognition_
 labels = LabelEncoder()
 labels.classes_ = np.load('models/character_recoginition/license_character_classes.npy')
 
+## global variable :: setting this for kafka producer
+kafka_endpoint = os.getenv('KAFKA_ENDPOINT', 'localhost:9092')
+kafka_topic_name = os.getenv('KAFKA_TOPIC', 'lpr')
+
+## kafka producer initilization
+loop = asyncio.get_event_loop()
+kafkaproducer = AIOKafkaProducer(loop=loop, bootstrap_servers=kafka_endpoint)
+
+@app.on_event("startup")
+async def startup_event():
+    await kafkaproducer.start()
+
+
+@app.on_event("shutdown")
+async def shutdown_event():
+    await kafkaproducer.stop()
+
 
 @app.get("/")
 async def root():
@@ -209,4 +225,5 @@ async def detect_plate(image: UploadFile = File(...)):
 async def DetectPlateFromUrl(url: str):    
     input_imag_bytes = base64.encodebytes(requests.get(url).content)
     license_plate_string = lpr_process(input_imag_bytes)
+    await kafkaproducer.send_and_wait(kafka_topic_name, json.dumps(license_plate_string).encode('utf-8'))
     return  license_plate_string

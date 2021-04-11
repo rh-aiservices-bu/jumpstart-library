@@ -8,4 +8,7 @@ fastapi
 uvicorn
 python-multipart
 gsutil
+Faker
+aiokafka==0.7.0
+
 
