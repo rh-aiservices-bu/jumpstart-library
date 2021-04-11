@@ -23,7 +23,7 @@ import random
 from faker import Faker
 from aiokafka import AIOKafkaProducer
 import asyncio
-from loguru import logger
+
 
 
 def save_model_h5_to_tf_format(path):
