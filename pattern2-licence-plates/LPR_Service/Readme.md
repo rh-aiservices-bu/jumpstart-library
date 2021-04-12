@@ -12,6 +12,24 @@ docker login -u="xxx" -p="xxx" quay.io
 docker tag lpr-service quay.io/xxx/license-plate-recognition-app:latest
 docker push quay.io/xxx/license-plate-recognition-app
 ```
+
+## Automated Builds
+```
+oc new-project license-plate-recognition
+# Login to quay.io > account > get password > docker configuration file
+oc create secret generic quayio-registry --from-file .dockerconfigjson=/Users/karasing/Downloads/karasing-auth.json --type kubernetes.io/dockerconfigjson
+oc secrets link builder quayio-registry
+
+oc new-app --as-deployment-config --name=license-plate-recognition https://github.com/red-hat-data-services/jumpstart-library.git#ksingh-tf-v1 --context-dir=pattern2-licence-plates/LPR_Service -e KAFKA_ENDPOINT='pattern-2-kafka-kafka-bootstrap:9092 ' -e KAFKA_TOPIC='lpr' 
+
+oc expose service/license-plate-recognition
+
+
+bin/kafka-console-consumer.sh --bootstrap-server pattern-2-kafka-kafka-bootstrap:9092 --topic lpr --from-beginning
+
+
+```
+
 ## Deploy the service on OCP
 
 ```
@@ -67,11 +85,11 @@ after :
 ```
 docker network create kafka-net --driver bridge
 
-docker run --name zookeeper-server -p 2181:2181 -d --network kafka-net -e ALLOW_ANONYMOUS_LOGIN=yes bitnami/zookeeper:latest
+docker run --rm --name zookeeper-server -p 2181:2181 -d --network kafka-net -e ALLOW_ANONYMOUS_LOGIN=yes bitnami/zookeeper:latest
 
 nc -v localhost 2181
 
-docker run --name kafka-server1 -d --network kafka-net -e ALLOW_PLAINTEXT_LISTENER=yes -e KAFKA_CFG_ZOOKEEPER_CONNECT=zookeeper-server:2181 -e KAFKA_CFG_ADVERTISED_LISTENERS=PLAINTEXT://localhost:9092 -p 9092:9092 bitnami/kafka:latest
+docker run --rm --name kafka-server1 -d --network kafka-net -e ALLOW_PLAINTEXT_LISTENER=yes -e KAFKA_CFG_ZOOKEEPER_CONNECT=zookeeper-server:2181 -e KAFKA_CFG_ADVERTISED_LISTENERS=PLAINTEXT://localhost:9092 -p 9092:9092 bitnami/kafka:latest
 
 curl https://raw.githubusercontent.com/birdayz/kaf/master/godownloader.sh | BINDIR=$HOME/bin bash
 sudo cp /Users/karasing/bin/kaf /usr/local/bin/kaf
