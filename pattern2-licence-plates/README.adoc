@@ -13,4 +13,4 @@ In this pattern, we show how to implement this scenario:
 
 // end::description[]
 
-link:doc/full-desciption.adoc[Full scenario description and architecture]
+link:doc/full-description.adoc[Full scenario description and architecture]
