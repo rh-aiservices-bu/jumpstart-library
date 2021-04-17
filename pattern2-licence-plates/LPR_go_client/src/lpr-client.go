@@ -22,7 +22,7 @@ var (
 func init() {
   	flag.StringVar(&bucketName, "bucket", "public-license-plate-dataset", "S3 bucket name containing Image dataset")
 		flag.StringVar(&region, "region", "ap-south-1", "S3 bucket region")
-    flag.StringVar(&endpoint,  "endpoint", "http://license-plate-recognition-license-plate-recognition.apps.perf3.chris.ocs.ninja", "License Plate Recoginition service endpoint")
+    flag.StringVar(&endpoint,  "endpoint", "http://license-plate-recognition-license-plate-recognition.apps.perf3.chris.ocs.ninja", "License Plate Recoginition service endpoint, including a trailing '/' ")
 }
 
 // Lists all objects in a bucket using pagination
@@ -51,7 +51,7 @@ func main() {
 	//log.Println("Objects:")
   fmt.Println("Detecting License Plate Number ...")
 	rest_client := &http.Client{}
-	apiUrl := "http://license-plate-recognition-license-plate-recognition.apps.perf3.chris.ocs.ninja/DetectPlateFromUrl/"
+	apiUrl := endpoint + "DetectPlateFromUrl/"
 
 	req, err := http.NewRequest("POST",apiUrl, nil)
 	if err != nil {
