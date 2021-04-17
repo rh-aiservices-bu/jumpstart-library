@@ -209,7 +209,7 @@ async def shutdown_event():
 
 @app.get("/")
 async def root():
-    return {"message": "Hello World ! Welcome to License Plate Recoginition Service.."}
+    return {"message": "Hello World !! Welcome to License Plate Recoginition Service.."}
 
 # @app.get("/DetectPlate")
 # async def detect_plate():
