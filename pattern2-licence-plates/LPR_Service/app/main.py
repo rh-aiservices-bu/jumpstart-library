@@ -20,7 +20,7 @@ import base64
 import requests
 import datetime
 import random
-from faker import Faker
+#from faker import Faker
 from aiokafka import AIOKafkaProducer
 import asyncio
 
@@ -123,15 +123,14 @@ def  lpr_process(input_image_path):
         license_plate_string =  ""
         
     if len(license_plate_string) >= 3 :
-        fake = Faker(['en-US', 'en_US', 'en_US', 'en-US'])
-        fake_lat_long = fake.local_latlng()
-        print(fake_lat_long[0])
+       # fake = Faker(['en-US', 'en_US', 'en_US', 'en-US'])
+        rand = random.randint(0,len(location_data)-1)
         result = {
             "event_timestamp": str(datetime.datetime.now()),
             "event_id": str(random.randint(99,99999)),
              "event_vehicle_detected_plate_number": license_plate_string,
-            "event_vehicle_detected_lat": str(fake_lat_long[0]),
-            "event_vehicle_detected_long": str(fake_lat_long[1]),
+            "event_vehicle_detected_lat": str(location_data[rand]['lat']),
+            "event_vehicle_detected_long": str(location_data[rand]['long']),
             "event_vehicle_lpn_detection_status": "Successful"
         }
         #print(json.dumps(result))
@@ -186,6 +185,9 @@ model = model_from_json(loaded_model_json)
 model.load_weights("models/character_recoginition/License_character_recognition_weight.h5")
 labels = LabelEncoder()
 labels.classes_ = np.load('models/character_recoginition/license_character_classes.npy')
+
+## Location Data Lat and Long
+location_data = json.load(open("location_data.json"))
 
 ## global variable :: setting this for kafka producer
 kafka_endpoint = os.getenv('KAFKA_ENDPOINT', 'localhost:9092')
