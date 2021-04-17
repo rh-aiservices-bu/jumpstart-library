@@ -39,6 +39,20 @@ oc new-app --docker-image=quay.io/xxx/license-plate-recognition-app --name=licen
 oc expose service/license-plate-recognition
 oc get all
 ```
+```
+
+oc new-app --name license-plate-recognition2 --as-deployment-config https://github.com/red-hat-data-services/jumpstart-library#ksingh-tf-v1 --context-dir=pattern2-licence-plates/LPR_Service -l app=license-plate-recognition2 -e KAFKA_ENDPOINT=pattern-2-kafka-kafka-bootstrap:9092
+
+oc adm policy add-scc-to-user anyuid -z default
+oc scale dc/license-plate-recognition2 --replicas=2
+oc expose service/license-plate-recognition2
+
+oc set env dc/license-plate-recognition2  -e KAFKA_ENDPOINT=pattern-2-kafka-kafka-bootstrap:9092
+
+./lprctl --endpoint http://license-plate-recognition-license-plate-recognition2.apps.perf3.chris.ocs.ninja  
+
+```
+
 ## Test the service
 
 ```
@@ -68,7 +82,7 @@ Sample Response
 cd jumpstart-library/pattern2-licence-plates/LPR_Service
 docker run  -d -p 80:80 lpr-service
 time curl -X 'POST' http://127.0.0.1/DetectPlate -F 'image=@dataset/images/Cars0.png'
-```
+``` 
 
 ```
 ### Local Testing
