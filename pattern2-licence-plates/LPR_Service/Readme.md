@@ -53,6 +53,8 @@ oc set env dc/license-plate-recognition2  -e KAFKA_ENDPOINT=pattern-2-kafka-kafk
 
 ```
 
+
+
 ## Test the service
 
 ```

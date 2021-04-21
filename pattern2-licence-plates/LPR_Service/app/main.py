@@ -227,5 +227,7 @@ async def detect_plate(image: UploadFile = File(...)):
 async def DetectPlateFromUrl(url: str):    
     input_imag_bytes = base64.encodebytes(requests.get(url).content)
     license_plate_string = lpr_process(input_imag_bytes)
+    ## The data in license_plate_string data is dumped on Kafka, another microservice consumes this data and store that to PGSQL Database
     await kafkaproducer.send_and_wait(kafka_topic_name, json.dumps(license_plate_string).encode('utf-8'))
+    ## Data is returned to the user
     return  license_plate_string
