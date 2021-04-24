@@ -24,7 +24,7 @@ fi
 echo "---> Installing application source..."
 cp -Rf /tmp/src/. ./
 
-echo "PWD"
+echo"PWD"
 pwd
 echo "in tmp"
 ls -l /tmp/src
