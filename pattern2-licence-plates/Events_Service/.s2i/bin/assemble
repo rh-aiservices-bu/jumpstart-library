@@ -32,4 +32,4 @@ echo "in pwd"
 ls -l ./
 echo "---> Building application from source..."
 # TODO: Add build steps for your application, eg npm install, bundle install, pip install, etc.
-pip install -r /opt/app-root/src/requirements.txt
+pip install -r requirements.txt
