@@ -171,14 +171,23 @@ customer_zip_code VARCHAR NOT NULL,
 customer_contact_number VARCHAR NOT NULL
 );
 
-CREATE TABLE events_data (
-id SERIAL,
-event_timestamp VARCHAR NOT NULL,
-event_id INT NOT NULL,
+CREATE TABLE IF NOT EXISTS event (
+event_id INT NOT NULL PRIMARY KEY,
+event_timestamp TIMESTAMPTZ NOT NULL
 event_vehicle_detected_plate_number VARCHAR NOT NULL,
 event_vehicle_detected_lat VARCHAR NOT NULL,
 event_vehicle_detected_long VARCHAR NOT NULL,
 event_vehicle_lpn_detection_status VARCHAR NOT NULL
 );
+
+class Event(Base):
+    __tablename__ = "event"
+    event_id = Column(Integer, primary_key=True, index=True)
+    event_timestamp = Column('date', DateTime(timezone=True), default=func.now())
+    event_vehicle_detected_plate_number = Column(String, index=True)
+    event_vehicle_detected_lat = Column(Numeric(precision=7, scale=5, decimal_return_scale=None, asdecimal=False))
+    event_vehicle_detected_long = Column(Numeric(precision=7, scale=5, decimal_return_scale=None, asdecimal=False))
+    event_vehicle_lpn_detection_status = Column(String)
+
 
 ```

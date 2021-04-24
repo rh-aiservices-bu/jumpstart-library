@@ -1,4 +1,5 @@
-from sqlalchemy import create_engine
+from sqlalchemy import create_engine, Column, Integer, String, Numeric, DateTime, func
+from sqlalchemy.ext.declarative import declarative_base
 from aiokafka import AIOKafkaConsumer
 import asyncio, os, ast
 import nest_asyncio
@@ -19,9 +20,24 @@ TABLE_NAME = os.getenv('TABLE_NAME','event')
 
 engine = create_engine('postgresql://'+DB_USER+':'+DB_PASSWORD+'@'+DB_HOST+'/'+DB_NAME, connect_args={})
 
+Base = declarative_base()
+
+class Event(Base):
+    __tablename__ = "event"
+    event_id = Column(Integer, primary_key=True, index=True)
+    event_timestamp = Column('date', DateTime(timezone=True), default=func.now())
+    event_vehicle_detected_plate_number = Column(String, index=True)
+    event_vehicle_detected_lat = Column(Numeric(precision=7, scale=5, decimal_return_scale=None, asdecimal=False))
+    event_vehicle_detected_long = Column(Numeric(precision=7, scale=5, decimal_return_scale=None, asdecimal=False))
+    event_vehicle_lpn_detection_status = Column(String)
+
+
+
 async def consume():
     kafkaConsumer = AIOKafkaConsumer(KAFKA_TOPIC, loop=loop, bootstrap_servers=KAFKA_ENDPOINT, group_id=KAFKA_CONSUMER_GROUP_ID)
     connection = engine.connect()
+    Event.__table__.create(bind=engine, checkfirst=True)
+
     await kafkaConsumer.start()
     try:
         async for msg in kafkaConsumer:
