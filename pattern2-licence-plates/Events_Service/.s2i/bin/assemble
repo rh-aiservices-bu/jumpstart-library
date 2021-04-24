@@ -24,6 +24,12 @@ fi
 echo "---> Installing application source..."
 cp -Rf /tmp/src/. ./
 
+echo"PWD"
+pwd
+echo "in tmp"
+ls -l /tmp/src
+echo "in pwd"
+ls -l ./
 echo "---> Building application from source..."
 # TODO: Add build steps for your application, eg npm install, bundle install, pip install, etc.
-pip install -r requirements.txt
+pip install -r /tmp/src/requirements.txt
