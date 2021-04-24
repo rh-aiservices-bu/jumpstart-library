@@ -36,6 +36,7 @@ class Event(Base):
 async def consume():
     kafkaConsumer = AIOKafkaConsumer(KAFKA_TOPIC, loop=loop, bootstrap_servers=KAFKA_ENDPOINT, group_id=KAFKA_CONSUMER_GROUP_ID)
     connection = engine.connect()
+    ## Create Table if does not exists
     Event.__table__.create(bind=engine, checkfirst=True)
 
     await kafkaConsumer.start()
