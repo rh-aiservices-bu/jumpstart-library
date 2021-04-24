@@ -1,29 +1,38 @@
-from typing import List
-from fastapi import Depends, FastAPI, HTTPException
-from sqlalchemy.orm import Session
-import crud, models, schemas
-from database import SessionLocal, engine
+from sqlalchemy import create_engine
+from aiokafka import AIOKafkaConsumer
+import asyncio, os, ast
+import nest_asyncio
+nest_asyncio.apply()
 
-models.Base.metadata.create_all(bind=engine)
+## global variable :: setting this for kafka Consumer
+KAFKA_ENDPOINT = os.getenv('KAFKA_ENDPOINT', 'localhost:9092')
+KAFKA_TOPIC = os.getenv('KAFKA_TOPIC', 'lpr')
+KAFKA_CONSUMER_GROUP_ID = os.getenv('KAFKA_CONSUMER_GROUP_ID', 'event_consumer_group')
+loop = asyncio.get_event_loop()
 
-app = FastAPI()
+## Database details and connection
+DB_USER = os.getenv('DB_USER', 'dbadmin')
+DB_PASSWORD = os.getenv('DB_PASSWORD', 'HT@1202k')
+DB_HOST = os.getenv('DB_HOST', '127.0.0.1')
+DB_NAME = os.getenv('DB_NAME','pgdb')
+TABLE_NAME = os.getenv('TABLE_NAME','event')
 
-# Dependency
-def get_db():
-    db = SessionLocal()
+engine = create_engine('postgresql://'+DB_USER+':'+DB_PASSWORD+'@'+DB_HOST+'/'+DB_NAME, connect_args={})
+
+async def consume():
+    kafkaConsumer = AIOKafkaConsumer(KAFKA_TOPIC, loop=loop, bootstrap_servers=KAFKA_ENDPOINT, group_id=KAFKA_CONSUMER_GROUP_ID)
+    connection = engine.connect()
+    await kafkaConsumer.start()
     try:
-        yield db
+        async for msg in kafkaConsumer:
+            print(msg.key)
+            message = msg.value
+            payload=ast.literal_eval(message.decode('utf-8'))
+            connection.execute(f"""INSERT INTO public.{TABLE_NAME}(event_id, date, event_vehicle_detected_plate_number, event_vehicle_detected_lat, event_vehicle_detected_long, event_vehicle_lpn_detection_status) VALUES('{payload['event_id']}', '{payload['event_timestamp']}', '{payload['event_vehicle_detected_plate_number']}', '{payload['event_vehicle_detected_lat']}', '{payload['event_vehicle_detected_long']}', '{payload['event_vehicle_lpn_detection_status']}')""")
+            print("===============================================")
+            print(payload)
+            print("Message written to DB successfully")
+            print("===============================================")
     finally:
-        db.close()
-
-@app.get("/event/", response_model=List[schemas.Event])
-def get_event(skip: int = 0, limit: int = 100, db: Session = Depends(get_db)):
-    event = crud.get_event(db, skip=skip, limit=limit)
-    return event
-
-@app.post("/event/", response_model=schemas.EventCreate)
-def create_event(payload: schemas.EventCreate, db: Session = Depends(get_db) ):
-    #db_event = crud.create_event(db, event_id = payload.event_id, event_timestamp = payload.event_timestamp, event_vehicle_detected_plate_number = payload.event_vehicle_detected_plate_number, event_vehicle_detected_lat = payload.event_vehicle_detected_lat, event_vehicle_detected_long = payload.event_vehicle_detected_long, event_vehicle_lpn_detection_status = payload.event_vehicle_lpn_detection_status)
-    return crud.create_event(db=db, payload=payload)
-    #return db_event
-
+        await kafkaConsumer.stop()
+loop.run_until_complete(consume())

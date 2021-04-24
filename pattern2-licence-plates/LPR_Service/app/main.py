@@ -126,11 +126,11 @@ def  lpr_process(input_image_path):
        # fake = Faker(['en-US', 'en_US', 'en_US', 'en-US'])
         rand = random.randint(0,len(location_data)-1)
         result = {
-            "event_timestamp": str(datetime.datetime.now()),
-            "event_id": str(random.randint(99,99999)),
-             "event_vehicle_detected_plate_number": license_plate_string,
-            "event_vehicle_detected_lat": str(location_data[rand]['lat']),
-            "event_vehicle_detected_long": str(location_data[rand]['long']),
+            "event_timestamp":datetime.datetime.now().isoformat(),
+            "event_id": random.randint(99,99999),
+             "event_vehicle_detected_plate_number": str(license_plate_string),
+            "event_vehicle_detected_lat": location_data[rand]['lat'],
+            "event_vehicle_detected_long": location_data[rand]['long'],
             "event_vehicle_lpn_detection_status": "Successful"
         }
         #print(json.dumps(result))
