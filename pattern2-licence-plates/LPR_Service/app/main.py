@@ -128,10 +128,19 @@ def  lpr_process(input_image_path):
         result = {
             "event_timestamp":datetime.datetime.now().isoformat(),
             "event_id": random.randint(99,99999),
-             "event_vehicle_detected_plate_number": str(license_plate_string),
+            "event_vehicle_detected_plate_number": str(license_plate_string),
             "event_vehicle_detected_lat": location_data[rand]['lat'],
             "event_vehicle_detected_long": location_data[rand]['long'],
-            "event_vehicle_lpn_detection_status": "Successful"
+            "event_vehicle_lpn_detection_status": "Successful",
+            "stationA1": location_data[rand]['stationA1'],
+            "stationA5201": location_data[rand]['stationA5201'],
+            "stationA13": location_data[rand]['stationA13'],
+            "stationA2": location_data[rand]['stationA2'],
+            "stationA23": location_data[rand]['stationA23'],
+            "stationB313": location_data[rand]['stationB313'],
+            "stationA4202": location_data[rand]['stationA4202'],
+            "stationA41": location_data[rand]['stationA41'],
+            "stationB504": location_data[rand]['stationB504']
         }
         #print(json.dumps(result))
         #print("mv "+ input_image_path +" dataset/images/success")
@@ -141,7 +150,7 @@ def  lpr_process(input_image_path):
     else:
         result = {
             "license_plate_number_detection_status": "Failed",
-            "reason": "Not able to read license plate, it could be blur or complex image"
+            "reason": "Not able to read license plate, the input image could be blur or complex for inferencing"
         }
         #print(json.dumps(result))
         return result
@@ -221,6 +230,9 @@ async def root():
 async def detect_plate(image: UploadFile = File(...)):
     input_imag_bytes =base64.encodebytes(image.file.read())
     license_plate_string = lpr_process(input_imag_bytes)
+    ## The data in license_plate_string data is dumped on Kafka, another microservice consumes this data and store that to PGSQL Database
+    await kafkaproducer.send_and_wait(kafka_topic_name, json.dumps(license_plate_string).encode('utf-8'))
+    ## Data is returned to the user
     return  license_plate_string
 
 @app.post("/DetectPlateFromUrl/")

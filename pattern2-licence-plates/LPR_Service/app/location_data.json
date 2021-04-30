@@ -1,42 +1,120 @@
 [
   {
      "lat":"51.58893",
-     "long":"-0.20724"
+     "long":"-0.20724",
+     "stationA1" : "true",
+     "stationA5201" : "false",
+     "stationA13" : "false",
+     "stationA2" : "false",
+     "stationA23" : "false",
+     "stationB313" : "false",
+     "stationA4202" : "false",
+     "stationA41" : "false",
+     "stationB504" : "false"
   },
   {
      "lat":"51.61571",
-     "long":"-0.08334"
+     "long":"-0.08334",
+     "stationA1" : "false",
+     "stationA5201" : "true",
+     "stationA13" : "false",
+     "stationA2" : "false",
+     "stationA23" : "false",
+     "stationB313" : "false",
+     "stationA4202" : "false",
+     "stationA41" : "false",
+     "stationB504" : "false"
   },
   {
      "lat":"51.57334",
-     "long":"0.04632"
+     "long":"0.04632",
+     "stationA1" : "false",
+     "stationA5201" : "false",
+     "stationA13" : "true",
+     "stationA2" : "false",
+     "stationA23" : "false",
+     "stationB313" : "false",
+     "stationA4202" : "false",
+     "stationA41" : "false",
+     "stationB504" : "false"
   },
   {
      "lat":"51.52401",
-     "long":"0.07265"
+     "long":"0.07265",
+     "stationA1" : "false",
+     "stationA5201" : "false",
+     "stationA13" : "false",
+     "stationA2" : "true",
+     "stationA23" : "false",
+     "stationB313" : "false",
+     "stationA4202" : "false",
+     "stationA41" : "false",
+     "stationB504" : "false"
   },
   {
      "lat":"51.45587",
-     "long":"0.04024"
+     "long":"0.04024",
+     "stationA1" : "false",
+     "stationA5201" : "false",
+     "stationA13" : "false",
+     "stationA2" : "false",
+     "stationA23" : "true",
+     "stationB313" : "false",
+     "stationA4202" : "false",
+     "stationA41" : "false",
+     "stationB504" : "false"
   },
   {
      "lat":"51.44703",
-     "long":"-0.12847"
+     "long":"-0.12847",
+     "stationA1" : "false",
+     "stationA5201" : "false",
+     "stationA13" : "false",
+     "stationA2" : "false",
+     "stationA23" : "false",
+     "stationB313" : "true",
+     "stationA4202" : "false",
+     "stationA41" : "false",
+     "stationB504" : "false"
   },
   {
      "lat":"51.45803",
-     "long":"-0.20714"
+     "long":"-0.20714",
+     "stationA1" : "false",
+     "stationA5201" : "false",
+     "stationA13" : "false",
+     "stationA2" : "false",
+     "stationA23" : "false",
+     "stationB313" : "false",
+     "stationA4202" : "true",
+     "stationA41" : "false",
+     "stationB504" : "false"
   },
   {
      "lat":"51.47085",
-     "long":"-0.27663"
+     "long":"-0.27663",
+     "stationA1" : "false",
+     "stationA5201" : "false",
+     "stationA13" : "false",
+     "stationA2" : "false",
+     "stationA23" : "false",
+     "stationB313" : "false",
+     "stationA4202" : "false",
+     "stationA41" : "true",
+     "stationB504" : "false"
   },
   {
      "lat":"51.49307",
-     "long":"-0.28215"
-  },
-  {
-     "lat":"51.53257",
-     "long":"-0.29135"
+     "long":"-0.28215",
+     "stationA1" : "false",
+     "stationA5201" : "false",
+     "stationA13" : "false",
+     "stationA2" : "false",
+     "stationA23" : "false",
+     "stationB313" : "false",
+     "stationA4202" : "false",
+     "stationA41" : "false",
+     "stationB504" : "true"
   }
 ]
+

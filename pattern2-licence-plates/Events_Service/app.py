@@ -1,4 +1,4 @@
-from sqlalchemy import create_engine, Column, Integer, String, Numeric, DateTime, func
+from sqlalchemy import create_engine, Column, Integer, String, Numeric, DateTime, func, Boolean
 from sqlalchemy.ext.declarative import declarative_base
 from aiokafka import AIOKafkaConsumer
 import asyncio, os, ast
@@ -27,9 +27,18 @@ class Event(Base):
     event_id = Column(Integer, primary_key=True, index=True)
     event_timestamp = Column('date', DateTime(timezone=True), default=func.now())
     event_vehicle_detected_plate_number = Column(String, index=True)
-    event_vehicle_detected_lat = Column(Numeric(precision=7, scale=5, decimal_return_scale=None, asdecimal=False))
-    event_vehicle_detected_long = Column(Numeric(precision=7, scale=5, decimal_return_scale=None, asdecimal=False))
+    #event_vehicle_detected_lat = Column(Numeric(precision=7, scale=5, decimal_return_scale=None, asdecimal=False))
+    #event_vehicle_detected_long = Column(Numeric(precision=7, scale=5, decimal_return_scale=None, asdecimal=False))
     event_vehicle_lpn_detection_status = Column(String)
+    stationA1 = Column(Boolean, unique=False)
+    stationA5201 = Column(Boolean, unique=False)
+    stationA13 = Column(Boolean, unique=False)
+    stationA2 = Column(Boolean, unique=False)
+    stationA23 = Column(Boolean, unique=False)
+    stationB313 = Column(Boolean, unique=False)
+    stationA4202 = Column(Boolean, unique=False)
+    stationA41 = Column(Boolean, unique=False)
+    stationB504 = Column(Boolean, unique=False)
 
 
 
@@ -45,7 +54,9 @@ async def consume():
             print(msg.key)
             message = msg.value
             payload=ast.literal_eval(message.decode('utf-8'))
-            connection.execute(f"""INSERT INTO public.{TABLE_NAME}(event_id, date, event_vehicle_detected_plate_number, event_vehicle_detected_lat, event_vehicle_detected_long, event_vehicle_lpn_detection_status) VALUES('{payload['event_id']}', '{payload['event_timestamp']}', '{payload['event_vehicle_detected_plate_number']}', '{payload['event_vehicle_detected_lat']}', '{payload['event_vehicle_detected_long']}', '{payload['event_vehicle_lpn_detection_status']}')""")
+            connection.execute(f"""INSERT INTO public.{TABLE_NAME}(event_id, date, event_vehicle_detected_plate_number, event_vehicle_lpn_detection_status, "stationA1", "stationA5201", "stationA13", "stationA2", "stationA23", "stationB313", "stationA4202" 
+, "stationA41", "stationB504" ) VALUES('{payload['event_id']}', '{payload['event_timestamp']}', '{payload['event_vehicle_detected_plate_number']}', '{payload['event_vehicle_lpn_detection_status']}', '{payload['stationA1']}', '{payload['stationA5201']}', '{payload['stationA13']}', '{payload['stationA2']}', '{payload['stationA23']}', '{payload['stationB313']}', '{payload['stationA4202']}', '{payload['stationA41']}', '{payload['stationB504']}'
+)""")
             print("===============================================")
             print(payload)
             print("Message written to DB successfully")
