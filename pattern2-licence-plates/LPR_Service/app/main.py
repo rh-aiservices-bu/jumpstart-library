@@ -128,7 +128,7 @@ def  lpr_process(input_image_path):
         rand = random.randint(0,len(location_data)-1)
         result = {
             "event_timestamp":datetime.datetime.now().isoformat(),
-            "event_id": uuid.uuid4(),
+            "event_id": uuid.uuid4().hex,
             "event_vehicle_detected_plate_number": str(license_plate_string),
             "event_vehicle_detected_lat": location_data[rand]['lat'],
             "event_vehicle_detected_long": location_data[rand]['long'],
