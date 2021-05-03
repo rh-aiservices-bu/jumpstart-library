@@ -24,7 +24,7 @@ Base = declarative_base()
 
 class Event(Base):
     __tablename__ = "event"
-    event_id = Column(Integer, primary_key=True, index=True)
+    event_id = Column(String, primary_key=True, index=True)
     event_timestamp = Column('date', DateTime(timezone=True), default=func.now())
     event_vehicle_detected_plate_number = Column(String, index=True)
     #event_vehicle_detected_lat = Column(Numeric(precision=7, scale=5, decimal_return_scale=None, asdecimal=False))

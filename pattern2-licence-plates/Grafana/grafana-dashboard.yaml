@@ -377,15 +377,15 @@ spec:
                 }
               ],
               "hide": false,
-              "metricColumn": "detected_plate",
+              "metricColumn": "event_vehicle_detected_plate_number",
               "rawQuery": false,
-              "rawSql": "SELECT\n  $__timeGroupAlias(eventtime,$__interval),\n  detected_plate AS metric,\n  count(eventid)\nFROM toll\nWHERE\n  $__timeFilter(eventtime) AND\n  stationa23 = 'true'\nGROUP BY 1,2\nORDER BY 1,2",
+              "rawSql": "SELECT\n  $__timeGroupAlias(date,$__interval),\n  event_vehicle_detected_plate_number AS metric,\n  count(event_id)\nFROM event\nWHERE\n  $__timeFilter(date) AND\n  'stationA23' = 'true'\nGROUP BY 1,2\nORDER BY 1,2",
               "refId": "A",
               "select": [
                 [
                   {
                     "params": [
-                      "eventid"
+                      "event_id"
                     ],
                     "type": "column"
                   },
@@ -397,8 +397,8 @@ spec:
                   }
                 ]
               ],
-              "table": "toll",
-              "timeColumn": "eventtime",
+              "table": "event",
+              "timeColumn": "date",
               "timeColumnType": "timestamp",
               "where": [
                 {
@@ -410,7 +410,7 @@ spec:
                   "datatype": "bool",
                   "name": "",
                   "params": [
-                    "stationa23",
+                    "stationA23",
                     "=",
                     "'true'"
                   ],
@@ -430,15 +430,15 @@ spec:
                 }
               ],
               "hide": false,
-              "metricColumn": "detected_plate",
+              "metricColumn": "event_vehicle_detected_plate_number",
               "rawQuery": false,
-              "rawSql": "SELECT\n  $__timeGroupAlias(eventtime,$__interval),\n  detected_plate AS metric,\n  count(eventid)\nFROM toll\nWHERE\n  $__timeFilter(eventtime) AND\n  stationa2 = 'true'\nGROUP BY 1,2\nORDER BY 1,2",
+              "rawSql": "SELECT\n  $__timeGroupAlias(date,$__interval),\n  event_vehicle_detected_plate_number AS metric,\n  count(event_id)\nFROM event\nWHERE\n  $__timeFilter(date) AND\n  'stationA2' = 'true'\nGROUP BY 1,2\nORDER BY 1,2",
               "refId": "B",
               "select": [
                 [
                   {
                     "params": [
-                      "eventid"
+                      "event_id"
                     ],
                     "type": "column"
                   },
@@ -450,8 +450,8 @@ spec:
                   }
                 ]
               ],
-              "table": "toll",
-              "timeColumn": "eventtime",
+              "table": "event",
+              "timeColumn": "date",
               "timeColumnType": "timestamp",
               "where": [
                 {
@@ -463,7 +463,7 @@ spec:
                   "datatype": "bool",
                   "name": "",
                   "params": [
-                    "stationa2",
+                    "stationA2",
                     "=",
                     "'true'"
                   ],
@@ -483,15 +483,15 @@ spec:
                 }
               ],
               "hide": false,
-              "metricColumn": "detected_plate",
+              "metricColumn": "event_vehicle_detected_plate_number",
               "rawQuery": false,
-              "rawSql": "SELECT\n  $__timeGroupAlias(eventtime,$__interval),\n  detected_plate AS metric,\n  count(eventid)\nFROM toll\nWHERE\n  $__timeFilter(eventtime) AND\n  stationb313 = 'true'\nGROUP BY 1,2\nORDER BY 1,2",
+              "rawSql": "SELECT\n  $__timeGroupAlias(date,$__interval),\n  event_vehicle_detected_plate_number AS metric,\n  count(event_id)\nFROM event\nWHERE\n  $__timeFilter(date) AND\n  'stationB313' = 'true'\nGROUP BY 1,2\nORDER BY 1,2",
               "refId": "C",
               "select": [
                 [
                   {
                     "params": [
-                      "eventid"
+                      "event_id"
                     ],
                     "type": "column"
                   },
@@ -503,8 +503,8 @@ spec:
                   }
                 ]
               ],
-              "table": "toll",
-              "timeColumn": "eventtime",
+              "table": "event",
+              "timeColumn": "date",
               "timeColumnType": "timestamp",
               "where": [
                 {
@@ -516,7 +516,7 @@ spec:
                   "datatype": "bool",
                   "name": "",
                   "params": [
-                    "stationb313",
+                    "stationB313",
                     "=",
                     "'true'"
                   ],
@@ -536,15 +536,15 @@ spec:
                 }
               ],
               "hide": false,
-              "metricColumn": "detected_plate",
+              "metricColumn": "event_vehicle_detected_plate_number",
               "rawQuery": false,
-              "rawSql": "SELECT\n  $__timeGroupAlias(eventtime,$__interval),\n  detected_plate AS metric,\n  count(eventid)\nFROM toll\nWHERE\n  $__timeFilter(eventtime) AND\n  stationb504 = 'true'\nGROUP BY 1,2\nORDER BY 1,2",
+              "rawSql": "SELECT\n  $__timeGroupAlias(date,$__interval),\n  event_vehicle_detected_plate_number AS metric,\n  count(event_id)\nFROM event\nWHERE\n  $__timeFilter(date) AND\n  'stationB504' = 'true'\nGROUP BY 1,2\nORDER BY 1,2",
               "refId": "D",
               "select": [
                 [
                   {
                     "params": [
-                      "eventid"
+                      "event_id"
                     ],
                     "type": "column"
                   },
@@ -556,8 +556,8 @@ spec:
                   }
                 ]
               ],
-              "table": "toll",
-              "timeColumn": "eventtime",
+              "table": "event",
+              "timeColumn": "date",
               "timeColumnType": "timestamp",
               "where": [
                 {
@@ -569,7 +569,7 @@ spec:
                   "datatype": "bool",
                   "name": "",
                   "params": [
-                    "stationb504",
+                    "stationB504",
                     "=",
                     "'true'"
                   ],
@@ -589,15 +589,15 @@ spec:
                 }
               ],
               "hide": false,
-              "metricColumn": "detected_plate",
+              "metricColumn": "event_vehicle_detected_plate_number",
               "rawQuery": false,
-              "rawSql": "SELECT\n  $__timeGroupAlias(eventtime,$__interval),\n  detected_plate AS metric,\n  count(eventid)\nFROM toll\nWHERE\n  $__timeFilter(eventtime) AND\n  stationa4202 = 'true'\nGROUP BY 1,2\nORDER BY 1,2",
+              "rawSql": "SELECT\n  $__timeGroupAlias(date,$__interval),\n  event_vehicle_detected_plate_number AS metric,\n  count(event_id)\nFROM event\nWHERE\n  $__timeFilter(date) AND\n  'stationA4202' = 'true'\nGROUP BY 1,2\nORDER BY 1,2",
               "refId": "E",
               "select": [
                 [
                   {
                     "params": [
-                      "eventid"
+                      "event_id"
                     ],
                     "type": "column"
                   },
@@ -609,8 +609,8 @@ spec:
                   }
                 ]
               ],
-              "table": "toll",
-              "timeColumn": "eventtime",
+              "table": "event",
+              "timeColumn": "date",
               "timeColumnType": "timestamp",
               "where": [
                 {
@@ -622,7 +622,7 @@ spec:
                   "datatype": "bool",
                   "name": "",
                   "params": [
-                    "stationa4202",
+                    "stationA4202",
                     "=",
                     "'true'"
                   ],
@@ -642,15 +642,15 @@ spec:
                 }
               ],
               "hide": false,
-              "metricColumn": "detected_plate",
+              "metricColumn": "event_vehicle_detected_plate_number",
               "rawQuery": false,
-              "rawSql": "SELECT\n  $__timeGroupAlias(eventtime,$__interval),\n  detected_plate AS metric,\n  count(eventid)\nFROM toll\nWHERE\n  $__timeFilter(eventtime) AND\n  stationa1 = 'true'\nGROUP BY 1,2\nORDER BY 1,2",
+              "rawSql": "SELECT\n  $__timeGroupAlias(date,$__interval),\n  event_vehicle_detected_plate_number AS metric,\n  count(event_id)\nFROM event\nWHERE\n  $__timeFilter(date) AND\n  'stationA1' = 'true'\nGROUP BY 1,2\nORDER BY 1,2",
               "refId": "F",
               "select": [
                 [
                   {
                     "params": [
-                      "eventid"
+                      "event_id"
                     ],
                     "type": "column"
                   },
@@ -662,8 +662,8 @@ spec:
                   }
                 ]
               ],
-              "table": "toll",
-              "timeColumn": "eventtime",
+              "table": "event",
+              "timeColumn": "date",
               "timeColumnType": "timestamp",
               "where": [
                 {
@@ -675,7 +675,7 @@ spec:
                   "datatype": "bool",
                   "name": "",
                   "params": [
-                    "stationa1",
+                    "stationA1",
                     "=",
                     "'true'"
                   ],
@@ -695,15 +695,15 @@ spec:
                 }
               ],
               "hide": false,
-              "metricColumn": "detected_plate",
+              "metricColumn": "event_vehicle_detected_plate_number",
               "rawQuery": false,
-              "rawSql": "SELECT\n  $__timeGroupAlias(eventtime,$__interval),\n  detected_plate AS metric,\n  count(eventid)\nFROM toll\nWHERE\n  $__timeFilter(eventtime) AND\n  stationa13 = 'true'\nGROUP BY 1,2\nORDER BY 1,2",
+              "rawSql": "SELECT\n  $__timeGroupAlias(date,$__interval),\n  event_vehicle_detected_plate_number AS metric,\n  count(event_id)\nFROM event\nWHERE\n  $__timeFilter(date) AND\n  'stationA13' = 'true'\nGROUP BY 1,2\nORDER BY 1,2",
               "refId": "G",
               "select": [
                 [
                   {
                     "params": [
-                      "eventid"
+                      "event_id"
                     ],
                     "type": "column"
                   },
@@ -715,8 +715,8 @@ spec:
                   }
                 ]
               ],
-              "table": "toll",
-              "timeColumn": "eventtime",
+              "table": "event",
+              "timeColumn": "date",
               "timeColumnType": "timestamp",
               "where": [
                 {
@@ -728,7 +728,7 @@ spec:
                   "datatype": "bool",
                   "name": "",
                   "params": [
-                    "stationa13",
+                    "stationA13",
                     "=",
                     "'true'"
                   ],
@@ -748,15 +748,15 @@ spec:
                 }
               ],
               "hide": false,
-              "metricColumn": "detected_plate",
+              "metricColumn": "event_vehicle_detected_plate_number",
               "rawQuery": false,
-              "rawSql": "SELECT\n  $__timeGroupAlias(eventtime,$__interval),\n  detected_plate AS metric,\n  count(eventid)\nFROM toll\nWHERE\n  $__timeFilter(eventtime) AND\n  stationa5201 = 'true'\nGROUP BY 1,2\nORDER BY 1,2",
+              "rawSql": "SELECT\n  $__timeGroupAlias(date,$__interval),\n  event_vehicle_detected_plate_number AS metric,\n  count(event_id)\nFROM event\nWHERE\n  $__timeFilter(date) AND\n  'stationA5201' = 'true'\nGROUP BY 1,2\nORDER BY 1,2",
               "refId": "H",
               "select": [
                 [
                   {
                     "params": [
-                      "eventid"
+                      "event_id"
                     ],
                     "type": "column"
                   },
@@ -768,8 +768,8 @@ spec:
                   }
                 ]
               ],
-              "table": "toll",
-              "timeColumn": "eventtime",
+              "table": "event",
+              "timeColumn": "date",
               "timeColumnType": "timestamp",
               "where": [
                 {
@@ -781,7 +781,7 @@ spec:
                   "datatype": "bool",
                   "name": "",
                   "params": [
-                    "stationa5201",
+                    "stationA5201",
                     "=",
                     "'true'"
                   ],
@@ -801,15 +801,15 @@ spec:
                 }
               ],
               "hide": false,
-              "metricColumn": "detected_plate",
+              "metricColumn": "event_vehicle_detected_plate_number",
               "rawQuery": false,
-              "rawSql": "SELECT\n  $__timeGroupAlias(eventtime,$__interval),\n  detected_plate AS metric,\n  count(eventid)\nFROM toll\nWHERE\n  $__timeFilter(eventtime) AND\n  stationa41 = 'true'\nGROUP BY 1,2\nORDER BY 1,2",
+              "rawSql": "SELECT\n  $__timeGroupAlias(date,$__interval),\n  event_vehicle_detected_plate_number AS metric,\n  count(event_id)\nFROM event\nWHERE\n  $__timeFilter(date) AND\n  'stationA41' = 'true'\nGROUP BY 1,2\nORDER BY 1,2",
               "refId": "I",
               "select": [
                 [
                   {
                     "params": [
-                      "eventid"
+                      "event_id"
                     ],
                     "type": "column"
                   },
@@ -821,8 +821,8 @@ spec:
                   }
                 ]
               ],
-              "table": "toll",
-              "timeColumn": "eventtime",
+              "table": "event",
+              "timeColumn": "date",
               "timeColumnType": "timestamp",
               "where": [
                 {
@@ -834,7 +834,7 @@ spec:
                   "datatype": "bool",
                   "name": "",
                   "params": [
-                    "stationa41",
+                    "stationA41",
                     "=",
                     "'true'"
                   ],
