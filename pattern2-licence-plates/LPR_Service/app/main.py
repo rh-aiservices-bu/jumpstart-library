@@ -133,15 +133,15 @@ def  lpr_process(input_image_path):
             "event_vehicle_detected_lat": location_data[rand]['lat'],
             "event_vehicle_detected_long": location_data[rand]['long'],
             "event_vehicle_lpn_detection_status": "Successful",
-            "stationA1": location_data[rand]['stationA1'],
-            "stationA5201": location_data[rand]['stationA5201'],
-            "stationA13": location_data[rand]['stationA13'],
-            "stationA2": location_data[rand]['stationA2'],
-            "stationA23": location_data[rand]['stationA23'],
-            "stationB313": location_data[rand]['stationB313'],
-            "stationA4202": location_data[rand]['stationA4202'],
-            "stationA41": location_data[rand]['stationA41'],
-            "stationB504": location_data[rand]['stationB504']
+            "stationa1": location_data[rand]['stationA1'],
+            "stationa5201": location_data[rand]['stationA5201'],
+            "stationa13": location_data[rand]['stationA13'],
+            "stationa2": location_data[rand]['stationA2'],
+            "stationa23": location_data[rand]['stationA23'],
+            "stationb313": location_data[rand]['stationB313'],
+            "stationa4202": location_data[rand]['stationA4202'],
+            "stationa41": location_data[rand]['stationA41'],
+            "stationb504": location_data[rand]['stationB504']
         }
         #print(json.dumps(result))
         #print("mv "+ input_image_path +" dataset/images/success")
