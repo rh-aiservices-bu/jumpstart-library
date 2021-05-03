@@ -1,0 +1,1001 @@
+---
+apiVersion: integreatly.org/v1alpha1
+kind: GrafanaDashboard
+metadata:
+  labels:
+    app: grafana
+  name: lpr-dashboard
+spec:
+  json: |
+    {
+      "annotations": {
+        "list": [
+          {
+            "builtIn": 1,
+            "datasource": "-- Grafana --",
+            "enable": true,
+            "hide": true,
+            "iconColor": "rgba(0, 211, 255, 1)",
+            "name": "Annotations & Alerts",
+            "type": "dashboard"
+          }
+        ]
+      },
+      "editable": true,
+      "gnetId": null,
+      "graphTooltip": 0,
+      "id": 5,
+      "links": [],
+      "panels": [
+        {
+          "datasource": null,
+          "description": "",
+          "fieldConfig": {
+            "defaults": {
+              "custom": {}
+            },
+            "overrides": []
+          },
+          "gridPos": {
+            "h": 5,
+            "w": 7,
+            "x": 0,
+            "y": 0
+          },
+          "id": 4,
+          "options": {
+            "content": "# London\n\n## Ultra Low Emissions Zone",
+            "mode": "markdown"
+          },
+          "pluginVersion": "7.3.10",
+          "timeFrom": null,
+          "timeShift": null,
+          "title": "",
+          "transparent": true,
+          "type": "text"
+        },
+        {
+          "datasource": null,
+          "fieldConfig": {
+            "defaults": {
+              "custom": {}
+            },
+            "overrides": []
+          },
+          "gridPos": {
+            "h": 5,
+            "w": 7,
+            "x": 7,
+            "y": 0
+          },
+          "id": 6,
+          "options": {
+            "bgColor": "#0c0c0c",
+            "clockType": "24 hour",
+            "countdownSettings": {
+              "endCountdownTime": "2021-04-26T23:10:44-07:00",
+              "endText": "00:00:00"
+            },
+            "dateSettings": {
+              "dateFormat": "YYYY-MM-DD",
+              "fontSize": "20px",
+              "fontWeight": "normal",
+              "showDate": true
+            },
+            "mode": "time",
+            "timeSettings": {
+              "fontSize": "48pt",
+              "fontWeight": "bold"
+            },
+            "timezone": "Europe/London",
+            "timezoneSettings": {
+              "fontSize": "12px",
+              "fontWeight": "normal",
+              "showTimezone": true,
+              "zoneFormat": "offsetAbbv"
+            }
+          },
+          "pluginVersion": "7.3.10",
+          "timeFrom": null,
+          "timeShift": null,
+          "title": "",
+          "transparent": true,
+          "type": "grafana-clock-panel"
+        },
+        {
+          "datasource": null,
+          "fieldConfig": {
+            "defaults": {
+              "custom": {}
+            },
+            "overrides": []
+          },
+          "gridPos": {
+            "h": 8,
+            "w": 10,
+            "x": 14,
+            "y": 0
+          },
+          "id": 10,
+          "options": {
+            "content": "# Title\n\nFor markdown syntax help: [commonmark.org/help](https://commonmark.org/help/)\n         ",
+            "mode": "markdown"
+          },
+          "pluginVersion": "7.3.10",
+          "timeFrom": null,
+          "timeShift": null,
+          "title": "Detected",
+          "transparent": true,
+          "type": "text"
+        },
+        {
+          "dashboardFilter": "",
+          "dashboardTags": [],
+          "datasource": null,
+          "fieldConfig": {
+            "defaults": {
+              "custom": {}
+            },
+            "overrides": []
+          },
+          "folderId": null,
+          "gridPos": {
+            "h": 3,
+            "w": 14,
+            "x": 0,
+            "y": 5
+          },
+          "id": 8,
+          "limit": 10,
+          "nameFilter": "",
+          "onlyAlertsOnDashboard": false,
+          "pluginVersion": "7.3.10",
+          "show": "current",
+          "sortOrder": 1,
+          "stateFilter": [],
+          "timeFrom": null,
+          "timeShift": null,
+          "title": "Amber Alerts",
+          "transparent": true,
+          "type": "alertlist"
+        },
+        {
+          "datasource": "PostgreSQL",
+          "fieldConfig": {
+            "defaults": {
+              "custom": {}
+            },
+            "overrides": []
+          },
+          "gridPos": {
+            "h": 22,
+            "w": 14,
+            "x": 0,
+            "y": 8
+          },
+          "id": 2,
+          "options": {
+            "forceImageRefresh": false,
+            "imageUrl": "http://jumpstart-library.s3.amazonaws.com/lpr-demo/london-ulev.png",
+            "lockSensors": true,
+            "mappings": [],
+            "sensors": [
+              {
+                "backgroundBlink": false,
+                "backgroundColor": "#000",
+                "bold": false,
+                "decimals": 2,
+                "fontColor": "#FFF",
+                "link": "",
+                "mappingId": "",
+                "name": "Station A23",
+                "position": {
+                  "x": 54.55259026687598,
+                  "y": 84.93723849372385
+                },
+                "query": {
+                  "alias": "",
+                  "id": "A"
+                },
+                "valueBlink": false,
+                "visible": true
+              },
+              {
+                "backgroundBlink": false,
+                "backgroundColor": "#000",
+                "bold": false,
+                "decimals": 2,
+                "fontColor": "#FFF",
+                "link": "",
+                "mappingId": "",
+                "name": "Station A2",
+                "position": {
+                  "x": 75.27472527472527,
+                  "y": 74.47698744769875
+                },
+                "query": {
+                  "alias": "",
+                  "id": "B"
+                },
+                "valueBlink": false,
+                "visible": true
+              },
+              {
+                "backgroundBlink": false,
+                "backgroundColor": "#000",
+                "bold": false,
+                "decimals": 2,
+                "fontColor": "#FFF",
+                "link": "",
+                "mappingId": "",
+                "name": "Station B313",
+                "position": {
+                  "x": 20.38519681376824,
+                  "y": 70.056304561186
+                },
+                "query": {
+                  "alias": "",
+                  "id": "C"
+                },
+                "valueBlink": false,
+                "visible": true
+              },
+              {
+                "backgroundBlink": false,
+                "backgroundColor": "#000",
+                "bold": false,
+                "decimals": 2,
+                "fontColor": "#FFF",
+                "link": "",
+                "mappingId": "",
+                "name": "Station B504",
+                "position": {
+                  "x": 34.34095005523578,
+                  "y": 5.494601993904643
+                },
+                "query": {
+                  "alias": "",
+                  "id": "D"
+                },
+                "valueBlink": false,
+                "visible": true
+              },
+              {
+                "backgroundBlink": false,
+                "backgroundColor": "#000",
+                "bold": false,
+                "decimals": 2,
+                "fontColor": "#FFF",
+                "link": "",
+                "mappingId": "",
+                "name": "Station A4202",
+                "position": {
+                  "x": 6.917698703412988,
+                  "y": 41.878712743426824
+                },
+                "query": {
+                  "alias": "",
+                  "id": "E"
+                },
+                "valueBlink": false,
+                "visible": true
+              },
+              {
+                "backgroundBlink": false,
+                "backgroundColor": "#000",
+                "bold": false,
+                "decimals": 2,
+                "fontColor": "#FFF",
+                "link": "",
+                "mappingId": "",
+                "name": "Station A1",
+                "position": {
+                  "x": 59.89010989010989,
+                  "y": 1.8828451882845187
+                },
+                "query": {
+                  "alias": "",
+                  "id": "F"
+                },
+                "valueBlink": false,
+                "visible": true
+              },
+              {
+                "backgroundBlink": false,
+                "backgroundColor": "#000",
+                "bold": false,
+                "decimals": 2,
+                "fontColor": "#FFF",
+                "link": "",
+                "mappingId": "",
+                "name": "Station A13",
+                "position": {
+                  "x": 87.36263736263736,
+                  "y": 38.70292887029289
+                },
+                "query": {
+                  "alias": "",
+                  "id": "G"
+                },
+                "valueBlink": false,
+                "visible": true
+              },
+              {
+                "backgroundBlink": false,
+                "backgroundColor": "#000",
+                "bold": false,
+                "decimals": 2,
+                "fontColor": "#FFF",
+                "link": "",
+                "mappingId": "",
+                "name": "Station A41",
+                "position": {
+                  "x": 8.338566195709053,
+                  "y": 17.07939459682835
+                },
+                "query": {
+                  "alias": "",
+                  "id": "I"
+                },
+                "valueBlink": false,
+                "visible": true
+              },
+              {
+                "backgroundBlink": false,
+                "backgroundColor": "#000",
+                "bold": false,
+                "decimals": 2,
+                "fontColor": "#FFF",
+                "link": "",
+                "mappingId": "",
+                "name": "Station A5201",
+                "position": {
+                  "x": 74.80376766091052,
+                  "y": 11.715481171548117
+                },
+                "query": {
+                  "alias": "",
+                  "id": "H"
+                },
+                "valueBlink": false,
+                "visible": true
+              }
+            ],
+            "sensorsTextSize": 10
+          },
+          "pluginVersion": "7.3.10",
+          "targets": [
+            {
+              "format": "time_series",
+              "group": [
+                {
+                  "params": [
+                    "$__interval",
+                    "none"
+                  ],
+                  "type": "time"
+                }
+              ],
+              "hide": false,
+              "metricColumn": "detected_plate",
+              "rawQuery": false,
+              "rawSql": "SELECT\n  $__timeGroupAlias(eventtime,$__interval),\n  detected_plate AS metric,\n  count(eventid)\nFROM toll\nWHERE\n  $__timeFilter(eventtime) AND\n  stationa23 = 'true'\nGROUP BY 1,2\nORDER BY 1,2",
+              "refId": "A",
+              "select": [
+                [
+                  {
+                    "params": [
+                      "eventid"
+                    ],
+                    "type": "column"
+                  },
+                  {
+                    "params": [
+                      "count"
+                    ],
+                    "type": "aggregate"
+                  }
+                ]
+              ],
+              "table": "toll",
+              "timeColumn": "eventtime",
+              "timeColumnType": "timestamp",
+              "where": [
+                {
+                  "name": "$__timeFilter",
+                  "params": [],
+                  "type": "macro"
+                },
+                {
+                  "datatype": "bool",
+                  "name": "",
+                  "params": [
+                    "stationa23",
+                    "=",
+                    "'true'"
+                  ],
+                  "type": "expression"
+                }
+              ]
+            },
+            {
+              "format": "time_series",
+              "group": [
+                {
+                  "params": [
+                    "$__interval",
+                    "none"
+                  ],
+                  "type": "time"
+                }
+              ],
+              "hide": false,
+              "metricColumn": "detected_plate",
+              "rawQuery": false,
+              "rawSql": "SELECT\n  $__timeGroupAlias(eventtime,$__interval),\n  detected_plate AS metric,\n  count(eventid)\nFROM toll\nWHERE\n  $__timeFilter(eventtime) AND\n  stationa2 = 'true'\nGROUP BY 1,2\nORDER BY 1,2",
+              "refId": "B",
+              "select": [
+                [
+                  {
+                    "params": [
+                      "eventid"
+                    ],
+                    "type": "column"
+                  },
+                  {
+                    "params": [
+                      "count"
+                    ],
+                    "type": "aggregate"
+                  }
+                ]
+              ],
+              "table": "toll",
+              "timeColumn": "eventtime",
+              "timeColumnType": "timestamp",
+              "where": [
+                {
+                  "name": "$__timeFilter",
+                  "params": [],
+                  "type": "macro"
+                },
+                {
+                  "datatype": "bool",
+                  "name": "",
+                  "params": [
+                    "stationa2",
+                    "=",
+                    "'true'"
+                  ],
+                  "type": "expression"
+                }
+              ]
+            },
+            {
+              "format": "time_series",
+              "group": [
+                {
+                  "params": [
+                    "$__interval",
+                    "none"
+                  ],
+                  "type": "time"
+                }
+              ],
+              "hide": false,
+              "metricColumn": "detected_plate",
+              "rawQuery": false,
+              "rawSql": "SELECT\n  $__timeGroupAlias(eventtime,$__interval),\n  detected_plate AS metric,\n  count(eventid)\nFROM toll\nWHERE\n  $__timeFilter(eventtime) AND\n  stationb313 = 'true'\nGROUP BY 1,2\nORDER BY 1,2",
+              "refId": "C",
+              "select": [
+                [
+                  {
+                    "params": [
+                      "eventid"
+                    ],
+                    "type": "column"
+                  },
+                  {
+                    "params": [
+                      "count"
+                    ],
+                    "type": "aggregate"
+                  }
+                ]
+              ],
+              "table": "toll",
+              "timeColumn": "eventtime",
+              "timeColumnType": "timestamp",
+              "where": [
+                {
+                  "name": "$__timeFilter",
+                  "params": [],
+                  "type": "macro"
+                },
+                {
+                  "datatype": "bool",
+                  "name": "",
+                  "params": [
+                    "stationb313",
+                    "=",
+                    "'true'"
+                  ],
+                  "type": "expression"
+                }
+              ]
+            },
+            {
+              "format": "time_series",
+              "group": [
+                {
+                  "params": [
+                    "$__interval",
+                    "none"
+                  ],
+                  "type": "time"
+                }
+              ],
+              "hide": false,
+              "metricColumn": "detected_plate",
+              "rawQuery": false,
+              "rawSql": "SELECT\n  $__timeGroupAlias(eventtime,$__interval),\n  detected_plate AS metric,\n  count(eventid)\nFROM toll\nWHERE\n  $__timeFilter(eventtime) AND\n  stationb504 = 'true'\nGROUP BY 1,2\nORDER BY 1,2",
+              "refId": "D",
+              "select": [
+                [
+                  {
+                    "params": [
+                      "eventid"
+                    ],
+                    "type": "column"
+                  },
+                  {
+                    "params": [
+                      "count"
+                    ],
+                    "type": "aggregate"
+                  }
+                ]
+              ],
+              "table": "toll",
+              "timeColumn": "eventtime",
+              "timeColumnType": "timestamp",
+              "where": [
+                {
+                  "name": "$__timeFilter",
+                  "params": [],
+                  "type": "macro"
+                },
+                {
+                  "datatype": "bool",
+                  "name": "",
+                  "params": [
+                    "stationb504",
+                    "=",
+                    "'true'"
+                  ],
+                  "type": "expression"
+                }
+              ]
+            },
+            {
+              "format": "time_series",
+              "group": [
+                {
+                  "params": [
+                    "$__interval",
+                    "none"
+                  ],
+                  "type": "time"
+                }
+              ],
+              "hide": false,
+              "metricColumn": "detected_plate",
+              "rawQuery": false,
+              "rawSql": "SELECT\n  $__timeGroupAlias(eventtime,$__interval),\n  detected_plate AS metric,\n  count(eventid)\nFROM toll\nWHERE\n  $__timeFilter(eventtime) AND\n  stationa4202 = 'true'\nGROUP BY 1,2\nORDER BY 1,2",
+              "refId": "E",
+              "select": [
+                [
+                  {
+                    "params": [
+                      "eventid"
+                    ],
+                    "type": "column"
+                  },
+                  {
+                    "params": [
+                      "count"
+                    ],
+                    "type": "aggregate"
+                  }
+                ]
+              ],
+              "table": "toll",
+              "timeColumn": "eventtime",
+              "timeColumnType": "timestamp",
+              "where": [
+                {
+                  "name": "$__timeFilter",
+                  "params": [],
+                  "type": "macro"
+                },
+                {
+                  "datatype": "bool",
+                  "name": "",
+                  "params": [
+                    "stationa4202",
+                    "=",
+                    "'true'"
+                  ],
+                  "type": "expression"
+                }
+              ]
+            },
+            {
+              "format": "time_series",
+              "group": [
+                {
+                  "params": [
+                    "$__interval",
+                    "none"
+                  ],
+                  "type": "time"
+                }
+              ],
+              "hide": false,
+              "metricColumn": "detected_plate",
+              "rawQuery": false,
+              "rawSql": "SELECT\n  $__timeGroupAlias(eventtime,$__interval),\n  detected_plate AS metric,\n  count(eventid)\nFROM toll\nWHERE\n  $__timeFilter(eventtime) AND\n  stationa1 = 'true'\nGROUP BY 1,2\nORDER BY 1,2",
+              "refId": "F",
+              "select": [
+                [
+                  {
+                    "params": [
+                      "eventid"
+                    ],
+                    "type": "column"
+                  },
+                  {
+                    "params": [
+                      "count"
+                    ],
+                    "type": "aggregate"
+                  }
+                ]
+              ],
+              "table": "toll",
+              "timeColumn": "eventtime",
+              "timeColumnType": "timestamp",
+              "where": [
+                {
+                  "name": "$__timeFilter",
+                  "params": [],
+                  "type": "macro"
+                },
+                {
+                  "datatype": "bool",
+                  "name": "",
+                  "params": [
+                    "stationa1",
+                    "=",
+                    "'true'"
+                  ],
+                  "type": "expression"
+                }
+              ]
+            },
+            {
+              "format": "time_series",
+              "group": [
+                {
+                  "params": [
+                    "$__interval",
+                    "none"
+                  ],
+                  "type": "time"
+                }
+              ],
+              "hide": false,
+              "metricColumn": "detected_plate",
+              "rawQuery": false,
+              "rawSql": "SELECT\n  $__timeGroupAlias(eventtime,$__interval),\n  detected_plate AS metric,\n  count(eventid)\nFROM toll\nWHERE\n  $__timeFilter(eventtime) AND\n  stationa13 = 'true'\nGROUP BY 1,2\nORDER BY 1,2",
+              "refId": "G",
+              "select": [
+                [
+                  {
+                    "params": [
+                      "eventid"
+                    ],
+                    "type": "column"
+                  },
+                  {
+                    "params": [
+                      "count"
+                    ],
+                    "type": "aggregate"
+                  }
+                ]
+              ],
+              "table": "toll",
+              "timeColumn": "eventtime",
+              "timeColumnType": "timestamp",
+              "where": [
+                {
+                  "name": "$__timeFilter",
+                  "params": [],
+                  "type": "macro"
+                },
+                {
+                  "datatype": "bool",
+                  "name": "",
+                  "params": [
+                    "stationa13",
+                    "=",
+                    "'true'"
+                  ],
+                  "type": "expression"
+                }
+              ]
+            },
+            {
+              "format": "time_series",
+              "group": [
+                {
+                  "params": [
+                    "$__interval",
+                    "none"
+                  ],
+                  "type": "time"
+                }
+              ],
+              "hide": false,
+              "metricColumn": "detected_plate",
+              "rawQuery": false,
+              "rawSql": "SELECT\n  $__timeGroupAlias(eventtime,$__interval),\n  detected_plate AS metric,\n  count(eventid)\nFROM toll\nWHERE\n  $__timeFilter(eventtime) AND\n  stationa5201 = 'true'\nGROUP BY 1,2\nORDER BY 1,2",
+              "refId": "H",
+              "select": [
+                [
+                  {
+                    "params": [
+                      "eventid"
+                    ],
+                    "type": "column"
+                  },
+                  {
+                    "params": [
+                      "count"
+                    ],
+                    "type": "aggregate"
+                  }
+                ]
+              ],
+              "table": "toll",
+              "timeColumn": "eventtime",
+              "timeColumnType": "timestamp",
+              "where": [
+                {
+                  "name": "$__timeFilter",
+                  "params": [],
+                  "type": "macro"
+                },
+                {
+                  "datatype": "bool",
+                  "name": "",
+                  "params": [
+                    "stationa5201",
+                    "=",
+                    "'true'"
+                  ],
+                  "type": "expression"
+                }
+              ]
+            },
+            {
+              "format": "time_series",
+              "group": [
+                {
+                  "params": [
+                    "$__interval",
+                    "none"
+                  ],
+                  "type": "time"
+                }
+              ],
+              "hide": false,
+              "metricColumn": "detected_plate",
+              "rawQuery": false,
+              "rawSql": "SELECT\n  $__timeGroupAlias(eventtime,$__interval),\n  detected_plate AS metric,\n  count(eventid)\nFROM toll\nWHERE\n  $__timeFilter(eventtime) AND\n  stationa41 = 'true'\nGROUP BY 1,2\nORDER BY 1,2",
+              "refId": "I",
+              "select": [
+                [
+                  {
+                    "params": [
+                      "eventid"
+                    ],
+                    "type": "column"
+                  },
+                  {
+                    "params": [
+                      "count"
+                    ],
+                    "type": "aggregate"
+                  }
+                ]
+              ],
+              "table": "toll",
+              "timeColumn": "eventtime",
+              "timeColumnType": "timestamp",
+              "where": [
+                {
+                  "name": "$__timeFilter",
+                  "params": [],
+                  "type": "macro"
+                },
+                {
+                  "datatype": "bool",
+                  "name": "",
+                  "params": [
+                    "stationa41",
+                    "=",
+                    "'true'"
+                  ],
+                  "type": "expression"
+                }
+              ]
+            }
+          ],
+          "timeFrom": null,
+          "timeShift": null,
+          "title": "",
+          "transparent": true,
+          "type": "pierosavi-imageit-panel"
+        },
+        {
+          "cards": {
+            "cardHSpacing": 2,
+            "cardMinWidth": 5,
+            "cardRound": null,
+            "cardVSpacing": 2
+          },
+          "color": {
+            "cardColor": "#b4ff00",
+            "colorScale": "sqrt",
+            "colorScheme": "interpolateRdYlGn",
+            "defaultColor": "#757575",
+            "exponent": 0.5,
+            "mode": "spectrum",
+            "thresholds": []
+          },
+          "datasource": null,
+          "fieldConfig": {
+            "defaults": {
+              "custom": {}
+            },
+            "overrides": []
+          },
+          "gridPos": {
+            "h": 13,
+            "w": 10,
+            "x": 14,
+            "y": 8
+          },
+          "highlightCards": true,
+          "id": 12,
+          "legend": {
+            "show": true
+          },
+          "nullPointMode": "as empty",
+          "pageSize": 15,
+          "pluginVersion": "7.3.10",
+          "seriesFilterIndex": -1,
+          "statusmap": {
+            "ConfigVersion": "v1"
+          },
+          "timeFrom": null,
+          "timeShift": null,
+          "title": "Hourly ingress by station",
+          "tooltip": {
+            "extraInfo": "",
+            "freezeOnClick": true,
+            "items": [],
+            "show": true,
+            "showExtraInfo": false,
+            "showItems": false
+          },
+          "transparent": true,
+          "type": "flant-statusmap-panel",
+          "useMax": true,
+          "usingPagination": false,
+          "xAxis": {
+            "show": true
+          },
+          "yAxis": {
+            "maxWidth": -1,
+            "minWidth": -1,
+            "show": true
+          },
+          "yAxisSort": "metrics",
+          "yLabel": {
+            "delimiter": "",
+            "labelTemplate": "",
+            "usingSplitLabel": false
+          }
+        },
+        {
+          "datasource": null,
+          "fieldConfig": {
+            "defaults": {
+              "custom": {}
+            },
+            "overrides": []
+          },
+          "gridPos": {
+            "h": 9,
+            "w": 5,
+            "x": 14,
+            "y": 21
+          },
+          "id": 14,
+          "options": {
+            "content": "# Title\n\nFor markdown syntax help: [commonmark.org/help](https://commonmark.org/help/)\n         ",
+            "mode": "markdown"
+          },
+          "pluginVersion": "7.3.10",
+          "timeFrom": null,
+          "timeShift": null,
+          "title": "Panel Title",
+          "type": "text"
+        },
+        {
+          "datasource": null,
+          "fieldConfig": {
+            "defaults": {
+              "custom": {}
+            },
+            "overrides": []
+          },
+          "gridPos": {
+            "h": 9,
+            "w": 5,
+            "x": 19,
+            "y": 21
+          },
+          "id": 16,
+          "options": {
+            "content": "# Title\n\nFor markdown syntax help: [commonmark.org/help](https://commonmark.org/help/)\n         ",
+            "mode": "markdown"
+          },
+          "pluginVersion": "7.3.10",
+          "timeFrom": null,
+          "timeShift": null,
+          "title": "Panel Title",
+          "type": "text"
+        }
+      ],
+      "schemaVersion": 26,
+      "style": "dark",
+      "tags": [],
+      "templating": {
+        "list": []
+      },
+      "time": {
+        "from": "now-6h",
+        "to": "now"
+      },
+      "timepicker": {},
+      "timezone": "",
+      "title": "LPR Demon - ULEV London",
+      "uid": "HQZA6drGz",
+      "version": 7
+    }
+  name: lpr-dashboard.json
+  plugins:
+  - name: pierosavi-imageit-panel
+    version: 1.0.2
+  - name: flant-statusmap-panel
+    version: 0.4.1
+  - name: grafana-clock-panel
+    version: 1.1.1
+  - name: ryantxu-ajax-panel
+    version: 0.0.6
+labels:
+grafana: dashboard
