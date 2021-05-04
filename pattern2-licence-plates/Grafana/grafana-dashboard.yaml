@@ -24,7 +24,7 @@ spec:
       "editable": true,
       "gnetId": null,
       "graphTooltip": 0,
-      "id": 5,
+      "id": 2,
       "links": [],
       "panels": [
         {
@@ -138,7 +138,6 @@ spec:
             },
             "overrides": []
           },
-          "folderId": null,
           "gridPos": {
             "h": 3,
             "w": 14,
@@ -184,7 +183,7 @@ spec:
                 "backgroundBlink": false,
                 "backgroundColor": "#000",
                 "bold": false,
-                "decimals": 2,
+                "decimals": 0,
                 "fontColor": "#FFF",
                 "link": "",
                 "mappingId": "",
@@ -204,7 +203,7 @@ spec:
                 "backgroundBlink": false,
                 "backgroundColor": "#000",
                 "bold": false,
-                "decimals": 2,
+                "decimals": 0,
                 "fontColor": "#FFF",
                 "link": "",
                 "mappingId": "",
@@ -224,7 +223,7 @@ spec:
                 "backgroundBlink": false,
                 "backgroundColor": "#000",
                 "bold": false,
-                "decimals": 2,
+                "decimals": 0,
                 "fontColor": "#FFF",
                 "link": "",
                 "mappingId": "",
@@ -244,7 +243,7 @@ spec:
                 "backgroundBlink": false,
                 "backgroundColor": "#000",
                 "bold": false,
-                "decimals": 2,
+                "decimals": 0,
                 "fontColor": "#FFF",
                 "link": "",
                 "mappingId": "",
@@ -264,7 +263,7 @@ spec:
                 "backgroundBlink": false,
                 "backgroundColor": "#000",
                 "bold": false,
-                "decimals": 2,
+                "decimals": 0,
                 "fontColor": "#FFF",
                 "link": "",
                 "mappingId": "",
@@ -284,7 +283,7 @@ spec:
                 "backgroundBlink": false,
                 "backgroundColor": "#000",
                 "bold": false,
-                "decimals": 2,
+                "decimals": 0,
                 "fontColor": "#FFF",
                 "link": "",
                 "mappingId": "",
@@ -304,7 +303,7 @@ spec:
                 "backgroundBlink": false,
                 "backgroundColor": "#000",
                 "bold": false,
-                "decimals": 2,
+                "decimals": 0,
                 "fontColor": "#FFF",
                 "link": "",
                 "mappingId": "",
@@ -324,7 +323,7 @@ spec:
                 "backgroundBlink": false,
                 "backgroundColor": "#000",
                 "bold": false,
-                "decimals": 2,
+                "decimals": 0,
                 "fontColor": "#FFF",
                 "link": "",
                 "mappingId": "",
@@ -344,7 +343,7 @@ spec:
                 "backgroundBlink": false,
                 "backgroundColor": "#000",
                 "bold": false,
-                "decimals": 2,
+                "decimals": 0,
                 "fontColor": "#FFF",
                 "link": "",
                 "mappingId": "",
@@ -378,8 +377,8 @@ spec:
               ],
               "hide": false,
               "metricColumn": "event_vehicle_detected_plate_number",
-              "rawQuery": false,
-              "rawSql": "SELECT\n  $__timeGroupAlias(date,$__interval),\n  event_vehicle_detected_plate_number AS metric,\n  count(event_id)\nFROM event\nWHERE\n  $__timeFilter(date) AND\n  'stationA23' = 'true'\nGROUP BY 1,2\nORDER BY 1,2",
+              "rawQuery": true,
+              "rawSql": "SELECT\n  count(event_id) as \"value\",\n  max(date) as \"time\"\nFROM event\nWHERE\n  $__timeFilter(date) AND stationa23 = 'true'\n",
               "refId": "A",
               "select": [
                 [
@@ -431,8 +430,8 @@ spec:
               ],
               "hide": false,
               "metricColumn": "event_vehicle_detected_plate_number",
-              "rawQuery": false,
-              "rawSql": "SELECT\n  $__timeGroupAlias(date,$__interval),\n  event_vehicle_detected_plate_number AS metric,\n  count(event_id)\nFROM event\nWHERE\n  $__timeFilter(date) AND\n  'stationA2' = 'true'\nGROUP BY 1,2\nORDER BY 1,2",
+              "rawQuery": true,
+              "rawSql": "SELECT\n  count(event_id) as \"value\",\n  max(date) as \"time\"\nFROM event\nWHERE\n  $__timeFilter(date) AND stationa2 = 'true'",
               "refId": "B",
               "select": [
                 [
@@ -484,8 +483,8 @@ spec:
               ],
               "hide": false,
               "metricColumn": "event_vehicle_detected_plate_number",
-              "rawQuery": false,
-              "rawSql": "SELECT\n  $__timeGroupAlias(date,$__interval),\n  event_vehicle_detected_plate_number AS metric,\n  count(event_id)\nFROM event\nWHERE\n  $__timeFilter(date) AND\n  'stationB313' = 'true'\nGROUP BY 1,2\nORDER BY 1,2",
+              "rawQuery": true,
+              "rawSql": "SELECT\n  count(event_id) as \"value\",\n  max(date) as \"time\"\nFROM event\nWHERE\n  $__timeFilter(date) AND stationb313 = 'true'",
               "refId": "C",
               "select": [
                 [
@@ -537,8 +536,8 @@ spec:
               ],
               "hide": false,
               "metricColumn": "event_vehicle_detected_plate_number",
-              "rawQuery": false,
-              "rawSql": "SELECT\n  $__timeGroupAlias(date,$__interval),\n  event_vehicle_detected_plate_number AS metric,\n  count(event_id)\nFROM event\nWHERE\n  $__timeFilter(date) AND\n  'stationB504' = 'true'\nGROUP BY 1,2\nORDER BY 1,2",
+              "rawQuery": true,
+              "rawSql": "SELECT\n  count(event_id) as \"value\",\n  max(date) as \"time\"\nFROM event\nWHERE\n  $__timeFilter(date) AND stationb504 = 'true'",
               "refId": "D",
               "select": [
                 [
@@ -590,8 +589,8 @@ spec:
               ],
               "hide": false,
               "metricColumn": "event_vehicle_detected_plate_number",
-              "rawQuery": false,
-              "rawSql": "SELECT\n  $__timeGroupAlias(date,$__interval),\n  event_vehicle_detected_plate_number AS metric,\n  count(event_id)\nFROM event\nWHERE\n  $__timeFilter(date) AND\n  'stationA4202' = 'true'\nGROUP BY 1,2\nORDER BY 1,2",
+              "rawQuery": true,
+              "rawSql": "SELECT\n  count(event_id) as \"value\",\n  max(date) as \"time\"\nFROM event\nWHERE\n  $__timeFilter(date) AND stationa4202 = 'true'",
               "refId": "E",
               "select": [
                 [
@@ -643,8 +642,8 @@ spec:
               ],
               "hide": false,
               "metricColumn": "event_vehicle_detected_plate_number",
-              "rawQuery": false,
-              "rawSql": "SELECT\n  $__timeGroupAlias(date,$__interval),\n  event_vehicle_detected_plate_number AS metric,\n  count(event_id)\nFROM event\nWHERE\n  $__timeFilter(date) AND\n  'stationA1' = 'true'\nGROUP BY 1,2\nORDER BY 1,2",
+              "rawQuery": true,
+              "rawSql": "SELECT\n  count(event_id) as \"value\",\n  max(date) as \"time\"\nFROM event\nWHERE\n  $__timeFilter(date) AND stationa1 = 'true'",
               "refId": "F",
               "select": [
                 [
@@ -696,8 +695,8 @@ spec:
               ],
               "hide": false,
               "metricColumn": "event_vehicle_detected_plate_number",
-              "rawQuery": false,
-              "rawSql": "SELECT\n  $__timeGroupAlias(date,$__interval),\n  event_vehicle_detected_plate_number AS metric,\n  count(event_id)\nFROM event\nWHERE\n  $__timeFilter(date) AND\n  'stationA13' = 'true'\nGROUP BY 1,2\nORDER BY 1,2",
+              "rawQuery": true,
+              "rawSql": "SELECT\n  count(event_id) as \"value\",\n  max(date) as \"time\"\nFROM event\nWHERE\n  $__timeFilter(date) AND stationa13 = 'true'",
               "refId": "G",
               "select": [
                 [
@@ -749,8 +748,8 @@ spec:
               ],
               "hide": false,
               "metricColumn": "event_vehicle_detected_plate_number",
-              "rawQuery": false,
-              "rawSql": "SELECT\n  $__timeGroupAlias(date,$__interval),\n  event_vehicle_detected_plate_number AS metric,\n  count(event_id)\nFROM event\nWHERE\n  $__timeFilter(date) AND\n  'stationA5201' = 'true'\nGROUP BY 1,2\nORDER BY 1,2",
+              "rawQuery": true,
+              "rawSql": "SELECT\n  count(event_id) as \"value\",\n  max(date) as \"time\"\nFROM event\nWHERE\n  $__timeFilter(date) AND stationa5201 = 'true'",
               "refId": "H",
               "select": [
                 [
@@ -802,8 +801,8 @@ spec:
               ],
               "hide": false,
               "metricColumn": "event_vehicle_detected_plate_number",
-              "rawQuery": false,
-              "rawSql": "SELECT\n  $__timeGroupAlias(date,$__interval),\n  event_vehicle_detected_plate_number AS metric,\n  count(event_id)\nFROM event\nWHERE\n  $__timeFilter(date) AND\n  'stationA41' = 'true'\nGROUP BY 1,2\nORDER BY 1,2",
+              "rawQuery": true,
+              "rawSql": "SELECT\n  count(event_id) as \"value\",\n  max(date) as \"time\"\nFROM event\nWHERE\n  $__timeFilter(date) AND stationa41 = 'true'",
               "refId": "I",
               "select": [
                 [
@@ -985,7 +984,7 @@ spec:
       "timezone": "",
       "title": "LPR Demon - ULEV London",
       "uid": "HQZA6drGz",
-      "version": 7
+      "version": 4
     }
   name: lpr-dashboard.json
   plugins:
