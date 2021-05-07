@@ -40,14 +40,13 @@ oc expose service/license-plate-recognition
 oc get all
 ```
 ```
+oc adm policy add-scc-to-user anyuid -z default # used for tiangolo/uvicorn-gunicorn-fastapi:python3.8 image 
 
-oc new-app --name license-plate-recognition2 --as-deployment-config https://github.com/red-hat-data-services/jumpstart-library#ksingh-tf-v1 --context-dir=pattern2-licence-plates/LPR_Service -l app=license-plate-recognition2 -e KAFKA_ENDPOINT=pattern-2-kafka-kafka-bootstrap:9092
+oc new-app --name license-plate-recognition --as-deployment-config https://github.com/red-hat-data-services/jumpstart-library#ksingh-tf-v1 --context-dir=pattern2-licence-plates/LPR_Service -l app=license-plate-recognition -e KAFKA_ENDPOINT=pattern-2-kafka-kafka-bootstrap:9092
 
-oc adm policy add-scc-to-user anyuid -z default
-oc scale dc/license-plate-recognition2 --replicas=2
-oc expose service/license-plate-recognition2
+oc scale dc/license-plate-recognition --replicas=2
+oc expose service/license-plate-recognition
 
-oc set env dc/license-plate-recognition2  -e KAFKA_ENDPOINT=pattern-2-kafka-kafka-bootstrap:9092
 
 ./lprctl --endpoint http://license-plate-recognition-license-plate-recognition2.apps.perf3.chris.ocs.ninja  
 
@@ -120,4 +119,42 @@ kaf topic describe lpr
 echo test | kaf produce lpr
 kaf topic describe lpr
 kaf consume lpr
+```
+
+### Testing the overall flow
+
+```
+git clone https://github.com/red-hat-data-services/jumpstart-library.git
+cd jumpstart-library
+git checkout ksingh-tf-v1
+cd pattern2-licence-plates/LPR_Service/dataset/images
+## This is our images dataset
+ls
+curl -X 'POST' http://license-plate-recognition2-license-plate-recognition.apps.perf3.chris.ocs.ninja/DetectPlate -F "@image=1.png"
+oc get po -l deploymentconfig=postgresql
+oc port-forward postgresql-1-d6h9t 5432:5432
+psql -h 127.0.0.1 -p 5432 -U dbadmin -w HT@1202k -d pgdb
+\d
+\d event;
+\d vehicle_metadata;
+select * from event; 
+```
+## Secor Notes
+```
+oc create -f <obc.yaml>
+oc get obc secor-bucket  -o jsonpath='{.spec.bucketName}'
+
+oc get secret secor-bucket --template={{.data.AWS_ACCESS_KEY_ID}} | base64 -d 
+oc get secret secor-bucket --template={{.data.AWS_SECRET_ACCESS_KEY}} | base64 -d
+
+oc rsh s3cmd
+
+s3cmd --access_key=7NS6UR50MP07EH5PQZ51 --secret_key=I0v9WC0XchfxHx3tPwj0a8JiMk2zUoq99LZHMj7M --no-ssl  --host=s3.data.local --host-bucket="s3.data.local/%(bucket)" ls 
+
+s3cmd --access_key=7NS6UR50MP07EH5PQZ51 --secret_key=I0v9WC0XchfxHx3tPwj0a8JiMk2zUoq99LZHMj7M --no-ssl  --host=s3.data.local --host-bucket="s3.data.local/%(bucket)" put /s3cmd-2.1.0.zip s3://secor-bucket-9af181ee-216d-483e-8fb1-cdecc2015b63/s3cmd.zip
+
+s3cmd --access_key=7NS6UR50MP07EH5PQZ51 --secret_key=I0v9WC0XchfxHx3tPwj0a8JiMk2zUoq99LZHMj7M --no-ssl  --host=s3.data.local --host-bucket="s3.data.local/%(bucket)" ls s3://secor-bucket-9af181ee-216d-483e-8fb1-cdecc2015b63
+
+oc project lpr-core-site
+
 ```
