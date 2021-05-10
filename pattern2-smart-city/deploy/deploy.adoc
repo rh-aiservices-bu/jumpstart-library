@@ -36,4 +36,13 @@ From the `deploy` folder and subfolders, create the OpenShift resources in this 
 oc apply -f file.yaml
 ----
 
+=== Load Generator
+
 * `base/is_python38-ubi8.yaml`: ImageStream for the ubi8 Python 3.8 image
+* `generator/is_sc_generator.yaml`: ImageStream for the load generator
+* `generator/bc_sc_generator.yaml`: BuildConfiguration to create the load generator image
+* `generator/dc_sc_generaror.yaml`
+
+=== Kafka instances
+
+
