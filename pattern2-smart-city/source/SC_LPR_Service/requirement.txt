@@ -1,0 +1,14 @@
+tensorflow==2.2.0
+opencv-python
+numpy
+matplotlib
+sklearn2
+Keras
+fastapi
+uvicorn
+python-multipart
+gsutil
+#Faker
+aiokafka==0.7.0
+
+

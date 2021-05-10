@@ -1,0 +1,4 @@
+sqlalchemy
+aiokafka==0.7.0
+nest_asyncio
+psycopg2

@@ -1,0 +1,39 @@
+= Smart Cities Workshop Deployment Guide
+
+== Requirements
+
+* A working OpenShift environment. Last tested version: 4.6
+* Cluster-admin access to OpenShift, or ability to deploy operators.
+* OpenShift Data Foundation (ODF). Last tested version: 4.6
+* A running RGW instance in ODF. External Route to the RGW must be exposed with SSL enabled for Grafana dashboards to work properly.
+
+== Namespace
+
+Create an OpenShift project/namespace to deploy the environment. In this documentation we'll use `smartcity`.
+
+[source,bash]
+----
+oc new-project smartcity
+----
+
+TIP: If you did not use `smartcity` as the name of your project, don't forget to change it in the commands or the config files used for the deployment.
+
+== Operators
+
+If not already available, deploy the following operators from OperatorHub:
+
+* Red Hat AMQ Streams (all namespaces)
+* Grafana Operator (`smartcity` namespace only)
+* Presto operator (`smartcity namespace only`)
+
+== Deployment
+
+From the `deploy` folder and subfolders, create the OpenShift resources in this order.
+
+.Creating a resource
+[source,bash]
+----
+oc apply -f file.yaml
+----
+
+* `base/is_python38-ubi8.yaml`: ImageStream for the ubi8 Python 3.8 image
