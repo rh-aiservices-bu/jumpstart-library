@@ -1,0 +1,6 @@
+tf-nightly
+opencv-python
+numpy
+matplotlib
+sklearn2
+Keras

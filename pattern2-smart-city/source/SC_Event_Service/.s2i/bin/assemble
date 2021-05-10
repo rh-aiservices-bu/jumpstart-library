@@ -1,0 +1,35 @@
+#!/bin/bash -e
+#
+# S2I assemble script for the 'events-service' image.
+# The 'assemble' script builds your application source so that it is ready to run.
+#
+# For more information refer to the documentation:
+#	https://github.com/openshift/source-to-image/blob/master/docs/builder_image.md
+#
+
+# If the 'events-service' assemble script is executed with the '-h' flag, print the usage.
+if [[ "$1" == "-h" ]]; then
+	exec /usr/libexec/s2i/usage
+fi
+
+# Restore artifacts from the previous build (if they exist).
+#
+if [ "$(ls /tmp/artifacts/ 2>/dev/null)" ]; then
+  echo "---> Restoring build artifacts..."
+  shopt -s dotglob
+  mv /tmp/artifacts/* ./
+  shopt -u dotglob
+fi
+
+echo "---> Installing application source..."
+cp -Rf /tmp/src/. ./
+
+echo "PWD"
+pwd
+echo "in tmp"
+ls -l /tmp/src
+echo "in pwd"
+ls -l ./
+echo "---> Building application from source..."
+# TODO: Add build steps for your application, eg npm install, bundle install, pip install, etc.
+pip install -r requirements.txt

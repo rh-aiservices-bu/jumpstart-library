@@ -1,0 +1,26 @@
+[
+    {
+        "vehicle_registered_plate_number": "CHIAN000",
+        "vehicle_color": "black",
+        "vehicle_make": "toyota",
+        "vehicle_body_type": "sedan-wagon",
+        "vehicle_make_model": "toyota_land-cruiser",
+        "vehicle_model_year": "2010-2014",
+        "vehicle_registered_locality": "MA",
+        "vehicle_owner_name": "Roy Dale-Robinson",
+        "vehicle_owner_address": "302 Depot Road",
+        "vehicle_owner_city": "Boxborough",
+        "vehicle_owner_state": "MA",
+        "vehicle_owner_zip_code": "01719",
+        "vehicle_owner_contact_number": "+1-873-399-6088",
+        "customer_id": "afc220a0-ccee-414e-99df-73300b555d53",
+        "customer_balance": "164 USD",
+        "customer_name": "Roy Dale-Robinson",
+        "customer_address": "302 Depot Road",
+        "customer_city": "Boxborough",
+        "customer_state": "MA",
+        "customer_zip_code": "01719",
+        "customer_locality": "MA",
+        "customer_contact_number": "+1-873-399-6088"
+    }
+]
