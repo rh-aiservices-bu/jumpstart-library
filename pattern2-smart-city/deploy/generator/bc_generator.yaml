@@ -24,7 +24,6 @@ spec:
     type: Git
     git:
       uri: 'https://github.com/red-hat-data-services/jumpstart-library'
-      ref: main
     contextDir: pattern2-smart-city/source/SC_Generator
   triggers:
     - type: ConfigChange
