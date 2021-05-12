@@ -1,0 +1,9 @@
+kind: ImageStream
+apiVersion: image.openshift.io/v1
+metadata:
+  name: lpr_service
+  labels:
+    app: lpr_service
+spec:
+  lookupPolicy:
+    local: false
