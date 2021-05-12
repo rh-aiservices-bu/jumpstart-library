@@ -63,5 +63,13 @@ This is the component that runs in the Core and listens to incoming Kafka events
 * `events_service/bc_events_service.yaml`: BuildConfiguration for the event service
 * `events_service/dc_events_service.yaml`: Deployment Configuration for the event service
 
+=== LPR Service
+
+This component presents an API that you can query with an image and returns the infered licence plate number.
+
+* `lpr_service/is_lpr_service.yaml`: ImageStream for the LPR service
+* `lpr_service/bc_lpr_service.yaml`: BuildConfiguration for the LPR service
+* `lpr_service/dc_lpr_service.yaml`: Deployment Configuration for the LPR service
+
 
 

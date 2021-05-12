@@ -1,6 +1,2 @@
 *.env
-pattern2-license-plates/dataset/images-corpus/*
-pattern2-license-plates/dataset/images-not-detecting/*
-pattern2-license-plates/dataset/images-with-error/*
-pattern2-licence-plates/LPR_Service/__pycache__
-pattern2-licence-plates/LPR_Service/app/test.ipynb
+*__pycache__
