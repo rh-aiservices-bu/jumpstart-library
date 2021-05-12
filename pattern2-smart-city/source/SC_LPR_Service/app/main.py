@@ -1,60 +1,58 @@
+## Imports
+import glob
+import json
+import os
+from os.path import splitext,basename
+import base64
+
+import cv2
+import numpy as np
+
 import tensorflow as tf
 tf.compat.v1.logging.set_verbosity(tf.compat.v1.logging.ERROR)
 tf.get_logger().setLevel('ERROR')
-import cv2
-import numpy as np
-import matplotlib.pyplot as plt
-import matplotlib.gridspec as gridspec
-from local_utils import detect_lp
-from os.path import splitext,basename
+from tensorflow import keras
 from tensorflow.keras.models  import model_from_json
 from keras.preprocessing.image import load_img, img_to_array
 from keras.applications.mobilenet_v2 import preprocess_input
 from sklearn.preprocessing import LabelEncoder
-from tensorflow import keras
-import glob
-import os
-import json
+
+from local_utils import detect_lp
+
 from fastapi import FastAPI, File, UploadFile
-import base64
-import requests
-import datetime
-import random
-#from faker import Faker
-from aiokafka import AIOKafkaProducer
-import asyncio
-import uuid
 
+## Processing Functions
 
-
-def save_model_h5_to_tf_format(path):
+#######################################
+# Loads a model given a specific path #
+#######################################
+def load_model(path):
     try:
         path = splitext(path)[0]
-        #print(splitext(path.split('/')[0]))
         with open('%s.json' % path, 'r') as json_file:
             model_json = json_file.read()
         model = model_from_json(model_json, custom_objects={})
         model.load_weights('%s.h5' % path)
-        #print(os.path())
-        # Save the model to h5 format
-        model.save("models/wpod_net_all_in_one.h5")
-        #print("Keras Model Saved successfully as h5 format")
-        model = tf.keras.models.load_model('models/wpod_net_all_in_one.h5')
-        # Save the model to TF SavedModel format
-        tf.saved_model.save(model, "models")
-        #print("successfully saved keras model h5 file to tensorflow SavedModel format")
-        return 
+        print("Model Loaded successfully...")
+        return model
     except Exception as e:
         print(e)
 
+##############################################################################
+# Returns the image of the car (vehicle) and the Licence plate image (LpImg) #
+##############################################################################
 def get_plate(image_path, Dmax=608, Dmin = 608):
     vehicle = preprocess_image(image_path)
     ratio = float(max(vehicle.shape[:2])) / min(vehicle.shape[:2])
     side = int(ratio * Dmin)
     bound_dim = min(side, Dmax)
-    _ , LpImg, _, cor = detect_lp(tf_model, vehicle, bound_dim, lp_threshold=0.5)
+    _ , LpImg, _, cor = detect_lp(wpod_net, vehicle, bound_dim, lp_threshold=0.5)
     return vehicle, LpImg, cor
 
+######################################################################################
+# Converts colors from BGR (as read by OpenCV) to RGB (so that we can display them), #
+# also eventually resizes the image to fit the size the model has been trained on    #
+######################################################################################
 def preprocess_image(image_path,resize=False):
     nparr = np.frombuffer(base64.decodebytes(image_path), dtype=np.uint8)
     img = cv2.imdecode(nparr, -1)
@@ -64,7 +62,9 @@ def preprocess_image(image_path,resize=False):
         img = cv2.resize(img, (224,224))
     return img
 
-# Create sort_contours() function to grab the contour of each digit from left to right 
+######################################################
+# Grabs the contour of each digit from left to right #
+######################################################
 def sort_contours(cnts,reverse = False):
     i = 0
     boundingBoxes = [cv2.boundingRect(c) for c in cnts]
@@ -72,14 +72,18 @@ def sort_contours(cnts,reverse = False):
                                         key=lambda b: b[1][i], reverse=reverse))
     return cnts
 
-# pre-processing input images and pedict with model
+###############################################
+# Recognizes a single character from an image #
+###############################################
 def predict_characters_from_model(image):
     image = cv2.resize(image,(80,80))
     image = np.stack((image,)*3, axis=-1)
-    prediction = labels.inverse_transform([np.argmax(model.predict(image[np.newaxis,:]))])
+    prediction = labels.inverse_transform([np.argmax(character_model.predict(image[np.newaxis,:]))])
     return prediction
 
-
+####################################################
+# Ties all the steps together in a single function #
+####################################################
 def  lpr_process(input_image_path):
     license_plate_string =  ""
     vehicle, LpImg, cor = get_plate(input_image_path)
@@ -122,125 +126,35 @@ def  lpr_process(input_image_path):
 
     else:
         license_plate_string =  ""
-        
-    if len(license_plate_string) >= 3 :
-       # fake = Faker(['en-US', 'en_US', 'en_US', 'en-US'])
-        rand = random.randint(0,len(location_data)-1)
-        result = {
-            "event_timestamp":datetime.datetime.now().isoformat(),
-            "event_id": uuid.uuid4().hex,
-            "event_vehicle_detected_plate_number": str(license_plate_string),
-            "event_vehicle_detected_lat": location_data[rand]['lat'],
-            "event_vehicle_detected_long": location_data[rand]['long'],
-            "event_vehicle_lpn_detection_status": "Successful",
-            "stationa1": location_data[rand]['stationA1'],
-            "stationa5201": location_data[rand]['stationA5201'],
-            "stationa13": location_data[rand]['stationA13'],
-            "stationa2": location_data[rand]['stationA2'],
-            "stationa23": location_data[rand]['stationA23'],
-            "stationb313": location_data[rand]['stationB313'],
-            "stationa4202": location_data[rand]['stationA4202'],
-            "stationa41": location_data[rand]['stationA41'],
-            "stationb504": location_data[rand]['stationB504']
-        }
-        #print(json.dumps(result))
-        #print("mv "+ input_image_path +" dataset/images/success")
-        # event_vehicle_captured_image
-        # event_vehicle_detected_geo_location
-        return result
-    else:
-        result = {
-            "license_plate_number_detection_status": "Failed",
-            "reason": "Not able to read license plate, the input image could be blur or complex for inferencing"
-        }
-        #print(json.dumps(result))
-        return result
 
-# def main():
-#     wpod_net_path = "models/wpod-net.json"
-#     save_model_h5_to_tf_format(wpod_net_path)
-    # Just provide the directory name where the TF *.pb (model file saved_model.pb) file is located
-    
+    return license_plate_string
 
-   # input_image_path = "dataset/plate5.jpeg"
-    
-    # for image_id in range(0,11):
-    #     input_image_path = "dataset/Cars" + str(image_id) + ".png"
-    #     license_plate_string = lpr_process(input_image_path)
-
-    # dataset_directory = r'dataset/images'
-    # for entry in os.scandir(dataset_directory):
-    #     if (entry.path.endswith(".jpg")
-    #            or entry.path.endswith(".png") or entry.path.endswith(".jpeg")) and entry.is_file():
-    #        license_plate_string = lpr_process(entry.path)
-   
-# if __name__ == "__main__":
-#     tf_model = keras.models.load_model('models')
-#     main()
-
-
+## Application  
 
 app = FastAPI()
 
 ## Model for LP detection
 wpod_net_path = "models/wpod-net.json"
-save_model_h5_to_tf_format(wpod_net_path)
-tf_model = keras.models.load_model('models')
+wpod_net = load_model(wpod_net_path)
 
 ## Model for character recoginition
-json_file = open('models/character_recoginition/MobileNets_character_recognition.json', 'r')
-loaded_model_json = json_file.read()
-json_file.close()
-model = model_from_json(loaded_model_json)
-model.load_weights("models/character_recoginition/License_character_recognition_weight.h5")
+character_net_path = 'models/character_recoginition/MobileNets_character_recognition.json'
+character_model = load_model(character_net_path)
+print("[INFO] Model loaded successfully...")
+
+# Load the character classes
 labels = LabelEncoder()
 labels.classes_ = np.load('models/character_recoginition/license_character_classes.npy')
-
-## Location Data Lat and Long
-location_data = json.load(open("location_data.json"))
-
-## global variable :: setting this for kafka producer
-kafka_endpoint = os.getenv('KAFKA_ENDPOINT', 'localhost:9092')
-kafka_topic_name = os.getenv('KAFKA_TOPIC', 'lpr')
-
-## kafka producer initilization
-loop = asyncio.get_event_loop()
-kafkaproducer = AIOKafkaProducer(loop=loop, bootstrap_servers=kafka_endpoint)
-
-@app.on_event("startup")
-async def startup_event():
-    await kafkaproducer.start()
-
-
-@app.on_event("shutdown")
-async def shutdown_event():
-    await kafkaproducer.stop()
-
+print("[INFO] Labels loaded successfully...")
 
 @app.get("/")
 async def root():
     return {"message": "Hello World !! Welcome to License Plate Recoginition Service.."}
 
-# @app.get("/DetectPlate")
-# async def detect_plate():
-#     input_image_path = "dataset/images/Cars0.png"
-#     license_plate_string = lpr_process(input_image_path)
-#     return  license_plate_string
 
 @app.post("/DetectPlate")
 async def detect_plate(image: UploadFile = File(...)):
-    input_imag_bytes =base64.encodebytes(image.file.read())
-    license_plate_string = lpr_process(input_imag_bytes)
-    ## The data in license_plate_string data is dumped on Kafka, another microservice consumes this data and store that to PGSQL Database
-    await kafkaproducer.send_and_wait(kafka_topic_name, json.dumps(license_plate_string).encode('utf-8'))
-    ## Data is returned to the user
-    return  license_plate_string
-
-@app.post("/DetectPlateFromUrl/")
-async def DetectPlateFromUrl(url: str):    
-    input_imag_bytes = base64.encodebytes(requests.get(url).content)
-    license_plate_string = lpr_process(input_imag_bytes)
-    ## The data in license_plate_string data is dumped on Kafka, another microservice consumes this data and store that to PGSQL Database
-    await kafkaproducer.send_and_wait(kafka_topic_name, json.dumps(license_plate_string).encode('utf-8'))
+    input_img_bytes = base64.encodebytes(image.file.read())
+    license_plate_string = lpr_process(input_img_bytes)
     ## Data is returned to the user
     return  license_plate_string
