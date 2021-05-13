@@ -1,0 +1,7 @@
+apiVersion: objectbucket.io/v1alpha1
+kind: ObjectBucketClaim
+metadata:
+  name: pgsql-bucket
+spec:
+  generateBucketName: pgsql-backup
+  storageClassName: ocs-storagecluster-ceph-rgw

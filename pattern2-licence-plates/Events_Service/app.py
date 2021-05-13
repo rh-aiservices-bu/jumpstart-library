@@ -15,7 +15,7 @@ loop = asyncio.get_event_loop()
 DB_USER = os.getenv('DB_USER', 'dbadmin')
 DB_PASSWORD = os.getenv('DB_PASSWORD', 'HT@1202k')
 DB_HOST = os.getenv('DB_HOST', '127.0.0.1')
-DB_NAME = os.getenv('DB_NAME','pgdb')
+DB_NAME = os.getenv('DB_NAME',' ')
 TABLE_NAME = os.getenv('TABLE_NAME','event')
 
 engine = create_engine('postgresql://'+DB_USER+':'+DB_PASSWORD+'@'+DB_HOST+'/'+DB_NAME, connect_args={})

@@ -1,0 +1,64 @@
+image:
+  repository: "harbor.starburstdata.net/starburstdata/hive"
+  tag: "356.0.0"
+  pullPolicy: "IfNotPresent"
+# docker pull harbor.starburstdata.net/starburstdata/hive:356.0.0
+
+registryCredentials:
+  enabled: true
+  registry: harbor.starburstdata.net/starburstdata
+  username: redhat
+  password: JBXjLPv6Scch5t8Dk2zLnZhgS
+
+database:
+  type: internal
+  internal:
+    image:
+       repository: "registry.redhat.io/rhscl/postgresql-96-rhel7"
+       tag: "latest"
+    env:
+      - name: POSTGRESQL_DATABASE
+        value: "hive"
+      - name: POSTGRESQL_USER
+        value: "hive"
+      - name: POSTGRESQL_PASSWORD
+        value: "HivePass1234"
+    volume:
+      persistentVolumeClaim:
+       storageClassName: ocs-storagecluster-ceph-rbd
+       accessModes:
+         - ReadWriteOnce
+       resources:
+         requests:
+           storage: "2Gi"
+    resources:
+      requests:
+        memory: "1Gi"
+        cpu: 2
+      limits:
+        memory: "1Gi"
+        cpu: 2
+    driver: "org.postgresql.Driver"
+    port: 5432
+    databaseName: "hive"
+    databaseUser: "hive"
+    databasePassword: "HivePass1234"
+
+objectStorage:
+  awsS3:
+    region: us-east-1
+    endpoint: "http://s3.data.local"
+    accessKey: "7NS6UR50MP07EH5PQZ51"
+    secretKey: "I0v9WC0XchfxHx3tPwj0a8JiMk2zUoq99LZHMj7M"
+    pathStyleAccess: true
+
+#heapSizePercentage: 85
+
+resources:
+  requests:
+    memory: "1Gi"
+    cpu: 1
+  limits:
+    memory: "1Gi"
+    cpu: 1
+

@@ -27,6 +27,8 @@ oc expose service/license-plate-recognition
 
 bin/kafka-console-consumer.sh --bootstrap-server pattern-2-kafka-kafka-bootstrap:9092 --topic lpr --from-beginning
 
+bin/kafka-console-consumer.sh --bootstrap-server kafka-core-site-kafka-bootstrap:9092 --topic lpr
+
 
 ```
 
@@ -155,6 +157,138 @@ s3cmd --access_key=7NS6UR50MP07EH5PQZ51 --secret_key=I0v9WC0XchfxHx3tPwj0a8JiMk2
 
 s3cmd --access_key=7NS6UR50MP07EH5PQZ51 --secret_key=I0v9WC0XchfxHx3tPwj0a8JiMk2zUoq99LZHMj7M --no-ssl  --host=s3.data.local --host-bucket="s3.data.local/%(bucket)" ls s3://secor-bucket-9af181ee-216d-483e-8fb1-cdecc2015b63
 
+s3cmd --access_key=7NS6UR50MP07EH5PQZ51 --secret_key=I0v9WC0XchfxHx3tPwj0a8JiMk2zUoq99LZHMj7M --no-ssl  --host=s3.data.local --host-bucket="s3.data.local/%(bucket)
+" ls s3://secor-bucket-9af181ee-216d-483e-8fb1-cdecc2015b63/raw_logs/lpr/offset=0/
+
+s3cmd --access_key=7NS6UR50MP07EH5PQZ51 --secret_key=I0v9WC0XchfxHx3tPwj0a8JiMk2zUoq99LZHMj7M --no-ssl  --host=s3.data.local --host-bucket="s3.data.local/%(bucket)
+" ls s3://secor-bucket-9af181ee-216d-483e-8fb1-cdecc2015b63/raw_logs/lpr/offset=0/1_0_00000000000000440962
+
+s3cmd --access_key=7NS6UR50MP07EH5PQZ51 --secret_key=I0v9WC0XchfxHx3tPwj0a8JiMk2zUoq99LZHMj7M --no-ssl  --host=s3.data.local --host-bucket="s3.data.local/%(bucket)
+" get s3://secor-bucket-9af181ee-216d-483e-8fb1-cdecc2015b63/raw_logs/lpr/offset=0/1_0_00000000000000440962  car.txt
+
+
 oc project lpr-core-site
 
 ```
+
+## SuperSet Notes
+admin/admin
+
+oc new-app --name postgresql-db --template=postgresql-ephemeral  -p POSTGRESQL_USER=dbadmin -p POSTGRESQL_PASSWORD=HTb1202k -p POSTGRESQL_DATABASE=pgdb
+
+postgresql://'dbadmin':'HTt1202k'@postgresql/pgdb
+
+## Deploying Presto
+brew install helm
+oc new-project presto-1
+
+git clone https://github.com/valeriano-manassero/helm-charts.git
+cd helm-charts
+vim valeriano-manassero/trino/values.yaml
+service:worker:1
+oc adm policy add-scc-to-user anyuid -z default
+helm install my-trino valeriano-manassero/trino --version 1.1.1
+
+
+```
++ NODE_ID=-Dnode.id=my-trino-worker-7bcbf5664-9xv7t
++ exec /usr/lib/trino/bin/launcher run --etc-dir /etc/trino -Dnode.id=my-trino-worker-7bcbf5664-9xv7t
+ERROR: [Errno 13] Permission denied: '/data/trino/var'
+```
+
+
+oc port-forward svc/my-trino 8080:8080
+visit http://127.0.0.1:8080
+
+
+ALTER USER postgres WITH PASSWORD 'postgres';
+
+connector.name=postgresql
+connection-url=jdbc:postgresql://postgresql.license-plate-recognition.svc.cluster.local:5432/presto
+connection-user=postgres
+connection-password=postgres
+
+
+  hive:
+    additionalProperties: |
+      connector.name=hive-hadoop2
+      hive.s3.endpoint=http://172.30.197.73
+      hive.s3.signer-type=S3SignerType
+      hive.s3.path-style-access=true
+      hive.s3.staging-directory=/tmp
+      hive.s3.ssl.enabled=false
+      hive.s3.sse.enabled=false
+
+postgresql://dbadmin:HT%401202k@postgresql.license-plate-recognition.svc.cluster.local/pgdb
+postgresql://postgres:postgres@postgresql.license-plate-recognition.svc.cluster.local/presto
+
+presto://my-trino.presto-1.svc.cluster.local:8080/postgresql
+
+## Deploying Starburst Enterprise Presto (SEP)
+
+
+
+helm upgrade  my-presto starburstdata/starburst-presto \
+  --install \
+  --version 350.7.0 \
+  --values ./values.yaml
+
+helm upgrade  my-presto starburstdata/starburst-enterprise \
+  --install \
+  --version 356.0.0 \
+  --values ./registry-credentials.yaml
+  --values ./sep-prod-cluster.yaml
+
+helm upgrade  my-sep starburstdata/starburst-hive \
+  --install \
+  --version 355.0.0 \
+  --values ./registry-credentials.yaml
+  --values ./hms-prod-cluster.yaml
+
+-------------------------------------------
+
+
+
+
+
+  ## Trino / presto dump
+
+    hive:
+    additionalProperties: |
+      connector.name=hive-hadoop2
+      hive.s3.endpoint=http://172.30.197.73
+      hive.s3.signer-type=S3SignerType
+      hive.s3.path-style-access=true
+      hive.s3.staging-directory=/tmp
+      hive.s3.ssl.enabled=false
+      hive.s3.sse.enabled=false
+    awsSecretName: presto-s3-secrets
+    internalMetastore:
+      cpu: 0.5
+      image:
+        imagepullPolicy: IfNotPresent
+      memory: 0.5G
+      postgreSql:
+        jdbcUrl: 'jdbc:postgresql://postgresql.presto.svc.cluster.local/redhat'
+        password: redhat
+        username: redhat
+      s3Endpoint: 'http://172.30.197.73'
+  additionalCatalogs:
+    postgresql: >
+      connector.name=postgresql
+
+      connection-url=jdbc:postgresql://postgresql.presto.svc.cluster.local/redhat
+
+      connection-user=redhat
+
+      connection-password=redhat
+    tpcds: |
+      connector.name=tpcds
+
++ trap '/usr/lib/starburst/bin/graceful-shutdown; wait "${child_pid}"' SIGTERM
++ child_pid=7
++ wait 7
++ exec /usr/lib/starburst/bin/launcher run --etc-dir /etc/starburst
+Invalid initial heap size: -Xms-209716k
+Error: Could not create the Java Virtual Machine.
+Error: A fatal exception has occurred. Program will exit.
