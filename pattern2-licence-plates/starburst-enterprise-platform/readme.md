@@ -1,6 +1,6 @@
 - Install helm 3.x client
 - oc new-project presto
-
+```
 helm repo add \
   --username redhat \
   --password JBXjLPv6Scch5t8Dk2zLnZhgS \
@@ -26,4 +26,5 @@ helm upgrade sep-cluster starburstdata/starburst-enterprise \
 oc expose svc/coordinator
 
 oc port-forward svc/coordinator 8080:8080
-visit http://127.0.0.1:8080
+```
+- visit http://127.0.0.1:8080
