@@ -5,7 +5,19 @@ metadata:
   labels:
     app: grafana
   name: lpr-dashboard
+labels:
+grafana: dashboard
 spec:
+  name: lpr-dashboard.json
+  plugins:
+  - name: pierosavi-imageit-panel
+    version: 1.0.2
+  - name: flant-statusmap-panel
+    version: 0.4.1
+  - name: grafana-clock-panel
+    version: 1.1.1
+  - name: ryantxu-ajax-panel
+    version: 0.0.6
   json: |
     {
       "annotations": {
@@ -37,8 +49,8 @@ spec:
             "overrides": []
           },
           "gridPos": {
-            "h": 5,
-            "w": 7,
+            "h": 3,
+            "w": 5,
             "x": 0,
             "y": 0
           },
@@ -63,8 +75,8 @@ spec:
             "overrides": []
           },
           "gridPos": {
-            "h": 5,
-            "w": 7,
+            "h": 3,
+            "w": 10,
             "x": 7,
             "y": 0
           },
@@ -103,62 +115,6 @@ spec:
           "type": "grafana-clock-panel"
         },
         {
-          "datasource": null,
-          "fieldConfig": {
-            "defaults": {
-              "custom": {}
-            },
-            "overrides": []
-          },
-          "gridPos": {
-            "h": 8,
-            "w": 10,
-            "x": 14,
-            "y": 0
-          },
-          "id": 10,
-          "options": {
-            "content": "# Title\n\nFor markdown syntax help: [commonmark.org/help](https://commonmark.org/help/)\n         ",
-            "mode": "markdown"
-          },
-          "pluginVersion": "7.3.10",
-          "timeFrom": null,
-          "timeShift": null,
-          "title": "Detected",
-          "transparent": true,
-          "type": "text"
-        },
-        {
-          "dashboardFilter": "",
-          "dashboardTags": [],
-          "datasource": null,
-          "fieldConfig": {
-            "defaults": {
-              "custom": {}
-            },
-            "overrides": []
-          },
-          "gridPos": {
-            "h": 3,
-            "w": 14,
-            "x": 0,
-            "y": 5
-          },
-          "id": 8,
-          "limit": 10,
-          "nameFilter": "",
-          "onlyAlertsOnDashboard": false,
-          "pluginVersion": "7.3.10",
-          "show": "current",
-          "sortOrder": 1,
-          "stateFilter": [],
-          "timeFrom": null,
-          "timeShift": null,
-          "title": "Amber Alerts",
-          "transparent": true,
-          "type": "alertlist"
-        },
-        {
           "datasource": "PostgreSQL",
           "fieldConfig": {
             "defaults": {
@@ -170,7 +126,7 @@ spec:
             "h": 22,
             "w": 14,
             "x": 0,
-            "y": 8
+            "y": 3
           },
           "id": 2,
           "options": {
@@ -851,7 +807,7 @@ spec:
         {
           "cards": {
             "cardHSpacing": 2,
-            "cardMinWidth": 5,
+            "cardMinWidth": 20,
             "cardRound": null,
             "cardVSpacing": 2
           },
@@ -875,7 +831,7 @@ spec:
             "h": 13,
             "w": 10,
             "x": 14,
-            "y": 8
+            "y": 3
           },
           "highlightCards": true,
           "id": 12,
@@ -889,6 +845,244 @@ spec:
           "statusmap": {
             "ConfigVersion": "v1"
           },
+          "targets": [
+            {
+              "format": "time_series",
+              "group": [],
+              "metricColumn": "none",
+              "rawQuery": true,
+              "rawSql": "SELECT\n  $__timeGroupAlias(date,$__interval),\n  count(event_id) as \"Station A23\"\nFROM event\nWHERE\n  $__timeFilter(date) AND stationa23 = 'true'\nGROUP BY 1",
+              "refId": "A",
+              "select": [
+                [
+                  {
+                    "params": [
+                      "value"
+                    ],
+                    "type": "column"
+                  }
+                ]
+              ],
+              "table": "event",
+              "timeColumn": "date",
+              "timeColumnType": "timestamptz",
+              "where": [
+                {
+                  "name": "$__timeFilter",
+                  "params": [],
+                  "type": "macro"
+                }
+              ]
+            },
+            {
+              "format": "time_series",
+              "group": [],
+              "metricColumn": "none",
+              "rawQuery": true,
+              "rawSql": "SELECT\n  $__timeGroupAlias(date,$__interval),\n  count(event_id) as \"Station A1\"\nFROM event\nWHERE\n  $__timeFilter(date) AND stationa1 = 'true'\nGROUP BY 1\n",
+              "refId": "B",
+              "select": [
+                [
+                  {
+                    "params": [
+                      "value"
+                    ],
+                    "type": "column"
+                  }
+                ]
+              ],
+              "timeColumn": "time",
+              "where": [
+                {
+                  "name": "$__timeFilter",
+                  "params": [],
+                  "type": "macro"
+                }
+              ]
+            },
+            {
+              "format": "time_series",
+              "group": [],
+              "metricColumn": "none",
+              "rawQuery": true,
+              "rawSql": "SELECT\n  $__timeGroupAlias(date,$__interval),\n  count(event_id) as \"Station A4202\"\nFROM event\nWHERE\n  $__timeFilter(date) AND stationa4202 = 'true'\nGROUP BY 1\n",
+              "refId": "C",
+              "select": [
+                [
+                  {
+                    "params": [
+                      "value"
+                    ],
+                    "type": "column"
+                  }
+                ]
+              ],
+              "timeColumn": "time",
+              "where": [
+                {
+                  "name": "$__timeFilter",
+                  "params": [],
+                  "type": "macro"
+                }
+              ]
+            },
+            {
+              "format": "time_series",
+              "group": [],
+              "metricColumn": "none",
+              "rawQuery": true,
+              "rawSql": "SELECT\n  $__timeGroupAlias(date,$__interval),\n  count(event_id) as \"Station A41\"\nFROM event\nWHERE\n  $__timeFilter(date) AND stationa41 = 'true'\nGROUP BY 1\n",
+              "refId": "D",
+              "select": [
+                [
+                  {
+                    "params": [
+                      "value"
+                    ],
+                    "type": "column"
+                  }
+                ]
+              ],
+              "timeColumn": "time",
+              "where": [
+                {
+                  "name": "$__timeFilter",
+                  "params": [],
+                  "type": "macro"
+                }
+              ]
+            },
+            {
+              "format": "time_series",
+              "group": [],
+              "metricColumn": "none",
+              "rawQuery": true,
+              "rawSql": "SELECT\n  $__timeGroupAlias(date,$__interval),\n  count(event_id) as \"Station B504\"\nFROM event\nWHERE\n  $__timeFilter(date) AND stationb504 = 'true'\nGROUP BY 1\n",
+              "refId": "E",
+              "select": [
+                [
+                  {
+                    "params": [
+                      "value"
+                    ],
+                    "type": "column"
+                  }
+                ]
+              ],
+              "timeColumn": "time",
+              "where": [
+                {
+                  "name": "$__timeFilter",
+                  "params": [],
+                  "type": "macro"
+                }
+              ]
+            },
+            {
+              "format": "time_series",
+              "group": [],
+              "metricColumn": "none",
+              "rawQuery": true,
+              "rawSql": "SELECT\n  $__timeGroupAlias(date,$__interval),\n  count(event_id) as \"Station A5201\"\nFROM event\nWHERE\n  $__timeFilter(date) AND stationa5201 = 'true'\nGROUP BY 1\n",
+              "refId": "F",
+              "select": [
+                [
+                  {
+                    "params": [
+                      "value"
+                    ],
+                    "type": "column"
+                  }
+                ]
+              ],
+              "timeColumn": "time",
+              "where": [
+                {
+                  "name": "$__timeFilter",
+                  "params": [],
+                  "type": "macro"
+                }
+              ]
+            },
+            {
+              "format": "time_series",
+              "group": [],
+              "metricColumn": "none",
+              "rawQuery": true,
+              "rawSql": "SELECT\n  $__timeGroupAlias(date,$__interval),\n  count(event_id) as \"Station A13\"\nFROM event\nWHERE\n  $__timeFilter(date) AND stationa13 = 'true'\nGROUP BY 1\n",
+              "refId": "G",
+              "select": [
+                [
+                  {
+                    "params": [
+                      "value"
+                    ],
+                    "type": "column"
+                  }
+                ]
+              ],
+              "timeColumn": "time",
+              "where": [
+                {
+                  "name": "$__timeFilter",
+                  "params": [],
+                  "type": "macro"
+                }
+              ]
+            },
+            {
+              "format": "time_series",
+              "group": [],
+              "metricColumn": "none",
+              "rawQuery": true,
+              "rawSql": "SELECT\n  $__timeGroupAlias(date,$__interval),\n  count(event_id) as \"Station B313\"\nFROM event\nWHERE\n  $__timeFilter(date) AND stationb313 = 'true'\nGROUP BY 1\n",
+              "refId": "H",
+              "select": [
+                [
+                  {
+                    "params": [
+                      "value"
+                    ],
+                    "type": "column"
+                  }
+                ]
+              ],
+              "timeColumn": "time",
+              "where": [
+                {
+                  "name": "$__timeFilter",
+                  "params": [],
+                  "type": "macro"
+                }
+              ]
+            },
+            {
+              "format": "time_series",
+              "group": [],
+              "metricColumn": "none",
+              "rawQuery": true,
+              "rawSql": "SELECT\n  $__timeGroupAlias(date,$__interval),\n  count(event_id) as \"Station A2\"\nFROM event\nWHERE\n  $__timeFilter(date) AND stationa2 = 'true'\nGROUP BY 1\n",
+              "refId": "I",
+              "select": [
+                [
+                  {
+                    "params": [
+                      "value"
+                    ],
+                    "type": "column"
+                  }
+                ]
+              ],
+              "timeColumn": "time",
+              "where": [
+                {
+                  "name": "$__timeFilter",
+                  "params": [],
+                  "type": "macro"
+                }
+              ]
+            }
+          ],
           "timeFrom": null,
           "timeShift": null,
           "title": "Hourly ingress by station",
@@ -912,7 +1106,7 @@ spec:
             "minWidth": -1,
             "show": true
           },
-          "yAxisSort": "metrics",
+          "yAxisSort": "a → z",
           "yLabel": {
             "delimiter": "",
             "labelTemplate": "",
@@ -921,6 +1115,7 @@ spec:
         },
         {
           "datasource": null,
+          "description": "",
           "fieldConfig": {
             "defaults": {
               "custom": {}
@@ -931,21 +1126,63 @@ spec:
             "h": 9,
             "w": 5,
             "x": 14,
-            "y": 21
+            "y": 16
           },
+          "header_js": "{}",
           "id": 14,
-          "options": {
-            "content": "# Title\n\nFor markdown syntax help: [commonmark.org/help](https://commonmark.org/help/)\n         ",
-            "mode": "markdown"
-          },
+          "method": "GET",
+          "mode": "html",
+          "params_js": "{\n from:ctrl.range.from.format('x'),  // x is unix ms timestamp\n to:ctrl.range.to.format('x'), \n height:ctrl.height,\n now:Date.now(),\n interval: ctrl.template('$__interval'),\n sample: 'Not escaped: $__interval',\n since:ctrl.lastRequestTime\n}",
           "pluginVersion": "7.3.10",
+          "request": "http",
+          "responseType": "json",
+          "showTime": false,
+          "showTimeFormat": "LTS",
+          "showTimePrefix": null,
+          "showTimeValue": "request",
+          "skipSameURL": false,
+          "targets": [
+            {
+              "format": "time_series",
+              "group": [],
+              "metricColumn": "none",
+              "rawQuery": false,
+              "rawSql": "SELECT\n  date AS \"time\",\n  value\nFROM event\nWHERE\n  $__timeFilter(date)\nORDER BY 1",
+              "refId": "A",
+              "select": [
+                [
+                  {
+                    "params": [
+                      "value"
+                    ],
+                    "type": "column"
+                  }
+                ]
+              ],
+              "table": "event",
+              "timeColumn": "date",
+              "timeColumnType": "timestamptz",
+              "where": [
+                {
+                  "name": "$__timeFilter",
+                  "params": [],
+                  "type": "macro"
+                }
+              ]
+            }
+          ],
+          "templateResponse": true,
           "timeFrom": null,
           "timeShift": null,
-          "title": "Panel Title",
-          "type": "text"
+          "title": "",
+          "transparent": true,
+          "type": "ryantxu-ajax-panel",
+          "url": "https://gist.githubusercontent.com/mmgaggle/c6fffd57d26d3d9f22e91a5304e5528a/raw/e9cfd7b2695b78dc74060e9648e66518cbaf4c70/lpr",
+          "withCredentials": false
         },
         {
           "datasource": null,
+          "description": "",
           "fieldConfig": {
             "defaults": {
               "custom": {}
@@ -956,20 +1193,22 @@ spec:
             "h": 9,
             "w": 5,
             "x": 19,
-            "y": 21
+            "y": 16
           },
           "id": 16,
           "options": {
-            "content": "# Title\n\nFor markdown syntax help: [commonmark.org/help](https://commonmark.org/help/)\n         ",
-            "mode": "markdown"
+            "content": "\n<p><table>\n    <thead>\n        <tr>\n            <th colspan=\"2\">Toll Station</th>\n        </tr>\n    </thead>\n    <tbody>\n        <tr>\n            <td>Station A2</td>\n        </tr>\n    </tbody>\n</table></p>\n<p>\n<table>\n    <thead>\n        <tr>\n            <th colspan=\"2\">Vehicle Info</th>\n        </tr>\n    </thead>\n    <tbody>\n        <tr>\n            <td>Detected Plate</td>\n            <td>CZ20FSE</td>\n        </tr>\n                <tr>\n            <td>Type</td>\n            <td>Car</td>\n        </tr>\n                <tr>\n            <td>ULEV Exempt</td>\n            <td>No</td>\n        </tr>\n                <tr>\n            <td>PCN History</td>\n            <td>3</td>\n        </tr>\n    </tbody>\n</table>\n</p>",
+            "mode": "html"
           },
           "pluginVersion": "7.3.10",
           "timeFrom": null,
           "timeShift": null,
-          "title": "Panel Title",
+          "title": "",
+          "transparent": true,
           "type": "text"
         }
       ],
+      "refresh": "5s",
       "schemaVersion": 26,
       "style": "dark",
       "tags": [],
@@ -977,24 +1216,13 @@ spec:
         "list": []
       },
       "time": {
-        "from": "now-6h",
+        "from": "now-15m",
         "to": "now"
       },
       "timepicker": {},
       "timezone": "",
       "title": "LPR Demon - ULEV London",
       "uid": "HQZA6drGz",
-      "version": 4
+      "version": 7
     }
-  name: lpr-dashboard.json
-  plugins:
-  - name: pierosavi-imageit-panel
-    version: 1.0.2
-  - name: flant-statusmap-panel
-    version: 0.4.1
-  - name: grafana-clock-panel
-    version: 1.1.1
-  - name: ryantxu-ajax-panel
-    version: 0.0.6
-labels:
-grafana: dashboard
+

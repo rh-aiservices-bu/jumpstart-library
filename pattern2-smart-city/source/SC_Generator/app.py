@@ -13,7 +13,7 @@ import botocore
 from aiokafka import AIOKafkaProducer
 
 # Images on local S3
-service_point = os.environ['SERVICE_POINT']
+service_point = 'http://' + os.environ['SERVICE_POINT']
 aws_access_key_id = os.environ['AWS_ACCESS_KEY_ID']
 aws_secret_access_key = os.environ['AWS_SECRET_ACCESS_KEY']
 bucket_name = os.environ['BUCKET_NAME']
@@ -26,7 +26,7 @@ kafka_topic_name = os.getenv('KAFKA_TOPIC', 'lpr')
 seconds_wait = float(os.environ['SECONDS_WAIT'])
 
 # LPR Service URL
-lpr_service = os.environ['LPR_SERVICE_URL']
+lpr_service = 'http://' + os.environ['LPR_SERVICE_URL']
 
 # Initialize client
 s3client = boto3.client('s3', 'us-east-1', endpoint_url=service_point,

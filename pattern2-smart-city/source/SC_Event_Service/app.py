@@ -61,6 +61,8 @@ async def consume():
             print(payload)
             print("Message written to DB successfully")
             print("===============================================")
+    except Exception as e:
+        print(e.message)
     finally:
         await kafkaConsumer.stop()
 loop.run_until_complete(consume())
