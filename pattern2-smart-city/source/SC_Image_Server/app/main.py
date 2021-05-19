@@ -89,8 +89,7 @@ def get_last_image():
     return result
 
 # Response templates 
-LOCATION_TEMPLATE = Template("""
-    <img src="${service_point}/${bucket_name}/${image_name}" style="width:260px;"></img>""")
+LOCATION_TEMPLATE = Template("""<img src="${service_point}/${bucket_name}/${image_name}" style="width:300px;"></img>""")
 
 ## Application  
 
