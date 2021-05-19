@@ -17,7 +17,7 @@ db_user = os.environ['database-user']
 db_password = os.environ['database-password']
 db_host = os.environ['database-host']
 db_db = os.environ['database-db']
-service_point = service_point = os.environ['service_point']
+service_point = os.environ['service_point']
 
 # Bucket base name
 bucket_base_name = os.environ['bucket-base-name']
