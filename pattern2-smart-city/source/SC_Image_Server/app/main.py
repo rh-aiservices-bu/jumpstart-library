@@ -7,6 +7,7 @@ logging.basicConfig(stream=sys.stdout, level=logging.INFO)
 
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
+from fastapi.responses import HTMLResponse
 
 from sqlalchemy import create_engine, Column, Integer, String, Numeric, DateTime, func, Boolean
 from sqlalchemy.ext.declarative import declarative_base
@@ -115,7 +116,7 @@ async def last_image():
         html = '<h2 style="font-family: Roboto,Helvetica Neue,Arial,sans-serif;text-align: center; color: white;font-size: 15px;font-weight: 400;">No image to show</h2>'
     return html
 
-@app.get("/random_image")
+@app.get("/random_image", response_class=HTMLResponse)
 async def random_image():
     image_name = get_random_image()   
     if image_name != "":   
