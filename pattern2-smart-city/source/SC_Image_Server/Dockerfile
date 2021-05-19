@@ -1,5 +1,5 @@
 FROM tiangolo/uvicorn-gunicorn-fastapi:python3.8
-COPY ./requirement.txt requirement.txt
+COPY ./requirements.txt requirements.txt
 RUN apt-get update && apt-get install -y python3-opencv
 RUN pip install -r requirements.txt
 COPY ./app /app
