@@ -57,9 +57,10 @@ We will need two different Kafka instances. One will simulate the "Edges", the t
 This is the component that injects car images into the pipeline.
 
 * `base/is_python38-ubi8.yaml`: ImageStream for the ubi8 Python 3.8 image (base image for most container images)
-* `generator/is_sc_generator.yaml`: ImageStream for the load generator
-* `generator/bc_sc_generator.yaml`: BuildConfiguration to create the load generator image
-* `generator/dc_sc_generaror.yaml`: Deployment Configuration for the load generator
+* `generator/obc_dataset_generator.yaml`: Bucket to store the images dataset
+* `generator/is_generator.yaml`: ImageStream for the load generator
+* `generator/bc_generator.yaml`: BuildConfiguration to create the load generator image
+* `generator/dc_generator.yaml`: Deployment Configuration for the load generator
 
 === Events Service
 

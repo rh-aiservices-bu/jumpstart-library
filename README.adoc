@@ -29,4 +29,4 @@ In this pattern, we show how to implement this scenario:
 * A central database contains other information coming from licence registry system: car model, color,...
 * Data analysis leveraging Presto and Superset is done against stored data (database and object storage).
 
-link:pattern2-licence-plates/README.adoc[See this pattern]
+link:pattern2-smart-city/README.adoc[See this pattern]
