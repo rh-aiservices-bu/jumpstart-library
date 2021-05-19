@@ -6,6 +6,7 @@ import sys
 logging.basicConfig(stream=sys.stdout, level=logging.INFO)
 
 from fastapi import FastAPI
+from fastapi.middleware.cors import CORSMiddleware
 
 from sqlalchemy import create_engine, Column, Integer, String, Numeric, DateTime, func, Boolean
 from sqlalchemy.ext.declarative import declarative_base
@@ -94,6 +95,16 @@ LOCATION_TEMPLATE = Template("""<img src="${service_point}/${bucket_name}/${imag
 ## Application  
 
 app = FastAPI()
+
+origins = ["*"]
+
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=origins,
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
 
 @app.get("/last_image")
 async def last_image():
