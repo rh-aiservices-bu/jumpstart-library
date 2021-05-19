@@ -27,8 +27,6 @@ class Event(Base):
     event_id = Column(String, primary_key=True, index=True)
     event_timestamp = Column('date', DateTime(timezone=True), default=func.now())
     event_vehicle_detected_plate_number = Column(String, index=True)
-    #event_vehicle_detected_lat = Column(Numeric(precision=7, scale=5, decimal_return_scale=None, asdecimal=False))
-    #event_vehicle_detected_long = Column(Numeric(precision=7, scale=5, decimal_return_scale=None, asdecimal=False))
     event_vehicle_lpn_detection_status = Column(String)
     stationa1 = Column(Boolean, unique=False)
     stationa5201 = Column(Boolean, unique=False)
