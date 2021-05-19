@@ -62,6 +62,17 @@ This is the component that injects car images into the pipeline.
 * `generator/bc_generator.yaml`: BuildConfiguration to create the load generator image
 * `generator/dc_generator.yaml`: Deployment Configuration for the load generator
 
+=== Dataset
+
+Retrieve the information for the dataset bucket created previously and upload the images.
+
+[source,bash]
+----
+export AWS_ACCESS_KEY_ID=$(oc get secret/generator-dataset -o yaml | grep " AWS_ACCESS_KEY_ID" | awk '{ print $2 }' - | base64 -d)
+export AWS_SECRET_ACCESS_KEY=$(oc get secret/generator-dataset -o yaml | grep " AWS_SECRET_ACCESS_KEY" | awk '{ print $2 }' - | base64 -d)
+aws --endpoint-url YOUR_ROUTE_TO_S3 s3 cp --recursive ../source/dataset/images s3://$(oc get cm/generator-dataset -o yaml | grep " BUCKET_NAME:" | awk '{ print $2 }' -)/images
+----
+
 === Events Service
 
 This is the component that runs in the Core and listens to incoming Kafka events to write them into a PostgreSQL database so that they can be queried to create the dashboards.
