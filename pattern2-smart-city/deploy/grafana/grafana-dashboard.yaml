@@ -17,7 +17,7 @@ spec:
   - name: grafana-clock-panel
     version: 1.1.1
   - name: ryantxu-ajax-panel
-    version: 0.0.6
+    version: 0.0.7-dev
   json: |
     {
       "annotations": {
@@ -1115,7 +1115,6 @@ spec:
         },
         {
           "datasource": null,
-          "description": "",
           "fieldConfig": {
             "defaults": {
               "custom": {}
@@ -1123,19 +1122,20 @@ spec:
             "overrides": []
           },
           "gridPos": {
-            "h": 9,
+            "h": 8,
             "w": 5,
             "x": 14,
             "y": 16
           },
           "header_js": "{}",
           "id": 14,
-          "method": "GET",
-          "mode": "html",
+          "method": "iframe",
+          "mode": "json",
           "params_js": "{\n from:ctrl.range.from.format('x'),  // x is unix ms timestamp\n to:ctrl.range.to.format('x'), \n height:ctrl.height,\n now:Date.now(),\n interval: ctrl.template('$__interval'),\n sample: 'Not escaped: $__interval',\n since:ctrl.lastRequestTime\n}",
           "pluginVersion": "7.3.10",
           "request": "http",
           "responseType": "json",
+          "showErrors": true,
           "showTime": false,
           "showTimeFormat": "LTS",
           "showTimePrefix": null,
@@ -1147,7 +1147,7 @@ spec:
               "group": [],
               "metricColumn": "none",
               "rawQuery": false,
-              "rawSql": "SELECT\n  date AS \"time\",\n  value\nFROM event\nWHERE\n  $__timeFilter(date)\nORDER BY 1",
+              "rawSql": "SELECT\n  $__time(time_column),\n  value1\nFROM\n  metric_table\nWHERE\n  $__timeFilter(time_column)\n",
               "refId": "A",
               "select": [
                 [
@@ -1159,9 +1159,7 @@ spec:
                   }
                 ]
               ],
-              "table": "event",
-              "timeColumn": "date",
-              "timeColumnType": "timestamptz",
+              "timeColumn": "time",
               "where": [
                 {
                   "name": "$__timeFilter",
@@ -1174,10 +1172,9 @@ spec:
           "templateResponse": true,
           "timeFrom": null,
           "timeShift": null,
-          "title": "",
-          "transparent": true,
+          "title": "Last detected car",
           "type": "ryantxu-ajax-panel",
-          "url": "https://gist.githubusercontent.com/mmgaggle/c6fffd57d26d3d9f22e91a5304e5528a/raw/e9cfd7b2695b78dc74060e9648e66518cbaf4c70/lpr",
+          "url": "https://image-server-license-plate-recognition.apps.perf3.chris.ocs.ninja/random_image",
           "withCredentials": false
         },
         {
@@ -1221,8 +1218,7 @@ spec:
       },
       "timepicker": {},
       "timezone": "",
-      "title": "LPR Demon - ULEV London",
+      "title": "Smart City - ULEV London",
       "uid": "HQZA6drGz",
-      "version": 7
+      "version": 2
     }
-

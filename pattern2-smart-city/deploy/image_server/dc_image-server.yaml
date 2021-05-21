@@ -24,38 +24,42 @@ spec:
         - name: image-server
           image: image-server:latest
           env:
-            - name: database-user
+            - name: DB_USER
               valueFrom:
                 secretKeyRef:
-                  name: db-secret
+                  name: postgresql
                   key:  database-user
-            - name: database-password
+            - name: DB_PASSWORD
               valueFrom:
                 secretKeyRef:
-                  name: db-secret
+                  name: postgresql
                   key:  database-password
-            - name: database-host
+            - name: DB_HOST
+              value: postgresql
+            - name: DB_NAME
               valueFrom:
                 secretKeyRef:
-                  name: db-secret
-                  key:  database-host
-            - name: database-db
+                  name: postgresql
+                  key:  database-name
+            - name: SERVICE_POINT
+              value: "https://rgw-openshift-storage.apps.perf3.chris.ocs.ninja/"
+            - name: BUCKET_NAME
+              valueFrom:
+                configMapKeyRef:
+                  name: lpr-dataset
+                  key: BUCKET_NAME
+            - name: AWS_ACCESS_KEY_ID
               valueFrom:
                 secretKeyRef:
-                  name: db-secret
-                  key:  database-db
-            - name: service_point
+                  name: lpr-dataset
+                  key:  AWS_ACCESS_KEY_ID
+            - name: AWS_SECRET_ACCESS_KEY
               valueFrom:
-                configMapKeyRef:
-                  name: service-point
-                  key: url-external
-            - name: bucket-base-name
-              valueFrom:
-                configMapKeyRef:
-                  name: buckets-config
-                  key: bucket-base-name
+                secretKeyRef:
+                  name: lpr-dataset
+                  key:  AWS_SECRET_ACCESS_KEY
           ports:
-            - containerPort: 5000
+            - containerPort: 8080
           resources:
             limits:
                 cpu: '2'
@@ -78,7 +82,7 @@ spec:
   ports:
     - protocol: TCP
       port: 80
-      targetPort: 5000
+      targetPort: 8080
   selector:
     name: image-server
 ---
@@ -92,7 +96,7 @@ spec:
     name: image-server
     weight: 100
   port:
-    targetPort: 5000
+    targetPort: 80
   tls:
     termination: edge
   wildcardPolicy: None
