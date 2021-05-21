@@ -6,6 +6,8 @@ import sys
 logging.basicConfig(stream=sys.stdout, level=logging.INFO)
 
 from fastapi import FastAPI
+from fastapi.middleware.cors import CORSMiddleware
+from fastapi.responses import HTMLResponse
 
 from sqlalchemy import create_engine, Column, Integer, String, Numeric, DateTime, func, Boolean
 from sqlalchemy.ext.declarative import declarative_base
@@ -89,12 +91,13 @@ def get_last_image():
     return result
 
 # Response templates 
-LOCATION_TEMPLATE = Template("""
-    <img src="${service_point}/${bucket_name}/${image_name}" style="width:260px;"></img>""")
+LOCATION_TEMPLATE = Template("""<img src="${service_point}/${bucket_name}/${image_name}" style="width:300px;"></img>""")
 
 ## Application  
 
 app = FastAPI()
+
+
 
 @app.get("/last_image")
 async def last_image():
@@ -105,7 +108,7 @@ async def last_image():
         html = '<h2 style="font-family: Roboto,Helvetica Neue,Arial,sans-serif;text-align: center; color: white;font-size: 15px;font-weight: 400;">No image to show</h2>'
     return html
 
-@app.get("/random_image")
+@app.get("/random_image", response_class=HTMLResponse)
 async def random_image():
     image_name = get_random_image()   
     if image_name != "":   
@@ -113,3 +116,11 @@ async def random_image():
     else:
         html = '<h2 style="font-family: Roboto,Helvetica Neue,Arial,sans-serif;text-align: center; color: white;font-size: 15px;font-weight: 400;">No image to show</h2>'
     return html
+
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=["*"], # Allows all origins
+    allow_credentials=True,
+    allow_methods=["*"], # Allows all methods
+    allow_headers=["*"], # Allows all headers
+    )

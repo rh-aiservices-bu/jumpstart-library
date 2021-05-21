@@ -1,1 +1,5 @@
 sqlalchemy
+boto3==1.17.*
+requests==2.25.*
+nest_asyncio
+psycopg2
