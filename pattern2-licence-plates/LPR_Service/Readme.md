@@ -29,6 +29,9 @@ bin/kafka-console-consumer.sh --bootstrap-server pattern-2-kafka-kafka-bootstrap
 
 bin/kafka-console-consumer.sh --bootstrap-server kafka-core-site-kafka-bootstrap:9092 --topic lpr
 
+```
+{"event_timestamp": "2021-05-21T20:44:09.028536", "event_id": "296cf40701914bbb9a37f87db84afb9c", "event_vehicle_detected_plate_number": "BPT00O1", "event_vehicle_detected_lat": "51.58893", "event_vehicle_detected_long": "-0.20724", "event_vehicle_lpn_detection_status": "Successful", "stationa1": "true", "stationa5201": "false", "stationa13": "false", "stationa2": "false", "stationa23": "false", "stationb313": "false", "stationa4202": "false", "stationa41": "false", "stationb504": "false"}
+```
 
 ```
 
@@ -157,8 +160,7 @@ s3cmd --access_key=7NS6UR50MP07EH5PQZ51 --secret_key=I0v9WC0XchfxHx3tPwj0a8JiMk2
 
 s3cmd --access_key=7NS6UR50MP07EH5PQZ51 --secret_key=I0v9WC0XchfxHx3tPwj0a8JiMk2zUoq99LZHMj7M --no-ssl  --host=s3.data.local --host-bucket="s3.data.local/%(bucket)" ls s3://secor-bucket-9af181ee-216d-483e-8fb1-cdecc2015b63
 
-s3cmd --access_key=7NS6UR50MP07EH5PQZ51 --secret_key=I0v9WC0XchfxHx3tPwj0a8JiMk2zUoq99LZHMj7M --no-ssl  --host=s3.data.local --host-bucket="s3.data.local/%(bucket)
-" ls s3://secor-bucket-9af181ee-216d-483e-8fb1-cdecc2015b63/raw_logs/lpr/offset=0/
+s3cmd --access_key=7NS6UR50MP07EH5PQZ51 --secret_key=I0v9WC0XchfxHx3tPwj0a8JiMk2zUoq99LZHMj7M --no-ssl  --host=s3.data.local --host-bucket="s3.data.local/%(bucket)" ls s3://secor-bucket-9af181ee-216d-483e-8fb1-cdecc2015b63/raw_logs/lpr/offset=0/
 
 s3cmd --access_key=7NS6UR50MP07EH5PQZ51 --secret_key=I0v9WC0XchfxHx3tPwj0a8JiMk2zUoq99LZHMj7M --no-ssl  --host=s3.data.local --host-bucket="s3.data.local/%(bucket)
 " ls s3://secor-bucket-9af181ee-216d-483e-8fb1-cdecc2015b63/raw_logs/lpr/offset=0/1_0_00000000000000440962
@@ -200,6 +202,7 @@ ERROR: [Errno 13] Permission denied: '/data/trino/var'
 oc port-forward svc/my-trino 8080:8080
 visit http://127.0.0.1:8080
 
+./trino --server localhost:8080 --catalog hive --schema default
 
 ALTER USER postgres WITH PASSWORD 'postgres';
 

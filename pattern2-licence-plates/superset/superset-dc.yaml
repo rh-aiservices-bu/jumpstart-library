@@ -1,0 +1,49 @@
+apiVersion: apps.openshift.io/v1
+kind: DeploymentConfig
+metadata:
+  labels:
+    app: superset
+    component.opendatahub.io/name: superset
+    opendatahub.io/component: "true"
+  name: superset
+  namespace: odh
+spec:
+  replicas: 1
+  selector:
+    deploymentconfig: superset
+  template:
+    metadata:
+      labels:
+        app: superset
+        deploymentconfig: superset
+    spec:
+      containers:
+      - envFrom:
+        - configMapRef:
+            name: superset
+        - secretRef:
+            name: superset-secret
+        image: quay.io/internaldatahub/superset:1.1.0
+        imagePullPolicy: Always
+        name: superset
+        ports:
+        - containerPort: 8088
+          protocol: TCP
+        volumeMounts:
+        - mountPath: /var/lib/superset
+          name: superset-data
+        - mountPath: /etc/superset
+          name: superset-config
+      volumes:
+      - name: superset-data
+        persistentVolumeClaim:
+          claimName: superset-data
+      - configMap:
+          defaultMode: 420
+          items:
+          - key: superset_config.py
+            path: superset_config.py
+          name: superset
+        name: superset-config
+  triggers:
+  - type: ConfigChange

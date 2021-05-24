@@ -49,11 +49,11 @@ catalogs:
     hive.s3.sse.enabled=false
     hive.s3.aws-access-key="7NS6UR50MP07EH5PQZ51"
     hive.s3.aws-secret-key="I0v9WC0XchfxHx3tPwj0a8JiMk2zUoq99LZHMj7M"
-  postgresql-internal: |
-    connector.name=postgresql
-    connection-url=jdbc:postgresql://postgresql:5432/hive
-    connection-user=hive
-    connection-password=HivePass1234
+  # postgresql-internal: |
+  #   connector.name=postgresql
+  #   connection-url=jdbc:postgresql://postgresql:5432/hive
+  #   connection-user=hive
+  #   connection-password=HivePass1234
   postgresql-lpr: |
     connector.name=postgresql
     connection-url=jdbc:postgresql://postgresql.license-plate-recognition.svc.cluster.local:5432/pgdb
