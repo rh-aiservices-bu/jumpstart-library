@@ -353,7 +353,6 @@ ORDER by CD_ID, INTEGER_IDX;
 
 ### Trying with AWS S3
 
-s3cmd --access_key=AKIA5ERYHIFHMHUU2IHF --secret_key=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 ls
 
 CREATE SCHEMA "aws-s3".tpch_tiny WITH (location = 's3a://tiny-presto/');
 
