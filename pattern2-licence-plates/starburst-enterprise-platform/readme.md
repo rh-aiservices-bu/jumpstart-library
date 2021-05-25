@@ -13,13 +13,21 @@ helm search repo
 
 oc create secret generic mylicense --from-file=starburstdata.license
 
+## If using existing PGDB for HMS >> Create PGSQL DB and Users
+oc projct <namespace_running_pgsql_pod>
+oc rsh <pgsql_pod>
+create database hive;
+create user hive with encrypted password 'hive';
+grant all privileges on database hive to hive;
+ALTER DATABASE hive OWNER TO hive;
+
 helm upgrade sep-hive starburstdata/starburst-hive \
   --install \
   --version 356.0.0 \
   --values ./hms-config.yaml
 
 # Only required for internal postgresql db
-oc create -f postgresql_service.yaml
+oc create -f postgresql_service_only_for_internal_PGDB.yaml
 
 helm upgrade sep-cluster starburstdata/starburst-enterprise \
   --install \
@@ -27,8 +35,8 @@ helm upgrade sep-cluster starburstdata/starburst-enterprise \
   --values ./sep-config.yaml
 
 oc expose svc/coordinator
-
 oc port-forward svc/coordinator 8080:8080
+
 ```
 - visit http://127.0.0.1:8080
 
@@ -167,7 +175,7 @@ CREATE EXTERNAL TABLE s3_events(date timestamp, event_id string, event_vehicle_d
 
 
 
-CREATE SCHEMA s3.hive WITH (location = 's3://secor-bucket-9af181ee-216d-483e-8fb1-cdecc2015b63/');
+CREATE SCHEMA hive.secor WITH (location = 's3://secor-bucket-9af181ee-216d-483e-8fb1-cdecc2015b63/raw_logs/');
 
 ```
 trino:default> CREATE SCHEMA s3.hive WITH (location = 's3://secor-bucket-9af181ee-216d-483e-8fb1-cdecc2015b63/')
@@ -189,7 +197,7 @@ Splits: 19 total, 19 done (100.00%)
 trino:default>
 ```
 
-CREATE TABLE IF NOT EXISTS s3.hive.event(date timestamp, event_id varchar, event_vehicle_detected_plate_number varchar, event_vehicle_detected_lat varchar, event_vehicle_detected_long varchar, event_vehicle_lpn_detection_status varchar, stationa1 boolean, stationa5201 boolean, stationa13 boolean, stationa2 boolean, stationa23 boolean, stationb313 boolean, stationa4202 boolean, stationa41 boolean, stationb504 boolean) with ( external_location = 's3://secor-bucket-9af181ee-216d-483e-8fb1-cdecc2015b63/raw_logs/lpr/', format = 'SEQUENCEFILE' );
+CREATE TABLE IF NOT EXISTS hive.secor.event(date timestamp, event_id varchar, event_vehicle_detected_plate_number varchar, event_vehicle_detected_lat varchar, event_vehicle_detected_long varchar, event_vehicle_lpn_detection_status varchar, stationa1 boolean, stationa5201 boolean, stationa13 boolean, stationa2 boolean, stationa23 boolean, stationb313 boolean, stationa4202 boolean, stationa41 boolean, stationb504 boolean) with ( external_location = 's3://secor-bucket-9af181ee-216d-483e-8fb1-cdecc2015b63/raw_logs/lpr/', format = 'SEQUENCEFILE' );
 
 ```
 trino:default> CREATE TABLE IF NOT EXISTS s3.hive.event(date timestamp, event_id varchar, event_vehicle_detected_plate_number varchar, event_vehicle_detected_lat varchar, event_vehicle_detected_long varchar, event_vehicle_lpn_detection_status varchar, stationa1 boolean, stationa5201 boolean, stationa13 boolean, stationa2 boolean, stationa23 boolean, stationb313 boolean, stationa4202 boolean, stationa41 boolean, stationb504 boolean) with ( external_location = 's3://secor-bucket-9af181ee-216d-483e-8fb1-cdecc2015b63/raw_logs/lpr/', format = 'SEQUENCEFILE' );
@@ -249,3 +257,129 @@ Query 20210522_192124_00013_r9ie5 failed: null (Service: Amazon S3; Status Code:
 
 trino:public>
 ```
+https://pastebin.com/raw/tJ8tnrhE
+
+##  Test using TPCDS
+
+oc get ob obc-license-plate-recognition-secor-bucket -n license-plate-recognition -o yaml | grep -i cephUser:
+
+oc rsh rook-toolbox
+radosgw-admin user modify --uid=ceph-user-DH6eHw6z --max-buckets=100
+
+
+s3cmd --access_key=7NS6UR50MP07EH5PQZ51 --secret_key=I0v9WC0XchfxHx3tPwj0a8JiMk2zUoq99LZHMj7M --no-ssl  --host=s3.data.local --host-bucket="s3.data.local/%(bucket)" mb s3://tiny
+
+s3cmd --access_key=7NS6UR50MP07EH5PQZ51 --secret_key=I0v9WC0XchfxHx3tPwj0a8JiMk2zUoq99LZHMj7M --no-ssl  --host=s3.data.local --host-bucket="s3.data.local/%(bucket)" ls  s3://tiny
+
+CREATE SCHEMA odf.tpch_tiny WITH (location = 's3a://tiny-presto/');
+
+CREATE SCHEMA hive.tpch_tiny WITH (location = 's3://tiny/');
+
+-  Move the customer data from the tiny generated tpch data into MinIO uing a CTAS query. Run the following query and if you like, watch it running on the Trino UI:
+
+CREATE TABLE hive.tpch_tiny.customer  WITH (format = 'ORC', external_location = 's3://tiny/customer') AS SELECT * FROM tpch.tiny.customer;
+
+CREATE TABLE "aws-s3".tpch_tiny.customer  WITH (format = 'ORC', external_location = 's3://tiny-presto/customer') AS SELECT * FROM tpch.tiny.customer;
+
+
+
+CREATE TABLE odf.tpch_tiny.ted (comments VARCHAR) WITH (format='CSV', external_location='s3://tiny/ted');
+
+
+TBLPROPERTIES ("transactional"="false")
+
+SELECT * FROM s3.tiny.customer LIMIT 50;
+
+In order for Trino to know where to locate this file, it uses the Hive metastore to manage and store this information or metadata in a relational database that the metastore points to, in this case our pgsql instance. 
+
+SELECT DB_ID, DB_LOCATION_URI, NAME, OWNER_NAME, OWNER_TYPE, CTLG_NAME FROM metastore_db.DBS;
+
+SELECT 
+ t.TBL_ID, 
+ t.DB_ID, 
+ t.OWNER, 
+ t.TBL_NAME, 
+ t.TBL_TYPE,
+ t.SD_ID
+FROM metastore_db.TBLS t 
+ JOIN metastore_db.DBS d 
+  ON t.DB_ID= d.DB_ID 
+WHERE d.NAME = 'tiny';
+- You may notice the location for the table seems to be missing but that information is actually on another table. The next query will show this location. Take note of the SD_ID before running the next query.
+
+SELECT 
+ s.SD_ID,
+ s.INPUT_FORMAT,
+ s.LOCATION,
+ s.SERDE_ID 
+FROM metastore_db.TBLS t 
+ JOIN metastore_db.DBS d
+  ON t.DB_ID = d.DB_ID
+ JOIN metastore_db.SDS s 
+  ON t.SD_ID = s.SD_ID
+WHERE t.TBL_NAME = 'customer'
+ AND d.NAME='tiny';
+
+- To find out the serializer used, run the following query:
+
+SELECT 
+ sd.SERDE_ID,
+ sd.NAME,
+ sd.SLIB
+FROM metastore_db.TBLS t 
+ JOIN metastore_db.DBS d
+  ON t.DB_ID = d.DB_ID
+ JOIN metastore_db.SDS s 
+  ON t.SD_ID = s.SD_ID
+ JOIN metastore_db.SERDES sd 
+  ON s.SERDE_ID = sd.SERDE_ID
+WHERE t.TBL_NAME = 'customer'
+ AND d.NAME='tiny';
+
+- Our last metadata query is looking at the columns on the table.
+
+SELECT c.* 
+FROM metastore_db.TBLS t
+ JOIN metastore_db.DBS d
+  ON t.DB_ID = d.DB_ID
+ JOIN metastore_db.SDS s
+  ON t.SD_ID = s.SD_ID
+ JOIN metastore_db.COLUMNS_V2 c
+  ON s.CD_ID = c.CD_ID
+WHERE t.TBL_NAME = 'customer'
+ AND d.NAME='tiny'
+ORDER by CD_ID, INTEGER_IDX;
+
+
+### Trying with AWS S3
+
+s3cmd --access_key=AKIA5ERYHIFHMHUU2IHF --secret_key=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 ls
+
+CREATE SCHEMA "aws-s3".tpch_tiny WITH (location = 's3a://tiny-presto/');
+
+CREATE TABLE "aws-s3".tpch_tiny.customer  WITH (format = 'ORC', external_location = 's3://tiny-presto/customer') AS SELECT * FROM tpch.tiny.customer;
+
+https://pastebin.com/raw/YzaRPeve
+
+
+CREATE TABLE odf.tpch_tiny.customer ( custkey BIGINT, name VARCHAR, address VARCHAR ) WITH (
+   format='CSV', # <-- or parquet
+external_location='s3://<bucket-name>/hive/customer')
+
+
+hive.create-empty-bucket-files=true
+
+
+SET SESSION hive.create-empty-bucket-files=true;
+
+CREATE SCHEMA hive.web WITH (location = 's3://tiny/');
+
+CREATE TABLE odf.web.page_views ( view_time timestamp, user_id bigint, page_url varchar, ds date, country varchar) WITH (
+  format = 'ORC',
+  partitioned_by = ARRAY['ds', 'country'],
+  bucketed_by = ARRAY['user_id'],
+  bucket_count = 50
+);
+
+
+

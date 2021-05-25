@@ -5,3 +5,4 @@ pattern2-license-plates/dataset/images-with-error/*
 pattern2-licence-plates/LPR_Service/__pycache__
 pattern2-licence-plates/LPR_Service/app/test.ipynb
 pattern2-licence-plates/starburst-enterprise-platform/starburstdata.license
+jumpstart-library/pattern2-licence-plates/starburst-enterprise-platform/aws-s3/
