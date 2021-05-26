@@ -76,14 +76,6 @@ export BUCKET=$(oc get cm/generator-dataset -o yaml | grep " BUCKET_NAME:" | awk
 aws --endpoint-url $RGW_ROUTE s3 cp --recursive ../source/dataset/images s3://$BUCKET/images
 ----
 
-=== Events Service
-
-This is the component that runs in the Core and listens to incoming Kafka events to write them into a PostgreSQL database so that they can be queried to create the dashboards.
-
-* `events_service/is_events_service.yaml`: ImageStream for the event service
-* `events_service/bc_events_service.yaml`: BuildConfiguration for the event service
-* `events_service/dc_events_service.yaml`: Deployment Configuration for the event service
-
 === LPR Service
 
 This component presents an API that you can query with an image and returns the infered licence plate number.
@@ -93,4 +85,11 @@ This component presents an API that you can query with an image and returns the 
 * `lpr_service/dc_lpr_service.yaml`: Deployment Configuration for the LPR service
 
 
+=== Events Service
+
+This is the component that runs in the Core and listens to incoming Kafka events to write them into a PostgreSQL database so that they can be queried to create the dashboards.
+
+* `events_service/is_events_service.yaml`: ImageStream for the event service
+* `events_service/bc_events_service.yaml`: BuildConfiguration for the event service
+* `events_service/dc_events_service.yaml`: Deployment Configuration for the event service
 
