@@ -72,21 +72,25 @@ async def send_image(image_key):
     ## The data in license_plate_string data is dumped on Kafka, another microservice consumes this data and store that to PGSQL Database
     await kafkaproducer.send_and_wait(kafka_topic_name, json.dumps(result).encode('utf-8'))
 
+async def main():
+    await kafkaproducer.start()
+
+    # Main loop
+    while seconds_wait != 0: #This allows the container to keep running but not send any image if parameter is set to 0
+        #logging.info("copy image")
+        rand_type = random.randint(1,10)
+        if rand_type <= 8: # 80% of time, choose randomly
+            image_key = car_images[random.randint(0,len(car_images)-1)]
+        else: # 20% of time, choose between the first 5 images
+            image_key = car_images[random.randint(0,4)]
+        send_image(image_key)
+        sleep(seconds_wait)
+
 ## kafka producer initialization
 loop = asyncio.get_event_loop()
 kafkaproducer = AIOKafkaProducer(loop=loop, bootstrap_servers=kafka_endpoint)
-kafkaproducer.start()
 
-# Main loop
-while seconds_wait != 0: #This allows the container to keep running but not send any image if parameter is set to 0
-    #logging.info("copy image")
-    rand_type = random.randint(1,10)
-    if rand_type <= 8: # 80% of time, choose randomly
-        image_key = car_images[random.randint(0,len(car_images)-1)]
-    else: # 20% of time, choose between the first 5 images
-        image_key = car_images[random.randint(0,4)]
-    send_image(image_key)
-    sleep(seconds_wait)
+asyncio.run(main())
 
 # Dirty hack to keep container running even when no images are to be copied
 os.system("tail -f /dev/null")
