@@ -15,4 +15,4 @@ link:doc/full-description.adoc[Full scenario description and architecture]
 
 == Deployment
 
-All the instructions to deploy the environment and the scenario can be found link:deploy/deploy.adoc[here]
+All the instructions to deploy the environment and the scenario can be found link:deploy/README.adoc[here]
