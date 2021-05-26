@@ -11,7 +11,7 @@ In this pattern, we show how to implement this scenario:
 * A central database contains other information coming from licence registry system: car model, color,...
 * Data analysis leveraging Presto and Superset is done against stored data.
 
-link:doc/full-desciption.adoc[Full scenario description and architecture]
+link:doc/full-description.adoc[Full scenario description and architecture]
 
 == Deployment
 
