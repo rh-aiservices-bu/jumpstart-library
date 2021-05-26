@@ -68,27 +68,28 @@ async def send_image(image_key):
             "license_plate_number_detection_status": "Failed",
             "reason": "Not able to read license plate, the input image could be blur or complex for inferencing"
         }
-
-    ## The data in license_plate_string data is dumped on Kafka, another microservice consumes this data and store that to PGSQL Database
-    await kafkaproducer.send_and_wait(kafka_topic_name, json.dumps(result).encode('utf-8'))
+    
+    return result
 
 async def main():
+    ## kafka producer initialization
+    loop = asyncio.get_event_loop()
+    kafkaproducer = AIOKafkaProducer(loop=loop, bootstrap_servers=kafka_endpoint)
     await kafkaproducer.start()
 
     # Main loop
     while seconds_wait != 0: #This allows the container to keep running but not send any image if parameter is set to 0
-        #logging.info("copy image")
-        rand_type = random.randint(1,10)
+        rand_type = random.randint(1,10) # Random cheater...
         if rand_type <= 8: # 80% of time, choose randomly
             image_key = car_images[random.randint(0,len(car_images)-1)]
-        else: # 20% of time, choose between the first 5 images
+        else: # 20% of time, choose between the first 5 images only
             image_key = car_images[random.randint(0,4)]
-        send_image(image_key)
-        sleep(seconds_wait)
+        result = send_image(image_key) # Get generated licence plate info
 
-## kafka producer initialization
-loop = asyncio.get_event_loop()
-kafkaproducer = AIOKafkaProducer(loop=loop, bootstrap_servers=kafka_endpoint)
+        ## Send the data to Kafka
+        await kafkaproducer.send_and_wait(kafka_topic_name, json.dumps(result).encode('utf-8'))
+        
+        sleep(seconds_wait)
 
 asyncio.run(main())
 
