@@ -42,7 +42,6 @@ We will need a few base elements or helpers to start with. You can edit the Secr
 
 * base/secret_postgresql.yaml : Secrets to deploy the PostgreSQL database
 * base/dc_postgresql.yaml: Deployment of the PostgreSQL helper database
-* base/is_python38-ubi8.yaml : ImageStream pointing to the base Python image used to build other containers
 
 === Kafka
 
@@ -63,18 +62,6 @@ This is the component that injects car images into the pipeline.
 * `generator/bc_generator.yaml`: BuildConfiguration to create the load generator image
 * `generator/dc_generator.yaml`: Deployment Configuration for the load generator
 
-=== Dataset
-
-Retrieve the information for the dataset bucket created previously and upload the images.
-
-[source,bash]
-----
-export AWS_ACCESS_KEY_ID=$(oc get secret/generator-dataset -o yaml | grep " AWS_ACCESS_KEY_ID" | awk '{ print $2 }' - | base64 -d)
-export AWS_SECRET_ACCESS_KEY=$(oc get secret/generator-dataset -o yaml | grep " AWS_SECRET_ACCESS_KEY" | awk '{ print $2 }' - | base64 -d)
-export RGW_ROUTE=https://$(oc get routes -n openshift-storage | grep rgw | awk '{ print $2 }')
-export BUCKET=$(oc get cm/generator-dataset -o yaml | grep " BUCKET_NAME:" | awk '{ print $2 }' -)
-aws --endpoint-url $RGW_ROUTE s3 cp --recursive ../source/dataset/images s3://$BUCKET/images
-----
 
 === LPR Service
 
@@ -92,4 +79,18 @@ This is the component that runs in the Core and listens to incoming Kafka events
 * `events_service/is_events_service.yaml`: ImageStream for the event service
 * `events_service/bc_events_service.yaml`: BuildConfiguration for the event service
 * `events_service/dc_events_service.yaml`: Deployment Configuration for the event service
+
+=== Dataset
+
+Retrieve the information for the dataset bucket created previously and upload the images.
+
+[source,bash]
+----
+export AWS_ACCESS_KEY_ID=$(oc get secret/generator-dataset -o yaml | grep " AWS_ACCESS_KEY_ID" | awk '{ print $2 }' - | base64 -d)
+export AWS_SECRET_ACCESS_KEY=$(oc get secret/generator-dataset -o yaml | grep " AWS_SECRET_ACCESS_KEY" | awk '{ print $2 }' - | base64 -d)
+export RGW_ROUTE=https://$(oc get routes -n openshift-storage | grep rgw | awk '{ print $2 }')
+export BUCKET=$(oc get cm/generator-dataset -o yaml | grep " BUCKET_NAME:" | awk '{ print $2 }' -)
+aws --endpoint-url $RGW_ROUTE s3 cp --recursive ../source/dataset/images s3://$BUCKET/images
+----
+
 
