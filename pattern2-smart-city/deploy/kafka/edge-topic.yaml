@@ -1,7 +1,7 @@
 apiVersion: kafka.strimzi.io/v1beta2
 kind: KafkaTopic
 metadata:
-  name: lpr
+  name: lpr-edge
   labels:
     strimzi.io/cluster: edge-kafka
 spec:

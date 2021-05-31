@@ -1,0 +1,11 @@
+opencv-python-headless==4.5.*
+keras==2.4.*
+tensorflow==2.4.1
+numpy==1.19.2
+scikit-image==0.18.1
+scikit-learn==0.24.1
+h5py==2.10.0
+uvicorn[standard]==0.13.*
+gunicorn==20.1.*
+fastapi==0.65.*
+python-multipart==0.0.5

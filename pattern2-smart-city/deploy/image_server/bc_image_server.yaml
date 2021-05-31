@@ -17,8 +17,8 @@ spec:
     type: Source
     sourceStrategy:
       from:
-        kind: ImageStreamTag
-        name: 'python-38:latest'
+        kind: DockerImage
+        name: 'registry.access.redhat.com/ubi8/python-38:latest'
   postCommit: {}
   source:
     type: Git

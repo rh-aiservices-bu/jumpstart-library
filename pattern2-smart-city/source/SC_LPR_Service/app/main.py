@@ -33,7 +33,6 @@ def load_model(path):
             model_json = json_file.read()
         model = model_from_json(model_json, custom_objects={})
         model.load_weights('%s.h5' % path)
-        print("Model Loaded successfully...")
         return model
     except Exception as e:
         print(e)
@@ -136,11 +135,12 @@ app = FastAPI()
 ## Model for LP detection
 wpod_net_path = "models/wpod-net.json"
 wpod_net = load_model(wpod_net_path)
+print("[INFO] LP Model loaded successfully...")
 
 ## Model for character recoginition
 character_net_path = 'models/character_recoginition/MobileNets_character_recognition.json'
 character_model = load_model(character_net_path)
-print("[INFO] Model loaded successfully...")
+print("[INFO] CR Model loaded successfully...")
 
 # Load the character classes
 labels = LabelEncoder()

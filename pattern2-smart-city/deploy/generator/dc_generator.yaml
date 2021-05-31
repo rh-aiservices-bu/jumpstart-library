@@ -65,6 +65,10 @@ spec:
                 secretKeyRef:
                   name: generator-dataset
                   key: AWS_SECRET_ACCESS_KEY
+            - name: KAFKA_ENDPOINT
+              value: edge-kafka-kafka-bootstrap:9092
+            - name: KAFKA_TOPIC
+              value: lpr
             - name: SECONDS_WAIT
               value: '1'
             - name: LPR_SERVICE_URL
