@@ -40,7 +40,7 @@ for image in s3client.list_objects(Bucket=bucket_name,Prefix='images/')['Content
     car_images.append(image['Key'])
 
 # Send an image to LPR Service
-async def send_image(image_key):
+def send_image(image_key):
     url = lpr_service + '/DetectPlate'
     image_object = s3client.get_object(Bucket=bucket_name,Key=image_key)
     files = {'image': BytesIO(image_object['Body'].read())}
@@ -69,7 +69,7 @@ async def send_image(image_key):
             "reason": "Not able to read license plate, the input image could be blur or complex for inferencing"
         }
     
-    return result
+    return json.dumps(result)
 
 async def main():
     ## kafka producer initialization
@@ -87,7 +87,7 @@ async def main():
         result = send_image(image_key) # Get generated licence plate info
 
         ## Send the data to Kafka
-        await kafkaproducer.send_and_wait(kafka_topic_name, json.dumps(result).encode('utf-8'))
+        await kafkaproducer.send_and_wait(kafka_topic_name, result.encode('utf-8'))
         
         sleep(seconds_wait)
 
