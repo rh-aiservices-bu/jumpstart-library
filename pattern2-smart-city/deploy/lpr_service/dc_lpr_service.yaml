@@ -20,12 +20,12 @@ spec:
       imageChangeParams:
         automatic: true
         containerNames:
-          - lpr_service
+          - lpr-service
         from:
           kind: ImageStreamTag
-          name: 'lpr_service:latest'
+          name: 'lpr-service:latest'
     - type: ConfigChange
-  replicas: 0
+  replicas: 1
   revisionHistoryLimit: 5
   test: false
   selector:
@@ -41,6 +41,9 @@ spec:
       containers:
         - name: lpr-service
           image: lpr-service:latest
+          env:
+            - name: MAX_WORKERS
+              value: "2"
           ports:
             - containerPort: 8080
               protocol: TCP

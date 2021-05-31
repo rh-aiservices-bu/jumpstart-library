@@ -1,0 +1,13 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: lpr-service
+  labels:
+    app: lpr-service
+spec:
+  selector:
+    app: lpr-service
+  ports:
+    - protocol: TCP
+      port: 8080
+      targetPort: 8080
