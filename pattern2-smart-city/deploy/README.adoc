@@ -42,6 +42,7 @@ We will need a few base elements or helpers to start with. You can edit the Secr
 
 * `base/secret_postgresql.yaml`: Secrets to deploy the PostgreSQL database
 * `base/dc_postgresql.yaml`: Deployment of the PostgreSQL helper database
+* `base/service_postgresql.yaml`: Service for PostgreSQL helper database
 
 === Kafka
 
