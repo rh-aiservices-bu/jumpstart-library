@@ -1,9 +1,9 @@
 kind: DeploymentConfig
 apiVersion: apps.openshift.io/v1
 metadata:
-  name: lpr_service
+  name: lpr-service
   labels:
-    app: lpr_service
+    app: lpr-service
 spec:
   strategy:
     type: Rolling
@@ -29,18 +29,18 @@ spec:
   revisionHistoryLimit: 5
   test: false
   selector:
-    app: lpr_service
-    deploymentconfig: lpr_service
+    app: lpr-service
+    deploymentconfig: lpr-service
   template:
     metadata:
       creationTimestamp: null
       labels:
-        app: lpr_service
-        deploymentconfig: lpr_service
+        app: lpr-service
+        deploymentconfig: lpr-service
     spec:
       containers:
-        - name: lpr_service
-          image: lpr_service:latest
+        - name: lpr-service
+          image: lpr-service:latest
           ports:
             - containerPort: 8080
               protocol: TCP
