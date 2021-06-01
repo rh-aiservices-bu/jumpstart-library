@@ -1,18 +1,18 @@
 apiVersion: apps.openshift.io/v1
 kind: DeploymentConfig
 metadata:
-  name: kafdrop
+  name: edge-kafdrop
 spec:
   selector:
-    app: kafdrop
+    app: edge-kafdrop
   replicas: 1
   template:
     metadata:
       labels:
-        app: kafdrop
+        app: edge-kafdrop
     spec:
       containers:
-        - name: kafdrop
+        - name: edge-kafdrop
           image: obsidiandynamics/kafdrop:latest
           ports:
             - containerPort: 9000
@@ -27,10 +27,10 @@ spec:
 apiVersion: v1
 kind: Service
 metadata:
-  name: kafdrop
+  name: edge-kafdrop
 spec:
   selector:
-    app: kafdrop
+    app: edge-kafdrop
   ports:
     - protocol: TCP
       port: 9000
@@ -39,12 +39,12 @@ spec:
 kind: Route
 apiVersion: route.openshift.io/v1
 metadata:
-  name: kafdrop
+  name: edge-kafdrop
 spec:
   subdomain: ''
   to:
     kind: Service
-    name: kafdrop
+    name: edge-kafdrop
     weight: 100
   port:
     targetPort: 9000
