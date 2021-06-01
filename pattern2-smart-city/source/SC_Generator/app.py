@@ -68,7 +68,6 @@ def send_image(image_key):
             "license_plate_number_detection_status": "Failed",
             "reason": "Not able to read license plate, the input image could be blur or complex for inferencing"
         }
-    
     return json.dumps(result)
 
 async def main():
@@ -88,7 +87,6 @@ async def main():
 
         ## Send the data to Kafka
         await kafkaproducer.send_and_wait(kafka_topic_name, result.encode('utf-8'))
-        
         sleep(seconds_wait)
 
 asyncio.run(main())

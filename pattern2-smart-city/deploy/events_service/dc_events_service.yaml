@@ -49,14 +49,13 @@ spec:
             - name: DB_NAME
               value: pgdb
             - name: DB_PASSWORD
-              value: HT@1202k
+              value: dbpassword
             - name: DB_USER
               value: dbadmin
             - name: KAFKA_CONSUMER_GROUP_ID
               value: event_consumer_group
             - name: KAFKA_ENDPOINT
-              value: >-
-                kafka-core-site-kafka-bootstrap.lpr-core-site.svc.cluster.local:9092
+              value: core-kafka-kafka-bootstrap:9092
             - name: KAFKA_TOPIC
               value: lpr
             - name: TABLE_NAME
