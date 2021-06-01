@@ -90,20 +90,20 @@ def  lpr_process(input_image_path):
         plate_image = cv2.convertScaleAbs(LpImg[0], alpha=(255.0))
         gray = cv2.cvtColor(plate_image, cv2.COLOR_BGR2GRAY)
         blur = cv2.GaussianBlur(gray,(7,7),0)
-         # Applied inversed thresh_binary 
+         # Applied inversed thresh_binary
         binary = cv2.threshold(blur, 180, 255,cv2.THRESH_BINARY_INV + cv2.THRESH_OTSU)[1]
         kernel3 = cv2.getStructuringElement(cv2.MORPH_RECT, (3, 3))
         thre_mor = cv2.morphologyEx(binary, cv2.MORPH_DILATE, kernel3)
-        
+
         cont, _  = cv2.findContours(binary, cv2.RETR_EXTERNAL, cv2.CHAIN_APPROX_SIMPLE)
         # creat a copy version "test_roi" of plat_image to draw bounding box
         test_roi = plate_image.copy()
         # Initialize a list which will be used to append charater image
         crop_characters = []
-        
+
         # define standard width and height of character
         digit_w, digit_h = 30, 60
-        
+
         for c in sort_contours(cont):
             (x, y, w, h) = cv2.boundingRect(c)
             ratio = h/w
@@ -116,9 +116,9 @@ def  lpr_process(input_image_path):
                     curr_num = cv2.resize(curr_num, dsize=(digit_w, digit_h))
                     _, curr_num = cv2.threshold(curr_num, 220, 255, cv2.THRESH_BINARY + cv2.THRESH_OTSU)
                     crop_characters.append(curr_num)
-        
+
         cols = len(crop_characters)
-        
+
         for i,character in enumerate(crop_characters):
             title = np.array2string(predict_characters_from_model(character))
             license_plate_string+=title.strip("'[]")
@@ -128,7 +128,7 @@ def  lpr_process(input_image_path):
 
     return license_plate_string
 
-## Application  
+## Application
 
 app = FastAPI()
 
@@ -157,4 +157,4 @@ async def detect_plate(image: UploadFile = File(...)):
     input_img_bytes = base64.encodebytes(image.file.read())
     license_plate_string = lpr_process(input_img_bytes)
     ## Data is returned to the user
-    return  license_plate_string
+    return  license_plate_string.decode()
