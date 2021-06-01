@@ -1,0 +1,67 @@
+apiVersion: kfdef.apps.kubeflow.org/v1
+kind: KfDef
+metadata:
+  name: opendatahub
+  namespace: smartcity
+spec:
+  applications:
+    - kustomizeConfig:
+        repoRef:
+          name: manifests
+          path: odh-common
+      name: odh-common
+    - kustomizeConfig:
+        parameters:
+          - name: SUPERSET_ADMIN_PASSWORD
+            value: admin
+        repoRef:
+          name: manifests
+          path: superset
+      name: superset
+    - kustomizeConfig:
+        overlays:
+          - storage-class
+        parameters:
+          - name: storage_class
+            value: ocs-storagecluster-ceph-rbd
+          - name: s3_endpoint_url
+            value: rook-ceph-rgw-ocs-storagecluster-cephobjectstore.svc.cluster.local
+        repoRef:
+          name: manifests
+          path: jupyterhub/jupyterhub
+      name: jupyterhub
+    - kustomizeConfig:
+        overlays:
+          - additional
+        repoRef:
+          name: manifests
+          path: jupyterhub/notebook-images
+      name: notebook-images
+    - kustomizeConfig:
+        repoRef:
+          name: manifests
+          path: odh-dashboard
+      name: odh-dashboard
+    - kustomizeConfig:
+        overlays:
+          - storage-class
+        parameters:
+        - name: s3_endpoint_url
+          value: CHANGEME_rook-ceph-rgw-ocs-storagecluster-cephobjectstore.svc.cluster.local_or_IP
+        - name: s3_credentials_secret
+          value: secor-bucket
+        - name: s3_bucket
+          value: secor-bucket
+        - name: s3_endpoint_url_prefix
+          value: 'http://'
+        - name: storage_class
+          value: ocs-storagecluster-ceph-rbd
+        repoRef:
+          name: manifests
+          path: trino
+      name: trino
+  repos:
+    - name: kf-manifests
+      uri: 'https://github.com/kubeflow/manifests/tarball/v1.2-branch'
+    - name: manifests
+      uri: 'https://github.com/guimou/odh-manifests/tarball/trino'
