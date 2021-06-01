@@ -53,14 +53,18 @@ helm upgrade sep-cluster starburstdata/starburst-enterprise \
   --version 356.0.0 \
   --values ./sep.yaml
 ```
+```
+oc expose svc/coordinator
+```
 
 ## To connect to presto cluster from CLI (optional)
 ```
-oc expose svc/coordinator
 oc port-forward svc/coordinator 8080:8080
+# Need to download trino CLI locally
+ ./trino --server localhost:8080 --catalog hive --schema default
 ```
 
 ### TODO
-- update service postgres name to `smartcity-db`
+- work with Starburst to include licene free version of presto in this demo
 
 
