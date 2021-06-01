@@ -14,7 +14,7 @@ registryCredentials:
   enabled: true
   registry: harbor.starburstdata.net/starburstdata
   username: redhat
-  password: JBXjLPv6Scch5t8Dk2zLnZhgS
+  password: Jxxxxx
 
 coordinator:
   resources:
