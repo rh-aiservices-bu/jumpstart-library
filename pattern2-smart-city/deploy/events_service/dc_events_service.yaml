@@ -45,7 +45,7 @@ spec:
               protocol: TCP
           env:
             - name: DB_HOST
-              value: postgresql
+              value: "smartcity-db-service"
             - name: DB_NAME
               value: pgdb
             - name: DB_PASSWORD

@@ -1,7 +1,7 @@
 apiVersion: objectbucket.io/v1alpha1
 kind: ObjectBucketClaim
 metadata:
-  name: secor-bucket
+  name: secor-obc
 spec:
-  generateBucketName: secor-bucket
+  generateBucketName: secor
   storageClassName: ocs-storagecluster-ceph-rgw

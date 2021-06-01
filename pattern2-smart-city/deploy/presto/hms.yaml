@@ -1,0 +1,60 @@
+image:
+  repository: "harbor.starburstdata.net/starburstdata/hive"
+  tag: "356.0.0"
+  pullPolicy: "IfNotPresent"
+
+registryCredentials:
+  enabled: true
+  registry: harbor.starburstdata.net/starburstdata
+  username: redhat
+  password: Jxxxxxx
+
+database:
+  type: internal
+  internal:
+    image:
+      repository: "registry.redhat.io/rhscl/postgresql-96-rhel7"
+      tag: "latest"
+    env:
+      - name: POSTGRESQL_DATABASE
+        value: "hive"
+      - name: POSTGRESQL_USER
+        value: "hive"
+      - name: POSTGRESQL_PASSWORD
+        value: "hive"
+    volume:
+      persistentVolumeClaim:
+        storageClassName: ocs-storagecluster-ceph-rbd
+        accessModes:
+          - ReadWriteOnce
+        resources:
+          requests:
+            storage: "2Gi"
+    resources:
+      requests:
+        memory: "1Gi"
+        cpu: 2
+      limits:
+        memory: "1Gi"
+        cpu: 2
+    driver: "org.postgresql.Driver"
+    port: 5432
+    databaseName: "hive"
+    databaseUser: "hive"
+    databasePassword: "hive"
+
+objectStorage:
+  awsS3:
+    region: us-east-1
+    endpoint: http://172.30.135.220
+    accessKey: MK2RT98OKJN6WEH1R0PN
+    secretKey: OYWYuogkGN7T0MFEwOUSxGyDjR8qLJO6YX99Lh0j
+    pathStyleAccess: true
+
+resources:
+  requests:
+    memory: "1Gi"
+    cpu: 1
+  limits:
+    memory: "1Gi"
+    cpu: 1
