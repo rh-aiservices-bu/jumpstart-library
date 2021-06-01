@@ -52,8 +52,9 @@ We will need two different Kafka instances. One will simulate the "Edges", the t
 * `kafka/core.yaml`: Core Kafka instance
 * `kafka/edge-topic.yaml`: Edge topic
 * `kafka/core-topic.yaml`: Core topic
-* `kafka/mirror.yaml`: Mirror maker
-* `kafka/kafdrop.yaml`: Optional! Kafdrop is a UI interface to your Kafka cluster (to inspect messages)
+* `kafka/mirror-maker.yaml`: Mirror maker
+* `kafka/edge-kafdrop.yaml`: Optional! Kafdrop is a UI interface to your Kafka cluster (to inspect messages)
+* `kafka/core-kafdrop.yaml`: Optional! Kafdrop is a UI interface to your Kafka cluster (to inspect messages)
 
 === Load Generator
 
