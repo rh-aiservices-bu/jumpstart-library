@@ -44,7 +44,7 @@ def send_image(image_key):
     url = lpr_service + '/DetectPlate'
     image_object = s3client.get_object(Bucket=bucket_name,Key=image_key)
     files = {'image': BytesIO(image_object['Body'].read())}
-    license_plate_string = str(requests.post(url, files=files).content)
+    license_plate_string = json.loads(requests.post(url, files=files).content)['lp']
 
     if len(license_plate_string) >= 3 :
         rand = random.choices(population=[0,1,2,3,4,5,6,7,8],weights=[0.4, 0.4, 0.4, 0.1, 0.1, 0.1, 0.1, 0.1, 0.1],k=1)[0]

@@ -126,6 +126,8 @@ def  lpr_process(input_image_path):
     else:
         license_plate_string =  ""
 
+    result = ''
+
     return license_plate_string
 
 ## Application  
@@ -157,4 +159,4 @@ async def detect_plate(image: UploadFile = File(...)):
     input_img_bytes = base64.encodebytes(image.file.read())
     license_plate_string = lpr_process(input_img_bytes)
     ## Data is returned to the user
-    return  license_plate_string
+    return  {"lp": license_plate_string}
