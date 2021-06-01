@@ -1,0 +1,67 @@
+image:
+  repository: "harbor.starburstdata.net/starburstdata/starburst-enterprise"
+  tag: "356-e.0"
+  pullPolicy: "IfNotPresent"
+#docker pull harbor.starburstdata.net/starburstdata/starburst-enterprise:356-e.0
+#docker pull harbor.starburstdata.net/starburstdata/starburst-enterprise:355-e
+initImage:
+  repository: "harbor.starburstdata.net/starburstdata/starburst-enterprise-init"
+  tag: "356.0.0"
+  pullPolicy: "IfNotPresent"
+#docker pull harbor.starburstdata.net/starburstdata/starburst-enterprise-init:356.0.0
+#docker pull harbor.starburstdata.net/starburstdata/starburst-enterprise-init:355.0.0
+registryCredentials:
+  enabled: true
+  registry: harbor.starburstdata.net/starburstdata
+  username: redhat
+  password: JBXjLPv6Scch5t8Dk2zLnZhgS
+
+coordinator:
+  resources:
+    requests:
+      memory: "6Gi"
+      cpu: 2
+    limits:
+      memory: "6Gi"
+      cpu: 2
+      
+worker:
+  replicas: 1
+  resources:
+    requests:
+      memory: "6Gi"
+      cpu: 2
+    limits:
+      memory: "6Gi"
+      cpu: 2
+
+catalogs:
+  tpcds: |
+    connector.name=tpcds
+  hive: |
+    connector.name=hive-hadoop2
+    hive.metastore.uri=thrift://hive:9083
+    hive.s3.endpoint=http://172.30.135.220
+    hive.s3.signer-type=S3SignerType
+    hive.s3.ssl.enabled=false
+    hive.s3.sse.enabled=false
+    hive.s3.aws-access-key=MK2RT98OKJN6WEH1R0PN
+    hive.s3.aws-secret-key=OYWYuogkGN7T0MFEwOUSxGyDjR8qLJO6YX99Lh0j
+    hive.non-managed-table-writes-enabled=true
+    hive.non-managed-table-creates-enabled=true
+    hive.allow-drop-table=true
+    hive.allow-rename-table=true
+    hive.orc.use-column-names=true
+
+  postgresql-internal: |
+    connector.name=postgresql
+    connection-url=jdbc:postgresql://postgresql:5432/hive
+    connection-user=hive
+    connection-password=hive
+  postgresql-lpr: |
+    connector.name=postgresql
+    connection-url=jdbc:postgresql://smartcity-db-service:5432/pgdb
+    connection-user=dbadmin
+    connection-password=dbpassword
+
+starburstPlatformLicense: starburst-license

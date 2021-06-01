@@ -3,7 +3,7 @@ kind: Service
 metadata:
   labels:
     app: postgresql-db
-  name: postgresql
+  name: smartcity-db-service
 spec:
   ports:
   - port: 5432
