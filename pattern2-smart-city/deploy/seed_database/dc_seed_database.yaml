@@ -1,0 +1,60 @@
+kind: DeploymentConfig
+apiVersion: apps.openshift.io/v1
+metadata:
+  name: seed-database
+  labels:
+    app: seed-database
+spec:
+  strategy:
+    type: Rolling
+    rollingParams:
+      updatePeriodSeconds: 1
+      intervalSeconds: 1
+      timeoutSeconds: 600
+      maxUnavailable: 25%
+      maxSurge: 25%
+    resources: {}
+    activeDeadlineSeconds: 21600
+  triggers:
+    - type: ConfigChange
+    - type: ImageChange
+      imageChangeParams:
+        automatic: true
+        containerNames:
+          - seed-database
+        from:
+          kind: ImageStreamTag
+          name: 'seed-database:latest'
+  replicas: 1
+  revisionHistoryLimit: 5
+  test: false
+  selector:
+    app: seed-database
+    deploymentconfig: seed-database
+  template:
+    metadata:
+      labels:
+        app: seed-database
+        deploymentconfig: seed-database
+    spec:
+      containers:
+        - name: seed-database
+          image: seed-database:latest
+          ports:
+            - containerPort: 8080
+              protocol: TCP
+          env:
+            - name: DB_HOST
+              value: "smartcity-db-service"
+            - name: DB_NAME
+              value: pgdb
+            - name: DB_PASSWORD
+              value: dbpassword
+            - name: DB_USER
+              value: dbadmin
+            - name: TABLE_NAME
+              value: vehicle_metadata
+            - name: VEHICLE_METADATA_DB_URL
+              value: https://raw.githubusercontent.com/red-hat-data-services/jumpstart-library/ksingh-refactor/pattern2-smart-city/source/SC_Seed_Database/vehicle_metadata_db.json
+          imagePullPolicy: Always
+
