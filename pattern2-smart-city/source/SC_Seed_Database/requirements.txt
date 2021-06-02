@@ -1,2 +1,11 @@
+<<<<<<< HEAD
 sqlalchemy==1.4.*
 psycopg2==2.8.*
+=======
+<<<<<<< HEAD
+sqlalchemy
+psycopg2
+=======
+sqlalchemy
+>>>>>>> c909ba1 (seed-database as job)
+>>>>>>> 019a9f6 (seed-database as job)
