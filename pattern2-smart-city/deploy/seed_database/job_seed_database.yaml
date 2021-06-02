@@ -14,4 +14,17 @@ spec:
       containers:
       - name: seed-database
         image: seed-database:latest
+        env:
+          - name: DB_HOST
+            value: "smartcity-db-service"
+          - name: DB_NAME
+            value: pgdb
+          - name: DB_PASSWORD
+            value: dbpassword
+          - name: DB_USER
+            value: dbadmin
+          - name: TABLE_NAME
+            value: vehicle_metadata
+          - name: VEHICLE_METADATA_DB_URL
+            value: https://raw.githubusercontent.com/red-hat-data-services/jumpstart-library/ksingh-refactor/pattern2-smart-city/source/SC_Seed_Database/vehicle_metadata_db.json        
       restartPolicy: Never   
