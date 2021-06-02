@@ -2,12 +2,11 @@ from sqlalchemy import create_engine, Column, Integer, String, Sequence
 from sqlalchemy.ext.declarative import declarative_base
 import json, urllib.request
 
-## JSON Data URL
-JSON_DB_URL = "https://raw.githubusercontent.com/red-hat-data-services/jumpstart-library/ksingh-tf-v1/pattern2-licence-plates/LPR_seed_database/uk_database.json"
+JSON_DB_FILE = "vehicle_metadata_db.json"
 
 ## Database details and connection
 DB_USER = os.getenv('DB_USER', 'dbadmin')
-DB_PASSWORD = os.getenv('DB_PASSWORD', 'HT@1202k')
+DB_PASSWORD = os.getenv('DB_PASSWORD', 'dbpassword')
 DB_HOST = os.getenv('DB_HOST', '127.0.0.1')
 DB_NAME = os.getenv('DB_NAME','pgdb')
 TABLE_NAME = os.getenv('TABLE_NAME','vehicle_metadata')
@@ -38,11 +37,12 @@ class Create_Table(Base):
     customer_city = Column(String)
     customer_zip_code = Column(String)
     customer_contact_number = Column(String)
+    metadata_image_name= Column(String)
 
 ## Create Table if does not exists
 Create_Table.__table__.create(bind=engine, checkfirst=True)
 
-with urllib.request.urlopen(JSON_DB_URL) as url:
+with urllib.request.urlopen(JSON_DB_FILE) as url:
     data = json.loads(url.read().decode())
 
 connection = engine.connect()
