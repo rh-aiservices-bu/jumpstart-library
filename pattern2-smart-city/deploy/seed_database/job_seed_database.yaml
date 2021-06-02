@@ -12,6 +12,7 @@ spec:
       name: seed-database
     spec:
       containers:
+<<<<<<< HEAD
       - name: seed-database
         image: seed-database:latest
         env:
@@ -37,3 +38,8 @@ spec:
           - name: VEHICLE_METADATA_DB_URL
             value: https://raw.githubusercontent.com/red-hat-data-services/jumpstart-library/main/pattern2-smart-city/source/SC_Seed_Database/vehicle_metadata_db.json        
       restartPolicy: Never
+=======
+      - name: seed-database:latest
+        image: perl
+      restartPolicy: Never   
+>>>>>>> 58d263c (seed-database as job)
