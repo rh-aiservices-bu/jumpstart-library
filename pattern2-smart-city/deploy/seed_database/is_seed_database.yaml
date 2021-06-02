@@ -1,0 +1,9 @@
+kind: ImageStream
+apiVersion: image.openshift.io/v1
+metadata:
+  name: seed-database
+  labels:
+    app: seed-database
+spec:
+  lookupPolicy:
+    local: true
