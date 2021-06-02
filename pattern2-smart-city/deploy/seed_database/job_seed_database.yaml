@@ -1,0 +1,17 @@
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: seed-database
+spec:
+  parallelism: 1    
+  completions: 1    
+  activeDeadlineSeconds: 1800 
+  backoffLimit: 6   
+  template:         
+    metadata:
+      name: seed-database
+    spec:
+      containers:
+      - name: seed-database:latest
+        image: perl
+      restartPolicy: Never   
