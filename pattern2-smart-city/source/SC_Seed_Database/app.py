@@ -3,7 +3,7 @@ from sqlalchemy.ext.declarative import declarative_base
 import json, urllib.request
 import os, sys
 
-JSON_DB_FILE = "vehicle_metadata_db.json"
+DB_URL = os.getenv('VEHICLE_METADATA_DB_URL', 'https://raw.githubusercontent.com/red-hat-data-services/jumpstart-library/ksingh-refactor/pattern2-smart-city/source/SC_Seed_Database/vehicle_metadata_db.json')
 
 ## Database details and connection
 DB_USER = os.getenv('DB_USER', 'dbadmin')
@@ -43,11 +43,12 @@ class Create_Table(Base):
 ## Create Table if does not exists
 Create_Table.__table__.create(bind=engine, checkfirst=True)
 
-with open(JSON_DB_FILE) as db_source:
-    data = json.load(db_source)
-
+with urllib.request.urlopen(DB_URL) as url:
+    data = json.loads(url.read().decode())
+#print(data)
 connection = engine.connect()
 
+# Loop to insert provided JSON DB to PGSQL DB
 for count in range(len(data)):
     try:
         connection.execute(f"""INSERT INTO public.{TABLE_NAME}(vehicle_registered_plate_number,vehicle_color,vehicle_make,vehicle_body_type,vehicle_make_model,vehicle_model_year,vehicle_registered_city,vehicle_owner_name,vehicle_owner_address,vehicle_owner_city,vehicle_owner_zip_code,vehicle_owner_contact_number,customer_id,customer_balance,customer_name,customer_address,customer_city,customer_zip_code,customer_contact_number,metadata_image_name) VALUES('{data[count]['vehicle_registered_plate_number']}', '{data[count]['vehicle_color']}', '{data[count]['vehicle_make']}', '{data[count]['vehicle_body_type']}', '{data[count]['vehicle_make_model']}', '{data[count]['vehicle_model_year']}', '{data[count]['vehicle_registered_city']}', '{data[count]['vehicle_owner_name']}', '{data[count]['vehicle_owner_address']}', '{data[count]['vehicle_owner_city']}', '{data[count]['vehicle_owner_zip_code']}', '{data[count]['vehicle_owner_contact_number']}', '{data[count]['customer_id']}', '{data[count]['customer_balance']}', '{data[count]['customer_name']}', '{data[count]['customer_address']}', '{data[count]['customer_city']}', '{data[count]['customer_zip_code']}', '{data[count]['customer_contact_number']}', '{data[count]['metadata_image_name']}')""")
