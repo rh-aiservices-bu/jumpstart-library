@@ -6,4 +6,4 @@ metadata:
     app: seed-database
 spec:
   lookupPolicy:
-    local: false
+    local: true

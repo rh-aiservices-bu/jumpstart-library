@@ -12,6 +12,6 @@ spec:
       name: seed-database
     spec:
       containers:
-      - name: seed-database:latest
-        image: perl
+      - name: seed-database
+        image: seed-database:latest
       restartPolicy: Never   
