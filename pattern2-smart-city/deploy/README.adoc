@@ -6,6 +6,95 @@
 * Cluster-admin access to OpenShift, or ability to deploy operators.
 * OpenShift Data Foundation (ODF). Last tested version: 4.7
 * A running RGW instance in ODF. External Route to the RGW must be exposed with SSL enabled for Grafana dashboards to work properly.
+* The `oc` client.
+* Optional: the `jq` tool (JSON patcher).
+
+== OpenShift/ODF Patch
+
+To circumvent some issues related to bucket access-style (DNS vs Path), we have to make some changes. 
+
+IMPORTANT: All the files used in the following commands are in the `ocp-odf-patch` folder.
+
+=== Deploy CoreDNS into the `openshift-storage` namespace:
+
+.Create the odf-coredns ConfigMap
+[source,bash]
+----
+oc apply -f cm_coredns.yaml
+----
+
+.Create the odf-coredns Deployment
+[source,bash]
+----
+oc apply -f dp_coredns.yaml
+----
+
+.Create the odf-coredns Service
+[source,bash]
+----
+oc apply -f svc_coredns.yaml
+----
+
+=== Patch the `dns.operator/default` object from OpenShift
+
+Here we are adding a new zone, `data.local` to our environment.
+
+.Patching command
+[source,bash]
+----
+oc patch dns.operator/default --type=merge --patch '{"spec":{"servers":[{"forwardPlugin":{"upstreams":["'$(oc get -n openshift-storage svc | grep dns | awk '{print $3}')':5353"]},"name":"rook-dns","zones":["data.local"]}]}}'
+----
+
+=== Add the new endpoint to the RGW zone configuration
+
+The RGW must know about this new zone it will serve from.
+
+* If not already done, deploy the Ceph toolbox
+
+[source,bash]
+----
+oc patch OCSInitialization ocsinit -n openshift-storage --type json --patch  '[{ "op": "replace", "path": "/spec/enableCephTools", "value": true }]'
+----
+
+* Add the endpoint 
+
+IMPORTANT: The next command does everything in one step. If you want to understand what's going on (or just don't trust those long commands...), detailed instructions are available in the next section.
+
+.One line command
+[source,bash]
+----
+oc exec -n openshift-storage deploy/rook-ceph-tools -- bash -c "radosgw-admin zonegroup get --rgw-zonegroup=ocs-storagecluster-cephobjectstore > /tmp/config.json && sed -i 's/\"hostnames\": \[],/\"hostnames\": \[\"s3\.data\.local\"],/' /tmp/config.json && radosgw-admin zonegroup set --rgw-zonegroup=ocs-storagecluster-cephobjectstore --infile=/tmp/config.json"
+----
+
+=== Manual steps to add the endpoint (Optional)
+
+*** Get the current config
+
+[source,bash]
+----
+echo $(oc exec -n openshift-storage deploy/rook-ceph-tools -- radosgw-admin zonegroup get --rgw-zonegroup=ocs-storagecluster-cephobjectstore) > config.json
+----
+
+** Edit the file config.json
+
+In the file `config.json` you obtained, replace the first occurence of `"hostnames": [],` by `"hostnames": ["s3.data.local"],`.
+
+You can also use jq to do that:
+`jq '.hostnames = ["s3.data.local"]' config.json > tmp.json && mv tmp.json config.json` (the complicated part with tmp.json is because json cannot edit in place...).
+
+** Upload the modified file to the toolbox
+
+[source,bash]
+----
+oc rsync . $(oc get pods -n openshift-storage | grep rook-ceph-tools | grep Running | awk '{print $1}'):/tmp --exclude=* --include=config.json --no-perms
+----
+
+** Apply the new configuration
+
+[source,bash]
+----
+oc exec -n openshift-storage deploy/rook-ceph-tools -- radosgw-admin zonegroup set --rgw-zonegroup=ocs-storagecluster-cephobjectstore --infile=/tmp/config.json
+----
 
 == Namespace
 
