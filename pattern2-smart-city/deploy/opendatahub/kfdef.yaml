@@ -25,7 +25,7 @@ spec:
           - name: storage_class
             value: ocs-storagecluster-ceph-rbd
           - name: s3_endpoint_url
-            value: rook-ceph-rgw-ocs-storagecluster-cephobjectstore.svc.cluster.local
+            value: s3.data.local
         repoRef:
           name: manifests
           path: jupyterhub/jupyterhub
@@ -47,7 +47,7 @@ spec:
           - storage-class
         parameters:
         - name: s3_endpoint_url
-          value: CHANGEME_rook-ceph-rgw-ocs-storagecluster-cephobjectstore.svc.cluster.local_or_IP
+          value: s3.data.local
         - name: s3_credentials_secret
           value: secor-bucket
         - name: s3_bucket
