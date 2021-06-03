@@ -67,4 +67,4 @@ spec:
     - name: manifests-trino
       uri: 'https://github.com/guimou/odh-manifests/tarball/trino'
     - name: manifests-superset
-      uri: 'https://github.com/maulikjs/odh-manifests/tarball/superset-upgrade-1.1.0'
+      uri: 'https://github.com/maulikjs/odh-manifests/tarball/e272300930ae424164e44172c74db29c060df1e8'
