@@ -2,7 +2,6 @@ apiVersion: kfdef.apps.kubeflow.org/v1
 kind: KfDef
 metadata:
   name: opendatahub
-  namespace: smartcity
 spec:
   applications:
     - kustomizeConfig:
@@ -15,7 +14,7 @@ spec:
           - name: SUPERSET_ADMIN_PASSWORD
             value: admin
         repoRef:
-          name: manifests
+          name: manifests-superset
           path: superset
       name: superset
     - kustomizeConfig:
@@ -57,11 +56,15 @@ spec:
         - name: storage_class
           value: ocs-storagecluster-ceph-rbd
         repoRef:
-          name: manifests
+          name: manifests-trino
           path: trino
       name: trino
   repos:
     - name: kf-manifests
       uri: 'https://github.com/kubeflow/manifests/tarball/v1.2-branch'
     - name: manifests
+      uri: 'https://github.com/opendatahub-io/odh-manifests/tarball/v1.0.11'
+    - name: manifests-trino
       uri: 'https://github.com/guimou/odh-manifests/tarball/trino'
+    - name: manifests-superset
+      uri: 'https://github.com/maulikjs/odh-manifests/tarball/superset-upgrade-1.1.0'
