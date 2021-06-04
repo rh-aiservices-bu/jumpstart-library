@@ -23,7 +23,6 @@ spec:
     type: Git
     git:
       uri: 'https://github.com/red-hat-data-services/jumpstart-library'
-      ref: ksingh-refactor
     contextDir: pattern2-smart-city/source/SC_Seed_Database
   triggers:
     - type: ConfigChange

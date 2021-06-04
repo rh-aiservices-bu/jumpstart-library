@@ -3,7 +3,7 @@ from sqlalchemy.ext.declarative import declarative_base
 import json, urllib.request
 import os, sys
 
-DB_URL = os.getenv('VEHICLE_METADATA_DB_URL', 'https://raw.githubusercontent.com/red-hat-data-services/jumpstart-library/ksingh-refactor/pattern2-smart-city/source/SC_Seed_Database/vehicle_metadata_db.json')
+DB_URL = os.getenv('VEHICLE_METADATA_DB_URL', 'https://raw.githubusercontent.com/red-hat-data-services/jumpstart-library/main/pattern2-smart-city/source/SC_Seed_Database/vehicle_metadata_db.json')
 
 ## Database details and connection
 DB_USER = os.getenv('DB_USER', 'dbadmin')
