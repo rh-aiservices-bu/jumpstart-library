@@ -112,8 +112,7 @@ TIP: If you did not use `smartcity` as the name of your project, don't forget to
 If not already available, deploy the following operators from OperatorHub:
 
 * Red Hat AMQ Streams (all namespaces)
-* Grafana Operator (`smartcity` namespace only)
-* Presto operator (`smartcity namespace only`)
+* Grafana Operator (in the `smartcity` namespace only)
 
 == Deployment
 
@@ -125,13 +124,21 @@ From the `deploy` folder and subfolders, create the OpenShift resources in this 
 oc apply -f file.yaml
 ----
 
-=== Base elements
+=== Database
 
-We will need a few base elements or helpers to start with. You can edit the Secret or ConfigMap files if you want change the default values. They contain the environment values that will be used by the rest of the deployments.
+We will need a database to store informations about the workflow, as well as registration information for the vehicles. You can edit the Secret file if you want change the default values.
 
-* `base/secret_postgresql.yaml`: Secrets to deploy the PostgreSQL database
-* `base/dc_postgresql.yaml`: Deployment of the PostgreSQL helper database
-* `base/service_postgresql.yaml`: Service for PostgreSQL helper database
+* `database/secret_postgresql.yaml`: Secrets to deploy the PostgreSQL database
+* `database/dc_postgresql.yaml`: Deployment of the PostgreSQL helper database
+* `database/service_postgresql.yaml`: Service for PostgreSQL helper database
+
+=== Seed the database
+
+We will now initialize the database with the registration informations.
+
+* `seed_database/is_seed_database.yaml`: ImageStream for the image that will be used to see the DB
+* `seed_database/bc_seed_database.yaml`: BuildConfiguration for the image
+* `seed_database/job_seed_database.yaml`: Seeding Job to initialize the DB
 
 === Kafka
 
@@ -144,16 +151,6 @@ We will need two different Kafka instances. One will simulate the "Edges", the t
 * `kafka/mirror-maker.yaml`: Mirror maker
 * `kafka/edge-kafdrop.yaml`: Optional! Kafdrop is a UI interface to your Kafka cluster (to inspect messages)
 * `kafka/core-kafdrop.yaml`: Optional! Kafdrop is a UI interface to your Kafka cluster (to inspect messages)
-
-=== Load Generator
-
-This is the component that injects car images into the pipeline.
-
-* `generator/obc_dataset_generator.yaml`: Bucket to store the images dataset
-* `generator/is_generator.yaml`: ImageStream for the load generator
-* `generator/bc_generator.yaml`: BuildConfiguration to create the load generator image
-* `generator/dc_generator.yaml`: Deployment Configuration for the load generator
-
 
 === LPR Service
 
@@ -186,4 +183,11 @@ export BUCKET=$(oc get cm/generator-dataset -o yaml | grep " BUCKET_NAME:" | awk
 aws --endpoint-url $RGW_ROUTE s3 cp --recursive ../source/dataset/images s3://$BUCKET/images
 ----
 
+=== Load Generator
 
+This is the component that injects car images into the pipeline.
+
+* `generator/obc_dataset_generator.yaml`: Bucket to store the images dataset
+* `generator/is_generator.yaml`: ImageStream for the load generator
+* `generator/bc_generator.yaml`: BuildConfiguration to create the load generator image
+* `generator/dc_generator.yaml`: Deployment Configuration for the load generator

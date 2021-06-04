@@ -38,8 +38,6 @@ class Event(Base):
     stationa41 = Column(Boolean, unique=False)
     stationb504 = Column(Boolean, unique=False)
 
-
-
 async def consume():
     kafkaConsumer = AIOKafkaConsumer(KAFKA_TOPIC, loop=loop, bootstrap_servers=KAFKA_ENDPOINT, group_id=KAFKA_CONSUMER_GROUP_ID)
     connection = engine.connect()
