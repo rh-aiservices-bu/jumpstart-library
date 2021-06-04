@@ -1,0 +1,3 @@
+#trino
+psycopg2
+sqlalchemy
