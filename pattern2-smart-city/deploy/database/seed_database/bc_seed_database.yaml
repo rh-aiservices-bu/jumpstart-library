@@ -22,11 +22,7 @@ spec:
   source:
     type: Git
     git:
-<<<<<<< HEAD
       uri: 'https://github.com/red-hat-data-services/jumpstart-library'
-=======
-      uri: 'https://github.com/red-hat-data-services/jumpstart-library#ksingh-refactor'
->>>>>>> 58d263c (seed-database as job)
     contextDir: pattern2-smart-city/source/SC_Seed_Database
   triggers:
     - type: ConfigChange
