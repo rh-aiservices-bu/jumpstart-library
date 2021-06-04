@@ -18,11 +18,20 @@ spec:
           - name: DB_HOST
             value: "smartcity-db-service"
           - name: DB_NAME
-            value: pgdb
+            valueFrom:
+                secretKeyRef:
+                  name: postgresql
+                  key: database-name
           - name: DB_PASSWORD
-            value: dbpassword
+            valueFrom:
+                secretKeyRef:
+                  name: postgresql
+                  key: database-password
           - name: DB_USER
-            value: dbadmin
+            valueFrom:
+                secretKeyRef:
+                  name: postgresql
+                  key: database-user
           - name: TABLE_NAME
             value: vehicle_metadata
           - name: VEHICLE_METADATA_DB_URL
