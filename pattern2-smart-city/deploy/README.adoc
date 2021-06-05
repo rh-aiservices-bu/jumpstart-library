@@ -191,3 +191,10 @@ This is the component that injects car images into the pipeline.
 * `generator/is_generator.yaml`: ImageStream for the load generator
 * `generator/bc_generator.yaml`: BuildConfiguration to create the load generator image
 * `generator/dc_generator.yaml`: Deployment Configuration for the load generator
+
+=== Secor
+
+Secor is the component that will listen to the Kafka Stream and write the aggregated data to an object Bucket.
+
+* `secor/1_obc_secor.yaml`: Bucket to store the streamed data
+* `secor/2_zookeeper_enterance.yaml`: Connection to the Kafka-Core instance
