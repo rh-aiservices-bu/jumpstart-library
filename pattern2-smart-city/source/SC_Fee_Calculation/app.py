@@ -40,8 +40,8 @@ def toll_and_pollution_fee_calculation(vehicle_metadata , event_result, connecti
                 column_customer_toll_fee_balance, value_customer_toll_fee_balance = list(row_as_dict_vehicle_metadata_result.items())[2]
                 column_customer_pollution_fee_balance, value_customer_pollution_fee_balance= list(row_as_dict_vehicle_metadata_result.items())[2]
 
-                value_customer_toll_fee_balance = value_customer_toll_fee_balance + TOLL_FEE
-                value_customer_pollution_fee_balance = value_customer_pollution_fee_balance + POLLUTION_FEE
+                value_customer_toll_fee_balance = value_customer_toll_fee_balance + int(TOLL_FEE)
+                value_customer_pollution_fee_balance = value_customer_pollution_fee_balance + int(POLLUTION_FEE)
                 
                 if fee_type == "toll_and_pollution":
                     update_statement = db.update(vehicle_metadata).values(customer_toll_fee_balance=value_customer_toll_fee_balance,customer_pollution_fee_balance= value_customer_pollution_fee_balance).where(vehicle_metadata.columns.vehicle_registered_plate_number == value_vehicle_registered_plate_number )
@@ -98,7 +98,7 @@ def main():
     
     ## BATCH_TIME_MINS defines the time interval in minutes to run the batch job
     current_time_utc = datetime.utcnow()
-    time_filter = current_time_utc - timedelta(minutes = BATCH_TIME_MINS)
+    time_filter = current_time_utc - timedelta(minutes = int(BATCH_TIME_MINS))
     print("==========  Running batch query between "+str(current_time_utc)+ " and "+str(time_filter)+ " ==========")
     
     ## DB Query to find vehicles entered into city between NOW and last BATCH_TIME_MINS Minutes
