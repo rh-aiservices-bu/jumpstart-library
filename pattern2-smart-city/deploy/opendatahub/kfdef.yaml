@@ -57,7 +57,7 @@ spec:
           value: ocs-storagecluster-ceph-rbd
         repoRef:
           name: manifests-trino
-          path: trino
+          path: pattern2-smart-city/deploy/opendatahub/trino
       name: trino
   repos:
     - name: kf-manifests
@@ -65,6 +65,6 @@ spec:
     - name: manifests
       uri: 'https://github.com/opendatahub-io/odh-manifests/tarball/v1.0.11'
     - name: manifests-trino
-      uri: 'https://github.com/guimou/odh-manifests/tarball/trino'
+      uri: 'https://github.com/red-hat-data-services/jumpstart-library/tarball/main'
     - name: manifests-superset
       uri: 'https://github.com/maulikjs/odh-manifests/tarball/e272300930ae424164e44172c74db29c060df1e8'
