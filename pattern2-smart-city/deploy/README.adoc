@@ -112,6 +112,7 @@ TIP: If you did not use `smartcity` as the name of your project, don't forget to
 If not already available, deploy the following operators from OperatorHub:
 
 * Red Hat AMQ Streams (all namespaces)
+* Open Data Hub (all namespaces)
 * Grafana Operator (in the `smartcity` namespace only)
 
 == Deployment
@@ -191,3 +192,41 @@ This is the component that injects car images into the pipeline.
 * `generator/is_generator.yaml`: ImageStream for the load generator
 * `generator/bc_generator.yaml`: BuildConfiguration to create the load generator image
 * `generator/dc_generator.yaml`: Deployment Configuration for the load generator
+
+=== Secor
+
+Secor is the component that will listen to the Kafka Stream and write the aggregated data to an object Bucket.
+
+* `secor/1_obc_secor.yaml`: Bucket to store the streamed data
+* `secor/2_zookeeper_entrance.yaml`: Connection to the Kafka-Core instance
+* `secor/3_secor.yaml`: Deploys the Secor instance
+
+=== Open Data Hub
+
+Open Data Hub will allow us to easily deploy SuperSet and Trino.
+
+* `opendatahub/kfdef.yaml`: Deploys an Open Data Hub instance with the needed components
+
+Once it is running, connect to the Superset pod and enter the following commands:
+
+[source,bash]
+----
+superset db upgrade
+superset init
+----
+
+=== Grafana
+
+Grafana will allow us to create dashbord to visualize the data workflow (Ops dashboard) and the Business Application itself (Main dashboard). All the deployments are taken care of by the Grafana operator deployed previously (see requirements).
+
+* PGSQL Source to retrieve the data
+
+.Retrieve the secrets, process the template, and apply the configuration
+[source,bash]
+----
+oc process -f grafana/grafana-pgsql-datasource.yaml -p db_database=$(oc get secret/postgresql -o yaml | grep " database-name:" | awk '{ print $2 }' - | base64 -d) -p db_user=$(oc get secret/postgresql -o yaml | grep " database-user:" | awk '{ print $2 }' - | base64 -d) -p db_password=$(oc get secret/postgresql -o yaml | grep " database-password:" | awk '{ print $2 }' - | base64 -d) | oc apply -f -
+----
+
+* `grafana/grafana-main-dashboard.yaml`: Main application dashboard
+* `grafana/grafana-ops-dashboard.yaml`: Ops dashboard
+* `grafana/grafana-smart-city.yaml`: Grafana instance itself.

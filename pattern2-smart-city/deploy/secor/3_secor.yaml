@@ -16,7 +16,7 @@ spec:
         app: secor
     spec:
       containers:
-      - image: karansingh/secor-0.29-hadoop-2.9.2:latest
+      - image: quay.io/rh-data-services/secor:0.29-hdp2.9.2_latest
         name: secor-0-29-hadoop-2-9-2
         imagePullPolicy: Always
         env:
@@ -29,15 +29,24 @@ spec:
         - name: KAFKA_SEED_BROKER_PORT
           value: "9092"
         - name: AWS_ACCESS_KEY
-          value: "MK2RT98OKJN6WEH1R0PN"
+          valueFrom:
+            secretKeyRef:
+              name: secor-obc
+              key: AWS_ACCESS_KEY_ID
         - name: AWS_SECRET_KEY
-          value: "OYWYuogkGN7T0MFEwOUSxGyDjR8qLJO6YX99Lh0j"
+          valueFrom:
+            secretKeyRef:
+              name: secor-obc
+              key: AWS_SECRET_ACCESS_KEY
         - name: AWS_ENDPOINT
-          value: "http://rook-ceph-rgw-ocs-storagecluster-cephobjectstore.openshift-storage.svc.cluster.local"
+          value: s3.data.local
         - name: AWS_PATH_STYLE_ACCESS
-          value: "true"
+          value: "false"
         - name: SECOR_S3_BUCKET
-          value: "secor-bb120bd3-830f-4f62-a4a5-c2871572c826"
+          valueFrom:
+            configMapKeyRef:
+              name: secor-obc
+              key: BUCKET_NAME
         - name: SECOR_GROUP
           value: "raw_logs"
 #        - name: SECOR_S3_PATH
