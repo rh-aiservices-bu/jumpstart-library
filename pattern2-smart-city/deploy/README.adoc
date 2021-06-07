@@ -198,3 +198,19 @@ Secor is the component that will listen to the Kafka Stream and write the aggreg
 
 * `secor/1_obc_secor.yaml`: Bucket to store the streamed data
 * `secor/2_zookeeper_enterance.yaml`: Connection to the Kafka-Core instance
+
+=== Grafana
+
+Grafana will allow us to create dashbord to visualize the data workflow (Ops dashboard) and the Business Application itself (Main dashboard). All the deployments are taken care of by the Grafana operator deployed previously (see requirements).
+
+* PGSQL Source to retrieve the data
+
+.Retrieve the secrets, process the template, and apply the configuration
+[source,bash]
+----
+oc process -f grafana/grafana-pgsql-datasource.yaml -p db_database=$(oc get secret/postgresql -o yaml | grep " database-name:" | awk '{ print $2 }' - | base64 -d) -p db_user=$(oc get secret/postgresql -o yaml | grep " database-user:" | awk '{ print $2 }' - | base64 -d) -p db_password=$(oc get secret/postgresql -o yaml | grep " database-password:" | awk '{ print $2 }' - | base64 -d) | oc apply -f -
+----
+
+* `grafana/grafana-main-dashboard.yaml`: Main application dashboard
+* `grafana/grafana-ops-dashboard.yaml`: Ops dashboard
+* `grafana/grafana-smart-city.yaml`: Grafana instance itself.
