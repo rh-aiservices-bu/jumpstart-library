@@ -47,12 +47,12 @@ spec:
         parameters:
         - name: s3_endpoint_url
           value: s3.data.local
-        - name: s3_credentials_secret
-          value: secor-bucket
-        - name: s3_bucket
-          value: secor-bucket
         - name: s3_endpoint_url_prefix
           value: 'http://'
+        - name: s3_credentials_secret
+          value: secor-obc
+        - name: s3_bucket
+          value: secor-obc
         - name: storage_class
           value: ocs-storagecluster-ceph-rbd
         repoRef:
