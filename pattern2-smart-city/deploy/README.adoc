@@ -112,6 +112,7 @@ TIP: If you did not use `smartcity` as the name of your project, don't forget to
 If not already available, deploy the following operators from OperatorHub:
 
 * Red Hat AMQ Streams (all namespaces)
+* Open Data Hub (all namespaces)
 * Grafana Operator (in the `smartcity` namespace only)
 
 == Deployment
@@ -202,7 +203,17 @@ Secor is the component that will listen to the Kafka Stream and write the aggreg
 
 === Open Data Hub
 
+Open Data Hub will allow us to easily deploy SuperSet and Trino.
 
+* `opendatahub/kfdef.yaml`: Deploys an Open Data Hub instance with the needed components
+
+Once it is running, connect to the Superset pod and enter the following commands:
+
+[source,bash]
+----
+superset db upgrade
+superset init
+----
 
 === Grafana
 
