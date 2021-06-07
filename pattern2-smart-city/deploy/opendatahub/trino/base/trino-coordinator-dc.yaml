@@ -39,6 +39,10 @@ spec:
             items:
               - key: hive.properties
                 path: hive.properties
+              - key: postgresql-lpr.properties
+                path: postgresql-lpr.properties
+              - key: jmx.properties
+                path: jmx.properties
       containers:
         - resources:
             requests:
