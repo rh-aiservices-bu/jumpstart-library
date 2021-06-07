@@ -1,0 +1,48 @@
+apiVersion: batch/v1beta1
+kind: CronJob
+metadata:
+  name: fee-calculation
+spec:
+  schedule: "*/5 * * * *"
+  concurrencyPolicy: "Replace"
+  startingDeadlineSeconds: 200
+  suspend: true
+  successfulJobsHistoryLimit: 3
+  failedJobsHistoryLimit: 1 
+  jobTemplate: 
+    metadata:
+      name: fee-calculation
+    spec:
+      template:
+        metadata:
+          name: fee-calculation
+        spec:
+          containers:
+          - name: fee-calculation
+            image: fee-calculation:latest
+            imagePullPolicy: Always
+            env:
+              - name: DB_HOST
+                value: "smartcity-db-service"
+              - name: DB_NAME
+                valueFrom:
+                    secretKeyRef:
+                      name: postgresql
+                      key: database-name
+              - name: DB_PASSWORD
+                valueFrom:
+                    secretKeyRef:
+                      name: postgresql
+                      key: database-password
+              - name: DB_USER
+                valueFrom:
+                    secretKeyRef:
+                      name: postgresql
+                      key: database-user
+              - name: TOLL_FEE
+                value: '5'
+              - name: POLLUTION_FEE
+                value: '5' 
+              - name: BATCH_TIME_MINS
+                value: '5' 
+          restartPolicy: OnFailure
