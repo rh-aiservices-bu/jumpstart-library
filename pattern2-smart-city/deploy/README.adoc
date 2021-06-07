@@ -197,7 +197,12 @@ This is the component that injects car images into the pipeline.
 Secor is the component that will listen to the Kafka Stream and write the aggregated data to an object Bucket.
 
 * `secor/1_obc_secor.yaml`: Bucket to store the streamed data
-* `secor/2_zookeeper_enterance.yaml`: Connection to the Kafka-Core instance
+* `secor/2_zookeeper_entrance.yaml`: Connection to the Kafka-Core instance
+* `secor/3_secor.yaml`: Deploys the Secor instance
+
+=== Open Data Hub
+
+
 
 === Grafana
 
