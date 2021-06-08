@@ -59,7 +59,7 @@ async def consume():
                 print("Message written to DB successfully")
                 print("===============================================")
             except Exception as e:
-                print(e.message)
+                print(e)
     except Exception as e:
         print(e.message)
     finally:
