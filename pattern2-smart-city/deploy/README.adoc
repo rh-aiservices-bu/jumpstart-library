@@ -192,6 +192,15 @@ export BUCKET=$(oc get cm/generator-dataset -o yaml | grep " BUCKET_NAME:" | awk
 aws --endpoint-url $RGW_ROUTE s3 cp --recursive ../source/dataset/images s3://$BUCKET/images
 ----
 
+This bucket also has to be made readable to display the images.
+
+In the file `image_server/policy.json`, replace `My_Bucket` by the name of your bucket, then apply the file.
+
+[source,bash]
+----
+aws --endpoint-url $RGW_ROUTE s3api put-bucket-policy --bucket $BUCKET --policy file://image_server/policy.json
+----
+
 === Load Generator
 
 This is the component that injects car images into the pipeline.

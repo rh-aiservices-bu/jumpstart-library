@@ -99,7 +99,7 @@ app = FastAPI()
 
 
 
-@app.get("/last_image")
+@app.get("/last_image", response_class=HTMLResponse)
 async def last_image():
     image_name = get_last_image()   
     if image_name != "":   
