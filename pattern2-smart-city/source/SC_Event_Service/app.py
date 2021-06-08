@@ -50,13 +50,16 @@ async def consume():
             print(msg.key)
             message = msg.value
             payload=ast.literal_eval(message.decode('utf-8'))
-            connection.execute(f"""INSERT INTO public.{TABLE_NAME}(event_id, date, event_vehicle_detected_plate_number, event_vehicle_lpn_detection_status, "stationa1", "stationa5201", "stationa13", "stationa2", "stationa23", "stationb313", "stationa4202" 
+            try:
+                connection.execute(f"""INSERT INTO public.{TABLE_NAME}(event_id, date, event_vehicle_detected_plate_number, event_vehicle_lpn_detection_status, "stationa1", "stationa5201", "stationa13", "stationa2", "stationa23", "stationb313", "stationa4202" 
 , "stationa41", "stationb504" ) VALUES('{payload['event_id']}', '{payload['event_timestamp']}', '{payload['event_vehicle_detected_plate_number']}', '{payload['event_vehicle_lpn_detection_status']}', '{payload['stationa1']}', '{payload['stationa5201']}', '{payload['stationa13']}', '{payload['stationa2']}', '{payload['stationa23']}', '{payload['stationb313']}', '{payload['stationa4202']}', '{payload['stationa41']}', '{payload['stationb504']}'
 )""")
-            print("===============================================")
-            print(payload)
-            print("Message written to DB successfully")
-            print("===============================================")
+                print("===============================================")
+                print(payload)
+                print("Message written to DB successfully")
+                print("===============================================")
+            except Exception as e:
+                print(e.message)
     except Exception as e:
         print(e.message)
     finally:
