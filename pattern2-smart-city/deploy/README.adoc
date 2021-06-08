@@ -233,6 +233,8 @@ From the Trino prompt:
 CREATE SCHEMA hive.odf WITH (location = 's3a://replace_with_secor_bucket_name/');
 
 CREATE TABLE IF NOT EXISTS hive.odf.event(event_timestamp timestamp, event_id varchar, event_vehicle_detected_plate_number varchar, event_vehicle_detected_lat varchar, event_vehicle_detected_long varchar, event_vehicle_lpn_detection_status varchar, stationa1 boolean, stationa5201 boolean, stationa13 boolean, stationa2 boolean, stationa23 boolean, stationb313 boolean, stationa4202 boolean, stationa41 boolean, stationb504 boolean, dt varchar) with ( external_location = 's3://replace_with_secor_bucket_name/raw_logs/lpr/', format = 'ORC', partitioned_by=ARRAY['dt']);
+
+CALL system.sync_partition_metadata(schema_name=>'odf', table_name=>'event', mode=>'FULL');
 ----
 
 

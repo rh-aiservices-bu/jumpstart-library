@@ -13,6 +13,8 @@ spec:
         parameters:
           - name: SUPERSET_ADMIN_PASSWORD
             value: admin
+          - name: SUPERSET_IMAGE
+            value: quay.io/rh-data-services/superset:1.1.0_trino
         repoRef:
           name: manifests-superset
           path: superset
