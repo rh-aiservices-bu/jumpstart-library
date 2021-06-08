@@ -12,6 +12,9 @@ from fastapi.responses import HTMLResponse
 from sqlalchemy import create_engine,MetaData
 import sqlalchemy as db
 
+# Images on local S3
+service_point = os.environ['SERVICE_POINT']
+bucket_name = os.environ['BUCKET_NAME']
 
 ## Database details and connection
 DB_USER = os.getenv('DB_USER', 'dbadmin')
