@@ -39,9 +39,9 @@ spec:
               name: secor-obc
               key: AWS_SECRET_ACCESS_KEY
         - name: AWS_ENDPOINT
-          value: s3.data.local
+          value: 'http://s3.data.local'
         - name: AWS_PATH_STYLE_ACCESS
-          value: "false"
+          value: 'true'
         - name: SECOR_S3_BUCKET
           valueFrom:
             configMapKeyRef:
