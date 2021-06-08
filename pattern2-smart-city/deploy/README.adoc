@@ -171,6 +171,14 @@ This is the component that runs in the Core and listens to incoming Kafka events
 * `events_service/bc_events_service.yaml`: BuildConfiguration for the event service
 * `events_service/dc_events_service.yaml`: Deployment Configuration for the event service
 
+=== Image Server
+
+This component will return the image of the last identified vehicle to be displayed on the dashbord.
+
+* `image_server/is_image-server.yaml`: ImageStream for the image-server
+* `image_server/bc_image-server.yaml`: Build Config for the image-server
+* `image_server/dc_image-server.yaml`: Deployment Config/Service/Route for the image-server
+
 === Dataset
 
 Retrieve the information for the dataset bucket created previously and upload the images.
