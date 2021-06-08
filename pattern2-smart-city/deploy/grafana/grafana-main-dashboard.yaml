@@ -50,7 +50,7 @@ spec:
           },
           "gridPos": {
             "h": 3,
-            "w": 5,
+            "w": 4,
             "x": 0,
             "y": 0
           },
@@ -76,8 +76,8 @@ spec:
           },
           "gridPos": {
             "h": 3,
-            "w": 7,
-            "x": 5,
+            "w": 4,
+            "x": 4,
             "y": 0
           },
           "id": 6,
@@ -113,6 +113,114 @@ spec:
           "title": "",
           "transparent": true,
           "type": "grafana-clock-panel"
+        },
+        {
+          "datasource": "PostgreSQL",
+          "fieldConfig": {
+            "defaults": {
+              "custom": {
+                "align": null,
+                "filterable": false
+              },
+              "mappings": [],
+              "thresholds": {
+                "mode": "absolute",
+                "steps": [
+                  {
+                    "color": "green",
+                    "value": null
+                  },
+                  {
+                    "color": "red",
+                    "value": 80
+                  }
+                ]
+              },
+              "unit": "dateTimeAsUS"
+            },
+            "overrides": [
+              {
+                "matcher": {
+                  "id": "byName",
+                  "options": "event"
+                },
+                "properties": [
+                  {
+                    "id": "custom.width",
+                    "value": 195
+                  }
+                ]
+              },
+              {
+                "matcher": {
+                  "id": "byName",
+                  "options": "plate"
+                },
+                "properties": [
+                  {
+                    "id": "custom.width",
+                    "value": 103
+                  }
+                ]
+              },
+              {
+                "matcher": {
+                  "id": "byName",
+                  "options": "event"
+                },
+                "properties": [
+                  {
+                    "id": "unit",
+                    "value": "dateTimeAsIso"
+                  }
+                ]
+              }
+            ]
+          },
+          "gridPos": {
+            "h": 5,
+            "w": 6,
+            "x": 8,
+            "y": 0
+          },
+          "id": 21,
+          "options": {
+            "showHeader": true,
+            "sortBy": []
+          },
+          "pluginVersion": "7.3.10",
+          "targets": [
+            {
+              "format": "table",
+              "group": [],
+              "metricColumn": "none",
+              "rawQuery": true,
+              "rawSql": "SELECT e.date AS Event, e.event_vehicle_detected_plate_number AS Plate,\n  CASE WHEN stationa1 = 'true' THEN 'stationa1'\n       WHEN stationa13 = 'true' THEN 'stationa13' \n       WHEN stationa2 = 'true' THEN 'stationa2'\n       WHEN stationa23 = 'true' THEN 'stationa23'\n       WHEN stationb313 = 'true' THEN 'stationb313'\n       WHEN stationa4202 = 'true' THEN 'stationa4202'\n       WHEN stationb504 = 'true' THEN 'stationb504'\n       WHEN stationa41 = 'true' THEN 'stationa41'\n       WHEN stationa5201 = 'true' THEN 'stationa5201'\n       END AS Station\nFROM event AS e\nLEFT JOIN vehicle_metadata AS v\nON e.event_vehicle_detected_plate_number = v.vehicle_registered_plate_number\nWHERE e.event_vehicle_detected_plate_number = 'LCA2555' OR e.event_vehicle_detected_plate_number = 'G526JHD'\nORDER by e.date DESC \nLIMIT 3\n",
+              "refId": "A",
+              "select": [
+                [
+                  {
+                    "params": [
+                      "value"
+                    ],
+                    "type": "column"
+                  }
+                ]
+              ],
+              "timeColumn": "time",
+              "where": [
+                {
+                  "name": "$__timeFilter",
+                  "params": [],
+                  "type": "macro"
+                }
+              ]
+            }
+          ],
+          "timeFrom": null,
+          "timeShift": null,
+          "title": "Wanted vehicles location",
+          "type": "table"
         },
         {
           "cards": {
@@ -395,7 +503,7 @@ spec:
           ],
           "timeFrom": null,
           "timeShift": null,
-          "title": "Hourly ingress by station",
+          "title": "Vehicles per station over period",
           "tooltip": {
             "extraInfo": "",
             "freezeOnClick": true,
@@ -435,7 +543,7 @@ spec:
             "h": 21,
             "w": 14,
             "x": 0,
-            "y": 3
+            "y": 5
           },
           "id": 2,
           "options": {
@@ -1488,7 +1596,7 @@ spec:
         "list": []
       },
       "time": {
-        "from": "now-3h",
+        "from": "now-30m",
         "to": "now"
       },
       "timepicker": {},
