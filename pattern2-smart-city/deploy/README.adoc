@@ -171,6 +171,14 @@ This is the component that runs in the Core and listens to incoming Kafka events
 * `events_service/bc_events_service.yaml`: BuildConfiguration for the event service
 * `events_service/dc_events_service.yaml`: Deployment Configuration for the event service
 
+=== Image Server
+
+This component will return the image of the last identified vehicle to be displayed on the dashbord.
+
+* `image_server/is_image-server.yaml`: ImageStream for the image-server
+* `image_server/bc_image-server.yaml`: Build Config for the image-server
+* `image_server/dc_image-server.yaml`: Deployment Config/Service/Route for the image-server
+
 === Dataset
 
 Retrieve the information for the dataset bucket created previously and upload the images.
@@ -182,6 +190,15 @@ export AWS_SECRET_ACCESS_KEY=$(oc get secret/generator-dataset -o yaml | grep " 
 export RGW_ROUTE=https://$(oc get routes -n openshift-storage | grep rgw | awk '{ print $2 }')
 export BUCKET=$(oc get cm/generator-dataset -o yaml | grep " BUCKET_NAME:" | awk '{ print $2 }' -)
 aws --endpoint-url $RGW_ROUTE s3 cp --recursive ../source/dataset/images s3://$BUCKET/images
+----
+
+This bucket also has to be made readable to display the images.
+
+In the file `image_server/policy.json`, replace `My_Bucket` by the name of your bucket, then apply the file.
+
+[source,bash]
+----
+aws --endpoint-url $RGW_ROUTE s3api put-bucket-policy --bucket $BUCKET --policy file://image_server/policy.json
 ----
 
 === Load Generator

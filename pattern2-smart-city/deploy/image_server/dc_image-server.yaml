@@ -35,28 +35,28 @@ spec:
                   name: postgresql
                   key:  database-password
             - name: DB_HOST
-              value: postgresql
+              value: smartcity-db-service
             - name: DB_NAME
               valueFrom:
                 secretKeyRef:
                   name: postgresql
                   key:  database-name
             - name: SERVICE_POINT
-              value: "https://rgw-openshift-storage.apps.perf3.chris.ocs.ninja/"
+              value: "https://s3-rgw-openshift-storage.apps.cluster-889d.889d.sandbox392.opentlc.com"
             - name: BUCKET_NAME
               valueFrom:
                 configMapKeyRef:
-                  name: lpr-dataset
+                  name: generator-dataset
                   key: BUCKET_NAME
             - name: AWS_ACCESS_KEY_ID
               valueFrom:
                 secretKeyRef:
-                  name: lpr-dataset
+                  name: generator-dataset
                   key:  AWS_ACCESS_KEY_ID
             - name: AWS_SECRET_ACCESS_KEY
               valueFrom:
                 secretKeyRef:
-                  name: lpr-dataset
+                  name: generator-dataset
                   key:  AWS_SECRET_ACCESS_KEY
           ports:
             - containerPort: 8080
