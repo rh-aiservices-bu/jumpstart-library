@@ -1,0 +1,206 @@
+{
+  "annotations": {
+    "list": [
+      {
+        "builtIn": 1,
+        "datasource": "-- Grafana --",
+        "enable": true,
+        "hide": true,
+        "iconColor": "rgba(0, 211, 255, 1)",
+        "name": "Annotations & Alerts",
+        "type": "dashboard"
+      }
+    ]
+  },
+  "editable": true,
+  "gnetId": null,
+  "graphTooltip": 0,
+  "id": 3,
+  "links": [],
+  "panels": [
+    {
+      "datasource": "prometheus",
+      "fieldConfig": {
+        "defaults": {
+          "custom": {}
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 21,
+        "w": 24,
+        "x": 0,
+        "y": 0
+      },
+      "id": 2,
+      "options": {
+        "forceImageRefresh": false,
+        "imageUrl": "https://s3-rgw-openshift-storage.apps.cluster-889d.889d.sandbox392.opentlc.com/generator-dataset-1d9c716e-268b-43ee-a1fe-9e3d36adf534/mlops-panel.gif",
+        "lockSensors": false,
+        "mappings": [],
+        "sensors": [
+          {
+            "backgroundBlink": false,
+            "backgroundColor": "#000",
+            "bold": false,
+            "decimals": 2,
+            "fontColor": "#FFF",
+            "link": "",
+            "mappingId": "",
+            "name": "",
+            "position": {
+              "x": 83.20494186046511,
+              "y": 18.00390266299357
+            },
+            "query": {
+              "alias": "",
+              "id": "A"
+            },
+            "unit": "bytes",
+            "valueBlink": false,
+            "visible": true
+          },
+          {
+            "backgroundBlink": false,
+            "backgroundColor": "#000",
+            "bold": false,
+            "decimals": 2,
+            "fontColor": "#FFF",
+            "link": "",
+            "mappingId": "",
+            "name": "",
+            "position": {
+              "x": 10.923076923076923,
+              "y": 16.80327868852459
+            },
+            "query": {
+              "alias": "",
+              "id": "B"
+            },
+            "unit": "bytes",
+            "valueBlink": false,
+            "visible": true
+          },
+          {
+            "backgroundBlink": false,
+            "backgroundColor": "#000",
+            "bold": false,
+            "decimals": 2,
+            "fontColor": "#FFF",
+            "link": "",
+            "mappingId": "",
+            "name": "",
+            "position": {
+              "x": 15.846153846153847,
+              "y": 86.47540983606558
+            },
+            "query": {
+              "alias": "",
+              "id": "C"
+            },
+            "unit": "bytes",
+            "valueBlink": false,
+            "visible": true
+          },
+          {
+            "backgroundBlink": false,
+            "backgroundColor": "#000",
+            "bold": false,
+            "decimals": 2,
+            "fontColor": "#FFF",
+            "link": "",
+            "mappingId": "",
+            "name": "",
+            "position": {
+              "x": 79.23076923076923,
+              "y": 60.65573770491803
+            },
+            "query": {
+              "alias": "",
+              "id": "D"
+            },
+            "unit": "bytes",
+            "valueBlink": false,
+            "visible": true
+          },
+          {
+            "backgroundBlink": false,
+            "backgroundColor": "#000",
+            "bold": false,
+            "decimals": 2,
+            "fontColor": "#FFF",
+            "link": "",
+            "mappingId": "",
+            "name": "",
+            "position": {
+              "x": 46.61538461538461,
+              "y": 14.754098360655737
+            },
+            "query": {
+              "alias": "",
+              "id": "E"
+            },
+            "unit": "bytes",
+            "valueBlink": false,
+            "visible": true
+          }
+        ],
+        "sensorsTextSize": 12
+      },
+      "pluginVersion": "7.3.10",
+      "targets": [
+        {
+          "expr": "sum(pod:container_memory_usage_bytes:sum{namespace=\"smartcity\", pod=~\"core-kafka.*\"})",
+          "instant": true,
+          "interval": "",
+          "legendFormat": "",
+          "refId": "A"
+        },
+        {
+          "expr": "sum(pod:container_memory_usage_bytes:sum{namespace=\"smartcity\", pod=~\"edge-kafka.*\"})",
+          "interval": "",
+          "legendFormat": "",
+          "refId": "B"
+        },
+        {
+          "expr": "sum(pod:container_memory_usage_bytes:sum{namespace=\"smartcity\", pod=~\"lpr-service.*\"})",
+          "interval": "",
+          "legendFormat": "",
+          "refId": "C"
+        },
+        {
+          "expr": "sum(pod:container_memory_usage_bytes:sum{namespace=\"smartcity\", pod=~\"secor.*\"})",
+          "interval": "",
+          "legendFormat": "",
+          "refId": "D"
+        },
+        {
+          "expr": "sum(pod:container_memory_usage_bytes:sum{namespace=\"smartcity\", pod=~\"mirror.*\"})",
+          "interval": "",
+          "legendFormat": "",
+          "refId": "E"
+        }
+      ],
+      "timeFrom": null,
+      "timeShift": null,
+      "title": "Memory consumption",
+      "type": "pierosavi-imageit-panel"
+    }
+  ],
+  "refresh": "5s",
+  "schemaVersion": 26,
+  "style": "dark",
+  "tags": [],
+  "templating": {
+    "list": []
+  },
+  "time": {
+    "from": "now-6h",
+    "to": "now"
+  },
+  "timepicker": {},
+  "timezone": "",
+  "title": "Pipeline Ops - RAM",
+  "uid": "U5Pe6w6Mk",
+  "version": 9
+}
