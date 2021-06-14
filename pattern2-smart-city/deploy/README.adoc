@@ -316,4 +316,3 @@ oc process -f grafana/grafana-pgsql-datasource.yaml -p db_database=$(oc get secr
 
 * `grafana/grafana-main-dashboard.yaml`: Main application dashboard
 * `grafana/grafana-ops-dashboard.yaml`: Ops dashboard
-* `grafana/grafana-smart-city.yaml`: Grafana instance itself.
