@@ -26,7 +26,7 @@ objects:
         user: ${db_user}
         database: ${db_database}
         basicAuth: false
-        isDefault: true
+        isDefault: false
         jsonData:
           postgresVersion: 903
           sslmode: disable
