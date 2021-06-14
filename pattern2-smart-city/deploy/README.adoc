@@ -3,11 +3,6 @@
 :sectnumlevels: 2
 :toc:
 
-.Content
-****
-:toc:
-****
-
 == Requirements
 
 * A working OpenShift environment. Last tested version: 4.7
