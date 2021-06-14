@@ -40,9 +40,9 @@ spec:
                       name: postgresql
                       key: database-user
               - name: TOLL_FEE
-                value: 5
+                value: '5'
               - name: POLLUTION_FEE
-                value: 5 
+                value: '5' 
               - name: BATCH_TIME_MINS
-                value: 5 
+                value: '5' 
           restartPolicy: OnFailure

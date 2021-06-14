@@ -111,9 +111,17 @@ TIP: If you did not use `smartcity` as the name of your project, don't forget to
 
 If not already available, deploy the following operators from OperatorHub:
 
+* Red Hat OpenShift Container Storage
 * Red Hat AMQ Streams (all namespaces)
 * Open Data Hub (all namespaces)
 * Grafana Operator (in the `smartcity` namespace only)
+
+== Deploy OpenShift Container Storage
+- select project `openshift-storage` > Installed Operators > OpenShift Container Storage > Create Storage Cluster
+- Select Capacity & Nodes  > Configure > Review and Create
+- Wait for OpenShift Container Storage to be ready
+- Once OCS deployment is completed, verify storage classes ` oc get sc`
+- Depending on your OCP environment, you might need to deploy OCS RGW. [Read More](https://red-hat-storage.github.io/ocs-training/training/ocs4/ocs4-enable-rgw.html)
 
 == Deployment
 
@@ -129,17 +137,20 @@ oc apply -f file.yaml
 
 We will need a database to store informations about the workflow, as well as registration information for the vehicles. You can edit the Secret file if you want change the default values.
 
-* `database/secret_postgresql.yaml`: Secrets to deploy the PostgreSQL database
-* `database/dc_postgresql.yaml`: Deployment of the PostgreSQL helper database
-* `database/service_postgresql.yaml`: Service for PostgreSQL helper database
+Deploying PostgreSQL DB
 
-=== Seed the database
+* `database/postgresql/secret_postgresql.yaml`: Secrets to deploy the PostgreSQL database
+* `database/postgresql/dc_postgresql.yaml`: Deployment of the PostgreSQL helper database
+* `database/postgresql/service_postgresql.yaml`: Service for PostgreSQL helper database
 
-We will now initialize the database with the registration informations.
+Deploying Seed Database to initialize the database with the registration informations.
 
-* `seed_database/is_seed_database.yaml`: ImageStream for the image that will be used to see the DB
-* `seed_database/bc_seed_database.yaml`: BuildConfiguration for the image
-* `seed_database/job_seed_database.yaml`: Seeding Job to initialize the DB
+* `database/seed_database/is_seed_database.yaml`: ImageStream for the image that will be used to see the DB
+* `database/seed_database/bc_seed_database.yaml`: BuildConfiguration for the image
+
+IMPORTANT: Before you apply `job_seed_database.yaml` make sure the build process (from the last step) has been completed, else seed job will complain until the image is not ready.
+
+* `database/seed_database/job_seed_database.yaml`: Seeding Job to initialize the DB
 
 === Kafka
 
@@ -147,6 +158,9 @@ We will need two different Kafka instances. One will simulate the "Edges", the t
 
 * `kafka/edge.yaml`: Edge Kafka instance
 * `kafka/core.yaml`: Core Kafka instance
+
+IMPORTANT: Before you create  edge and core kafka topics,  make sure both kafka clusters are up and running.
+
 * `kafka/edge-topic.yaml`: Edge topic
 * `kafka/core-topic.yaml`: Core topic
 * `kafka/mirror-maker.yaml`: Mirror maker
@@ -179,6 +193,15 @@ This component will return the image of the last identified vehicle to be displa
 * `image_server/bc_image-server.yaml`: Build Config for the image-server
 * `image_server/dc_image-server.yaml`: Deployment Config/Service/Route for the image-server
 
+=== Load Generator
+
+This is the component that injects car images into the pipeline.
+
+* `generator/obc_dataset_generator.yaml`: Bucket to store the images dataset
+* `generator/is_generator.yaml`: ImageStream for the load generator
+* `generator/bc_generator.yaml`: BuildConfiguration to create the load generator image
+* `generator/dc_generator.yaml`: Deployment Configuration for the load generator
+
 === Dataset
 
 Retrieve the information for the dataset bucket created previously and upload the images.
@@ -201,14 +224,19 @@ In the file `image_server/policy.json`, replace `My_Bucket` by the name of your 
 aws --endpoint-url $RGW_ROUTE s3api put-bucket-policy --bucket $BUCKET --policy file://image_server/policy.json
 ----
 
-=== Load Generator
+=== Start Traffic
+By default `generator` has not pods running, inorder to simulate traffic, increase the replica count of generator deployment to `1`
+[source,bash]
+----
+oc scale dc/generator --replicas 1
+----
 
-This is the component that injects car images into the pipeline.
-
-* `generator/obc_dataset_generator.yaml`: Bucket to store the images dataset
-* `generator/is_generator.yaml`: ImageStream for the load generator
-* `generator/bc_generator.yaml`: BuildConfiguration to create the load generator image
-* `generator/dc_generator.yaml`: Deployment Configuration for the load generator
+Verify the generated traffic by visiting the following kafdrop URL for edge and core kafka clusters
+[source,bash]
+----
+echo "http://$(oc get route | grep -i edge-kafdrop | awk '{print $2}')/topic/lpr/messages?partition=0&offset=0&count=100&keyFormat=DEFAULT&format=DEFAULT"
+echo "http://$(oc get route | grep -i core-kafdrop | awk '{print $2}')/topic/lpr/messages?partition=0&offset=0&count=100&keyFormat=DEFAULT&format=DEFAULT"
+----
 
 === Secor
 
@@ -222,6 +250,15 @@ Secor is the component that will listen to the Kafka Stream and write the aggreg
 
 Open Data Hub will allow us to easily deploy SuperSet and Trino.
 
+IMPORTANT: Before you apply `opendatahub/kfdef.yaml` make sure to replace s3 endpoint with RWG IP, using the following command
+
+[source,bash]
+----
+RGW_IP=$(oc get svc -n openshift-storage | grep -i rgw | awk '{print $3}')
+sed -i "s/s3.data.local/$RGW_IP/g" opendatahub/kfdef.yaml
+----
+
+
 * `opendatahub/kfdef.yaml`: Deploys an Open Data Hub instance with the needed components
 
 ==== Superset
@@ -230,20 +267,25 @@ Once Superset pod is running, connect to it and enter the following commands:
 
 [source,bash]
 ----
-superset db upgrade
-superset init
+oc exec $(oc get po -n smartcity | grep -i superset | grep -v db- | awk '{print $1}') -- superset db upgrade ;
+oc exec $(oc get po -n smartcity | grep -i superset | grep -v db- | awk '{print $1}') -- superset init ;
 ----
 
 ==== Trino
 
-Once trino-coordinator pod is running, connect to it and enter the following commands:
+Once trino-coordinator pod is running, connect to trino using trino-cli
 
 [source,bash]
 ----
-trino --server localhost:8080 --catalog hive --schema default
+wget https://repo1.maven.org/maven2/io/trino/trino-cli/358/trino-cli-358-executable.jar -O trino
+chmod +x trino
+oc port-forward svc/trino-service 8080:8080 
+./trino --server localhost:8080 --catalog hive --schema default
 ----
 
-From the Trino prompt:
+From the Trino prompt, create schema and table
+
+IMPORTANT: Before you execute the command to create schema and table , make sure to replace the bucket name with your bucket. To grab bucket name execute `oc get obc secor-obc -o json | jq -r .spec.bucketName`
 
 [source,sql]
 ----
@@ -252,6 +294,8 @@ CREATE SCHEMA hive.odf WITH (location = 's3a://replace_with_secor_bucket_name/')
 CREATE TABLE IF NOT EXISTS hive.odf.event(event_timestamp timestamp, event_id varchar, event_vehicle_detected_plate_number varchar, event_vehicle_detected_lat varchar, event_vehicle_detected_long varchar, event_vehicle_lpn_detection_status varchar, stationa1 boolean, stationa5201 boolean, stationa13 boolean, stationa2 boolean, stationa23 boolean, stationb313 boolean, stationa4202 boolean, stationa41 boolean, stationb504 boolean, dt varchar) with ( external_location = 's3://replace_with_secor_bucket_name/raw_logs/lpr/', format = 'ORC', partitioned_by=ARRAY['dt']);
 
 CALL system.sync_partition_metadata(schema_name=>'odf', table_name=>'event', mode=>'FULL');
+
+SELECT event_timestamp,event_vehicle_detected_plate_number,event_vehicle_lpn_detection_status FROM hive.odf.event LIMIT 10;
 ----
 
 
