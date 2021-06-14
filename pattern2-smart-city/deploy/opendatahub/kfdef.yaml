@@ -20,15 +20,15 @@ spec:
           path: superset
       name: superset
     - kustomizeConfig:
-      repoRef:
-        name: manifests
-        path: grafana/cluster
+        repoRef:
+          name: manifests
+          path: grafana/cluster
       name: grafana-cluster
     - kustomizeConfig:
         repoRef:
           name: manifests
           path: grafana/grafana
-      name: grafana-operator
+      name: grafana-instance
     - kustomizeConfig:
         overlays:
           - storage-class
