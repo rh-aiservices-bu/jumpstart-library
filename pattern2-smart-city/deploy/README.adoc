@@ -306,7 +306,7 @@ SELECT event_timestamp,event_vehicle_detected_plate_number,event_vehicle_lpn_det
 
 Grafana will allow us to create dashbord to visualize the data workflow (Ops dashboard) and the Business Application itself (Main dashboard). All the deployments are taken care of by the Grafana operator deployed previously (see requirements).
 
-* PGSQL Source to retrieve the data
+* PGSQL Source to retrieve the events and vehicle data
 
 .Retrieve the secrets, process the template, and apply the configuration
 [source,bash]
@@ -314,5 +314,30 @@ Grafana will allow us to create dashbord to visualize the data workflow (Ops das
 oc process -f grafana/grafana-pgsql-datasource.yaml -p db_database=$(oc get secret/postgresql -o yaml | grep " database-name:" | awk '{ print $2 }' - | base64 -d) -p db_user=$(oc get secret/postgresql -o yaml | grep " database-user:" | awk '{ print $2 }' - | base64 -d) -p db_password=$(oc get secret/postgresql -o yaml | grep " database-password:" | awk '{ print $2 }' - | base64 -d) | oc apply -f -
 ----
 
+* Prometheus Data Source to retrieve the CPU and RAM metrics
+
+Our Grafana dashboard wil connect to the main OpenShift Prometheus instance to retrieve CPU and RAM information. To enable this, follow those steps:
+
+.Grant the Grafana Service Account the cluster-monitoring-view cluster role:
+[source,bash]
+----
+oc adm policy add-cluster-role-to-user cluster-monitoring-view -z grafana-serviceaccount
+----
+
+.Retrieve the bearer token used to authenticate to Prometheus:
+[source,bash]
+----
+export bearer_token=$(oc serviceaccounts get-token grafana-serviceaccount)
+----
+
+.Deploy the Prometheus data source by using the template and substituting the bearer token:
+[source,bash]
+----
+sed 's/BEARER_TOKEN/'$bearer_token'/' grafana/grafana-prometheus-datasource.yaml | oc apply -f -
+----
+
+You can now apply the two last files:
+
 * `grafana/grafana-main-dashboard.yaml`: Main application dashboard
-* `grafana/grafana-ops-dashboard.yaml`: Ops dashboard
+* `grafana/grafana-pipeline-cpu-dashboard.yaml`: CPU Ops dashboard
+* `grafana/grafana-pipeline-ram-dashboard.yaml`: RAM Ops dashboard
