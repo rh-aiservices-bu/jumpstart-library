@@ -16,9 +16,14 @@ spec:
           - name: SUPERSET_IMAGE
             value: quay.io/rh-data-services/superset:1.1.0_trino
         repoRef:
-          name: manifests-superset
+          name: manifests
           path: superset
       name: superset
+    - kustomizeConfig:
+        repoRef:
+          name: manifests
+          path: grafana/grafana
+      name: grafana-instance
     - kustomizeConfig:
         overlays:
           - storage-class
@@ -68,5 +73,3 @@ spec:
       uri: 'https://github.com/opendatahub-io/odh-manifests/tarball/v1.0.11'
     - name: manifests-trino
       uri: 'https://github.com/red-hat-data-services/jumpstart-library/tarball/main'
-    - name: manifests-superset
-      uri: 'https://github.com/maulikjs/odh-manifests/tarball/e272300930ae424164e44172c74db29c060df1e8'

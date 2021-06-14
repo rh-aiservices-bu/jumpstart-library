@@ -1,13 +1,34 @@
 = Smart Cities Workshop Deployment Guide
+:sectnums:
+:sectnumlevels: 2
+:toc:
+
+.Content
+****
+:toc:
+****
 
 == Requirements
 
 * A working OpenShift environment. Last tested version: 4.7
 * Cluster-admin access to OpenShift, or ability to deploy operators.
-* OpenShift Data Foundation (ODF). Last tested version: 4.7
-* A running RGW instance in ODF. External Route to the RGW must be exposed with SSL enabled for Grafana dashboards to work properly.
 * The `oc` client.
 * Optional: the `jq` tool (JSON patcher).
+
+== Operators
+
+If not already available, deploy the following operators from OperatorHub:
+
+* Red Hat OpenShift Container Storage
+* Red Hat AMQ Streams (all namespaces)
+* Open Data Hub (all namespaces)
+
+== Deploy OpenShift Container Storage
+- select project `openshift-storage` > Installed Operators > OpenShift Container Storage > Create Storage Cluster
+- Select Capacity & Nodes  > Configure > Review and Create
+- Wait for OpenShift Container Storage to be ready
+- Once OCS deployment is completed, verify storage classes ` oc get sc`
+- Depending on your OCP environment, you might need to deploy OCS RGW. [Read More](https://red-hat-storage.github.io/ocs-training/training/ocs4/ocs4-enable-rgw.html)
 
 == OpenShift/ODF Patch
 
@@ -106,22 +127,6 @@ oc new-project smartcity
 ----
 
 TIP: If you did not use `smartcity` as the name of your project, don't forget to change it in the commands or the config files used for the deployment.
-
-== Operators
-
-If not already available, deploy the following operators from OperatorHub:
-
-* Red Hat OpenShift Container Storage
-* Red Hat AMQ Streams (all namespaces)
-* Open Data Hub (all namespaces)
-* Grafana Operator (in the `smartcity` namespace only)
-
-== Deploy OpenShift Container Storage
-- select project `openshift-storage` > Installed Operators > OpenShift Container Storage > Create Storage Cluster
-- Select Capacity & Nodes  > Configure > Review and Create
-- Wait for OpenShift Container Storage to be ready
-- Once OCS deployment is completed, verify storage classes ` oc get sc`
-- Depending on your OCP environment, you might need to deploy OCS RGW. [Read More](https://red-hat-storage.github.io/ocs-training/training/ocs4/ocs4-enable-rgw.html)
 
 == Deployment
 
@@ -225,7 +230,9 @@ aws --endpoint-url $RGW_ROUTE s3api put-bucket-policy --bucket $BUCKET --policy 
 ----
 
 === Start Traffic
-By default `generator` has not pods running, inorder to simulate traffic, increase the replica count of generator deployment to `1`
+
+By default `generator` has not pods running, in order to simulate traffic, you will increase the replica count of generator deployment to `1` (not yet, after you have deployed all the components!)
+
 [source,bash]
 ----
 oc scale dc/generator --replicas 1
@@ -252,12 +259,13 @@ Open Data Hub will allow us to easily deploy SuperSet and Trino.
 
 IMPORTANT: Before you apply `opendatahub/kfdef.yaml` make sure to replace s3 endpoint with RWG IP, using the following command
 
+// TODO: Check the s3.data.local deployment
+
 [source,bash]
 ----
 RGW_IP=$(oc get svc -n openshift-storage | grep -i rgw | awk '{print $3}')
 sed -i "s/s3.data.local/$RGW_IP/g" opendatahub/kfdef.yaml
 ----
-
 
 * `opendatahub/kfdef.yaml`: Deploys an Open Data Hub instance with the needed components
 
