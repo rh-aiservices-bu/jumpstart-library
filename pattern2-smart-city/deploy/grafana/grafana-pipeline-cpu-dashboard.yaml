@@ -1,4 +1,3 @@
----
 apiVersion: integreatly.org/v1alpha1
 kind: GrafanaDashboard
 metadata:
@@ -56,7 +55,7 @@ spec:
           "id": 2,
           "options": {
             "forceImageRefresh": false,
-            "imageUrl": "https://s3-rgw-openshift-storage.apps.cluster-889d.889d.sandbox392.opentlc.com/generator-dataset-1d9c716e-268b-43ee-a1fe-9e3d36adf534/mlops-panel.gif",
+            "imageUrl": "http://jumpstart-library.s3.amazonaws.com/smartcity/mlops-panel.gif",
             "lockSensors": false,
             "mappings": [],
             "sensors": [

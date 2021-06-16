@@ -1,4 +1,5 @@
 *.env
+*.devel
 !**/base/params.env
 *__pycache__
 

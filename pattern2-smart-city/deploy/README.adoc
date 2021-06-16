@@ -258,20 +258,21 @@ IMPORTANT: Before you apply `opendatahub/kfdef.yaml` make sure to replace s3 end
 [source,bash]
 ----
 RGW_IP=$(oc get svc -n openshift-storage | grep -i rgw | awk '{print $3}')
-sed -i "s/s3.data.local/$RGW_IP/g" opendatahub/kfdef.yaml
+sed -i 's/s3.data.local/'$RGW_IP'/g' opendatahub/kfdef.yaml
 ----
 
 * `opendatahub/kfdef.yaml`: Deploys an Open Data Hub instance with the needed components
 
-==== Superset
-
-Once Superset pod is running, connect to it and enter the following commands:
+Once the components are running (check the pods!) you can connect to the ODH dasboard to launch Superset or Grafana. The Route can be found in the OpenShift UI or like this:
 
 [source,bash]
 ----
-oc exec $(oc get po -n smartcity | grep -i superset | grep -v db- | awk '{print $1}') -- superset db upgrade ;
-oc exec $(oc get po -n smartcity | grep -i superset | grep -v db- | awk '{print $1}') -- superset init ;
+echo "https://$(oc get route | grep -i odh-dashboard | awk '{print $2}')"
 ----
+
+==== Superset
+
+To log into Superset you can use admin / admin (unless you have modified it into the ODH KfDef).
 
 ==== Trino
 
@@ -293,7 +294,7 @@ IMPORTANT: Before you execute the command to create schema and table , make sure
 ----
 CREATE SCHEMA hive.odf WITH (location = 's3a://replace_with_secor_bucket_name/');
 
-CREATE TABLE IF NOT EXISTS hive.odf.event(event_timestamp timestamp, event_id varchar, event_vehicle_detected_plate_number varchar, event_vehicle_detected_lat varchar, event_vehicle_detected_long varchar, event_vehicle_lpn_detection_status varchar, stationa1 boolean, stationa5201 boolean, stationa13 boolean, stationa2 boolean, stationa23 boolean, stationb313 boolean, stationa4202 boolean, stationa41 boolean, stationb504 boolean, dt varchar) with ( external_location = 's3://replace_with_secor_bucket_name/raw_logs/lpr/', format = 'ORC', partitioned_by=ARRAY['dt']);
+CREATE TABLE IF NOT EXISTS hive.odf.event(event_timestamp timestamp, event_id varchar, event_vehicle_detected_plate_number varchar, event_vehicle_detected_lat varchar, event_vehicle_detected_long varchar, event_vehicle_lpn_detection_status varchar, stationa1 boolean, stationa5201 boolean, stationa13 boolean, stationa2 boolean, stationa23 boolean, stationb313 boolean, stationa4202 boolean, stationa41 boolean, stationb504 boolean, dt varchar) with ( external_location = 's3a://replace_with_secor_bucket_name/raw_logs/lpr/', format = 'ORC', partitioned_by=ARRAY['dt']);
 
 CALL system.sync_partition_metadata(schema_name=>'odf', table_name=>'event', mode=>'FULL');
 
@@ -337,6 +338,13 @@ sed 's/BEARER_TOKEN/'$bearer_token'/' grafana/grafana-prometheus-datasource.yaml
 
 You can now apply the two last files:
 
-* `grafana/grafana-main-dashboard.yaml`: Main application dashboard
+* Main application dashboard
+
+.Retrieve the image server url, process the template, and apply the configuration
+[source,bash]
+----
+oc process -f grafana/grafana-main-dashboard.yaml -p image_server_host=$(oc get route | grep -i image-server | awk '{print $2}') | oc apply -f -
+----
+
 * `grafana/grafana-pipeline-cpu-dashboard.yaml`: CPU Ops dashboard
 * `grafana/grafana-pipeline-ram-dashboard.yaml`: RAM Ops dashboard

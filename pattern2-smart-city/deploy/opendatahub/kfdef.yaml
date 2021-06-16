@@ -30,25 +30,6 @@ spec:
           path: grafana/grafana
       name: grafana-instance
     - kustomizeConfig:
-        overlays:
-          - storage-class
-        parameters:
-          - name: storage_class
-            value: ocs-storagecluster-ceph-rbd
-          - name: s3_endpoint_url
-            value: s3.data.local
-        repoRef:
-          name: manifests
-          path: jupyterhub/jupyterhub
-      name: jupyterhub
-    - kustomizeConfig:
-        overlays:
-          - additional
-        repoRef:
-          name: manifests
-          path: jupyterhub/notebook-images
-      name: notebook-images
-    - kustomizeConfig:
         repoRef:
           name: manifests
           path: odh-dashboard
