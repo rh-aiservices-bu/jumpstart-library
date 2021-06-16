@@ -217,11 +217,10 @@ aws --endpoint-url $RGW_ROUTE s3 cp --recursive ../source/dataset/images s3://$B
 
 This bucket also has to be made readable to display the images.
 
-In the file `image_server/policy.json`, replace `My_Bucket` by the name of your bucket, then apply the file.
-
+.Apply the anonymous readonly policy
 [source,bash]
 ----
-aws --endpoint-url $RGW_ROUTE s3api put-bucket-policy --bucket $BUCKET --policy file://image_server/policy.json
+sed 's/MY_BUCKET/'$BUCKET'/' image_server/policy.json > /tmp/policy.json && aws --endpoint-url $RGW_ROUTE s3api put-bucket-policy --bucket $BUCKET --policy file:///tmp/policy.json
 ----
 
 === Start Traffic
