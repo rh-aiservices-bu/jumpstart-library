@@ -1,7 +1,7 @@
 apiVersion: v1
 kind: Template
 metadata:
-  name: grafana-xraylab-dashboard-template
+  name: grafana-pgsql-template
   annotations: {}
 parameters:
 - description: Name of the database
