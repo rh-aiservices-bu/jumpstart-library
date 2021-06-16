@@ -272,11 +272,26 @@ echo "https://$(oc get route | grep -i odh-dashboard | awk '{print $2}')"
 
 ==== Superset
 
-To log into Superset you can use admin / admin (unless you have modified it into the ODH KfDef).
+* Transfer the DataSources configuration file into the Superset pod.
+
+[source,bash]
+----
+oc rsync superset/config/superset-datasources.yaml $(oc get pod | grep superset- | awk '{print $1}'):/tmp
+----
+
+* Import the datasources into Superset (PostgreSQL and Hive from Trino)
+
+[source,bash]
+----
+oc exec $(oc get pod | grep superset- | awk '{print $1}') superset import_datasources -p /tmp/config/superset-datasources.yaml
+----
+
+* Log into Superset you can use admin / admin (unless you have modified it into the ODH KfDef).
+* From the Settings menu (top right), import the example dasboard from the file `dashboard/dashboard.json`
 
 ==== Trino
 
-Once trino-coordinator pod is running, connect to trino using trino-cli
+Once the trino-coordinator pod is running, connect to trino using trino-cli
 
 [source,bash]
 ----
