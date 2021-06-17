@@ -241,9 +241,9 @@ echo "http://$(oc get route | grep -i core-kafdrop | awk '{print $2}')/topic/lpr
 
 === Fee Calculation
 
-For calculating the toll and pollution fee, there are two cases that we have covered
+For calculating the toll and pollution fee, there are two cases that we have covered:
 
-* When any vehichel enters the ULEZ, a certain fee (aka toll fee) must be applied to that vehicle
+* When any vehicle enters the ULEZ, a certain fee (aka toll fee) must be applied to that vehicle
 * If the vehicle model is too old (older than 2014), apply addition fee (aka pollution fee) on that vehicle
 
 Deploy the fee calculation component, using the following commands
