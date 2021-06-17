@@ -288,6 +288,15 @@ echo "https://$(oc get route | grep -i odh-dashboard | awk '{print $2}')"
 
 ==== Superset
 
+* For superset to establish connection with PostgreSQL, set the credentials in `superset-dasboard.yaml` file
+
+[source, bash]
+----
+sed -i " " "s/DB_USER/dbadmin/" superset/config/superset-datasources.yaml
+sed -i " " "s/DB_PASSWORD/dbpassword/" superset/config/superset-datasources.yaml
+sed -i " " "s/DB_NAME/pgdb/" superset/config/superset-datasources.yaml
+----
+
 * Transfer the DataSources configuration file into the Superset pod.
 
 [source,bash]
