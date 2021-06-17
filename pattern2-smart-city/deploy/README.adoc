@@ -292,14 +292,14 @@ echo "https://$(oc get route | grep -i odh-dashboard | awk '{print $2}')"
 
 [source,bash]
 ----
-oc rsync superset/config/superset-datasources.yaml $(oc get pod | grep superset- | awk '{print $1}'):/tmp
+oc rsync superset/config $(oc get pod | grep superset- | awk '{print $1}'):/tmp
 ----
 
 * Import the datasources into Superset (PostgreSQL and Hive from Trino)
 
 [source,bash]
 ----
-oc exec $(oc get pod | grep superset- | awk '{print $1}') superset import_datasources -p /tmp/config/superset-datasources.yaml
+oc exec $(oc get pod | grep superset- | awk '{print $1}') -- superset import_datasources -p /tmp/config/superset-datasources.yaml
 ----
 
 * Log into Superset you can use admin / admin (unless you have modified it into the ODH KfDef).
