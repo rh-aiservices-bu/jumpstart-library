@@ -225,7 +225,7 @@ sed 's/MY_BUCKET/'$BUCKET'/' image_server/policy.json > /tmp/policy.json && aws 
 
 === Start Traffic
 
-By default `generator` has not pods running, in order to simulate traffic, you will increase the replica count of generator deployment to `1` (not yet, after you have deployed all the components!)
+By default `generator` has no pods running, in order to simulate traffic, you will increase the replica count of generator deployment to `1` (not yet, after you have deployed all the components!)
 
 [source,bash]
 ----
@@ -237,6 +237,22 @@ Verify the generated traffic by visiting the following kafdrop URL for edge and 
 ----
 echo "http://$(oc get route | grep -i edge-kafdrop | awk '{print $2}')/topic/lpr/messages?partition=0&offset=0&count=100&keyFormat=DEFAULT&format=DEFAULT"
 echo "http://$(oc get route | grep -i core-kafdrop | awk '{print $2}')/topic/lpr/messages?partition=0&offset=0&count=100&keyFormat=DEFAULT&format=DEFAULT"
+----
+
+=== Fee Calculation
+
+For calculating the toll and pollution fee, there are two cases that we have covered:
+
+* When any vehicle enters the ULEZ, a certain fee (aka toll fee) must be applied to that vehicle
+* If the vehicle model is too old (older than 2014), apply addition fee (aka pollution fee) on that vehicle
+
+Deploy the fee calculation component, using the following commands
+
+[source,bash]
+----
+oc create -f fee_calculation/is_fee_calculation.yaml
+oc create -f fee_calculation/bc_fee_calculation.yaml
+oc create -f fee_calculation/cronjob_fee_calculation.yaml
 ----
 
 === Secor
@@ -272,18 +288,27 @@ echo "https://$(oc get route | grep -i odh-dashboard | awk '{print $2}')"
 
 ==== Superset
 
+* For superset to establish connection with PostgreSQL, set the credentials in `superset-dasboard.yaml` file
+
+[source, bash]
+----
+sed -i " " "s/DB_USER/dbadmin/" superset/config/superset-datasources.yaml
+sed -i " " "s/DB_PASSWORD/dbpassword/" superset/config/superset-datasources.yaml
+sed -i " " "s/DB_NAME/pgdb/" superset/config/superset-datasources.yaml
+----
+
 * Transfer the DataSources configuration file into the Superset pod.
 
 [source,bash]
 ----
-oc rsync superset/config/superset-datasources.yaml $(oc get pod | grep superset- | awk '{print $1}'):/tmp
+oc rsync superset/config $(oc get pod | grep superset- | awk '{print $1}'):/tmp
 ----
 
 * Import the datasources into Superset (PostgreSQL and Hive from Trino)
 
 [source,bash]
 ----
-oc exec $(oc get pod | grep superset- | awk '{print $1}') superset import_datasources -p /tmp/config/superset-datasources.yaml
+oc exec $(oc get pod | grep superset- | awk '{print $1}') -- superset import_datasources -p /tmp/config/superset-datasources.yaml
 ----
 
 * Log into Superset you can use admin / admin (unless you have modified it into the ODH KfDef).
