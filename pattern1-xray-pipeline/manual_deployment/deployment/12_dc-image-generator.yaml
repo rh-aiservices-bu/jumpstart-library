@@ -13,7 +13,7 @@ spec:
           kind: ImageStreamTag
           name: image-generator:latest
     - type: ConfigChange
-  replicas: 1
+  replicas: 0
   revisionHistoryLimit: 3
   template:
     metadata:
@@ -25,7 +25,7 @@ spec:
           image: image-generator:latest
           env:
             - name: SECONDS_WAIT
-              value: '0'
+              value: '1'
             - name: AWS_ACCESS_KEY_ID
               valueFrom:
                 secretKeyRef:
