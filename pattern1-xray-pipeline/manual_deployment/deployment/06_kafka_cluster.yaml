@@ -1,4 +1,4 @@
-apiVersion: kafka.strimzi.io/v1beta1
+apiVersion: kafka.strimzi.io/v1beta2
 kind: Kafka
 metadata:
   name: my-cluster
@@ -10,16 +10,23 @@ spec:
       reconciliationIntervalSeconds: 120
   kafka:
     config:
-      log.message.format.version: '2.5'
+      log.message.format.version: '2.7'
       offsets.topic.replication.factor: 1
       transaction.state.log.min.isr: 1
       transaction.state.log.replication.factor: 1
     listeners:
-      plain: {}
+      - name: plain
+        port: 9092
+        type: internal
+        tls: false
+      - name: tls
+        port: 9093
+        type: internal
+        tls: true
     replicas: 3
     storage:
       type: ephemeral
-    version: 2.5.0
+    version: 2.7.0
   zookeeper:
     replicas: 3
     storage:
