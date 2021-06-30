@@ -42,7 +42,7 @@ spec:
                   name: postgresql
                   key:  database-name
             - name: SERVICE_POINT
-              value: "https://s3-rgw-openshift-storage.apps.cluster-889d.889d.sandbox392.opentlc.com"
+              value: "RGW_SERVICE_ENDPOINT"
             - name: BUCKET_NAME
               valueFrom:
                 configMapKeyRef:
@@ -96,7 +96,7 @@ spec:
     name: image-server
     weight: 100
   port:
-    targetPort: 80
+    targetPort: 8080
   tls:
     termination: edge
   wildcardPolicy: None

@@ -189,6 +189,12 @@ This is the component that runs in the Core and listens to incoming Kafka events
 
 This component will return the image of the last identified vehicle to be displayed on the dashbord.
 
+- Get the RGW Endpoint Name and update `image_server/dc_image-server.yaml`
+```
+export RGW_ROUTE=https://$(oc get routes -n openshift-storage | grep rgw | awk '{ print $2 }')
+sed -i " " 's/RGW_SERVICE_ENDPOINT/'$RGW_ROUTE'/' image_server/dc_image-server.yaml
+```
+
 * `image_server/is_image-server.yaml`: ImageStream for the image-server
 * `image_server/bc_image-server.yaml`: Build Config for the image-server
 * `image_server/dc_image-server.yaml`: Deployment Config/Service/Route for the image-server
