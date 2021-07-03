@@ -1,0 +1,16 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: ocp-odf-patch
+  namespace: argocd
+spec:
+  syncPolicy:
+    automated: {}
+  project: default
+  source:
+    repoURL: https://github.com/red-hat-data-services/jumpstart-library.git
+    targetRevision: argocd
+    path: pattern2-smart-city/deploy/ocp_odf_patch
+  destination:
+    server: https://api.crc.testing:6443
+    namespace: smartcity
