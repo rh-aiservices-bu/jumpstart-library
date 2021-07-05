@@ -90,7 +90,7 @@ def  lpr_process(input_image_path):
         plate_image = cv2.convertScaleAbs(LpImg[0], alpha=(255.0))
         gray = cv2.cvtColor(plate_image, cv2.COLOR_BGR2GRAY)
         blur = cv2.GaussianBlur(gray,(7,7),0)
-         # Applied inversed thresh_binary
+        # Applied inversed thresh_binary
         binary = cv2.threshold(blur, 180, 255,cv2.THRESH_BINARY_INV + cv2.THRESH_OTSU)[1]
         kernel3 = cv2.getStructuringElement(cv2.MORPH_RECT, (3, 3))
         thre_mor = cv2.morphologyEx(binary, cv2.MORPH_DILATE, kernel3)
@@ -151,7 +151,7 @@ print("[INFO] Labels loaded successfully...")
 
 @app.get("/")
 async def root():
-    return {"message": "Hello World !! Welcome to License Plate Recoginition Service !!"}
+    return {"message": "Hello World !! Welcome to License Plate Recoginition Service !! Hey RedHat"}
 
 
 @app.post("/DetectPlate")
