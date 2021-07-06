@@ -1,0 +1,23 @@
+== < Name of the pattern >
+
+=== Description
+
+Lorem ipsum...
+
+This pattern is used in the followind demos:
+
+* link:internal_link_to_the_demo[Name of the demo]
+* link:internal_link_to_the_demo[Name of the demo]
+
+=== Use cases
+
+==== Name of the use case
+
+Description of the use case...
+
+=== Videos
+
+The following videos are available for this pattern:
+
+* link:https://www.youtube.com/xxxxxxx[Implementation of the pattern]
+* link:https://www.youtube.com/xxxxxxx[The pattern in action]

@@ -1,0 +1,21 @@
+== Demo 1 - XRay analysis automated pipeline
+
+In this demo, we implement an automated data pipeline for chest Xray analysis:
+
+* Ingest chest Xrays into an object store based on Ceph.
+* The Object store sends notifications to a Kafka topic.
+* A KNative Eventing Listener to the topic triggers a KNative Serving function.
+* An ML-trained model running in a container makes a risk of Pneumonia assessment for incoming images.
+* A Grafana dashboard displays the pipeline in real time, along with images incoming, processed and anonymized, as well as full metrics.
+
+This pipeline is showcased link:https://www.youtube.com/watch?v=zja83FVsm14[in this video] (slides are also link:docs/Commons_Data_Science_Pipelines.pdf[here]).
+
+image::docs/dashboard.png[Pipeline dashboard]
+
+=== Content
+
+In this folder you will find the following content for this demo:
+
+* link:base_elements[*base_elements*]: notebooks, container images, scripts, images,... that are used to build the demo or run it.
+* link:manual_deployment[*manual_deployment*]: instructions to manually deploy the demo in an OpenShift environment, like creating configmaps, deployments,...
+* link:automated_deployment[*automated_deployment*]: scripts and playbooks to deploy the base elements (operators) as well as a workshop environment based on bookbag to guide you through the rest of the deployment.

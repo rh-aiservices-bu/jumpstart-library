@@ -1,0 +1,18 @@
+= Demo 2 - Smart City edge-to-core scenario
+
+== Scenario
+
+In this pattern, we show how to implement this scenario:
+
+* Using a trained ML model, licence plates are recognized at toll location.
+* Data (plate number, location, timestamp) is send from toll locations (edge) to the core using Kafka mirroring to handle communication issues and recovery.
+* Incoming data is screened real-time to trigger alerts for wanted vehicles (Amber Alert).
+* Data is aggregated and stored into object storage.
+* A central database contains other information coming from licence registry system: car model, color,...
+* Data analysis leveraging Presto and Superset is done against stored data.
+
+link:doc/full-description.adoc[Full scenario description and architecture]
+
+== Deployment
+
+All the instructions to deploy the environment and the scenario can be found link:deploy/README.adoc[here]
