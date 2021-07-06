@@ -1,0 +1,396 @@
+= Smart Cities Workshop Deployment Guide
+:sectnums:
+:sectnumlevels: 2
+:toc:
+
+== Requirements
+
+* A working OpenShift environment. Last tested version: 4.7
+* Cluster-admin access to OpenShift, or ability to deploy operators.
+* The `oc` client.
+* Optional: the `jq` tool (JSON patcher).
+
+== Operators
+
+If not already available, deploy the following operators from OperatorHub:
+
+* Red Hat OpenShift Container Storage
+* Red Hat AMQ Streams (all namespaces)
+* Open Data Hub (all namespaces)
+
+== Deploy OpenShift Container Storage
+- select project `openshift-storage` > Installed Operators > OpenShift Container Storage > Create Storage Cluster
+- Select Capacity & Nodes  > Configure > Review and Create
+- Wait for OpenShift Container Storage to be ready
+- Once OCS deployment is completed, verify storage classes ` oc get sc`
+- Depending on your OCP environment, you might need to deploy OCS RGW. [Read More](https://red-hat-storage.github.io/ocs-training/training/ocs4/ocs4-enable-rgw.html)
+
+== OpenShift/ODF Patch
+
+To circumvent some issues related to bucket access-style (DNS vs Path), we have to make some changes. 
+
+IMPORTANT: All the files used in the following commands are in the `ocp-odf-patch` folder.
+
+=== Deploy CoreDNS into the `openshift-storage` namespace:
+
+.Create the odf-coredns ConfigMap
+[source,bash]
+----
+oc apply -f cm_coredns.yaml
+----
+
+.Create the odf-coredns Deployment
+[source,bash]
+----
+oc apply -f dp_coredns.yaml
+----
+
+.Create the odf-coredns Service
+[source,bash]
+----
+oc apply -f svc_coredns.yaml
+----
+
+=== Patch the `dns.operator/default` object from OpenShift
+
+Here we are adding a new zone, `data.local` to our environment.
+
+.Patching command
+[source,bash]
+----
+oc patch dns.operator/default --type=merge --patch '{"spec":{"servers":[{"forwardPlugin":{"upstreams":["'$(oc get -n openshift-storage svc | grep dns | awk '{print $3}')':5353"]},"name":"rook-dns","zones":["data.local"]}]}}'
+----
+
+=== Add the new endpoint to the RGW zone configuration
+
+The RGW must know about this new zone it will serve from.
+
+* If not already done, deploy the Ceph toolbox
+
+[source,bash]
+----
+oc patch OCSInitialization ocsinit -n openshift-storage --type json --patch  '[{ "op": "replace", "path": "/spec/enableCephTools", "value": true }]'
+----
+
+* Add the endpoint 
+
+IMPORTANT: The next command does everything in one step. If you want to understand what's going on (or just don't trust those long commands...), detailed instructions are available in the next section.
+
+.One line command
+[source,bash]
+----
+oc exec -n openshift-storage deployment/rook-ceph-tools -- bash -c "radosgw-admin zonegroup get --rgw-zonegroup=ocs-storagecluster-cephobjectstore > /tmp/config.json && sed -i 's/\"hostnames\": \[],/\"hostnames\": \[\"s3\.data\.local\"],/' /tmp/config.json && radosgw-admin zonegroup set --rgw-zonegroup=ocs-storagecluster-cephobjectstore --infile=/tmp/config.json"
+----
+
+=== Manual steps to add the endpoint (Optional)
+
+*** Get the current config
+
+[source,bash]
+----
+echo $(oc exec -n openshift-storage deployment/rook-ceph-tools -- radosgw-admin zonegroup get --rgw-zonegroup=ocs-storagecluster-cephobjectstore) > config.json
+----
+
+** Edit the file config.json
+
+In the file `config.json` you obtained, replace the first occurence of `"hostnames": [],` by `"hostnames": ["s3.data.local"],`.
+
+You can also use jq to do that:
+`jq '.hostnames = ["s3.data.local"]' config.json > tmp.json && mv tmp.json config.json` (the complicated part with tmp.json is because json cannot edit in place...).
+
+** Upload the modified file to the toolbox
+
+[source,bash]
+----
+oc rsync . $(oc get pods -n openshift-storage | grep rook-ceph-tools | grep Running | awk '{print $1}'):/tmp --exclude=* --include=config.json --no-perms
+----
+
+** Apply the new configuration
+
+[source,bash]
+----
+oc exec -n openshift-storage deploy/rook-ceph-tools -- radosgw-admin zonegroup set --rgw-zonegroup=ocs-storagecluster-cephobjectstore --infile=/tmp/config.json
+----
+
+== Namespace
+
+Create an OpenShift project/namespace to deploy the environment. In this documentation we'll use `smartcity`.
+
+[source,bash]
+----
+oc new-project smartcity
+----
+
+TIP: If you did not use `smartcity` as the name of your project, don't forget to change it in the commands or the config files used for the deployment.
+
+== Deployment
+
+From the `deploy` folder and subfolders, create the OpenShift resources in this order.
+
+.Creating a resource
+[source,bash]
+----
+oc apply -f file.yaml
+----
+
+=== Database
+
+We will need a database to store informations about the workflow, as well as registration information for the vehicles. You can edit the Secret file if you want change the default values.
+
+Deploying PostgreSQL DB
+
+* `database/postgresql/secret_postgresql.yaml`: Secrets to deploy the PostgreSQL database
+* `database/postgresql/dc_postgresql.yaml`: Deployment of the PostgreSQL helper database
+* `database/postgresql/service_postgresql.yaml`: Service for PostgreSQL helper database
+
+Deploying Seed Database to initialize the database with the registration informations.
+
+* `database/seed_database/is_seed_database.yaml`: ImageStream for the image that will be used to see the DB
+* `database/seed_database/bc_seed_database.yaml`: BuildConfiguration for the image
+
+IMPORTANT: Before you apply `job_seed_database.yaml` make sure the build process (from the last step) has been completed, else seed job will complain until the image is not ready.
+
+* `database/seed_database/job_seed_database.yaml`: Seeding Job to initialize the DB
+
+=== Kafka
+
+We will need two different Kafka instances. One will simulate the "Edges", the toll station, the other one the "Core". We will also create the different topics that are needed, as well as the Kafka Mirror Maker to replicate the topics from the Edge to the Core.
+
+* `kafka/edge.yaml`: Edge Kafka instance
+* `kafka/core.yaml`: Core Kafka instance
+
+IMPORTANT: Before you create  edge and core kafka topics,  make sure both kafka clusters are up and running.
+
+* `kafka/edge-topic.yaml`: Edge topic
+* `kafka/core-topic.yaml`: Core topic
+* `kafka/mirror-maker.yaml`: Mirror maker
+* `kafka/edge-kafdrop.yaml`: Optional! Kafdrop is a UI interface to your Kafka cluster (to inspect messages)
+* `kafka/core-kafdrop.yaml`: Optional! Kafdrop is a UI interface to your Kafka cluster (to inspect messages)
+
+=== LPR Service
+
+This component presents an API that you can query with an image and returns the infered licence plate number.
+
+* `lpr_service/is_lpr_service.yaml`: ImageStream for the LPR service
+* `lpr_service/bc_lpr_service.yaml`: BuildConfiguration for the LPR service
+* `lpr_service/dc_lpr_service.yaml`: Deployment Configuration for the LPR service
+* `lpr_service/svc_lpr_service.yaml`: Service to access the LPR service
+
+
+=== Events Service
+
+This is the component that runs in the Core and listens to incoming Kafka events to write them into a PostgreSQL database so that they can be queried to create the dashboards.
+
+* `events_service/is_events_service.yaml`: ImageStream for the event service
+* `events_service/bc_events_service.yaml`: BuildConfiguration for the event service
+* `events_service/dc_events_service.yaml`: Deployment Configuration for the event service
+
+=== Image Server
+
+This component will return the image of the last identified vehicle to be displayed on the dashbord.
+
+- Get the RGW Endpoint Name and update `image_server/dc_image-server.yaml`
+```
+export RGW_ROUTE=https://$(oc get routes -n openshift-storage | grep rgw | awk '{ print $2 }')
+sed -i " " 's/RGW_SERVICE_ENDPOINT/'$RGW_ROUTE'/' image_server/dc_image-server.yaml
+```
+
+* `image_server/is_image-server.yaml`: ImageStream for the image-server
+* `image_server/bc_image-server.yaml`: Build Config for the image-server
+* `image_server/dc_image-server.yaml`: Deployment Config/Service/Route for the image-server
+
+=== Load Generator
+
+This is the component that injects car images into the pipeline.
+
+* `generator/obc_dataset_generator.yaml`: Bucket to store the images dataset
+* `generator/is_generator.yaml`: ImageStream for the load generator
+* `generator/bc_generator.yaml`: BuildConfiguration to create the load generator image
+* `generator/dc_generator.yaml`: Deployment Configuration for the load generator
+
+=== Dataset
+
+Retrieve the information for the dataset bucket created previously and upload the images.
+
+[source,bash]
+----
+export AWS_ACCESS_KEY_ID=$(oc get secret/generator-dataset -o yaml | grep " AWS_ACCESS_KEY_ID" | awk '{ print $2 }' - | base64 -d)
+export AWS_SECRET_ACCESS_KEY=$(oc get secret/generator-dataset -o yaml | grep " AWS_SECRET_ACCESS_KEY" | awk '{ print $2 }' - | base64 -d)
+export RGW_ROUTE=https://$(oc get routes -n openshift-storage | grep rgw | awk '{ print $2 }')
+export BUCKET=$(oc get cm/generator-dataset -o yaml | grep " BUCKET_NAME:" | awk '{ print $2 }' -)
+aws --endpoint-url $RGW_ROUTE s3 cp --recursive ../source/dataset/images s3://$BUCKET/images
+----
+
+This bucket also has to be made readable to display the images.
+
+.Apply the anonymous readonly policy
+[source,bash]
+----
+sed 's/MY_BUCKET/'$BUCKET'/' image_server/policy.json > /tmp/policy.json && aws --endpoint-url $RGW_ROUTE s3api put-bucket-policy --bucket $BUCKET --policy file:///tmp/policy.json
+----
+
+=== Start Traffic
+
+By default `generator` has no pods running, in order to simulate traffic, you will increase the replica count of generator deployment to `1` (not yet, after you have deployed all the components!)
+
+[source,bash]
+----
+oc scale dc/generator --replicas 1
+----
+
+Verify the generated traffic by visiting the following kafdrop URL for edge and core kafka clusters
+[source,bash]
+----
+echo "http://$(oc get route | grep -i edge-kafdrop | awk '{print $2}')/topic/lpr/messages?partition=0&offset=0&count=100&keyFormat=DEFAULT&format=DEFAULT"
+echo "http://$(oc get route | grep -i core-kafdrop | awk '{print $2}')/topic/lpr/messages?partition=0&offset=0&count=100&keyFormat=DEFAULT&format=DEFAULT"
+----
+
+=== Fee Calculation
+
+For calculating the toll and pollution fee, there are two cases that we have covered:
+
+* When any vehicle enters the ULEZ, a certain fee (aka toll fee) must be applied to that vehicle
+* If the vehicle model is too old (older than 2014), apply addition fee (aka pollution fee) on that vehicle
+
+Deploy the fee calculation component, using the following commands
+
+[source,bash]
+----
+oc create -f fee_calculation/is_fee_calculation.yaml
+oc create -f fee_calculation/bc_fee_calculation.yaml
+oc create -f fee_calculation/cronjob_fee_calculation.yaml
+----
+
+=== Secor
+
+Secor is the component that will listen to the Kafka Stream and write the aggregated data to an object Bucket.
+
+* `secor/1_obc_secor.yaml`: Bucket to store the streamed data
+* `secor/2_zookeeper_entrance.yaml`: Connection to the Kafka-Core instance
+* `secor/3_secor.yaml`: Deploys the Secor instance
+
+=== Open Data Hub - Superset - Trino
+
+Open Data Hub will allow us to easily deploy SuperSet and Trino.
+
+IMPORTANT: Before you apply `opendatahub/kfdef.yaml` make sure to replace s3 endpoint with RWG IP, using the following command
+
+// TODO: Check the s3.data.local deployment
+
+[source,bash]
+----
+RGW_IP=$(oc get svc -n openshift-storage | grep -i rgw | awk '{print $3}')
+sed -i 's/s3.data.local/'$RGW_IP'/g' opendatahub/kfdef.yaml
+----
+
+* `opendatahub/kfdef.yaml`: Deploys an Open Data Hub instance with the needed components
+
+Once the components are running (check the pods!) you can connect to the ODH dasboard to launch Superset or Grafana. The Route can be found in the OpenShift UI or like this:
+
+[source,bash]
+----
+echo "https://$(oc get route | grep -i odh-dashboard | awk '{print $2}')"
+----
+
+==== Superset
+
+* For superset to establish connection with PostgreSQL, set the credentials in `superset-dasboard.yaml` file
+
+[source, bash]
+----
+sed -i " " "s/DB_USER/dbadmin/" superset/config/superset-datasources.yaml
+sed -i " " "s/DB_PASSWORD/dbpassword/" superset/config/superset-datasources.yaml
+sed -i " " "s/DB_NAME/pgdb/" superset/config/superset-datasources.yaml
+----
+
+* Transfer the DataSources configuration file into the Superset pod.
+
+[source,bash]
+----
+oc rsync superset/config $(oc get pod | grep superset- | awk '{print $1}'):/tmp
+----
+
+* Import the datasources into Superset (PostgreSQL and Hive from Trino)
+
+[source,bash]
+----
+oc exec $(oc get pod | grep superset- | awk '{print $1}') -- superset import_datasources -p /tmp/config/superset-datasources.yaml
+----
+
+* Log into Superset you can use admin / admin (unless you have modified it into the ODH KfDef).
+* From the Settings menu (top right), import the example dasboard from the file `dashboard/dashboard.json`
+
+==== Trino
+
+Once the trino-coordinator pod is running, connect to trino using trino-cli
+
+[source,bash]
+----
+wget https://repo1.maven.org/maven2/io/trino/trino-cli/358/trino-cli-358-executable.jar -O trino
+chmod +x trino
+oc port-forward svc/trino-service 8080:8080 
+./trino --server localhost:8080 --catalog hive --schema default
+----
+
+From the Trino prompt, create schema and table
+
+IMPORTANT: Before you execute the command to create schema and table , make sure to replace the bucket name with your bucket. To grab bucket name execute `oc get obc secor-obc -o json | jq -r .spec.bucketName`
+
+[source,sql]
+----
+CREATE SCHEMA hive.odf WITH (location = 's3a://replace_with_secor_bucket_name/');
+
+CREATE TABLE IF NOT EXISTS hive.odf.event(event_timestamp timestamp, event_id varchar, event_vehicle_detected_plate_number varchar, event_vehicle_detected_lat varchar, event_vehicle_detected_long varchar, event_vehicle_lpn_detection_status varchar, stationa1 boolean, stationa5201 boolean, stationa13 boolean, stationa2 boolean, stationa23 boolean, stationb313 boolean, stationa4202 boolean, stationa41 boolean, stationb504 boolean, dt varchar) with ( external_location = 's3a://replace_with_secor_bucket_name/raw_logs/lpr/', format = 'ORC', partitioned_by=ARRAY['dt']);
+
+CALL system.sync_partition_metadata(schema_name=>'odf', table_name=>'event', mode=>'FULL');
+
+SELECT event_timestamp,event_vehicle_detected_plate_number,event_vehicle_lpn_detection_status FROM hive.odf.event LIMIT 10;
+----
+
+
+=== Grafana
+
+Grafana will allow us to create dashbord to visualize the data workflow (Ops dashboard) and the Business Application itself (Main dashboard). All the deployments are taken care of by the Grafana operator deployed previously (see requirements).
+
+* PGSQL Source to retrieve the events and vehicle data
+
+.Retrieve the secrets, process the template, and apply the configuration
+[source,bash]
+----
+oc process -f grafana/grafana-pgsql-datasource.yaml -p db_database=$(oc get secret/postgresql -o yaml | grep " database-name:" | awk '{ print $2 }' - | base64 -d) -p db_user=$(oc get secret/postgresql -o yaml | grep " database-user:" | awk '{ print $2 }' - | base64 -d) -p db_password=$(oc get secret/postgresql -o yaml | grep " database-password:" | awk '{ print $2 }' - | base64 -d) | oc apply -f -
+----
+
+* Prometheus Data Source to retrieve the CPU and RAM metrics
+
+Our Grafana dashboard wil connect to the main OpenShift Prometheus instance to retrieve CPU and RAM information. To enable this, follow those steps:
+
+.Grant the Grafana Service Account the cluster-monitoring-view cluster role:
+[source,bash]
+----
+oc adm policy add-cluster-role-to-user cluster-monitoring-view -z grafana-serviceaccount
+----
+
+.Retrieve the bearer token used to authenticate to Prometheus:
+[source,bash]
+----
+export bearer_token=$(oc serviceaccounts get-token grafana-serviceaccount)
+----
+
+.Deploy the Prometheus data source by using the template and substituting the bearer token:
+[source,bash]
+----
+sed 's/BEARER_TOKEN/'$bearer_token'/' grafana/grafana-prometheus-datasource.yaml | oc apply -f -
+----
+
+You can now apply the two last files:
+
+* Main application dashboard
+
+.Retrieve the image server url, process the template, and apply the configuration
+[source,bash]
+----
+oc process -f grafana/grafana-main-dashboard.yaml -p image_server_host=$(oc get route | grep -i image-server | awk '{print $2}') | oc apply -f -
+----
+
+* `grafana/grafana-pipeline-cpu-dashboard.yaml`: CPU Ops dashboard
+* `grafana/grafana-pipeline-ram-dashboard.yaml`: RAM Ops dashboard

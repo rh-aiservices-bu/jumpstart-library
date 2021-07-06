@@ -1,0 +1,28 @@
+== JumpStart Library patterns
+
+WARNING: Work In Progress
+
+Each pattern that you will find in this folder is documented in the same way:
+
+----
+└── pattern/
+    ├── README.adoc :   Full description of the pattern
+    │                   with use cases, reference implementations,
+    │                   video tutorial links,...
+    ├── deployment/
+    │   ├── ... :   Instructions and code to deploy
+    │   └── ...     the pattern.
+    ├── examples/
+    │   ├── ... :   Various basic examples on how to
+    │   └── ...     use or implement the pattern.
+    └── src/
+        ├── ... :   Sources for various elements used in the pattern,
+        └── ...     like container images, glue code,...
+    
+----
+
+=== List of patterns
+
+* 
+* 
+* 

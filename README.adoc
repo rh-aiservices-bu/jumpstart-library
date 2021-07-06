@@ -1,14 +1,22 @@
 = Jumpstart Library
 
-This repo contains documentation, source code, workshop contents, HowTos... for different use cases (aka "patterns") of Data Science, Data Engineering, AI/ML, Analytics...
+This repo contains documentation, source code, workshop contents, howtos... for different base techniques, aka "patterns", that can used in Data Science, Data Engineering, AI/ML, Analytics...
 
-The goal is to provide users with concrete elements that they will be able to learn from, reproduce, adapt and modify to fit their own needs and requirements.
+The goal is to provide concrete elements that people will be able to learn from, reproduce, adapt and modify to fit their own needs and requirements.
 
-This library currently presents two patterns.
+The library currently features 15 different patterns, as well as 2 demos that are full implementation of scenarios where several patterns are combined.
 
-== Pattern 1 - XRay analysis automated pipeline
+== Patterns
 
-In this pattern, we show how to implement an automated data pipeline for chest Xray analysis:
+In link:patterns[this folder], you will find the following patterns
+
+* Pattern 1
+* Pattern 2
+* Pattern 3
+
+== Demo 1 - XRay analysis automated pipeline
+
+In this demo, we show how to implement an automated data pipeline for chest Xray analysis:
 
 * Ingest chest Xrays into an object store based on Ceph.
 * The Object store sends notifications to a Kafka topic.
@@ -16,11 +24,11 @@ In this pattern, we show how to implement an automated data pipeline for chest X
 * An ML-trained model running in a container makes a risk of Pneumonia assessment for incoming images.
 * A Grafana dashboard displays the pipeline in real time, along with images incoming, processed and anonymized, as well as full metrics.
 
-link:pattern1-xray-pipeline/README.adoc[See this pattern]
+link:demo1-xray-pipeline/README.adoc[See this demo]
 
-== Pattern 2 - Smart City scenario
+== Demo 2 - Smart City scenario
 
-In this pattern, we show how to implement this scenario:
+In this demo, we show how to implement this scenario:
 
 * Using a trained ML model, licence plates are recognized at toll location.
 * Data (plate number, location, timestamp) is send from toll locations (edge) to the core using Kafka mirroring to handle communication issues and recovery.
@@ -29,4 +37,4 @@ In this pattern, we show how to implement this scenario:
 * A central database contains other information coming from licence registry system: car model, color,...
 * Data analysis leveraging Presto and Superset is done against stored data (database and object storage).
 
-link:pattern2-smart-city/README.adoc[See this pattern]
+link:demo2-smart-city/README.adoc[See this demo]
