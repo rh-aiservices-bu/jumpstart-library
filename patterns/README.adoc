@@ -1,5 +1,7 @@
 == JumpStart Library patterns
 
+WARNING: Work In Progress
+
 Each pattern that you will find in this folder is documented in the same way:
 
 ----

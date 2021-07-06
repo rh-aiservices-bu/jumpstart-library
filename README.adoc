@@ -9,9 +9,10 @@ The library currently features 15 different patterns, as well as 2 demos that ar
 == Patterns
 
 In link:patterns[this folder], you will find the following patterns
-* 
-* 
-* 
+
+* Pattern 1
+* Pattern 2
+* Pattern 3
 
 == Demo 1 - XRay analysis automated pipeline
 
