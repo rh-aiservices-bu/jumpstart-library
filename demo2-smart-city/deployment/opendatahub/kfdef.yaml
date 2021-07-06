@@ -50,7 +50,7 @@ spec:
           value: ocs-storagecluster-ceph-rbd
         repoRef:
           name: manifests-trino
-          path: demo2-smart-city/deploy/opendatahub/trino
+          path: demo2-smart-city/deployment/opendatahub/trino
       name: trino
   repos:
     - name: kf-manifests

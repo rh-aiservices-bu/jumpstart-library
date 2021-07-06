@@ -79,7 +79,7 @@ IMPORTANT: The next command does everything in one step. If you want to understa
 .One line command
 [source,bash]
 ----
-oc exec -n openshift-storage deploy/rook-ceph-tools -- bash -c "radosgw-admin zonegroup get --rgw-zonegroup=ocs-storagecluster-cephobjectstore > /tmp/config.json && sed -i 's/\"hostnames\": \[],/\"hostnames\": \[\"s3\.data\.local\"],/' /tmp/config.json && radosgw-admin zonegroup set --rgw-zonegroup=ocs-storagecluster-cephobjectstore --infile=/tmp/config.json"
+oc exec -n openshift-storage deployment/rook-ceph-tools -- bash -c "radosgw-admin zonegroup get --rgw-zonegroup=ocs-storagecluster-cephobjectstore > /tmp/config.json && sed -i 's/\"hostnames\": \[],/\"hostnames\": \[\"s3\.data\.local\"],/' /tmp/config.json && radosgw-admin zonegroup set --rgw-zonegroup=ocs-storagecluster-cephobjectstore --infile=/tmp/config.json"
 ----
 
 === Manual steps to add the endpoint (Optional)
@@ -88,7 +88,7 @@ oc exec -n openshift-storage deploy/rook-ceph-tools -- bash -c "radosgw-admin zo
 
 [source,bash]
 ----
-echo $(oc exec -n openshift-storage deploy/rook-ceph-tools -- radosgw-admin zonegroup get --rgw-zonegroup=ocs-storagecluster-cephobjectstore) > config.json
+echo $(oc exec -n openshift-storage deployment/rook-ceph-tools -- radosgw-admin zonegroup get --rgw-zonegroup=ocs-storagecluster-cephobjectstore) > config.json
 ----
 
 ** Edit the file config.json

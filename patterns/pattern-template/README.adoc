@@ -4,7 +4,7 @@
 
 Lorem ipsum...
 
-This pattern is used in the followind demos:
+This pattern is used in the following demos:
 
 * link:internal_link_to_the_demo[Name of the demo]
 * link:internal_link_to_the_demo[Name of the demo]
