@@ -10,7 +10,7 @@ The library currently features 15 different patterns, as well as 2 demos that ar
 
 In link:patterns[this folder], you will find the following patterns
 
-* link:Kafka Producer[]
+* Pattern 1
 * Pattern 2
 * Pattern 3
 
