@@ -5,7 +5,7 @@ WARNING: Work In Progress
 Each pattern that you will find in this folder is documented in the same way:
 
 ----
-└── pattern/
+└── pattern/pattern-x
     ├── README.adoc :   Full description of the pattern
     │                   with use cases, reference implementations,
     │                   video tutorial links,...
@@ -23,6 +23,6 @@ Each pattern that you will find in this folder is documented in the same way:
 
 === List of patterns
 
-* 
-* 
+* Kafka Producer ( Inference to Kafka ) : Produce kafka events from ML inference output
+* Kafka Edge-to-Core : Store-and-forward kafka events from edge to core
 * 
