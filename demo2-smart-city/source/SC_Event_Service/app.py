@@ -64,6 +64,8 @@ async def consume():
                 sys.exit(1)
     except Exception as e:
         print(e.message)
+        print("Exiting ....")
+        sys.exit(1)
     finally:
         await kafkaConsumer.stop()
 loop.run_until_complete(consume())
