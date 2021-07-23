@@ -68,8 +68,11 @@ async def last_image():
 
 @app.get("/health")
 async def health():
-    #db_connection_health_check = db.create_engine('postgresql://'+DB_USER+':'+DB_PASSWORD+'@'+DB_HOST+'/'+DB_NAME, pool_pre_ping=True)
-    return {"Health_Status": "All_is_well", "db_connection": "db_connection_health_check"}
+    engine = db.create_engine('postgresql://'+DB_USER+':'+DB_PASSWORD+'@'+DB_HOST+'/'+DB_NAME,  pool_pre_ping=True)
+    connection = engine.connect()
+    metadata = db.MetaData()
+    event = db.Table('event',metadata, autoload=True, autoload_with=engine)
+    return {"Health_Status": "All_is_well", "engine": engine, "connection": connection, "metadata": metadata, "event" : event}
 
 app.add_middleware(
     CORSMiddleware,
