@@ -23,15 +23,12 @@ DB_HOST = os.getenv('DB_HOST', '127.0.0.1')
 DB_NAME = os.getenv('DB_NAME','pgdb')
 TABLE_NAME = os.getenv('TABLE_NAME','event')
 
-engine = db.create_engine('postgresql://'+DB_USER+':'+DB_PASSWORD+'@'+DB_HOST+'/'+DB_NAME, connect_args={})
-connection = engine.connect()
-metadata = db.MetaData()
-
-event = db.Table('event',metadata, autoload=True, autoload_with=engine)
-
 def get_last_image():
     """Retrieves the last uploaded image according to helper database timestamp."""
-
+    engine = db.create_engine('postgresql://'+DB_USER+':'+DB_PASSWORD+'@'+DB_HOST+'/'+DB_NAME, pool_pre_ping=True)
+    connection = engine.connect()
+    metadata = db.MetaData()
+    event = db.Table('event',metadata, autoload=True, autoload_with=engine)
     try:
         query = """SELECT e.event_vehicle_detected_plate_number,
                     e.date,
@@ -52,20 +49,13 @@ def get_last_image():
         
     except Exception as e:
         logging.error(f"Unexpected error: {e}")
-        sys.exit(1)
-        #raise
-
-
+        raise
     return result
 
 # Response templates 
 LOCATION_TEMPLATE = Template("""<img src="${service_point}/${bucket_name}/images/${image_name}" style="width:300px;"></img>""")
-
 ## Application  
-
 app = FastAPI()
-
-
 
 @app.get("/last_image", response_class=HTMLResponse)
 async def last_image():
@@ -75,6 +65,11 @@ async def last_image():
     else:
         html = '<h2 style="font-family: Roboto,Helvetica Neue,Arial,sans-serif;text-align: center; color: white;font-size: 15px;font-weight: 400;">No image to show</h2>'
     return html
+
+@app.get("/health")
+async def root():
+    db_connection_health_check = db.create_engine('postgresql://'+DB_USER+':'+DB_PASSWORD+'@'+DB_HOST+'/'+DB_NAME, pool_pre_ping=True)
+    return {"Health_Status": "All_is_well", "db_connection": db_connection_health_check}
 
 app.add_middleware(
     CORSMiddleware,
