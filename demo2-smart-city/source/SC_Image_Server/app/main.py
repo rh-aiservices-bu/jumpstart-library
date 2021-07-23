@@ -52,7 +52,9 @@ def get_last_image():
         
     except Exception as e:
         logging.error(f"Unexpected error: {e}")
-        raise
+        sys.exit(1)
+        #raise
+
 
     return result
 
