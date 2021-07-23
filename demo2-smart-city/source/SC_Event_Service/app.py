@@ -1,7 +1,7 @@
 from sqlalchemy import create_engine, Column, Integer, String, Numeric, DateTime, func, Boolean
 from sqlalchemy.ext.declarative import declarative_base
 from aiokafka import AIOKafkaConsumer
-import asyncio, os, ast
+import asyncio, os, ast , sys
 import nest_asyncio
 nest_asyncio.apply()
 
@@ -60,6 +60,8 @@ async def consume():
                 print("===============================================")
             except Exception as e:
                 print(e)
+                print("Exiting ....")
+                sys.exit(1)
     except Exception as e:
         print(e.message)
     finally:
