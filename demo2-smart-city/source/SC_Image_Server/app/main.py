@@ -67,7 +67,7 @@ async def last_image():
     return html
 
 @app.get("/health")
-async def health():
+def health():
     engine = db.create_engine('postgresql://'+DB_USER+':'+DB_PASSWORD+'@'+DB_HOST+'/'+DB_NAME,  pool_pre_ping=True)
     connection = engine.connect()
     metadata = db.MetaData()
