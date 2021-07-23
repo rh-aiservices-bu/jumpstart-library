@@ -1,0 +1,25 @@
+== < Name of the pattern > deployment instructions
+
+=== Requirements
+
+Lorem ipsum...
+
+=== Part 1: < Name of the part >
+
+< Brief description of the part >
+
+==== Step 1: < Name of the step >
+
+* < Instruction >
+
+.< Code bloc title >
+[source,bash]
+----
+do some command;
+----
+
+* < Instruction >
+
+==== Step 2: < Name of the step >
+
+=== Part 2: < Name of the part >
