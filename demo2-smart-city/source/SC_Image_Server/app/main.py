@@ -23,13 +23,12 @@ DB_HOST = os.getenv('DB_HOST', '127.0.0.1')
 DB_NAME = os.getenv('DB_NAME','pgdb')
 TABLE_NAME = os.getenv('TABLE_NAME','event')
 
-engine = db.create_engine('postgresql://'+DB_USER+':'+DB_PASSWORD+'@'+DB_HOST+'/'+DB_NAME,  pool_pre_ping=True)
-connection = engine.connect()
-metadata = db.MetaData()
-event = db.Table('event',metadata, autoload=True, autoload_with=engine)
-
 def get_last_image():
     """Retrieves the last uploaded image according to helper database timestamp."""
+    engine = db.create_engine('postgresql://'+DB_USER+':'+DB_PASSWORD+'@'+DB_HOST+'/'+DB_NAME,  pool_pre_ping=True)
+    connection = engine.connect()
+    metadata = db.MetaData()
+    event = db.Table('event',metadata, autoload=True, autoload_with=engine)
     try:
         query = """SELECT e.event_vehicle_detected_plate_number,
                     e.date,
