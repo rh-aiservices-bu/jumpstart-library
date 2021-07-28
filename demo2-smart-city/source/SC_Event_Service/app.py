@@ -18,7 +18,7 @@ DB_HOST = os.getenv('DB_HOST', '127.0.0.1')
 DB_NAME = os.getenv('DB_NAME','pgdb')
 TABLE_NAME = os.getenv('TABLE_NAME','event')
 
-engine = create_engine('postgresql://'+DB_USER+':'+DB_PASSWORD+'@'+DB_HOST+'/'+DB_NAME, connect_args={})
+engine = create_engine('postgresql://'+DB_USER+':'+DB_PASSWORD+'@'+DB_HOST+'/'+DB_NAME, connect_args={'connect_timeout': 10})
 
 Base = declarative_base()
 
