@@ -18,10 +18,7 @@ DB_HOST = os.getenv('DB_HOST', '127.0.0.1')
 DB_NAME = os.getenv('DB_NAME','pgdb')
 TABLE_NAME = os.getenv('TABLE_NAME','event')
 
-engine = create_engine('postgresql://'+DB_USER+':'+DB_PASSWORD+'@'+DB_HOST+'/'+DB_NAME, connect_args={'connect_timeout': 10})
-
 Base = declarative_base()
-
 class Event(Base):
     __tablename__ = "event"
     event_id = Column(String, primary_key=True, index=True)
@@ -39,8 +36,11 @@ class Event(Base):
     stationb504 = Column(Boolean, unique=False)
 
 async def consume():
-    kafkaConsumer = AIOKafkaConsumer(KAFKA_TOPIC, loop=loop, bootstrap_servers=KAFKA_ENDPOINT, group_id=KAFKA_CONSUMER_GROUP_ID)
+    engine = create_engine('postgresql://'+DB_USER+':'+DB_PASSWORD+'@'+DB_HOST+'/'+DB_NAME, pool_pre_ping=True, connect_args={'connect_timeout': 10})    
     connection = engine.connect()
+    
+    kafkaConsumer = AIOKafkaConsumer(KAFKA_TOPIC, loop=loop, bootstrap_servers=KAFKA_ENDPOINT, group_id=KAFKA_CONSUMER_GROUP_ID)
+    
     ## Create Table if does not exists
     Event.__table__.create(bind=engine, checkfirst=True)
 
