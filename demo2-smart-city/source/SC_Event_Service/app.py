@@ -36,7 +36,7 @@ class Event(Base):
     stationb504 = Column(Boolean, unique=False)
 
 async def consume():
-    engine = create_engine('postgresql://'+DB_USER+':'+DB_PASSWORD+'@'+DB_HOST+'/'+DB_NAME+'?tcp_user_timeout=30', pool_pre_ping=True, connect_args={'connect_timeout': 10})    
+    engine = create_engine('postgresql://'+DB_USER+':'+DB_PASSWORD+'@'+DB_HOST+'/'+DB_NAME+'?tcp_user_timeout=3000&connect_timeout=10', pool_pre_ping=True, connect_args={})    
     connection = engine.connect()
     
     kafkaConsumer = AIOKafkaConsumer(KAFKA_TOPIC, loop=loop, bootstrap_servers=KAFKA_ENDPOINT, group_id=KAFKA_CONSUMER_GROUP_ID)
