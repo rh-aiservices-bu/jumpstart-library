@@ -8,7 +8,7 @@ KAFKA_TOPIC = os.getenv('KAFKA_TOPIC', 'lpr')
 async def main():
     ## kafka producer initialization
     #kafkaproducer = AIOKafkaProducer(loop=asyncio.get_event_loop(), bootstrap_servers=KAFKA_ENDPOINT)
-    kafkaproducer = AIOKafkaProducer(loop=asyncio.get_event_loop(), bootstrap_servers=KAFKA_ENDPOINT)
+    kafkaproducer = AIOKafkaProducer(bootstrap_servers=KAFKA_ENDPOINT)
     print("------ Starting Kafka Producer ------")
     await kafkaproducer.start()
     while True:
