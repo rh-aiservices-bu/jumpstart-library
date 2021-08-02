@@ -44,31 +44,10 @@ spec:
             - containerPort: 8080
               protocol: TCP
           env:
-            - name: DB_HOST
-              value: "smartcity-db-service"
-            - name: DB_NAME
-              valueFrom:
-                  secretKeyRef:
-                    name: postgresql
-                    key: database-name
-            - name: DB_PASSWORD
-              valueFrom:
-                  secretKeyRef:
-                    name: postgresql
-                    key: database-password
-            - name: DB_USER
-              valueFrom:
-                  secretKeyRef:
-                    name: postgresql
-                    key: database-user
-            - name: KAFKA_CONSUMER_GROUP_ID
-              value: event_consumer_group
             - name: KAFKA_ENDPOINT
               value: core-kafka-kafka-bootstrap:9092
             - name: KAFKA_TOPIC
-              value: lpr
-            - name: TABLE_NAME
-              value: event
+              value: topic-1
           resources: {}
           terminationMessagePath: /dev/termination-log
           terminationMessagePolicy: File
