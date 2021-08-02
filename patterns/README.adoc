@@ -24,5 +24,6 @@ Each pattern that you will find in this folder is documented in the same way:
 === List of patterns
 
 * link:https://github.com/red-hat-data-services/jumpstart-library/blob/main/patterns/Inference-to-kafka/README.adoc[Inference to Kafka] (Kafka Producer) : Produce kafka events from ML inference output
+* Kafka to Serverless : Triggers a serverless function from a Kafka event
 * Kafka Edge-to-Core : Store-and-forward kafka events from edge to core
 * 
