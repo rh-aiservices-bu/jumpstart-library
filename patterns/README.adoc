@@ -23,6 +23,6 @@ Each pattern that you will find in this folder is documented in the same way:
 
 === List of patterns
 
-* Kafka Producer ( Inference to Kafka ) : Produce kafka events from ML inference output
+* link:https://github.com/red-hat-data-services/jumpstart-library/blob/main/patterns/Inference-to-kafka/README.adoc[Inference to Kafka] (Kafka Producer) : Produce kafka events from ML inference output
 * Kafka Edge-to-Core : Store-and-forward kafka events from edge to core
 * 
