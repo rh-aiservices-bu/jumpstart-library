@@ -9,19 +9,26 @@ async def main():
     
     ### Your business logic Starts Here ###
     message = "This is a sample message"
-    time.sleep(30)
+    time.sleep(5)
     ### Your buiness logic Ends here ###
     
     ## kafka producer initialization
-    loop = asyncio.get_event_loop()
-    kafkaproducer = AIOKafkaProducer(loop=loop, bootstrap_servers=KAFKA_ENDPOINT)
+    kafkaproducer = AIOKafkaProducer(loop=asyncio.get_event_loop(), bootstrap_servers=KAFKA_ENDPOINT)
+    print("[producer] starting...")
     await kafkaproducer.start()
     try:
         ## Sending message to Kafka Topic and wait for response
+        print("[producer] sending msg...")
         response = await kafkaproducer.send_and_wait(KAFKA_TOPIC, message.encode('utf-8'))
+    except asyncio.CancelledError:
+        print("[producer] cancelled...")
     finally:
+        print("[producer] stopping...")
         await kafkaproducer.stop()
-    print("Success", response)
+        print("[producer] stopped")
+    
+    print("------- Message successfully written to Kafka Topic -------")
+    print(response)
 
 if __name__ == "__main__":
     asyncio.run(main())
