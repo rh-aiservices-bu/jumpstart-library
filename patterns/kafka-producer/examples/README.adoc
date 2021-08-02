@@ -1,5 +1,0 @@
-== < Name of the pattern > examples
-
-=== Example 1
-
-Description...
