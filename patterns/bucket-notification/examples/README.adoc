@@ -1,0 +1,55 @@
+== Bucket notification configuration example
+
+=== Example 1
+
+This is a Python code example to configure bucket notifications to a Kafka enpoint.
+
+.Notification to a Kafka Endpoint
+[source,python]
+----
+# Access and Secret keys configuration.
+aws_access_key_id = 'xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx'
+aws_secret_access_key = 'xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx'
+
+# Address of the enpoint
+endpoint_url = 'https://some_url'
+
+import boto3
+import json
+import botocore
+import argparse
+
+# API Clients init
+s3 = boto3.client('s3', 
+                endpoint_url=service_point,
+                aws_access_key_id=access_key,
+                aws_secret_access_key=secret_key,
+                use_ssl=True if 'https' in service_point else False)
+
+sns = boto3.client('sns', 
+                endpoint_url=service_point,
+                aws_access_key_id=access_key,
+                aws_secret_access_key=secret_key,
+                use_ssl=True if 'https' in service_point else False)
+
+# Topic creation
+attributes = {}
+attributes['push-endpoint'] = 'kafka://my-cluster-kafka-bootstrap:9092'
+attributes['kafka-ack-level'] = 'broker'
+
+topic_arn = sns.create_topic(Name=my-topic, Attributes=attributes)['TopicArn']
+
+# Bucket notification configuration
+bucket_notifications_configuration = {
+            "TopicConfigurations": [
+                {
+                    "Id": 'my-id',
+                    "TopicArn": topic_arn,
+                    "Events": ["s3:ObjectCreated:*"]
+                }
+            ]
+        }
+
+s3.put_bucket_notification_configuration(Bucket = bucket_base_name,
+        NotificationConfiguration=bucket_notifications_configuration)
+----
