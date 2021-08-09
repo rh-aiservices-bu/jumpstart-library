@@ -1,5 +1,38 @@
-== < Name of the pattern > examples
+== Kafka to Serverless Example
 
-=== Example 1
+In this example we want to trigger Knative Serving (greeter service), as soon as there is a new message in kafka topic `lpr` of kafka cluster `core-kafka-kafka-bootstrap.smartcity.svc:9092`
 
-Description...
+=== Knative Serving
+
+```
+apiVersion: serving.knative.dev/v1
+kind: Service
+metadata:
+  name: greeter
+  namespace: smartcity
+spec:
+  template:
+    spec:
+      containers:
+      - image: quay.io/rhdevelopers/knative-tutorial-greeter:quarkus
+```
+
+=== Knative Eventing
+
+```
+apiVersion: sources.knative.dev/v1beta1
+kind: KafkaSource
+metadata:
+  name: kafka-source
+spec:
+  consumerGroup: "knative-consumer-group"
+  bootstrapServers:
+  - core-kafka-kafka-bootstrap.smartcity.svc:9092
+  topics:
+  - lpr
+  sink:
+    ref:
+      apiVersion: serving.knative.dev/v1
+      kind: Service
+      name: greeter
+```
