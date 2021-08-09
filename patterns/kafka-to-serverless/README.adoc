@@ -1,18 +1,38 @@
-== Kafka to Serverless
+== Kafka to Serverless Example
 
-=== Description
+In this example we want to trigger Knative Serving (greeter service), as soon as there is a new message in kafka topic `lpr` of kafka cluster `core-kafka-kafka-bootstrap.smartcity.svc:9092`
 
-Triggers a serverless serving function when a messaged is posted to a Kafka Topic (serverless eventing)
+=== Knative Serving
 
-This pattern is used in the following demos:
+```
+apiVersion: serving.knative.dev/v1
+kind: Service
+metadata:
+  name: greeter
+  namespace: smartcity
+spec:
+  template:
+    spec:
+      containers:
+      - image: quay.io/rhdevelopers/knative-tutorial-greeter:quarkus
+```
 
-* link:https://github.com/red-hat-data-services/jumpstart-library/tree/main/demo1-xray-pipeline/manual_deployment/deployment#serverless-function[Demo-1 Assisted X-ray Diagnosis]
+=== Knative Eventing
 
-=== Use cases
-- Build event-driven business logic processing mechanism
-- Business logic processing , automated scale-up and scale-down to zero 
-
-=== Pattern Implementation
-
-* Deployment Instruction : link:https://github.com/red-hat-data-services/jumpstart-library/blob/main/patterns/kafka-to-serverless/deployment/README.adoc[Link]
-* Video Demo:  link:https://www.youtube.com/xxxxxxx[Link]
+```
+apiVersion: sources.knative.dev/v1beta1
+kind: KafkaSource
+metadata:
+  name: kafka-source
+spec:
+  consumerGroup: "knative-consumer-group"
+  bootstrapServers:
+  - core-kafka-kafka-bootstrap.smartcity.svc:9092
+  topics:
+  - lpr
+  sink:
+    ref:
+      apiVersion: serving.knative.dev/v1
+      kind: Service
+      name: greeter
+```
