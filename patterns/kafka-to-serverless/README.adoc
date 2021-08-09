@@ -2,22 +2,17 @@
 
 === Description
 
-Lorem ipsum...
+Triggers a serverless serving function when a messaged is posted to a Kafka Topic (serverless eventing)
 
 This pattern is used in the following demos:
 
-* link:internal_link_to_the_demo[Name of the demo]
-* link:internal_link_to_the_demo[Name of the demo]
+* link:https://github.com/red-hat-data-services/jumpstart-library/tree/main/demo1-xray-pipeline/manual_deployment/deployment#serverless-function[Demo-1 Assisted X-ray Diagnosis]
 
 === Use cases
+- Build event-driven business logic processing mechanism
+- Business logic processing , automated scale-up and scale-down to zero 
 
-==== Name of the use case
+=== Pattern Implementation
 
-Description of the use case...
-
-=== Videos
-
-The following videos are available for this pattern:
-
-* link:https://www.youtube.com/xxxxxxx[Implementation of the pattern]
-* link:https://www.youtube.com/xxxxxxx[The pattern in action]
+* Deployment Instruction : link:https://github.com/red-hat-data-services/jumpstart-library/blob/main/patterns/kafka-to-serverless/deployment/README.adoc[Link]
+* Video Demo:  link:https://www.youtube.com/xxxxxxx[Link]
