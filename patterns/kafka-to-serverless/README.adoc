@@ -9,8 +9,8 @@ This pattern is used in the following demos:
 * link:https://github.com/red-hat-data-services/jumpstart-library/tree/main/demo1-xray-pipeline/manual_deployment/deployment#serverless-function[Demo-1 Assisted X-ray Diagnosis]
 
 === Use cases
-- Build event-driven business logic processing mechanism
-- Business logic processing , automated scale-up and scale-down to zero
+- Develop an event-driven architecture with serverless applications
+- Serverless Business logic processing that is capable of automated scale-up and scale-down to zero
 
 === Pattern Implementation
 
