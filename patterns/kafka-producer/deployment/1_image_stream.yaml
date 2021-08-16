@@ -1,0 +1,9 @@
+kind: ImageStream
+apiVersion: image.openshift.io/v1
+metadata:
+  name: kafka-producer
+  labels:
+    app: kafka-producer
+spec:
+  lookupPolicy:
+    local: false
