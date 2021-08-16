@@ -7,7 +7,3 @@ pattern2-smart-city/
 demo2-smart-city/deployment/events_service/dc_event_service_ha.yaml
 demo2-smart-city/deployment/image_server/dc_image-server-ha.yaml
 demo2-smart-city/deployment/image_server/rgw_route.yaml
-demo2-smart-city/deployment/opendatahub/kfdef.yaml 
-demo2-smart-city/deployment/superset/config/superset-datasources.yaml 
-demo2-smart-city/deployment/opendatahub/kfdef.yaml
-demo2-smart-city/deployment/superset/config/superset-datasources.yaml

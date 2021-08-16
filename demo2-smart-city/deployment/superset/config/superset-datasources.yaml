@@ -168,3 +168,4 @@ databases:
       LEFT JOIN \"postgresql-lpr\".public.vehicle_metadata AS v\nON e.event_vehicle_detected_plate_number\
       \ = v.vehicle_registered_plate_number"
     table_name: Join_ODF_PGSQ_vehicle_by_station
+    
