@@ -1,38 +1,51 @@
 == Kafka to Serverless Example
+In this example we will go throught the process of setting up Knative eventing , Knative Kafka Source and Knative Serving. We will also test kafka to serverless event-driven invocation of Knative Serving by generating sample messages in kafka topic `lpr` and triggering the `greeter` service.
 
-In this example we want to trigger Knative Serving (greeter service), as soon as there is a new message in kafka topic `lpr` of kafka cluster `core-kafka-kafka-bootstrap.smartcity.svc:9092`
+==== Requirements
 
-=== Knative Serving
+- Red Hat OpenShift Container Platform
+- Red Hat AMQ Streams : Operator should be instlled and Kafka cluster must be created
+- Red Hat OpenShift Serverless : Operator must be installed
+- Knative Instances of Serving, Kafka Source Eventing ( follow setup instructions link:https://github.com/red-hat-data-services/jumpstart-library/tree/main/patterns/kafka-to-serverless/deployment#part-1-setting-up[here] )
+- (optional) Stern CLI tool link:https://github.com/wercker/stern[link]
 
-```
-apiVersion: serving.knative.dev/v1
-kind: Service
-metadata:
-  name: greeter
-  namespace: smartcity
-spec:
-  template:
-    spec:
-      containers:
-      - image: quay.io/rhdevelopers/knative-tutorial-greeter:quarkus
-```
+==== Knative Serving
+Create Knative Serving, follow instructions link:https://github.com/wercker/stern[here]
 
-=== Knative Eventing
+==== Knative Eventing
 
-```
-apiVersion: sources.knative.dev/v1beta1
-kind: KafkaSource
-metadata:
-  name: kafka-source
-spec:
-  consumerGroup: "knative-consumer-group"
-  bootstrapServers:
-  - core-kafka-kafka-bootstrap.smartcity.svc:9092
-  topics:
-  - lpr
-  sink:
-    ref:
-      apiVersion: serving.knative.dev/v1
-      kind: Service
-      name: greeter
-```
+Create Knative Eventing, follow instructions link:https://github.com/red-hat-data-services/jumpstart-library/tree/main/patterns/kafka-to-serverless/deployment#part-3-knative-eventing[here]
+
+==== Testing
+
+* Tail the logs of Knative Serving (optionally) you can install link:https://github.com/wercker/stern[stern] to view logs of the services  from CLI or choose to OpenShift Web Console to view logs.
+
+[source,bash]
+----
+oc get ksvc
+stern --selector=serving.knative.dev/service=greeter -c user-container
+----
+
+* Launch temporary Kafka CLI (kafkacat) in a new terminal
+
+[source,bash]
+----
+oc run kafkacat -i -t --image debezium/tooling --restart=Never
+----
+
+* Generate kafka messages in the topic `lpr` of `core-kafka-kafka-bootstrap` cluster. Here we are generating Kafka messages with link:https://github.com/cloudevents/spec/blob/master/spec.md[CloudEvents] (CE) specification.
+
+[source,bash]
+----
+for i in {1..50} ; do sleep 10 ; \
+echo '{"message":"Hello Red Hat"}' | kafkacat -P -b core-kafka-kafka-bootstrap -t lpr \
+  -H "content-type=application/json" \
+  -H "ce-id=CE-001" \
+  -H "ce-source=/kafkamessage"\
+  -H "ce-type=dev.knative.kafka.event" \
+  -H "ce-specversion=1.0" \
+  -H "ce-time=2018-04-05T03:56:24Z"
+done ;
+----
+
+* The above command will generate 50 Kafka messages every 10 seconds. Knative Eventing will pick up the messages and invoke the `greeter` Knative service, that you can verify from the logs of Knative Serving
