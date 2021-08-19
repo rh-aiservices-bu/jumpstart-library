@@ -20,6 +20,7 @@ link:https://www.redhat.com/en/topics/integration/what-is-event-driven-architect
 
 ==== How this works
 
+image::kafka-to-serverless.png[Kafka-to-Serverless]
 
 === Use cases
 - Develop an event-driven architecture with serverless applications
@@ -33,6 +34,6 @@ This pattern is implemented in the following demos:
 
 === Getting Started
 
-* Sample Implementation : link:https://github.com/red-hat-data-services/jumpstart-library/blob/main/patterns/kafka-to-serverless/example/README.adoc[Link]
+* Sample Implementation : link:https://github.com/red-hat-data-services/jumpstart-library/blob/main/patterns/kafka-to-serverless/examples/README.adoc[Link]
 * Deployment Instruction : link:https://github.com/red-hat-data-services/jumpstart-library/blob/main/patterns/kafka-to-serverless/deployment/README.adoc[Link]
 * Video Demo:  link:https://www.youtube.com/xxxxxxx[Link]
