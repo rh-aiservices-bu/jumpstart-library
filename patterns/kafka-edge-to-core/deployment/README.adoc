@@ -10,19 +10,36 @@
 ==== Step 1: Verification
 
 * Make sure Edge and Core Kafka Clusters are setup correctly.
+
+[source,bash]
+----
+oc get kafka
+----
+
 * Identify the Kafka topic that needs to be whitelisted for replication to the Core
 
+[source,bash]
+----
+oc get kafkatopics
+----
 ==== Step 2: Setup Mirror Maker
 
-* 
+* To setup mirror maker edit `mirror-maker.yaml` with the folowing parameters as per your enviroment.
+
+- Source kafka bootStrap server endpoint 
+- Target kafka bootstrap server endpoints
+- Topic Name under `topicsPattern`
 
 [source,bash]
 ----
 oc create -f mirror-maker.yaml;
 ----
 
-* < Instruction >
+* Verify Kafka Mirror Maker instances
 
-==== Step 2: < Name of the step >
+[source,bash]
+----
+oc get kafkamirrormaker
+----
 
-=== Part 2: < Name of the part >
+At this point Kafka Mirror Maker has been configured to asynchronously replicate messages from source kafka cluster to target kafka cluster. Thus providing you an architectural choice to connect various edge locations to a single core cluster with seamless data transfer. 

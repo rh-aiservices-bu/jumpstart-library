@@ -33,7 +33,7 @@ stern --selector=serving.knative.dev/service=greeter -c user-container
 oc run kafkacat -i -t --image debezium/tooling --restart=Never
 ----
 
-* Generate kafka messages in the topic `lpr` of `core-kafka-kafka-bootstrap` cluster. Here we are generating Kafka messages with link:https://github.com/cloudevents/spec/blob/master/spec.md[CloudEvents] (CE) specification.
+* From the `kafkacat` container shell, generate kafka messages in the topic `lpr` of `core-kafka-kafka-bootstrap` cluster. Here we are generating Kafka messages with link:https://github.com/cloudevents/spec/blob/master/spec.md[CloudEvents] (CE) specification.
 
 [source,bash]
 ----
