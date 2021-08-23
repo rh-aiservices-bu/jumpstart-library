@@ -1,0 +1,21 @@
+apiVersion: integreatly.org/v1alpha1
+kind: GrafanaDataSource
+metadata:
+  name: pgsql-grafana-datasource
+spec:
+  name: grafana-pgsql-datasource.yaml
+  datasources:
+    - name: PostgreSQL
+      type: postgres
+      typeLogoUrl: public/app/plugins/datasource/postgres/img/postgresql_logo.svg
+      access: proxy
+      url: "smartcity-db-service:5432"
+      password: "{{db_password}}"
+      user: "{{db_user}}"
+      database: "{{db_database}}"
+      basicAuth: false
+      isDefault: false
+      jsonData:
+        postgresVersion: 903
+        sslmode: disable
+      readOnly: false

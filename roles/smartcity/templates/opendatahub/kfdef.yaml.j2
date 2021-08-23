@@ -39,7 +39,7 @@ spec:
           - storage-class
         parameters:
           - name: s3_endpoint_url
-            value: s3.data.local
+            value: {{ rgw_ip }}
           - name: s3_endpoint_url_prefix
             value: "http://"
           - name: s3_credentials_secret

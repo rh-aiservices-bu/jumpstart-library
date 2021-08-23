@@ -1,0 +1,50 @@
+---
+# We will need two different Kafka instances. One will simulate the "Edges", the toll station,
+# the other one the "Core". We will also create the different topics that are needed,
+# as well as the Kafka Mirror Maker to replicate the topics from the Edge to the Core.
+
+- name: Deploy Kafka clusters
+  k8s:
+    state: present
+    src: "{{ item }}"
+  with_items:
+    - kafka/core.yaml # Core Kafka instance
+    - kafka/edge.yaml # Edge Kafka instance
+
+- name: wait for core kafka to be ready
+  k8s_info:
+    api_version: kafka.strimzi.io/v1beta2
+    kind: Kafka
+    name: core-kafka
+    wait: true
+    wait_condition:
+      type: Available
+
+- name: wait for edge kafka to be ready
+  k8s_info:
+    api_version: kafka.strimzi.io/v1beta2
+    kind: Kafka
+    name: edge-kafka
+    wait: true
+    wait_condition:
+      type: Available
+
+- name: Configure Kafka clusters
+  k8s:
+    state: present
+    src: "{{ item }}"
+  with_items:
+    - kafka/edge-topic.yaml # Edge topic
+    - kafka/core-topic.yaml # Core topic
+    - kafka/mirror-maker.yaml # Mirror maker
+
+- name: Deploy Kafka Drop UI
+  k8s:
+    state: present
+    src: "{{ item }}"
+  with_items:
+    - kafka/edge-kafdrop.yaml # Optional! Kafdrop is a UI interface to your Kafka cluster (to inspect messages)
+    - kafka/core-kafdrop.yaml # Optional! Kafdrop is a UI interface to your Kafka cluster (to inspect messages)
+  tags:
+    - kafkadrop
+    - extra
