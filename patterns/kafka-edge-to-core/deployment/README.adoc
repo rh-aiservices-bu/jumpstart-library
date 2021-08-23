@@ -1,21 +1,24 @@
-== < Name of the pattern > deployment instructions
+== Kafka Edge to Core deployment instructions
 
 === Requirements
 
-Lorem ipsum...
+- Red Hat OpenShift Container Platform
+- Red Hat AMQ Streams
+- Red Hat AMQ Streams Edge (Source) Kafka cluster
+- Red Hat AMQ Streams Core (Target) Kafka cluster
 
-=== Part 1: < Name of the part >
+==== Step 1: Verification
 
-< Brief description of the part >
+* Make sure Edge and Core Kafka Clusters are setup correctly.
+* Identify the Kafka topic that needs to be whitelisted for replication to the Core
 
-==== Step 1: < Name of the step >
+==== Step 2: Setup Mirror Maker
 
-* < Instruction >
+* 
 
-.< Code bloc title >
 [source,bash]
 ----
-do some command;
+oc create -f mirror-maker.yaml;
 ----
 
 * < Instruction >
