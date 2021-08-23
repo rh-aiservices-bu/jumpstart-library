@@ -17,12 +17,12 @@ spec:
           ports:
             - containerPort: 9000
           env:
-          - name: KAFKA_BROKERCONNECT
-            value: "core-kafka-kafka-bootstrap:9092"
-          - name: JVM_OPTS
-            value: "-Xms32M -Xmx64M"
-          - name: SERVER_SERVLET_CONTEXTPATH
-            value: "/"
+            - name: KAFKA_BROKERCONNECT
+              value: "core-kafka-kafka-bootstrap:9092"
+            - name: JVM_OPTS
+              value: "-Xms32M -Xmx64M"
+            - name: SERVER_SERVLET_CONTEXTPATH
+              value: "/"
 ---
 apiVersion: v1
 kind: Service
@@ -41,7 +41,7 @@ apiVersion: route.openshift.io/v1
 metadata:
   name: core-kafdrop
 spec:
-  subdomain: ''
+  subdomain: ""
   to:
     kind: Service
     name: core-kafdrop

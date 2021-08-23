@@ -16,19 +16,19 @@
 
 
   <link crossorigin="anonymous" media="all" integrity="sha512-B/jj6qcXmAwGUh/FG7mfpfFSb0lW1UpGiufFhzIeC+u3lXE5VDEJQzVxZ3gquw8xjZBNQ6CgWDSgCgjRzqPUgw==" rel="stylesheet" href="https://github.githubassets.com/assets/frameworks-07f8e3eaa717980c06521fc51bb99fa5.css" />
-  
+
     <link crossorigin="anonymous" media="all" integrity="sha512-6GPOjKyUzyBU9glXiYr5VayiMkmbK4LqbAjTke98cFsYGAMpdfhoyecnPX/K+2It8hZkRsp26FN+CRtyEJ/oGA==" rel="stylesheet" href="https://github.githubassets.com/assets/behaviors-e863ce8cac94cf2054f60957898af955.css" />
-    
-    
-    
+
+
+
     <link crossorigin="anonymous" media="all" integrity="sha512-f2KfubpZ4Eg8nwikR8+K0ND4R0evjnYPqjv8dQHShuiypc3SDPYKakEP9hU33tvkjTkCFkMsEjvnXZScK78Khw==" rel="stylesheet" href="https://github.githubassets.com/assets/github-7f629fb9ba59e0483c9f08a447cf8ad0.css" />
 
   <script crossorigin="anonymous" defer="defer" integrity="sha512-CzeY4A6TiG4fGZSWZU8FxmzFFmcQFoPpArF0hkH0/J/S7UL4eed/LKEXMQXfTwiG5yEJBI+9BdKG8KQJNbhcIQ==" type="application/javascript" src="https://github.githubassets.com/assets/environment-0b3798e0.js"></script>
     <script crossorigin="anonymous" defer="defer" integrity="sha512-DqYNCH7iUbISz3MHrZQblQWzFkyoyanHdbyINagP5PJaZUBI/ty/b5I50KRwLWqMSur/fpUltEz4XZeRHcr1Yw==" type="application/javascript" src="https://github.githubassets.com/assets/chunk-frameworks-0ea60d08.js"></script>
     <script crossorigin="anonymous" defer="defer" integrity="sha512-YufdcMb4hh5uM2JSDx/MEATxourBQILRY0+74aM14JruGbjAyRYNY7hr/9+MOvY/ItDDo5pyqG/MHZr+5zZKHg==" type="application/javascript" src="https://github.githubassets.com/assets/chunk-vendor-62e7dd70.js"></script>
-  
+
   <script crossorigin="anonymous" defer="defer" integrity="sha512-Oqv2XvAl5VOAlrAyMihP4k35+VdBeRpk1TerbcBPUr70MaPzA57U34hqrl9z6PUtkdUgGwpATYTUy8/qF11jRA==" type="application/javascript" src="https://github.githubassets.com/assets/behaviors-3aabf65e.js"></script>
-  
+
     <script crossorigin="anonymous" defer="defer" integrity="sha512-5tWKSr7mhAzSh4Sx5YRFgKftdGxKwHKnOGYw5DlxjHhkQVURYFU3Bk5IMOGMKuAiJTlC3OXYM3xzGcyjzuEFQQ==" type="application/javascript" data-module-id="./chunk-animate-on-scroll.js" data-src="https://github.githubassets.com/assets/chunk-animate-on-scroll-e6d58a4a.js"></script>
     <script crossorigin="anonymous" defer="defer" integrity="sha512-ct3QiK2mvpg7zor9R2psdWnNMM2K32RU4RGRB/7yA5FyZ8H4iY6SNynXc7UaJqzBx6NaReg3GsWJPwW3kgAAig==" type="application/javascript" data-module-id="./chunk-codemirror.js" data-src="https://github.githubassets.com/assets/chunk-codemirror-72ddd088.js"></script>
     <script crossorigin="anonymous" defer="defer" integrity="sha512-M6W/sGLOuJXCIkw+doDl6zl7J9q2DmqdwftQCtyEiZM/UJNGRVQdyKwI/PAMxD12se/wCx3ZcyJs9nz0o0OSVw==" type="application/javascript" data-module-id="./chunk-color-modes.js" data-src="https://github.githubassets.com/assets/chunk-color-modes-33a5bfb0.js"></script>
@@ -55,12 +55,12 @@
     <script crossorigin="anonymous" defer="defer" integrity="sha512-WK8VXw3lfUQ/VRW0zlgKPhcMUqH0uTnB/KzePUPdZhCm/HpxfXXHKTGvj5C0Oex7+zbIM2ECzULbtTCT4ug3yg==" type="application/javascript" data-module-id="./chunk-toast.js" data-src="https://github.githubassets.com/assets/chunk-toast-58af155f.js"></script>
     <script crossorigin="anonymous" defer="defer" integrity="sha512-vgHJEmEJxNmHucGbVY8bEUoOYo5/ZwpQ69rU8Dld89daWJ54uad9lNptxq32F8pnbHhdngw9lohNEbMbjmj5AQ==" type="application/javascript" data-module-id="./chunk-tweetsodium.js" data-src="https://github.githubassets.com/assets/chunk-tweetsodium-be01c912.js"></script>
     <script crossorigin="anonymous" defer="defer" integrity="sha512-SLqYSMMqthFrVCoXJeZhRyCtWXUsJCUHhj+FJ+bQaBxPTNh+1X0WxCX8u1KQF9eGovmnZUGLEFbUI8PpXhUTXQ==" type="application/javascript" data-module-id="./chunk-user-status-submit.js" data-src="https://github.githubassets.com/assets/chunk-user-status-submit-48ba9848.js"></script>
-  
+
   <script crossorigin="anonymous" defer="defer" integrity="sha512-bAU72DmcntUQKwnKZyoQCkl2wcaygOlbCdP+ZxAHch45lunUe4DmiTzCRc+NPbeOD5wlLrh3ctxOpx+v0cxvxg==" type="application/javascript" src="https://github.githubassets.com/assets/repositories-6c053bd8.js"></script>
 <script crossorigin="anonymous" defer="defer" integrity="sha512-BEvrrs0cYO23CqEdMrQjKZiSHL/ygrW+DYh8YePYDGDvnl6xwSQpSE+iaXDvyE6XMDjC55bPX0A7EfaWTEUIAQ==" type="application/javascript" src="https://github.githubassets.com/assets/diffs-044bebae.js"></script>
 
   <meta name="viewport" content="width=device-width">
-  
+
   <title>jumpstart-library/vehicle_metadata_db.csv at main · red-hat-data-services/jumpstart-library · GitHub</title>
     <meta name="description" content="Contribute to red-hat-data-services/jumpstart-library development by creating an account on GitHub.">
     <link rel="search" type="application/opensearchdescription+xml" href="/opensearch.xml" title="GitHub">
@@ -72,10 +72,10 @@
 
 
 
-    
+
 
   <link rel="assets" href="https://github.githubassets.com/">
-  
+
 
   <meta name="request-id" content="D533:57AD:55412D:5B8649:60CB4C1F" data-pjax-transient="true"/><meta name="html-safe-nonce" content="ac3596dc92709708afdf085b51cdc239f8fd45bac7aaf112c27c38a9c672421b" data-pjax-transient="true"/><meta name="visitor-payload" content="eyJyZWZlcnJlciI6IiIsInJlcXVlc3RfaWQiOiJENTMzOjU3QUQ6NTU0MTJEOjVCODY0OTo2MENCNEMxRiIsInZpc2l0b3JfaWQiOiI4ODE3ODY0ODMxNTMwNjUwNjU1IiwicmVnaW9uX2VkZ2UiOiJhcC1zb3V0aC0xIiwicmVnaW9uX3JlbmRlciI6ImFwLXNvdXRoLTEifQ==" data-pjax-transient="true"/><meta name="visitor-hmac" content="16ad5eb4829f01ec327eea66a24f6ab992a0befe7a22b0a91d8656e8e3d6403f" data-pjax-transient="true"/>
 
@@ -84,7 +84,7 @@
 
   <meta name="github-keyboard-shortcuts" content="repository,source-code" data-pjax-transient="true" />
 
-  
+
 
   <meta name="selected-link" value="repo_source" data-pjax-transient>
 
@@ -97,7 +97,7 @@
 
   <meta name="analytics-location" content="/&lt;user-name&gt;/&lt;repo-name&gt;/blob/show" data-pjax-transient="true" />
 
-  
+
 
 
 
@@ -108,7 +108,7 @@
 
 
 
-  
+
 
       <meta name="hostname" content="github.com">
     <meta name="user-login" content="">
@@ -120,9 +120,9 @@
     <meta name="enabled-features" content="MARKETPLACE_PENDING_INSTALLATIONS,AUTOCOMPLETE_EMOJIS_IN_MARKDOWN_EDITOR">
 
   <meta http-equiv="x-pjax-version" content="92ded48aa525583ad195da3d64d4dc4a8886fd7150acdc702a084a6a4f9559b1">
-  
 
-    
+
+
   <meta name="go-import" content="github.com/red-hat-data-services/jumpstart-library git https://github.com/red-hat-data-services/jumpstart-library.git">
 
   <meta name="octolytics-dimension-user_id" content="72153467" /><meta name="octolytics-dimension-user_login" content="red-hat-data-services" /><meta name="octolytics-dimension-repository_id" content="344625494" /><meta name="octolytics-dimension-repository_nwo" content="red-hat-data-services/jumpstart-library" /><meta name="octolytics-dimension-repository_public" content="true" /><meta name="octolytics-dimension-repository_is_fork" content="false" /><meta name="octolytics-dimension-repository_network_root_id" content="344625494" /><meta name="octolytics-dimension-repository_network_root_nwo" content="red-hat-data-services/jumpstart-library" />
@@ -153,17 +153,17 @@
   </head>
 
   <body class="logged-out env-production page-responsive page-blob" style="word-wrap: break-word;">
-    
+
 
     <div class="position-relative js-header-wrapper ">
       <a href="#start-of-content" class="px-2 py-4 color-bg-info-inverse color-text-white show-on-focus js-skip-to-content">Skip to content</a>
       <span data-view-component="true" class="progress-pjax-loader width-full js-pjax-loader-bar Progress position-fixed">
     <span style="background-color: #79b8ff;width: 0%;" data-view-component="true" class="Progress-item progress-pjax-loader-bar"></span>
-</span>      
-      
+</span>
 
 
-        
+
+
             <header class="Header-old header-logged-out js-details-container Details position-relative f4 py-2" role="banner">
   <div class="container-xl d-lg-flex flex-items-center p-responsive">
     <div class="d-flex flex-justify-between flex-items-center">
@@ -172,7 +172,7 @@
         </a>
 
           <div class="d-lg-none css-truncate css-truncate-target width-fit p-2">
-            
+
 
           </div>
 
@@ -181,7 +181,7 @@
                 data-attribute-name="href"
                 data-candidate-url="/signup?ref_cta=Sign+up&amp;ref_loc=header+logged+out&amp;ref_page=%2F%3Cuser-name%3E%2F%3Crepo-name%3E%2Fblob%2Fshow&amp;source=header-repo"
                 data-action="loaded:nux-signup-candidates#determineSignupAction"
-                
+
               >
                 <a href="/signup?ref_cta=Sign+up&amp;ref_loc=header+logged+out&amp;ref_page=%2F%3Cuser-name%3E%2F%3Crepo-name%3E%2Fblob%2Fshow&amp;source=header-repo"
                   class="d-inline-block d-lg-none f5 color-text-white no-underline border color-border-tertiary rounded-2 px-2 py-1 mr-3 mr-sm-5"
@@ -309,7 +309,7 @@
 
       <div class="d-lg-flex flex-items-center px-3 px-lg-0 text-center text-lg-left">
           <div class="d-lg-flex min-width-0 mb-3 mb-lg-0">
-            
+
 
 
   <div class="header-search flex-auto js-site-search position-relative flex-self-stretch flex-md-self-auto mb-3 mb-md-0 mr-0 mr-md-3 scoped-search site-scoped-search js-jump-to"
@@ -341,9 +341,9 @@
               <img src="https://github.githubassets.com/images/search-key-slash.svg" alt="" class="mr-2 header-search-key-slash">
 
             <div class="Box position-absolute overflow-hidden d-none jump-to-suggestions js-jump-to-suggestions-container">
-              
+
 <ul class="d-none js-jump-to-suggestions-template-container">
-  
+
 
 <li class="d-flex flex-justify-start flex-items-center p-0 f5 navigation-item js-navigation-item js-jump-to-suggestion" role="option">
   <a tabindex="-1" class="no-underline d-flex flex-auto flex-items-center jump-to-suggestions-path js-jump-to-suggestion-path js-navigation-open p-2" href="" data-item-type="suggestion">
@@ -384,7 +384,7 @@
 </ul>
 
 <ul id="jump-to-results" role="listbox" class="p-0 m-0 js-navigation-container jump-to-suggestions-results-container js-jump-to-suggestions-results-container">
-  
+
 
 <li class="d-flex flex-justify-start flex-items-center p-0 f5 navigation-item js-navigation-item js-jump-to-scoped-search d-none" role="option">
   <a tabindex="-1" class="no-underline d-flex flex-auto flex-items-center jump-to-suggestions-path js-jump-to-suggestion-path js-navigation-open p-2" href="" data-item-type="scoped_search">
@@ -416,7 +416,7 @@
   </a>
 </li>
 
-  
+
 
 <li class="d-flex flex-justify-start flex-items-center p-0 f5 navigation-item js-navigation-item js-jump-to-owner-scoped-search d-none" role="option">
   <a tabindex="-1" class="no-underline d-flex flex-auto flex-items-center jump-to-suggestions-path js-jump-to-suggestion-path js-navigation-open p-2" href="" data-item-type="owner_scoped_search">
@@ -448,7 +448,7 @@
   </a>
 </li>
 
-  
+
 
 <li class="d-flex flex-justify-start flex-items-center p-0 f5 navigation-item js-navigation-item js-jump-to-global-search d-none" role="option">
   <a tabindex="-1" class="no-underline d-flex flex-auto flex-items-center jump-to-suggestions-path js-jump-to-suggestion-path js-navigation-open p-2" href="" data-item-type="global_search">
@@ -500,7 +500,7 @@
               data-attribute-name="href"
               data-candidate-url="/signup?ref_cta=Sign+up&amp;ref_loc=header+logged+out&amp;ref_page=%2F%3Cuser-name%3E%2F%3Crepo-name%3E%2Fblob%2Fshow&amp;source=header-repo&amp;source_repo=red-hat-data-services%2Fjumpstart-library"
               data-action="loaded:nux-signup-candidates#determineSignupAction"
-              
+
             >
               <a href="/signup?ref_cta=Sign+up&amp;ref_loc=header+logged+out&amp;ref_page=%2F%3Cuser-name%3E%2F%3Crepo-name%3E%2Fblob%2Fshow&amp;source=header-repo&amp;source_repo=red-hat-data-services%2Fjumpstart-library"
                 class="HeaderMenu-link flex-shrink-0 d-inline-block no-underline border color-border-tertiary rounded px-2 py-1"
@@ -535,7 +535,7 @@
     <path fill-rule="evenodd" d="M3.72 3.72a.75.75 0 011.06 0L8 6.94l3.22-3.22a.75.75 0 111.06 1.06L9.06 8l3.22 3.22a.75.75 0 11-1.06 1.06L8 9.06l-3.22 3.22a.75.75 0 01-1.06-1.06L6.94 8 3.72 4.78a.75.75 0 010-1.06z"></path>
 </svg>
     </button>
-    
+
       <div>{{ message }}</div>
 
   </div>
@@ -544,7 +544,7 @@
 </div>
 
 
-    
+
 
   <include-fragment class="js-notification-shelf-include-fragment" data-base-src="https://github.com/notifications/beta/shelf"></include-fragment>
 
@@ -559,17 +559,17 @@
   >
         <div itemscope itemtype="http://schema.org/SoftwareSourceCode" class="">
     <main id="js-repo-pjax-container" data-pjax-container >
-      
-
-      
-    
 
 
 
 
 
 
-  
+
+
+
+
+
 
 
   <div class="hx_page-header-bg pt-3 hide-full-screen mb-5">
@@ -586,7 +586,7 @@
   <strong itemprop="name" class="mr-2 flex-self-stretch">
     <a data-pjax="#js-repo-pjax-container" href="/red-hat-data-services/jumpstart-library">jumpstart-library</a>
   </strong>
-  
+
 </h1>
 
 
@@ -633,82 +633,82 @@
 </ul>
 
       </div>
-        
+
 
   <nav data-pjax="#js-repo-pjax-container" aria-label="Repository" data-view-component="true" class="js-repo-nav js-sidenav-container-pjax js-responsive-underlinenav overflow-hidden UnderlineNav px-3 px-md-4 px-lg-5">
 
     <ul data-view-component="true" class="UnderlineNav-body list-style-none">
         <li data-view-component="true" class="d-flex">
   <a href="/red-hat-data-services/jumpstart-library" data-tab-item="i0code-tab" data-selected-links="repo_source repo_downloads repo_commits repo_releases repo_tags repo_branches repo_packages repo_deployments /red-hat-data-services/jumpstart-library" data-hotkey="g c" data-ga-click="Repository, Navigation click, Code tab" aria-current="page" data-view-component="true" class="UnderlineNav-item hx_underlinenav-item no-wrap js-responsive-underlinenav-item selected">
-    
+
                   <svg class="octicon octicon-code UnderlineNav-octicon d-none d-sm-inline" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path fill-rule="evenodd" d="M4.72 3.22a.75.75 0 011.06 1.06L2.06 8l3.72 3.72a.75.75 0 11-1.06 1.06L.47 8.53a.75.75 0 010-1.06l4.25-4.25zm6.56 0a.75.75 0 10-1.06 1.06L13.94 8l-3.72 3.72a.75.75 0 101.06 1.06l4.25-4.25a.75.75 0 000-1.06l-4.25-4.25z"></path></svg>
           <span data-content="Code">Code</span>
             <span title="Not available" data-view-component="true" class="Counter"></span>
 
-    
+
 </a></li>
         <li data-view-component="true" class="d-flex">
   <a href="/red-hat-data-services/jumpstart-library/issues" data-tab-item="i1issues-tab" data-selected-links="repo_issues repo_labels repo_milestones /red-hat-data-services/jumpstart-library/issues" data-hotkey="g i" data-ga-click="Repository, Navigation click, Issues tab" data-view-component="true" class="UnderlineNav-item hx_underlinenav-item no-wrap js-responsive-underlinenav-item">
-    
+
                   <svg class="octicon octicon-issue-opened UnderlineNav-octicon d-none d-sm-inline" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="M8 9.5a1.5 1.5 0 100-3 1.5 1.5 0 000 3z"></path><path fill-rule="evenodd" d="M8 0a8 8 0 100 16A8 8 0 008 0zM1.5 8a6.5 6.5 0 1113 0 6.5 6.5 0 01-13 0z"></path></svg>
           <span data-content="Issues">Issues</span>
             <span title="5" data-view-component="true" class="Counter">5</span>
 
-    
+
 </a></li>
         <li data-view-component="true" class="d-flex">
   <a href="/red-hat-data-services/jumpstart-library/pulls" data-tab-item="i2pull-requests-tab" data-selected-links="repo_pulls checks /red-hat-data-services/jumpstart-library/pulls" data-hotkey="g p" data-ga-click="Repository, Navigation click, Pull requests tab" data-view-component="true" class="UnderlineNav-item hx_underlinenav-item no-wrap js-responsive-underlinenav-item">
-    
+
                   <svg class="octicon octicon-git-pull-request UnderlineNav-octicon d-none d-sm-inline" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path fill-rule="evenodd" d="M7.177 3.073L9.573.677A.25.25 0 0110 .854v4.792a.25.25 0 01-.427.177L7.177 3.427a.25.25 0 010-.354zM3.75 2.5a.75.75 0 100 1.5.75.75 0 000-1.5zm-2.25.75a2.25 2.25 0 113 2.122v5.256a2.251 2.251 0 11-1.5 0V5.372A2.25 2.25 0 011.5 3.25zM11 2.5h-1V4h1a1 1 0 011 1v5.628a2.251 2.251 0 101.5 0V5A2.5 2.5 0 0011 2.5zm1 10.25a.75.75 0 111.5 0 .75.75 0 01-1.5 0zM3.75 12a.75.75 0 100 1.5.75.75 0 000-1.5z"></path></svg>
           <span data-content="Pull requests">Pull requests</span>
             <span title="1" data-view-component="true" class="Counter">1</span>
 
-    
+
 </a></li>
         <li data-view-component="true" class="d-flex">
   <a href="/red-hat-data-services/jumpstart-library/actions" data-tab-item="i3actions-tab" data-selected-links="repo_actions /red-hat-data-services/jumpstart-library/actions" data-hotkey="g a" data-ga-click="Repository, Navigation click, Actions tab" data-view-component="true" class="UnderlineNav-item hx_underlinenav-item no-wrap js-responsive-underlinenav-item">
-    
+
                   <svg class="octicon octicon-play UnderlineNav-octicon d-none d-sm-inline" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path fill-rule="evenodd" d="M1.5 8a6.5 6.5 0 1113 0 6.5 6.5 0 01-13 0zM8 0a8 8 0 100 16A8 8 0 008 0zM6.379 5.227A.25.25 0 006 5.442v5.117a.25.25 0 00.379.214l4.264-2.559a.25.25 0 000-.428L6.379 5.227z"></path></svg>
           <span data-content="Actions">Actions</span>
             <span title="Not available" data-view-component="true" class="Counter"></span>
 
-    
+
 </a></li>
         <li data-view-component="true" class="d-flex">
   <a href="/red-hat-data-services/jumpstart-library/projects" data-tab-item="i4projects-tab" data-selected-links="repo_projects new_repo_project repo_project /red-hat-data-services/jumpstart-library/projects" data-hotkey="g b" data-ga-click="Repository, Navigation click, Projects tab" data-view-component="true" class="UnderlineNav-item hx_underlinenav-item no-wrap js-responsive-underlinenav-item">
-    
+
                   <svg class="octicon octicon-project UnderlineNav-octicon d-none d-sm-inline" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path fill-rule="evenodd" d="M1.75 0A1.75 1.75 0 000 1.75v12.5C0 15.216.784 16 1.75 16h12.5A1.75 1.75 0 0016 14.25V1.75A1.75 1.75 0 0014.25 0H1.75zM1.5 1.75a.25.25 0 01.25-.25h12.5a.25.25 0 01.25.25v12.5a.25.25 0 01-.25.25H1.75a.25.25 0 01-.25-.25V1.75zM11.75 3a.75.75 0 00-.75.75v7.5a.75.75 0 001.5 0v-7.5a.75.75 0 00-.75-.75zm-8.25.75a.75.75 0 011.5 0v5.5a.75.75 0 01-1.5 0v-5.5zM8 3a.75.75 0 00-.75.75v3.5a.75.75 0 001.5 0v-3.5A.75.75 0 008 3z"></path></svg>
           <span data-content="Projects">Projects</span>
             <span title="2" data-view-component="true" class="Counter">2</span>
 
-    
+
 </a></li>
         <li data-view-component="true" class="d-flex">
   <a href="/red-hat-data-services/jumpstart-library/wiki" data-tab-item="i5wiki-tab" data-selected-links="repo_wiki /red-hat-data-services/jumpstart-library/wiki" data-hotkey="g w" data-ga-click="Repository, Navigation click, Wikis tab" data-view-component="true" class="UnderlineNav-item hx_underlinenav-item no-wrap js-responsive-underlinenav-item">
-    
+
                   <svg class="octicon octicon-book UnderlineNav-octicon d-none d-sm-inline" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path fill-rule="evenodd" d="M0 1.75A.75.75 0 01.75 1h4.253c1.227 0 2.317.59 3 1.501A3.744 3.744 0 0111.006 1h4.245a.75.75 0 01.75.75v10.5a.75.75 0 01-.75.75h-4.507a2.25 2.25 0 00-1.591.659l-.622.621a.75.75 0 01-1.06 0l-.622-.621A2.25 2.25 0 005.258 13H.75a.75.75 0 01-.75-.75V1.75zm8.755 3a2.25 2.25 0 012.25-2.25H14.5v9h-3.757c-.71 0-1.4.201-1.992.572l.004-7.322zm-1.504 7.324l.004-5.073-.002-2.253A2.25 2.25 0 005.003 2.5H1.5v9h3.757a3.75 3.75 0 011.994.574z"></path></svg>
           <span data-content="Wiki">Wiki</span>
             <span title="Not available" data-view-component="true" class="Counter"></span>
 
-    
+
 </a></li>
         <li data-view-component="true" class="d-flex">
   <a href="/red-hat-data-services/jumpstart-library/security" data-tab-item="i6security-tab" data-selected-links="security overview alerts policy token_scanning code_scanning /red-hat-data-services/jumpstart-library/security" data-hotkey="g s" data-ga-click="Repository, Navigation click, Security tab" data-view-component="true" class="UnderlineNav-item hx_underlinenav-item no-wrap js-responsive-underlinenav-item">
-    
+
                   <svg class="octicon octicon-shield UnderlineNav-octicon d-none d-sm-inline" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path fill-rule="evenodd" d="M7.467.133a1.75 1.75 0 011.066 0l5.25 1.68A1.75 1.75 0 0115 3.48V7c0 1.566-.32 3.182-1.303 4.682-.983 1.498-2.585 2.813-5.032 3.855a1.7 1.7 0 01-1.33 0c-2.447-1.042-4.049-2.357-5.032-3.855C1.32 10.182 1 8.566 1 7V3.48a1.75 1.75 0 011.217-1.667l5.25-1.68zm.61 1.429a.25.25 0 00-.153 0l-5.25 1.68a.25.25 0 00-.174.238V7c0 1.358.275 2.666 1.057 3.86.784 1.194 2.121 2.34 4.366 3.297a.2.2 0 00.154 0c2.245-.956 3.582-2.104 4.366-3.298C13.225 9.666 13.5 8.36 13.5 7V3.48a.25.25 0 00-.174-.237l-5.25-1.68zM9 10.5a1 1 0 11-2 0 1 1 0 012 0zm-.25-5.75a.75.75 0 10-1.5 0v3a.75.75 0 001.5 0v-3z"></path></svg>
           <span data-content="Security">Security</span>
             <include-fragment src="/red-hat-data-services/jumpstart-library/security/overall-count" accept="text/fragment+html"></include-fragment>
 
-    
+
 </a></li>
         <li data-view-component="true" class="d-flex">
   <a href="/red-hat-data-services/jumpstart-library/pulse" data-tab-item="i7insights-tab" data-selected-links="repo_graphs repo_contributors dependency_graph dependabot_updates pulse people community /red-hat-data-services/jumpstart-library/pulse" data-ga-click="Repository, Navigation click, Insights tab" data-view-component="true" class="UnderlineNav-item hx_underlinenav-item no-wrap js-responsive-underlinenav-item">
-    
+
                   <svg class="octicon octicon-graph UnderlineNav-octicon d-none d-sm-inline" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path fill-rule="evenodd" d="M1.5 1.75a.75.75 0 00-1.5 0v12.5c0 .414.336.75.75.75h14.5a.75.75 0 000-1.5H1.5V1.75zm14.28 2.53a.75.75 0 00-1.06-1.06L10 7.94 7.53 5.47a.75.75 0 00-1.06 0L3.22 8.72a.75.75 0 001.06 1.06L7 7.06l2.47 2.47a.75.75 0 001.06 0l5.25-5.25z"></path></svg>
           <span data-content="Insights">Insights</span>
             <span title="Not available" data-view-component="true" class="Counter"></span>
 
-    
+
 </a></li>
 </ul>
       <div style="visibility:hidden;" data-view-component="true" class="UnderlineNav-actions  js-responsive-underlinenav-overflow position-absolute pr-3 pr-md-4 pr-lg-5 right-0">      <details data-view-component="true" class="details-overlay details-reset position-relative">
@@ -720,7 +720,7 @@
           </div>
 </summary>
   <div data-view-component="true">          <details-menu role="menu" data-view-component="true" class="dropdown-menu dropdown-menu-sw">
-  
+
             <ul>
                 <li data-menu-item="i0code-tab" hidden>
                   <a role="menuitem" class="js-selected-navigation-item dropdown-item" data-selected-links=" /red-hat-data-services/jumpstart-library" href="/red-hat-data-services/jumpstart-library">
@@ -766,11 +766,11 @@
 <div class="container-xl clearfix new-discussion-timeline px-3 px-md-4 px-lg-5">
   <div id="repo-content-pjax-container" class="repository-content " >
 
-    
-      
-    
+
+
+
 <div>
-  
+
 
 
     <a class="d-none js-permalink-shortcut" data-hotkey="y" href="/red-hat-data-services/jumpstart-library/blob/15d51f1d3c7588ae083847e3dbb6267a8a8240ee/demo2-smart-city/source/SC_Seed_Database/vehicle_metadata_db.csv">Permalink</a>
@@ -778,7 +778,7 @@
     <!-- blob contrib key: blob_contributors:v22:464e64d192b8a11c810f3eb4b699183a7e70d959c089caff7ff7c5cb78895617 -->
 
     <div class="d-flex flex-items-start flex-shrink-0 pb-3 flex-wrap flex-md-nowrap flex-justify-between flex-md-justify-start">
-      
+
 <div class="position-relative">
   <details class="details-reset details-overlay mr-0 mb-0 " id="branch-select-menu">
     <summary class="btn css-truncate"
@@ -791,7 +791,7 @@
       <span class="dropdown-caret"></span>
     </summary>
 
-      
+
 <div class="SelectMenu">
   <div class="SelectMenu-modal">
     <header class="SelectMenu-header">
@@ -832,7 +832,7 @@
               focus-list:ref-selector#focusFirstListMember
             "
             query-endpoint="/red-hat-data-services/jumpstart-library/refs"
-            
+
             cache-key="v0:1622627263.8677819"
             current-committish="bWFpbg=="
             default-branch="bWFpbg=="
@@ -941,12 +941,12 @@
 
       <details id="blob-more-options-details" data-view-component="true" class="details-overlay details-reset position-relative">
   <summary role="button" data-view-component="true" class="btn">
-  
+
             <svg aria-label="More options" role="img" viewBox="0 0 16 16" version="1.1" data-view-component="true" height="16" width="16" class="octicon octicon-kebab-horizontal">
     <path d="M8 9a1.5 1.5 0 100-3 1.5 1.5 0 000 3zM1.5 9a1.5 1.5 0 100-3 1.5 1.5 0 000 3zm13 0a1.5 1.5 0 100-3 1.5 1.5 0 000 3z"></path>
 </svg>
 
-  
+
 
 </summary>
   <div data-view-component="true">          <ul class="dropdown-menu dropdown-menu-sw">
@@ -1002,13 +1002,13 @@
 
 
 
-  
+
     <div data-target="readme-toc.content" class="Box mt-3 position-relative
     ">
-      
+
   <div
     class="Box-header py-2 pr-2 d-flex flex-shrink-0 flex-md-row flex-items-center"
-    
+
   >
 
 
@@ -1023,15 +1023,15 @@
 
     <div class="BtnGroup">
       <a href="/red-hat-data-services/jumpstart-library/raw/main/demo2-smart-city/source/SC_Seed_Database/vehicle_metadata_db.csv" id="raw-url" role="button" data-view-component="true" class="btn-sm btn BtnGroup-item">
-  
+
   Raw
-  
+
 
 </a>
         <a href="/red-hat-data-services/jumpstart-library/blame/main/demo2-smart-city/source/SC_Seed_Database/vehicle_metadata_db.csv" data-hotkey="b" role="button" data-view-component="true" class="js-update-url-with-hash btn-sm btn BtnGroup-item">
-  
+
   Blame
-  
+
 
 </a>
     </div>
@@ -1096,7 +1096,7 @@
 </div>
 
 
-      
+
   <div itemprop="text" class="Box-body p-0 blob-wrapper data type-csv  gist-border-0">
       <div class="blob-interaction-bar">
   <svg aria-hidden="true" viewBox="0 0 16 16" version="1.1" data-view-component="true" height="16" width="16" class="octicon octicon-search">
@@ -1845,7 +1845,7 @@
     </div>
 
 
-  
+
 
   <details class="details-reset details-overlay details-overlay-dark" id="jumpto-line-details-dialog">
     <summary data-hotkey="l" aria-label="Jump to line"></summary>
@@ -1869,7 +1869,7 @@
 
   </div>
 
-          
+
 <div class="footer container-xl width-full p-responsive" role="contentinfo">
   <div class="position-relative d-flex flex-row-reverse flex-lg-row flex-wrap flex-lg-nowrap flex-justify-center flex-lg-justify-between pt-6 pb-2 mt-6 f6 color-text-secondary border-top color-border-secondary ">
     <ul class="list-style-none d-flex flex-wrap col-12 col-lg-5 flex-justify-center flex-lg-justify-between mb-2 mb-lg-0">
@@ -1899,7 +1899,7 @@
     <span class="f6 color-text-tertiary"></span>
   </div>
 
-  
+
 </div>
 
 
@@ -1958,8 +1958,7 @@
 
 
 
-  
+
 
   </body>
 </html>
-

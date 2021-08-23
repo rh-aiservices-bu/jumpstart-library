@@ -1,15 +1,15 @@
 ---
 # Red Hat RHTR 2020 - Hands on data pipelines: automated X-Ray images analysis!
 platform: labs
-purpose: rhtr2020   ## This is a cost tag, please make sure it's correct.
+purpose: rhtr2020 # This is a cost tag, please make sure it's correct.
 
 # ---------------------------------------------------------
 # OCP configuration
 # ---------------------------------------------------------
-#master_instance_type: c5d.2xlarge
+# master_instance_type: c5d.2xlarge
 master_instance_type: m5a.2xlarge
 master_instance_count: 3
-#worker_instance_type: m5.4xlarge
+# worker_instance_type: m5.4xlarge
 worker_instance_type: m5a.8xlarge
 worker_instance_count: 5
 

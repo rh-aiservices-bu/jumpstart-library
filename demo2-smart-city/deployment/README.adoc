@@ -27,7 +27,7 @@ If not already available, deploy the following operators from OperatorHub:
 
 == OpenShift/ODF Patch
 
-To circumvent some issues related to bucket access-style (DNS vs Path), we have to make some changes. 
+To circumvent some issues related to bucket access-style (DNS vs Path), we have to make some changes.
 
 IMPORTANT: All the files used in the following commands are in the `ocp-odf-patch` folder.
 
@@ -72,7 +72,7 @@ The RGW must know about this new zone it will serve from.
 oc patch OCSInitialization ocsinit -n openshift-storage --type json --patch  '[{ "op": "replace", "path": "/spec/enableCephTools", "value": true }]'
 ----
 
-* Add the endpoint 
+* Add the endpoint
 
 IMPORTANT: The next command does everything in one step. If you want to understand what's going on (or just don't trust those long commands...), detailed instructions are available in the next section.
 
@@ -328,7 +328,7 @@ Once the trino-coordinator pod is running, connect to trino using trino-cli
 ----
 wget https://repo1.maven.org/maven2/io/trino/trino-cli/358/trino-cli-358-executable.jar -O trino
 chmod +x trino
-oc port-forward svc/trino-service 8080:8080 
+oc port-forward svc/trino-service 8080:8080
 ./trino --server localhost:8080 --catalog hive --schema default
 ----
 

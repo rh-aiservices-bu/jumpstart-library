@@ -6,7 +6,7 @@
 
 If we want to load the pipeline some more and make our Service scale up, we just have to patch the image-generator with a lower value of seconds_wait. We can double the rate for example by setting it to 0.5.
 
-IMPORTANT: Please do not leave this setting more than a few minutes to make sure you don't fill up the cluster with thousands of copies of images... Please revert to the initial setting or stop the demo (last module). 
+IMPORTANT: Please do not leave this setting more than a few minutes to make sure you don't fill up the cluster with thousands of copies of images... Please revert to the initial setting or stop the demo (last module).
 
 === Through the console
 

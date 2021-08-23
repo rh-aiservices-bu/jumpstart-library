@@ -5,9 +5,9 @@ metadata:
 spec:
   consumerGroup: "knative-consumer-group"
   bootstrapServers:
-  - core-kafka-kafka-bootstrap.smartcity.svc:9092
+    - core-kafka-kafka-bootstrap.smartcity.svc:9092
   topics:
-  - lpr
+    - lpr
   sink:
     ref:
       apiVersion: serving.knative.dev/v1

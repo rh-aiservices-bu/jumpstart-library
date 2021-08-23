@@ -22,7 +22,7 @@ function initialize(workshop) {
             workshop.data_variable(varname, workshop_vars[varname]);
         }
     } catch(err) {}
-    
+
     workshop.data_variable('CLUSTER_SUBDOMAIN', process.env['CLUSTER_SUBDOMAIN']);
 }
 

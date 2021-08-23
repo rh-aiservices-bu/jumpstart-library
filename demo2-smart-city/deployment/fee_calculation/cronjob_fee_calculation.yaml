@@ -9,7 +9,7 @@ spec:
   suspend: false
   successfulJobsHistoryLimit: 10
   failedJobsHistoryLimit: 5
-  jobTemplate: 
+  jobTemplate:
     metadata:
       name: fee-calculation
     spec:
@@ -18,31 +18,31 @@ spec:
           name: fee-calculation
         spec:
           containers:
-          - name: fee-calculation
-            image: fee-calculation:latest
-            imagePullPolicy: Always
-            env:
-              - name: DB_HOST
-                value: "smartcity-db-service"
-              - name: DB_NAME
-                valueFrom:
+            - name: fee-calculation
+              image: fee-calculation:latest
+              imagePullPolicy: Always
+              env:
+                - name: DB_HOST
+                  value: "smartcity-db-service"
+                - name: DB_NAME
+                  valueFrom:
                     secretKeyRef:
                       name: postgresql
                       key: database-name
-              - name: DB_PASSWORD
-                valueFrom:
+                - name: DB_PASSWORD
+                  valueFrom:
                     secretKeyRef:
                       name: postgresql
                       key: database-password
-              - name: DB_USER
-                valueFrom:
+                - name: DB_USER
+                  valueFrom:
                     secretKeyRef:
                       name: postgresql
                       key: database-user
-              - name: TOLL_FEE
-                value: '5'
-              - name: POLLUTION_FEE
-                value: '5' 
-              - name: BATCH_TIME_MINS
-                value: '5' 
+                - name: TOLL_FEE
+                  value: "5"
+                - name: POLLUTION_FEE
+                  value: "5"
+                - name: BATCH_TIME_MINS
+                  value: "5"
           restartPolicy: OnFailure

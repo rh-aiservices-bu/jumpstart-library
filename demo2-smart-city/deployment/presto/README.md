@@ -4,7 +4,7 @@ SEP Deployment
 - Starburst Enterprise license file
 - OBC for Secor bucket created (preffered secor service deployed)
 
-- ODF 
+- ODF
   - RGW Service IP address
 ```
 oc -n openshift-storage get svc rook-ceph-rgw-ocs-storagecluster-cephobjectstore -o json | jq -r  .spec.clusterIP
@@ -45,7 +45,7 @@ helm upgrade sep-hive starburstdata/starburst-hive \
 - update `sep.yaml` with
   - `hive.s3.endpoint` with ODF RGW IP
   - `hive.s3.aws-access-key`
-  - `hive.s3.aws-access-key`  
+  - `hive.s3.aws-access-key`
 
 ```
 helm upgrade sep-cluster starburstdata/starburst-enterprise \
@@ -66,5 +66,3 @@ oc port-forward svc/coordinator 8080:8080
 
 ### TODO
 - work with Starburst to include licene free version of presto in this demo
-
-

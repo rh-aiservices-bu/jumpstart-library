@@ -5,11 +5,11 @@
 NOTE: This project is based on OpenShift Homeroom: https://github.com/openshift-homeroom.
 This repository is based on https://github.com/openshift-homeroom/lab-asciidoc-sample.
 If you are using OpenShift Homeroom project already, please continue using it.
-If you want to integrate it with AgnosticD, follow the instructions in 
+If you want to integrate it with AgnosticD, follow the instructions in
 <<If you Deploy Homeroom Directly from Agnosticd>>
 
 This repository should be used as a template for creating (converting) lab content to
-be used in Bookbag environments. 
+be used in Bookbag environments.
 
 == Using this Template
 

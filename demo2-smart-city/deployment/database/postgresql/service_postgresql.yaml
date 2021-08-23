@@ -6,9 +6,9 @@ metadata:
   name: smartcity-db-service
 spec:
   ports:
-  - port: 5432
-    protocol: TCP
-    targetPort: 5432
+    - port: 5432
+      protocol: TCP
+      targetPort: 5432
   selector:
     name: postgresql
   type: ClusterIP

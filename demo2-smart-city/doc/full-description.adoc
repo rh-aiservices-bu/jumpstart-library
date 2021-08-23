@@ -5,7 +5,7 @@ This scenario takes place in a highway environment: cars’ license plates are i
 
 === Detailed Scenario
 
-* A network of toll road access points capture images of vehicles as they enter. Local inference is performed on vehicle imagery at the toll road access point (edge), including: 
+* A network of toll road access points capture images of vehicles as they enter. Local inference is performed on vehicle imagery at the toll road access point (edge), including:
     ** Vehicle and license plate detection
         *** Vehicle bounding box
         *** License plate bounding box

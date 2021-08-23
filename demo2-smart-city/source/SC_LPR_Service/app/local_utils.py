@@ -67,7 +67,7 @@ def getWH(shape):
 def IOU(tl1, br1, tl2, br2):
     wh1, wh2 = br1-tl1, br2-tl2
     assert((wh1 >= 0).all() and (wh2 >= 0).all())
-    
+
     intersection_wh = np.maximum(np.minimum(br1, br2) - np.maximum(tl1, tl2), 0)
     intersection_area = np.prod(intersection_wh)
     area1, area2 = (np.prod(wh1), np.prod(wh2))
@@ -80,7 +80,7 @@ def IOU_labels(l1, l2):
 def nms(Labels, iou_threshold=0.5):
     SelectedLabels = []
     Labels.sort(key=lambda l: l.prob(), reverse=True)
-    
+
     for label in Labels:
         non_overlap = True
         for sel_label in SelectedLabels:
@@ -104,7 +104,7 @@ def find_T_matrix(pts, t_pts):
         xi = pts[:, i]
         xil = t_pts[:, i]
         xi = xi.T
-        
+
         A[i*2, 3:6] = -xil[2]*xi
         A[i*2, 6:] = xil[1]*xi
         A[i*2+1, :3] = xil[2]*xi
@@ -138,7 +138,7 @@ def reconstruct(I, Iresized, Yr, lp_threshold):
     Affines = Yr[..., 2:]
 
     xx, yy = np.where(Probs > lp_threshold)
-    # CNN input image size 
+    # CNN input image size
     WH = getWH(Iresized.shape)
     # output feature map size
     MN = WH/net_stride
@@ -172,7 +172,7 @@ def reconstruct(I, Iresized, Yr, lp_threshold):
 
         labels.append(DLabel(0, pts_prop, prob))
         labels_frontal.append(DLabel(0, frontal, prob))
-        
+
     final_labels = nms(labels, 0.1)
     final_labels_frontal = nms(labels_frontal, 0.1)
 
@@ -210,4 +210,3 @@ def detect_lp(model, I, max_dim, lp_threshold):
     #print(Yr.shape)
     L, TLp, lp_type, Cor = reconstruct(I, Iresized, Yr, lp_threshold)
     return L, TLp, lp_type, Cor
-

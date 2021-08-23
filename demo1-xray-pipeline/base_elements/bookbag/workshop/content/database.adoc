@@ -57,7 +57,7 @@ Your Terminal prompt is now the one from the MySQL engine! Inception...
 USE xraylabdb;
 ----
 
-For the following commands, you can copy/paste all lines at once in the mysql prompt. 
+For the following commands, you can copy/paste all lines at once in the mysql prompt.
 
 .Initialize tables
 [source,sql,subs="{markup-in-source}",role=execute]

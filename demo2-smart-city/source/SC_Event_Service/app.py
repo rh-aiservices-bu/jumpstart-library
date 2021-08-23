@@ -36,11 +36,11 @@ class Event(Base):
     stationb504 = Column(Boolean, unique=False)
 
 async def consume():
-    engine = create_engine('postgresql://'+DB_USER+':'+DB_PASSWORD+'@'+DB_HOST+'/'+DB_NAME+'?tcp_user_timeout=3000&connect_timeout=10', pool_pre_ping=True, connect_args={})    
+    engine = create_engine('postgresql://'+DB_USER+':'+DB_PASSWORD+'@'+DB_HOST+'/'+DB_NAME+'?tcp_user_timeout=3000&connect_timeout=10', pool_pre_ping=True, connect_args={})
     connection = engine.connect()
-    
+
     kafkaConsumer = AIOKafkaConsumer(KAFKA_TOPIC, loop=loop, bootstrap_servers=KAFKA_ENDPOINT, group_id=KAFKA_CONSUMER_GROUP_ID)
-    
+
     ## Create Table if does not exists
     Event.__table__.create(bind=engine, checkfirst=True)
 
@@ -51,7 +51,7 @@ async def consume():
             message = msg.value
             payload=ast.literal_eval(message.decode('utf-8'))
             try:
-                connection.execute(f"""INSERT INTO public.{TABLE_NAME}(event_id, date, event_vehicle_detected_plate_number, event_vehicle_lpn_detection_status, "stationa1", "stationa5201", "stationa13", "stationa2", "stationa23", "stationb313", "stationa4202" 
+                connection.execute(f"""INSERT INTO public.{TABLE_NAME}(event_id, date, event_vehicle_detected_plate_number, event_vehicle_lpn_detection_status, "stationa1", "stationa5201", "stationa13", "stationa2", "stationa23", "stationb313", "stationa4202"
 , "stationa41", "stationb504" ) VALUES('{payload['event_id']}', '{payload['event_timestamp']}', '{payload['event_vehicle_detected_plate_number']}', '{payload['event_vehicle_lpn_detection_status']}', '{payload['stationa1']}', '{payload['stationa5201']}', '{payload['stationa13']}', '{payload['stationa2']}', '{payload['stationa23']}', '{payload['stationb313']}', '{payload['stationa4202']}', '{payload['stationa41']}', '{payload['stationb504']}'
 )""")
                 print("===============================================")

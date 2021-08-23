@@ -84,7 +84,7 @@ async def main():
             image_key = car_images[random.randint(0,len(car_images)-1)]
         else: # 20% of time, choose between the first 5 images only
             image_key = car_images[random.randint(0,4)]
-        
+
         try:
             result = send_image(image_key) # Get generated licence plate info
 

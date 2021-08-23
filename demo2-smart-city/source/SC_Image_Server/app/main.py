@@ -52,15 +52,15 @@ def get_last_image():
     connection.close()
     return result
 
-# Response templates 
+# Response templates
 LOCATION_TEMPLATE = Template("""<img src="${service_point}/${bucket_name}/images/${image_name}" style="width:300px;"></img>""")
-## Application  
+## Application
 app = FastAPI()
 
 @app.get("/last_image", response_class=HTMLResponse)
 async def last_image():
-    image_name = get_last_image()   
-    if image_name != "":   
+    image_name = get_last_image()
+    if image_name != "":
         html = LOCATION_TEMPLATE.substitute(service_point=service_point, bucket_name=bucket_name, image_name=image_name)
     else:
         html = '<h2 style="font-family: Roboto,Helvetica Neue,Arial,sans-serif;text-align: center; color: white;font-size: 15px;font-weight: 400;">No image to show</h2>'

@@ -24,7 +24,7 @@ spec:
           - events-service
         from:
           kind: ImageStreamTag
-          name: 'events-service:latest'
+          name: "events-service:latest"
   replicas: 1
   revisionHistoryLimit: 5
   test: false
@@ -48,19 +48,19 @@ spec:
               value: "smartcity-db-service"
             - name: DB_NAME
               valueFrom:
-                  secretKeyRef:
-                    name: postgresql
-                    key: database-name
+                secretKeyRef:
+                  name: postgresql
+                  key: database-name
             - name: DB_PASSWORD
               valueFrom:
-                  secretKeyRef:
-                    name: postgresql
-                    key: database-password
+                secretKeyRef:
+                  name: postgresql
+                  key: database-password
             - name: DB_USER
               valueFrom:
-                  secretKeyRef:
-                    name: postgresql
-                    key: database-user
+                secretKeyRef:
+                  name: postgresql
+                  key: database-user
             - name: KAFKA_CONSUMER_GROUP_ID
               value: event_consumer_group
             - name: KAFKA_ENDPOINT

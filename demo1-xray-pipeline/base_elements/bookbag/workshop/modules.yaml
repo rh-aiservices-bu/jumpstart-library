@@ -27,7 +27,7 @@ modules:
   topic:
     name: Kafka Topic
     exit_sign: 'Next: Kafdrop'
-  kafdrop: 
+  kafdrop:
     name: Kafdrop
     exit_sign: 'Next: Image Server'
   imageserver:

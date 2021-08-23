@@ -5,36 +5,36 @@ metadata:
 spec:
   parallelism: 1
   completions: 1
-  activeDeadlineSeconds: 1800 
+  activeDeadlineSeconds: 1800
   backoffLimit: 6
-  template: 
+  template:
     metadata:
       name: seed-database
     spec:
       containers:
-      - name: seed-database
-        image: seed-database:latest
-        imagePullPolicy: Always
-        env:
-          - name: DB_HOST
-            value: "smartcity-db-service"
-          - name: DB_NAME
-            valueFrom:
+        - name: seed-database
+          image: seed-database:latest
+          imagePullPolicy: Always
+          env:
+            - name: DB_HOST
+              value: "smartcity-db-service"
+            - name: DB_NAME
+              valueFrom:
                 secretKeyRef:
                   name: postgresql
                   key: database-name
-          - name: DB_PASSWORD
-            valueFrom:
+            - name: DB_PASSWORD
+              valueFrom:
                 secretKeyRef:
                   name: postgresql
                   key: database-password
-          - name: DB_USER
-            valueFrom:
+            - name: DB_USER
+              valueFrom:
                 secretKeyRef:
                   name: postgresql
                   key: database-user
-          - name: TABLE_NAME
-            value: vehicle_metadata
-          - name: VEHICLE_METADATA_DB_URL
-            value: https://raw.githubusercontent.com/red-hat-data-services/jumpstart-library/main/demo2-smart-city/source/SC_Seed_Database/vehicle_metadata_db.json        
+            - name: TABLE_NAME
+              value: vehicle_metadata
+            - name: VEHICLE_METADATA_DB_URL
+              value: https://raw.githubusercontent.com/red-hat-data-services/jumpstart-library/main/demo2-smart-city/source/SC_Seed_Database/vehicle_metadata_db.json
       restartPolicy: Never

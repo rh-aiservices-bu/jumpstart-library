@@ -64,5 +64,3 @@ oc apply -f 01_odh.yaml
 * After a few seconds, you should see 2 pods running, `jupyterhub` and `jupyterhub-db`.
 
 We'll come back to this later to create and configure our buckets.
-
-

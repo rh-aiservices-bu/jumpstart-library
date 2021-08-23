@@ -9,14 +9,14 @@ grafana: dashboard
 spec:
   name: pipeline-cpu-dashboard.json
   plugins:
-  - name: pierosavi-imageit-panel
-    version: 1.0.2
-  - name: flant-statusmap-panel
-    version: 0.4.1
-  - name: grafana-clock-panel
-    version: 1.1.1
-  - name: ryantxu-ajax-panel
-    version: 0.0.7-dev
+    - name: pierosavi-imageit-panel
+      version: 1.0.2
+    - name: flant-statusmap-panel
+      version: 0.4.1
+    - name: grafana-clock-panel
+      version: 1.1.1
+    - name: ryantxu-ajax-panel
+      version: 0.0.7-dev
   json: |
     {
       "annotations": {

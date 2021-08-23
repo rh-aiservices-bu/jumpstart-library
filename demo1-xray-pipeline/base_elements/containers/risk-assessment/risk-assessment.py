@@ -53,7 +53,7 @@ CORS(app)
 def home():
     # Retrieve the CloudEvent
     event = from_http(request.headers, request.get_data())
-    
+
     # Process the event
     process_event(event.data)
 
@@ -148,7 +148,7 @@ def prediction(new_image):
         pred = model.predict_on_batch(new_image)
         pred_result = pred[0][0].numpy()
         logging.info('prediction made')
-        
+
         if pred_result > 0.80:
             label='Pneumonia, risk=' + str(round(pred_result*100,2)) + '%'
         elif pred_result < 0.60:
@@ -159,7 +159,7 @@ def prediction(new_image):
         gc.collect()
     except Exception as e:
         logging.error(f"Prediction error: {e}")
-        raise   
+        raise
     logging.info('label')
     prediction = {'label':label,'pred':pred_result}
     return prediction
@@ -172,8 +172,8 @@ def anonymize(img,img_name):
     blur_img = crop_img.filter(ImageFilter.GaussianBlur(radius=5))
     img.paste(blur_img, box)
 
-    # Anonymize filename  
-    logging.info('anonymizing filename') 
+    # Anonymize filename
+    logging.info('anonymizing filename')
     prefix = img_name.split('_')[0]
     patient_id = img_name.split('_')[2]
     suffix = img_name.split('_')[-1]
@@ -195,9 +195,9 @@ def get_study_id(patient_id):
 def get_safe_ext(key):
     ext = os.path.splitext(key)[-1].strip('.').upper()
     if ext in ['JPG', 'JPEG']:
-        return 'JPEG' 
+        return 'JPEG'
     elif ext in ['PNG']:
-        return 'PNG' 
+        return 'PNG'
     else:
         logging.error('Extension is invalid')
 

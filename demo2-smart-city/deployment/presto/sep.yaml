@@ -2,14 +2,14 @@ image:
   repository: "harbor.starburstdata.net/starburstdata/starburst-enterprise"
   tag: "356-e.0"
   pullPolicy: "IfNotPresent"
-#docker pull harbor.starburstdata.net/starburstdata/starburst-enterprise:356-e.0
-#docker pull harbor.starburstdata.net/starburstdata/starburst-enterprise:355-e
+# docker pull harbor.starburstdata.net/starburstdata/starburst-enterprise:356-e.0
+# docker pull harbor.starburstdata.net/starburstdata/starburst-enterprise:355-e
 initImage:
   repository: "harbor.starburstdata.net/starburstdata/starburst-enterprise-init"
   tag: "356.0.0"
   pullPolicy: "IfNotPresent"
-#docker pull harbor.starburstdata.net/starburstdata/starburst-enterprise-init:356.0.0
-#docker pull harbor.starburstdata.net/starburstdata/starburst-enterprise-init:355.0.0
+# docker pull harbor.starburstdata.net/starburstdata/starburst-enterprise-init:356.0.0
+# docker pull harbor.starburstdata.net/starburstdata/starburst-enterprise-init:355.0.0
 registryCredentials:
   enabled: true
   registry: harbor.starburstdata.net/starburstdata
@@ -24,7 +24,7 @@ coordinator:
     limits:
       memory: "6Gi"
       cpu: 2
-      
+
 worker:
   replicas: 1
   resources:

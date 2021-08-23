@@ -31,5 +31,3 @@ IMPORTANT: At the begining of the notebook, don't forget to enter the parameters
 * bucket_base_name: this is the SAME one you have entered in the config map module. If you have followed my recommandation, this should be `xraylab-{GUID}`.
 * AWS_ACCESS_KEY: `{ACCESS_KEY}`
 * AWS_SECRET_ACCESS_KEY: `{SECRET_KEY}`
-
-

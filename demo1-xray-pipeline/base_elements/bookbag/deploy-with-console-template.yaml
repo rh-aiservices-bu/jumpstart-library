@@ -23,12 +23,12 @@ parameters:
     value: set-by-trigger
   - name: WORKSHOP_VARS
     required: true
-    value: '{}'
+    value: "{}"
   - name: AUTH_USERNAME
     required: true
-    value: '*'
+    value: "*"
   - name: AUTH_PASSWORD
-    value: ''
+    value: ""
   - name: CONSOLE_IMAGE
     value: quay.io/openshift/origin-console:4.5
     required: true
@@ -155,8 +155,8 @@ objects:
       kind: ClusterRole
       name: ${ROLE}
     subjects:
-    - kind: ServiceAccount
-      name: ${NAME}
+      - kind: ServiceAccount
+        name: ${NAME}
 
   - apiVersion: v1
     kind: Service
@@ -166,10 +166,10 @@ objects:
       name: ${NAME}
     spec:
       ports:
-      - name: 10080-tcp
-        port: 10080
-        protocol: TCP
-        targetPort: 10080
+        - name: 10080-tcp
+          port: 10080
+          protocol: TCP
+          targetPort: 10080
       selector:
         name: ${NAME}
       type: ClusterIP

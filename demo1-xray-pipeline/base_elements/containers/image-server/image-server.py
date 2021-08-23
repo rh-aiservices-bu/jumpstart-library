@@ -51,7 +51,7 @@ def get_last_image(bucket_name):
 
     return result
 
-# Response templates 
+# Response templates
 LOCATION_TEMPLATE_SMALL = Template("""
     <img src="${service_point}/${bucket_name}/${image_name}" style="width:260px;"></img>""")
 
@@ -71,7 +71,7 @@ def homepage():
 @app.route('/last_image_small/<bucket_name>')
 def last_image_small(bucket_name):
     image_name = get_last_image(bucket_name)
-    if image_name != "":   
+    if image_name != "":
         html = LOCATION_TEMPLATE_SMALL.substitute(service_point=service_point, bucket_name=bucket_name, image_name=image_name)
     else:
         html = '<h2 style="font-family: Roboto,Helvetica Neue,Arial,sans-serif;text-align: center; color: white;font-size: 15px;font-weight: 400;">No image to show</h2>'
@@ -80,8 +80,8 @@ def last_image_small(bucket_name):
 # Answers with last image from <bucketname>, formatted as big
 @app.route('/last_image_big/<bucket_name>')
 def last_image_big(bucket_name):
-    image_name = get_last_image(bucket_name)   
-    if image_name != "":   
+    image_name = get_last_image(bucket_name)
+    if image_name != "":
         html = LOCATION_TEMPLATE_BIG.substitute(service_point=service_point, bucket_name=bucket_name, image_name=image_name)
     else:
         html = '<h2 style="font-family: Roboto,Helvetica Neue,Arial,sans-serif;text-align: center; color: white;font-size: 15px;font-weight: 400;">No image to show</h2>'
@@ -90,4 +90,3 @@ def last_image_big(bucket_name):
 # Launch Flask server
 if __name__ == '__main__':
     app.run(host='0.0.0.0')
-
