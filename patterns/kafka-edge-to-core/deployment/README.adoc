@@ -39,7 +39,7 @@ oc create -f mirror-maker.yaml;
 
 [source,bash]
 ----
-oc get kafkamirrormaker
+oc get kafkamirrormaker2
 ----
 
 At this point Kafka Mirror Maker has been configured to asynchronously replicate messages from source kafka cluster to target kafka cluster. Thus providing you an architectural choice to connect various edge locations to a single core cluster with seamless data transfer. 

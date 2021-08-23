@@ -5,14 +5,17 @@
 - Make sure Source and Target Kafka Clusters are setup correctly
 - Identify the Kafka topic that needs to be whitelisted for replication to the Core
 
-==== Testing
+==== Deployment
 
 * Deploy Kafka Mirror maker
 
 [source,bash]
 ----
-oc create -f mirror-maker.yaml;
+oc create -f mirror-maker.yaml
+oc get kafkamirrormaker2
 ----
+
+==== Testing
 
 * Launch temporary Kafka CLI (kafkacat)
 
@@ -21,21 +24,21 @@ oc create -f mirror-maker.yaml;
 oc run kafkacat -i -t --image debezium/tooling --restart=Never
 ----
 
-* From the `kafkacat` container shell, generate kafka messages in the topic `lpr` of  source Kafka cluster (`edge-kafka-kafka-bootstrap`) 
+* From the `kafkacat` container shell, generate a few kafka messages in the source Kafka cluster  `lpr` topic(`edge-kafka-kafka-bootstrap`) 
 
 [source,bash]
 ----
 for i in {1..50} ; do sleep 5 ; \
-'{"message":"Hello Red Hat Message-'$i'"}' | kafkacat -P -b edge-kafka-kafka-bootstrap -t lpr \
-done ;
+echo '{"message":"Hello Red Hat Message-'$i'"}' | kafkacat -P -b edge-kafka-kafka-bootstrap -t lpr ; done 
 ----
-* The above command will generate 50 Kafka messages every 5 seconds. KafkaMirrorMaker which is configured to replicate topic messages from source (edge) to target (core) kafka topics would more each message to the target kafka cluster. Thus
+* The above command will generate 50 Kafka messages every 5 seconds. The KafkaMirrorMaker2 which is configured to replicate topic messages from source (edge) to target (core) kafka topics, would move each message to the target kafka cluster.
 
-* On Target (core) Kafka cluster, verify the messages are replicated to the topic `lpr`
-
-* From the `kafkacat` container shell, verify that the messages are replicated from source (edge) kafka cluster to target (core) kafka cluster.
+* On Target (core) Kafka cluster, verify the messages are replicated to the topic `lpr`. From a new `kafkacat` container shell, verify that the messages are replicated from source (edge) kafka cluster to target (core) kafka cluster.
 
 [source,bash]
 ----
-kafkacat -C -b core-kafka-kafka-bootstrap -t lpr 
+oc rsh kafkacat
+kafkacat -b core-kafka-kafka-bootstrap -t lpr 
 ----
+
+* On the target (core) Kafka cluster, you should able to consume every message pushed from source (edge) Kafka cluster.
