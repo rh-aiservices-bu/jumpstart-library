@@ -38,3 +38,28 @@ In this demo, we show how to implement this scenario:
 * Data analysis leveraging Presto and Superset is done against stored data (database and object storage).
 
 link:demo2-smart-city/README.adoc[See this demo]
+
+== Contributing
+
+We recommend to use a virtual python environment to develop for this repository. To create such an environment use
+
+```bash
+python3 -m venv .venv
+source .venv/bin/activate
+```
+
+Then install the dependencies with:
+
+```bash
+pip -r requirements.txt
+```
+
+NOTE: This file is generated with `pip3 freeze > requirements.txt`
+
+Then install the pre-commit hook with
+
+```bash
+pre-commit install
+```
+
+Now you're ready to contribute code.
