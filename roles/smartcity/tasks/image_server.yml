@@ -1,0 +1,27 @@
+---
+# This component will return the image of the last identified vehicle to be displayed on the dashbord.
+
+- name: Deploy image server
+  k8s:
+    state: present
+    src: "{{ item }}"
+  with_items:
+    - image_server/is_image-server.yaml # ImageStream for the image-server
+    - image_server/bc_image-server.yaml # Build Config for the image-server
+
+- name: Get RGW route info
+  k8s_info:
+    api_version: route.openshift.io/v1
+    kind: Route
+    name: ocs-storagecluster-cephobjectstore
+    namespace: openshift-storage
+  register: rgw_route
+
+- name: Set rgw_service_endpoint for template
+  set_fact:
+    rgw_service_endpoint: "https://{{ rgw_route.spec.host }}"
+
+- name: Deployment Config/Service/Route for the image-server
+  k8s:
+    state: present
+    definition: "{{ lookup('template', 'image_server/dc_image-server.yaml.j2') | from_yaml }}"

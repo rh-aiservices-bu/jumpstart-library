@@ -42,7 +42,7 @@ spec:
                   name: postgresql
                   key: database-name
             - name: SERVICE_POINT
-              value: "RGW_SERVICE_ENDPOINT"
+              value: "{{ rgw_service_endpoint }}"
             - name: BUCKET_NAME
               valueFrom:
                 configMapKeyRef:

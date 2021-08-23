@@ -1,0 +1,12 @@
+---
+# This is the component that runs in the Core and listens to incoming Kafka events
+# to write them into a PostgreSQL database so that they can be queried to create the dashboards.
+
+- name: Deploy Kafka to PostgreSQL bridge
+  k8s:
+    state: present
+    src: "{{ item }}"
+  with_items:
+    - events_service/is_events_service.yaml # ImageStream for the event service
+    - events_service/bc_events_service.yaml # BuildConfiguration for the event service
+    - events_service/dc_events_service.yaml # Deployment Configuration for the event service

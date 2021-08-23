@@ -1,0 +1,47 @@
+---
+# Open Data Hub will allow us to easily deploy SuperSet and Trino.
+
+- name: Get RGW route info
+  k8s_info:
+    api_version: route.openshift.io/v1
+    kind: Service
+    name: rook-ceph-rgw-ocs-storagecluster-cephobjectstore
+    namespace: openshift-storage
+  register: rgw_svc
+
+- name: Set RGW_SERVICE_ENDPOINT for template
+  set_fact:
+    rgw_ip: "https://{{ rgw_svc.spec.clusterIP }}"
+
+- name: Deployment Open Data Hub
+  k8s:
+    state: present
+    definition: "{{ lookup('template', 'opendatahub/kfdef.yaml.j2') | from_yaml }}"
+
+- name: Search the superset pod to get the deployment name
+  k8s_info:
+    kind: Pod
+    label_selectors:
+      - app = superset
+  register: superset_pod_info
+  until: superset_pod_info.resources.length > 0
+
+- name: Add Superset Pod to inventory
+  add_host:
+    name: superset-pod
+    ansible_connection: kubectl
+    ansible_kubectl_pod: "{{ superset_pod_info.resources[0].metadata.name }}"
+    ansible_kubectl_namespace: smartcity
+
+- name: Copy superset config to Pod
+  copy:
+    src: superset/config
+    dest: /tmp
+    mode: 0777
+  delegate_to: superset-pod
+
+- name: Import the datasources into Superset (PostgreSQL and Hive from Trino)
+  command: superset import_datasources -p /tmp/config/superset-datasources.yaml
+  delegate_to: superset-pod
+  changed_when: true
+# TODO Trinio setup

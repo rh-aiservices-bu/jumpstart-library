@@ -1,0 +1,30 @@
+---
+# We will need a database to store informations about the workflow, as well as registration information for the vehicles.
+# You can edit the Secret file if you want change the default values.
+
+- name: Deploy PostgreSQL DB and seed it
+  k8s:
+    state: present
+    src: "{{ item }}"
+  with_items:
+    # deploy steps
+    - database/postgresql/secret_postgresql.yaml
+    - database/postgresql/dc_postgresql.yaml
+    - database/postgresql/service_postgresql.yaml
+    #  seed steps
+    - database/seed_database/is_seed_database.yaml
+    - database/seed_database/bc_seed_database.yaml
+
+- name: wait for ImageStream to be done
+  k8s_info:
+    api_version: build.openshift.io/v1
+    kind: BuildConfig
+    name: seed-database
+    wait: true
+    wait_condition:
+      type: Available
+
+- name: Seed PostgreSQL
+  k8s:
+    state: present
+    src: database/seed_database/job_seed_database.yaml

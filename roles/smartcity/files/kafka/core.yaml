@@ -10,8 +10,8 @@ spec:
     userOperator: {}
   kafka:
     config:
-      inter.broker.protocol.version: '2.6'
-      log.message.format.version: '2.6'
+      inter.broker.protocol.version: "2.6"
+      log.message.format.version: "2.6"
       offsets.topic.replication.factor: 3
       transaction.state.log.min.isr: 2
       transaction.state.log.replication.factor: 3

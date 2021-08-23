@@ -1,6 +1,6 @@
 databases:
   - database_name: PostgreSQL
-    sqlalchemy_uri: postgresql://DB_USER:DB_PASSWORD@smartcity-db-service/DB_NAME
+    sqlalchemy_uri: postgresql://dbadmin:dbpassword@smartcity-db-service/pgdb
     tables:
       - columns:
           - column_name: station
