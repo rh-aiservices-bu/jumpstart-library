@@ -25,6 +25,7 @@ This pattern is implemented in the following demos:
 
 === Getting Started
 
-* Sample Implementation : link:https://github.com/red-hat-data-services/jumpstart-library/blob/main/patterns/kafka-to-serverless/examples/README.adoc[Link]
-* Deployment Instruction : link:https://github.com/red-hat-data-services/jumpstart-library/blob/main/patterns/kafka-to-serverless/deployment/README.adoc[Link]
+* Deployment Instruction : link:https://github.com/red-hat-data-services/jumpstart-library/blob/main/patterns/kafka-edge-to-core/deployment/README.adoc[Link]
+* Sample Implementation : link:https://github.com/red-hat-data-services/jumpstart-library/blob/main/patterns/kafka-edge-to-core/examples/README.adoc[Link]
+* Demo Implementation : link:https://github.com/red-hat-data-services/jumpstart-library/blob/main/demo2-smart-city/deployment/kafka/mirror-maker.yaml[Smart City]
 * Video Demo:  link:https://www.youtube.com/xxxxxxx[Link]
