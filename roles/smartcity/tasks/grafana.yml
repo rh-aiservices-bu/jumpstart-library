@@ -1,0 +1,59 @@
+---
+# Grafana will allow us to create dashbord to visualize the data workflow (Ops dashboard)
+# and the Business Application itself (Main dashboard).
+# All the deployments are taken care of by the Grafana operator deployed previously (see requirements).
+
+- name: Get PostgreSQL connection info
+  k8s_info:
+    api_version: v1
+    kind: Secret
+    name: postgresql
+    namespace: smartcity
+  register: postgres_secret
+
+- name: Set PostgreQL facts
+  set_fact:
+    db_database: "{{ postgres_secret.resources.spec.database-name }}"
+    db_user: "{{ postgres_secret.resources.spec.database-user }}"
+    db_password: "{{ postgres_secret.resources.spec.database-password }}"
+
+- name: Deployment Config/Service/Route for the image-server
+  k8s:
+    state: present
+    definition: "{{ lookup('template', 'grafana/grafana-pgsql-datasource.yaml.j2') | from_yaml }}"
+
+# TODO oc adm policy add-cluster-role-to-user cluster-monitoring-view -z grafana-serviceaccount
+
+- name: Set Prometheus access token
+  set_fact:
+    bearer_token: "{{ postgres_secret.resources.spec.database-name }}"
+
+- name: Deployment Config/Service/Route for the image-server
+  k8s:
+    state: present
+    definition: "{{ lookup('template', 'grafana/grafana-prometheus-datasource.yaml.j2') | from_yaml }}"
+
+- name: Get image server route
+  k8s_info:
+    api_version: v1
+    kind: Route
+    name: image-server
+    namespace: smartcity
+  register: image_server_route_info
+
+- name: Set image server route
+  set_fact:
+    image_server_host: "{{ image_server_route_info.spec.host }}"
+
+- name: Deployment Config/Service/Route for the image-server
+  k8s:
+    state: present
+    definition: "{{ lookup('template', 'grafana/grafana-main-dashboard.yaml.j2') | from_yaml }}"
+
+- name: Deploy image server
+  k8s:
+    state: present
+    src: "{{ item }}"
+  with_items:
+    - grafana/grafana-pipeline-cpu-dashboard.yaml # CPU Ops dashboard
+    - grafana/grafana-pipeline-ram-dashboard.yaml # RAM Ops dashboard

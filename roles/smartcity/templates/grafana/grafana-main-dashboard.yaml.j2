@@ -1,0 +1,1606 @@
+apiVersion: integreatly.org/v1alpha1
+kind: GrafanaDashboard
+metadata:
+  labels:
+    app: grafana
+  name: lpr-dashboard
+labels:
+grafana: dashboard
+spec:
+  name: lpr-dashboard.json
+  plugins:
+    - name: pierosavi-imageit-panel
+      version: 1.0.2
+    - name: flant-statusmap-panel
+      version: 0.4.1
+    - name: grafana-clock-panel
+      version: 1.1.1
+    - name: ryantxu-ajax-panel
+      version: 0.0.7-dev
+  json: |
+    {
+      "annotations": {
+        "list": [
+          {
+            "builtIn": 1,
+            "datasource": "-- Grafana --",
+            "enable": true,
+            "hide": true,
+            "iconColor": "rgba(0, 211, 255, 1)",
+            "name": "Annotations & Alerts",
+            "type": "dashboard"
+          }
+        ]
+      },
+      "editable": true,
+      "gnetId": null,
+      "graphTooltip": 0,
+      "id": 2,
+      "links": [],
+      "panels": [
+        {
+          "datasource": null,
+          "description": "",
+          "fieldConfig": {
+            "defaults": {
+              "custom": {}
+            },
+            "overrides": []
+          },
+          "gridPos": {
+            "h": 3,
+            "w": 4,
+            "x": 0,
+            "y": 0
+          },
+          "id": 4,
+          "options": {
+            "content": "# London\n\n## Ultra Low Emissions Zone",
+            "mode": "markdown"
+          },
+          "pluginVersion": "7.3.10",
+          "timeFrom": null,
+          "timeShift": null,
+          "title": "",
+          "transparent": true,
+          "type": "text"
+        },
+        {
+          "datasource": null,
+          "fieldConfig": {
+            "defaults": {
+              "custom": {}
+            },
+            "overrides": []
+          },
+          "gridPos": {
+            "h": 3,
+            "w": 4,
+            "x": 4,
+            "y": 0
+          },
+          "id": 6,
+          "options": {
+            "bgColor": "#0c0c0c",
+            "clockType": "24 hour",
+            "countdownSettings": {
+              "endCountdownTime": "2021-04-26T23:10:44-07:00",
+              "endText": "00:00:00"
+            },
+            "dateSettings": {
+              "dateFormat": "YYYY-MM-DD",
+              "fontSize": "20px",
+              "fontWeight": "normal",
+              "showDate": true
+            },
+            "mode": "time",
+            "timeSettings": {
+              "fontSize": "48pt",
+              "fontWeight": "bold"
+            },
+            "timezone": "",
+            "timezoneSettings": {
+              "fontSize": "12px",
+              "fontWeight": "normal",
+              "showTimezone": true,
+              "zoneFormat": "offsetAbbv"
+            }
+          },
+          "pluginVersion": "7.3.10",
+          "timeFrom": null,
+          "timeShift": null,
+          "title": "",
+          "transparent": true,
+          "type": "grafana-clock-panel"
+        },
+        {
+          "datasource": "PostgreSQL",
+          "fieldConfig": {
+            "defaults": {
+              "custom": {
+                "align": null,
+                "filterable": false
+              },
+              "mappings": [],
+              "thresholds": {
+                "mode": "absolute",
+                "steps": [
+                  {
+                    "color": "green",
+                    "value": null
+                  },
+                  {
+                    "color": "red",
+                    "value": 80
+                  }
+                ]
+              },
+              "unit": "dateTimeAsUS"
+            },
+            "overrides": [
+              {
+                "matcher": {
+                  "id": "byName",
+                  "options": "event"
+                },
+                "properties": [
+                  {
+                    "id": "custom.width",
+                    "value": 195
+                  }
+                ]
+              },
+              {
+                "matcher": {
+                  "id": "byName",
+                  "options": "plate"
+                },
+                "properties": [
+                  {
+                    "id": "custom.width",
+                    "value": 103
+                  }
+                ]
+              },
+              {
+                "matcher": {
+                  "id": "byName",
+                  "options": "event"
+                },
+                "properties": [
+                  {
+                    "id": "unit",
+                    "value": "dateTimeAsIso"
+                  }
+                ]
+              }
+            ]
+          },
+          "gridPos": {
+            "h": 5,
+            "w": 6,
+            "x": 8,
+            "y": 0
+          },
+          "id": 21,
+          "options": {
+            "showHeader": true,
+            "sortBy": []
+          },
+          "pluginVersion": "7.3.10",
+          "targets": [
+            {
+              "format": "table",
+              "group": [],
+              "metricColumn": "none",
+              "rawQuery": true,
+              "rawSql": "SELECT e.date AS Event, e.event_vehicle_detected_plate_number AS Plate,\n  CASE WHEN stationa1 = 'true' THEN 'stationa1'\n       WHEN stationa13 = 'true' THEN 'stationa13' \n       WHEN stationa2 = 'true' THEN 'stationa2'\n       WHEN stationa23 = 'true' THEN 'stationa23'\n       WHEN stationb313 = 'true' THEN 'stationb313'\n       WHEN stationa4202 = 'true' THEN 'stationa4202'\n       WHEN stationb504 = 'true' THEN 'stationb504'\n       WHEN stationa41 = 'true' THEN 'stationa41'\n       WHEN stationa5201 = 'true' THEN 'stationa5201'\n       END AS Station\nFROM event AS e\nLEFT JOIN vehicle_metadata AS v\nON e.event_vehicle_detected_plate_number = v.vehicle_registered_plate_number\nWHERE e.event_vehicle_detected_plate_number = 'LCA2555' OR e.event_vehicle_detected_plate_number = 'G526JHD'\nORDER by e.date DESC \nLIMIT 3\n",
+              "refId": "A",
+              "select": [
+                [
+                  {
+                    "params": [
+                      "value"
+                    ],
+                    "type": "column"
+                  }
+                ]
+              ],
+              "timeColumn": "time",
+              "where": [
+                {
+                  "name": "$__timeFilter",
+                  "params": [],
+                  "type": "macro"
+                }
+              ]
+            }
+          ],
+          "timeFrom": null,
+          "timeShift": null,
+          "title": "Wanted vehicles location",
+          "type": "table"
+        },
+        {
+          "cards": {
+            "cardHSpacing": 2,
+            "cardMinWidth": 20,
+            "cardRound": null,
+            "cardVSpacing": 2
+          },
+          "color": {
+            "cardColor": "#b4ff00",
+            "colorScale": "sqrt",
+            "colorScheme": "interpolateRdYlGn",
+            "defaultColor": "#757575",
+            "exponent": 0.5,
+            "mode": "spectrum",
+            "thresholds": []
+          },
+          "datasource": "PostgreSQL",
+          "fieldConfig": {
+            "defaults": {
+              "custom": {}
+            },
+            "overrides": []
+          },
+          "gridPos": {
+            "h": 11,
+            "w": 10,
+            "x": 14,
+            "y": 0
+          },
+          "highlightCards": true,
+          "id": 12,
+          "legend": {
+            "show": true
+          },
+          "nullPointMode": "as empty",
+          "pageSize": 15,
+          "pluginVersion": "7.3.10",
+          "seriesFilterIndex": -1,
+          "statusmap": {
+            "ConfigVersion": "v1"
+          },
+          "targets": [
+            {
+              "format": "time_series",
+              "group": [],
+              "metricColumn": "none",
+              "rawQuery": true,
+              "rawSql": "SELECT\n  $__timeGroupAlias(date,$__interval),\n  count(event_id) as \"Station A23\"\nFROM event\nWHERE\n  $__timeFilter(date) AND stationa23 = 'true'\nGROUP BY 1",
+              "refId": "A",
+              "select": [
+                [
+                  {
+                    "params": [
+                      "value"
+                    ],
+                    "type": "column"
+                  }
+                ]
+              ],
+              "table": "event",
+              "timeColumn": "date",
+              "timeColumnType": "timestamptz",
+              "where": [
+                {
+                  "name": "$__timeFilter",
+                  "params": [],
+                  "type": "macro"
+                }
+              ]
+            },
+            {
+              "format": "time_series",
+              "group": [],
+              "metricColumn": "none",
+              "rawQuery": true,
+              "rawSql": "SELECT\n  $__timeGroupAlias(date,$__interval),\n  count(event_id) as \"Station A1\"\nFROM event\nWHERE\n  $__timeFilter(date) AND stationa1 = 'true'\nGROUP BY 1\n",
+              "refId": "B",
+              "select": [
+                [
+                  {
+                    "params": [
+                      "value"
+                    ],
+                    "type": "column"
+                  }
+                ]
+              ],
+              "timeColumn": "time",
+              "where": [
+                {
+                  "name": "$__timeFilter",
+                  "params": [],
+                  "type": "macro"
+                }
+              ]
+            },
+            {
+              "format": "time_series",
+              "group": [],
+              "metricColumn": "none",
+              "rawQuery": true,
+              "rawSql": "SELECT\n  $__timeGroupAlias(date,$__interval),\n  count(event_id) as \"Station A4202\"\nFROM event\nWHERE\n  $__timeFilter(date) AND stationa4202 = 'true'\nGROUP BY 1\n",
+              "refId": "C",
+              "select": [
+                [
+                  {
+                    "params": [
+                      "value"
+                    ],
+                    "type": "column"
+                  }
+                ]
+              ],
+              "timeColumn": "time",
+              "where": [
+                {
+                  "name": "$__timeFilter",
+                  "params": [],
+                  "type": "macro"
+                }
+              ]
+            },
+            {
+              "format": "time_series",
+              "group": [],
+              "metricColumn": "none",
+              "rawQuery": true,
+              "rawSql": "SELECT\n  $__timeGroupAlias(date,$__interval),\n  count(event_id) as \"Station A41\"\nFROM event\nWHERE\n  $__timeFilter(date) AND stationa41 = 'true'\nGROUP BY 1\n",
+              "refId": "D",
+              "select": [
+                [
+                  {
+                    "params": [
+                      "value"
+                    ],
+                    "type": "column"
+                  }
+                ]
+              ],
+              "timeColumn": "time",
+              "where": [
+                {
+                  "name": "$__timeFilter",
+                  "params": [],
+                  "type": "macro"
+                }
+              ]
+            },
+            {
+              "format": "time_series",
+              "group": [],
+              "metricColumn": "none",
+              "rawQuery": true,
+              "rawSql": "SELECT\n  $__timeGroupAlias(date,$__interval),\n  count(event_id) as \"Station B504\"\nFROM event\nWHERE\n  $__timeFilter(date) AND stationb504 = 'true'\nGROUP BY 1\n",
+              "refId": "E",
+              "select": [
+                [
+                  {
+                    "params": [
+                      "value"
+                    ],
+                    "type": "column"
+                  }
+                ]
+              ],
+              "timeColumn": "time",
+              "where": [
+                {
+                  "name": "$__timeFilter",
+                  "params": [],
+                  "type": "macro"
+                }
+              ]
+            },
+            {
+              "format": "time_series",
+              "group": [],
+              "metricColumn": "none",
+              "rawQuery": true,
+              "rawSql": "SELECT\n  $__timeGroupAlias(date,$__interval),\n  count(event_id) as \"Station A5201\"\nFROM event\nWHERE\n  $__timeFilter(date) AND stationa5201 = 'true'\nGROUP BY 1\n",
+              "refId": "F",
+              "select": [
+                [
+                  {
+                    "params": [
+                      "value"
+                    ],
+                    "type": "column"
+                  }
+                ]
+              ],
+              "timeColumn": "time",
+              "where": [
+                {
+                  "name": "$__timeFilter",
+                  "params": [],
+                  "type": "macro"
+                }
+              ]
+            },
+            {
+              "format": "time_series",
+              "group": [],
+              "metricColumn": "none",
+              "rawQuery": true,
+              "rawSql": "SELECT\n  $__timeGroupAlias(date,$__interval),\n  count(event_id) as \"Station A13\"\nFROM event\nWHERE\n  $__timeFilter(date) AND stationa13 = 'true'\nGROUP BY 1\n",
+              "refId": "G",
+              "select": [
+                [
+                  {
+                    "params": [
+                      "value"
+                    ],
+                    "type": "column"
+                  }
+                ]
+              ],
+              "timeColumn": "time",
+              "where": [
+                {
+                  "name": "$__timeFilter",
+                  "params": [],
+                  "type": "macro"
+                }
+              ]
+            },
+            {
+              "format": "time_series",
+              "group": [],
+              "metricColumn": "none",
+              "rawQuery": true,
+              "rawSql": "SELECT\n  $__timeGroupAlias(date,$__interval),\n  count(event_id) as \"Station B313\"\nFROM event\nWHERE\n  $__timeFilter(date) AND stationb313 = 'true'\nGROUP BY 1\n",
+              "refId": "H",
+              "select": [
+                [
+                  {
+                    "params": [
+                      "value"
+                    ],
+                    "type": "column"
+                  }
+                ]
+              ],
+              "timeColumn": "time",
+              "where": [
+                {
+                  "name": "$__timeFilter",
+                  "params": [],
+                  "type": "macro"
+                }
+              ]
+            },
+            {
+              "format": "time_series",
+              "group": [],
+              "metricColumn": "none",
+              "rawQuery": true,
+              "rawSql": "SELECT\n  $__timeGroupAlias(date,$__interval),\n  count(event_id) as \"Station A2\"\nFROM event\nWHERE\n  $__timeFilter(date) AND stationa2 = 'true'\nGROUP BY 1\n",
+              "refId": "I",
+              "select": [
+                [
+                  {
+                    "params": [
+                      "value"
+                    ],
+                    "type": "column"
+                  }
+                ]
+              ],
+              "timeColumn": "time",
+              "where": [
+                {
+                  "name": "$__timeFilter",
+                  "params": [],
+                  "type": "macro"
+                }
+              ]
+            }
+          ],
+          "timeFrom": null,
+          "timeShift": null,
+          "title": "Vehicles per station over period",
+          "tooltip": {
+            "extraInfo": "",
+            "freezeOnClick": true,
+            "items": [],
+            "show": true,
+            "showExtraInfo": false,
+            "showItems": false
+          },
+          "transparent": true,
+          "type": "flant-statusmap-panel",
+          "useMax": true,
+          "usingPagination": false,
+          "xAxis": {
+            "show": true
+          },
+          "yAxis": {
+            "maxWidth": -1,
+            "minWidth": -1,
+            "show": true
+          },
+          "yAxisSort": "a → z",
+          "yLabel": {
+            "delimiter": "",
+            "labelTemplate": "",
+            "usingSplitLabel": false
+          }
+        },
+        {
+          "datasource": "PostgreSQL",
+          "fieldConfig": {
+            "defaults": {
+              "custom": {}
+            },
+            "overrides": []
+          },
+          "gridPos": {
+            "h": 21,
+            "w": 14,
+            "x": 0,
+            "y": 5
+          },
+          "id": 2,
+          "options": {
+            "forceImageRefresh": false,
+            "imageUrl": "http://jumpstart-library.s3.amazonaws.com/smartcity/london-ulev.png",
+            "lockSensors": true,
+            "mappings": [],
+            "sensors": [
+              {
+                "backgroundBlink": false,
+                "backgroundColor": "#000",
+                "bold": false,
+                "decimals": 0,
+                "fontColor": "#FFF",
+                "link": "",
+                "mappingId": "",
+                "name": "Station A23",
+                "position": {
+                  "x": 54.55259026687598,
+                  "y": 84.93723849372385
+                },
+                "query": {
+                  "alias": "",
+                  "id": "A"
+                },
+                "valueBlink": false,
+                "visible": true
+              },
+              {
+                "backgroundBlink": false,
+                "backgroundColor": "#000",
+                "bold": false,
+                "decimals": 0,
+                "fontColor": "#FFF",
+                "link": "",
+                "mappingId": "",
+                "name": "Station A2",
+                "position": {
+                  "x": 75.27472527472527,
+                  "y": 74.47698744769875
+                },
+                "query": {
+                  "alias": "",
+                  "id": "B"
+                },
+                "valueBlink": false,
+                "visible": true
+              },
+              {
+                "backgroundBlink": false,
+                "backgroundColor": "#000",
+                "bold": false,
+                "decimals": 0,
+                "fontColor": "#FFF",
+                "link": "",
+                "mappingId": "",
+                "name": "Station B313",
+                "position": {
+                  "x": 20.38519681376824,
+                  "y": 70.056304561186
+                },
+                "query": {
+                  "alias": "",
+                  "id": "C"
+                },
+                "valueBlink": false,
+                "visible": true
+              },
+              {
+                "backgroundBlink": false,
+                "backgroundColor": "#000",
+                "bold": false,
+                "decimals": 0,
+                "fontColor": "#FFF",
+                "link": "",
+                "mappingId": "",
+                "name": "Station B504",
+                "position": {
+                  "x": 34.34095005523578,
+                  "y": 5.494601993904643
+                },
+                "query": {
+                  "alias": "",
+                  "id": "D"
+                },
+                "valueBlink": false,
+                "visible": true
+              },
+              {
+                "backgroundBlink": false,
+                "backgroundColor": "#000",
+                "bold": false,
+                "decimals": 0,
+                "fontColor": "#FFF",
+                "link": "",
+                "mappingId": "",
+                "name": "Station A4202",
+                "position": {
+                  "x": 6.917698703412988,
+                  "y": 41.878712743426824
+                },
+                "query": {
+                  "alias": "",
+                  "id": "E"
+                },
+                "valueBlink": false,
+                "visible": true
+              },
+              {
+                "backgroundBlink": false,
+                "backgroundColor": "#000",
+                "bold": false,
+                "decimals": 0,
+                "fontColor": "#FFF",
+                "link": "",
+                "mappingId": "",
+                "name": "Station A1",
+                "position": {
+                  "x": 59.89010989010989,
+                  "y": 1.8828451882845187
+                },
+                "query": {
+                  "alias": "",
+                  "id": "F"
+                },
+                "valueBlink": false,
+                "visible": true
+              },
+              {
+                "backgroundBlink": false,
+                "backgroundColor": "#000",
+                "bold": false,
+                "decimals": 0,
+                "fontColor": "#FFF",
+                "link": "",
+                "mappingId": "",
+                "name": "Station A13",
+                "position": {
+                  "x": 87.36263736263736,
+                  "y": 38.70292887029289
+                },
+                "query": {
+                  "alias": "",
+                  "id": "G"
+                },
+                "valueBlink": false,
+                "visible": true
+              },
+              {
+                "backgroundBlink": false,
+                "backgroundColor": "#000",
+                "bold": false,
+                "decimals": 0,
+                "fontColor": "#FFF",
+                "link": "",
+                "mappingId": "",
+                "name": "Station A41",
+                "position": {
+                  "x": 8.338566195709053,
+                  "y": 17.07939459682835
+                },
+                "query": {
+                  "alias": "",
+                  "id": "I"
+                },
+                "valueBlink": false,
+                "visible": true
+              },
+              {
+                "backgroundBlink": false,
+                "backgroundColor": "#000",
+                "bold": false,
+                "decimals": 0,
+                "fontColor": "#FFF",
+                "link": "",
+                "mappingId": "",
+                "name": "Station A5201",
+                "position": {
+                  "x": 74.80376766091052,
+                  "y": 11.715481171548117
+                },
+                "query": {
+                  "alias": "",
+                  "id": "H"
+                },
+                "valueBlink": false,
+                "visible": true
+              }
+            ],
+            "sensorsTextSize": 10
+          },
+          "pluginVersion": "7.3.10",
+          "targets": [
+            {
+              "format": "time_series",
+              "group": [
+                {
+                  "params": [
+                    "$__interval",
+                    "none"
+                  ],
+                  "type": "time"
+                }
+              ],
+              "hide": false,
+              "metricColumn": "event_vehicle_detected_plate_number",
+              "rawQuery": true,
+              "rawSql": "SELECT\n  count(event_id) as \"value\",\n  max(date) as \"time\"\nFROM event\nWHERE\n  $__timeFilter(date) AND stationa23 = 'true'\n",
+              "refId": "A",
+              "select": [
+                [
+                  {
+                    "params": [
+                      "event_id"
+                    ],
+                    "type": "column"
+                  },
+                  {
+                    "params": [
+                      "count"
+                    ],
+                    "type": "aggregate"
+                  }
+                ]
+              ],
+              "table": "event",
+              "timeColumn": "date",
+              "timeColumnType": "timestamp",
+              "where": [
+                {
+                  "name": "$__timeFilter",
+                  "params": [],
+                  "type": "macro"
+                },
+                {
+                  "datatype": "bool",
+                  "name": "",
+                  "params": [
+                    "stationA23",
+                    "=",
+                    "'true'"
+                  ],
+                  "type": "expression"
+                }
+              ]
+            },
+            {
+              "format": "time_series",
+              "group": [
+                {
+                  "params": [
+                    "$__interval",
+                    "none"
+                  ],
+                  "type": "time"
+                }
+              ],
+              "hide": false,
+              "metricColumn": "event_vehicle_detected_plate_number",
+              "rawQuery": true,
+              "rawSql": "SELECT\n  count(event_id) as \"value\",\n  max(date) as \"time\"\nFROM event\nWHERE\n  $__timeFilter(date) AND stationa2 = 'true'",
+              "refId": "B",
+              "select": [
+                [
+                  {
+                    "params": [
+                      "event_id"
+                    ],
+                    "type": "column"
+                  },
+                  {
+                    "params": [
+                      "count"
+                    ],
+                    "type": "aggregate"
+                  }
+                ]
+              ],
+              "table": "event",
+              "timeColumn": "date",
+              "timeColumnType": "timestamp",
+              "where": [
+                {
+                  "name": "$__timeFilter",
+                  "params": [],
+                  "type": "macro"
+                },
+                {
+                  "datatype": "bool",
+                  "name": "",
+                  "params": [
+                    "stationA2",
+                    "=",
+                    "'true'"
+                  ],
+                  "type": "expression"
+                }
+              ]
+            },
+            {
+              "format": "time_series",
+              "group": [
+                {
+                  "params": [
+                    "$__interval",
+                    "none"
+                  ],
+                  "type": "time"
+                }
+              ],
+              "hide": false,
+              "metricColumn": "event_vehicle_detected_plate_number",
+              "rawQuery": true,
+              "rawSql": "SELECT\n  count(event_id) as \"value\",\n  max(date) as \"time\"\nFROM event\nWHERE\n  $__timeFilter(date) AND stationb313 = 'true'",
+              "refId": "C",
+              "select": [
+                [
+                  {
+                    "params": [
+                      "event_id"
+                    ],
+                    "type": "column"
+                  },
+                  {
+                    "params": [
+                      "count"
+                    ],
+                    "type": "aggregate"
+                  }
+                ]
+              ],
+              "table": "event",
+              "timeColumn": "date",
+              "timeColumnType": "timestamp",
+              "where": [
+                {
+                  "name": "$__timeFilter",
+                  "params": [],
+                  "type": "macro"
+                },
+                {
+                  "datatype": "bool",
+                  "name": "",
+                  "params": [
+                    "stationB313",
+                    "=",
+                    "'true'"
+                  ],
+                  "type": "expression"
+                }
+              ]
+            },
+            {
+              "format": "time_series",
+              "group": [
+                {
+                  "params": [
+                    "$__interval",
+                    "none"
+                  ],
+                  "type": "time"
+                }
+              ],
+              "hide": false,
+              "metricColumn": "event_vehicle_detected_plate_number",
+              "rawQuery": true,
+              "rawSql": "SELECT\n  count(event_id) as \"value\",\n  max(date) as \"time\"\nFROM event\nWHERE\n  $__timeFilter(date) AND stationb504 = 'true'",
+              "refId": "D",
+              "select": [
+                [
+                  {
+                    "params": [
+                      "event_id"
+                    ],
+                    "type": "column"
+                  },
+                  {
+                    "params": [
+                      "count"
+                    ],
+                    "type": "aggregate"
+                  }
+                ]
+              ],
+              "table": "event",
+              "timeColumn": "date",
+              "timeColumnType": "timestamp",
+              "where": [
+                {
+                  "name": "$__timeFilter",
+                  "params": [],
+                  "type": "macro"
+                },
+                {
+                  "datatype": "bool",
+                  "name": "",
+                  "params": [
+                    "stationB504",
+                    "=",
+                    "'true'"
+                  ],
+                  "type": "expression"
+                }
+              ]
+            },
+            {
+              "format": "time_series",
+              "group": [
+                {
+                  "params": [
+                    "$__interval",
+                    "none"
+                  ],
+                  "type": "time"
+                }
+              ],
+              "hide": false,
+              "metricColumn": "event_vehicle_detected_plate_number",
+              "rawQuery": true,
+              "rawSql": "SELECT\n  count(event_id) as \"value\",\n  max(date) as \"time\"\nFROM event\nWHERE\n  $__timeFilter(date) AND stationa4202 = 'true'",
+              "refId": "E",
+              "select": [
+                [
+                  {
+                    "params": [
+                      "event_id"
+                    ],
+                    "type": "column"
+                  },
+                  {
+                    "params": [
+                      "count"
+                    ],
+                    "type": "aggregate"
+                  }
+                ]
+              ],
+              "table": "event",
+              "timeColumn": "date",
+              "timeColumnType": "timestamp",
+              "where": [
+                {
+                  "name": "$__timeFilter",
+                  "params": [],
+                  "type": "macro"
+                },
+                {
+                  "datatype": "bool",
+                  "name": "",
+                  "params": [
+                    "stationA4202",
+                    "=",
+                    "'true'"
+                  ],
+                  "type": "expression"
+                }
+              ]
+            },
+            {
+              "format": "time_series",
+              "group": [
+                {
+                  "params": [
+                    "$__interval",
+                    "none"
+                  ],
+                  "type": "time"
+                }
+              ],
+              "hide": false,
+              "metricColumn": "event_vehicle_detected_plate_number",
+              "rawQuery": true,
+              "rawSql": "SELECT\n  count(event_id) as \"value\",\n  max(date) as \"time\"\nFROM event\nWHERE\n  $__timeFilter(date) AND stationa1 = 'true'",
+              "refId": "F",
+              "select": [
+                [
+                  {
+                    "params": [
+                      "event_id"
+                    ],
+                    "type": "column"
+                  },
+                  {
+                    "params": [
+                      "count"
+                    ],
+                    "type": "aggregate"
+                  }
+                ]
+              ],
+              "table": "event",
+              "timeColumn": "date",
+              "timeColumnType": "timestamp",
+              "where": [
+                {
+                  "name": "$__timeFilter",
+                  "params": [],
+                  "type": "macro"
+                },
+                {
+                  "datatype": "bool",
+                  "name": "",
+                  "params": [
+                    "stationA1",
+                    "=",
+                    "'true'"
+                  ],
+                  "type": "expression"
+                }
+              ]
+            },
+            {
+              "format": "time_series",
+              "group": [
+                {
+                  "params": [
+                    "$__interval",
+                    "none"
+                  ],
+                  "type": "time"
+                }
+              ],
+              "hide": false,
+              "metricColumn": "event_vehicle_detected_plate_number",
+              "rawQuery": true,
+              "rawSql": "SELECT\n  count(event_id) as \"value\",\n  max(date) as \"time\"\nFROM event\nWHERE\n  $__timeFilter(date) AND stationa13 = 'true'",
+              "refId": "G",
+              "select": [
+                [
+                  {
+                    "params": [
+                      "event_id"
+                    ],
+                    "type": "column"
+                  },
+                  {
+                    "params": [
+                      "count"
+                    ],
+                    "type": "aggregate"
+                  }
+                ]
+              ],
+              "table": "event",
+              "timeColumn": "date",
+              "timeColumnType": "timestamp",
+              "where": [
+                {
+                  "name": "$__timeFilter",
+                  "params": [],
+                  "type": "macro"
+                },
+                {
+                  "datatype": "bool",
+                  "name": "",
+                  "params": [
+                    "stationA13",
+                    "=",
+                    "'true'"
+                  ],
+                  "type": "expression"
+                }
+              ]
+            },
+            {
+              "format": "time_series",
+              "group": [
+                {
+                  "params": [
+                    "$__interval",
+                    "none"
+                  ],
+                  "type": "time"
+                }
+              ],
+              "hide": false,
+              "metricColumn": "event_vehicle_detected_plate_number",
+              "rawQuery": true,
+              "rawSql": "SELECT\n  count(event_id) as \"value\",\n  max(date) as \"time\"\nFROM event\nWHERE\n  $__timeFilter(date) AND stationa5201 = 'true'",
+              "refId": "H",
+              "select": [
+                [
+                  {
+                    "params": [
+                      "event_id"
+                    ],
+                    "type": "column"
+                  },
+                  {
+                    "params": [
+                      "count"
+                    ],
+                    "type": "aggregate"
+                  }
+                ]
+              ],
+              "table": "event",
+              "timeColumn": "date",
+              "timeColumnType": "timestamp",
+              "where": [
+                {
+                  "name": "$__timeFilter",
+                  "params": [],
+                  "type": "macro"
+                },
+                {
+                  "datatype": "bool",
+                  "name": "",
+                  "params": [
+                    "stationA5201",
+                    "=",
+                    "'true'"
+                  ],
+                  "type": "expression"
+                }
+              ]
+            },
+            {
+              "format": "time_series",
+              "group": [
+                {
+                  "params": [
+                    "$__interval",
+                    "none"
+                  ],
+                  "type": "time"
+                }
+              ],
+              "hide": false,
+              "metricColumn": "event_vehicle_detected_plate_number",
+              "rawQuery": true,
+              "rawSql": "SELECT\n  count(event_id) as \"value\",\n  max(date) as \"time\"\nFROM event\nWHERE\n  $__timeFilter(date) AND stationa41 = 'true'",
+              "refId": "I",
+              "select": [
+                [
+                  {
+                    "params": [
+                      "event_id"
+                    ],
+                    "type": "column"
+                  },
+                  {
+                    "params": [
+                      "count"
+                    ],
+                    "type": "aggregate"
+                  }
+                ]
+              ],
+              "table": "event",
+              "timeColumn": "date",
+              "timeColumnType": "timestamp",
+              "where": [
+                {
+                  "name": "$__timeFilter",
+                  "params": [],
+                  "type": "macro"
+                },
+                {
+                  "datatype": "bool",
+                  "name": "",
+                  "params": [
+                    "stationA41",
+                    "=",
+                    "'true'"
+                  ],
+                  "type": "expression"
+                }
+              ]
+            }
+          ],
+          "timeFrom": null,
+          "timeShift": null,
+          "title": "",
+          "transparent": true,
+          "type": "pierosavi-imageit-panel"
+        },
+        {
+          "datasource": null,
+          "fieldConfig": {
+            "defaults": {
+              "custom": {}
+            },
+            "overrides": []
+          },
+          "gridPos": {
+            "h": 8,
+            "w": 5,
+            "x": 14,
+            "y": 11
+          },
+          "header_js": "{}",
+          "id": 14,
+          "method": "iframe",
+          "mode": "json",
+          "params_js": "{\n from:ctrl.range.from.format('x'),  // x is unix ms timestamp\n to:ctrl.range.to.format('x'), \n height:ctrl.height,\n now:Date.now(),\n interval: ctrl.template('$__interval'),\n sample: 'Not escaped: $__interval',\n since:ctrl.lastRequestTime\n}",
+          "pluginVersion": "7.3.10",
+          "request": "http",
+          "responseType": "json",
+          "showErrors": true,
+          "showTime": false,
+          "showTimeFormat": "LTS",
+          "showTimePrefix": null,
+          "showTimeValue": "request",
+          "skipSameURL": false,
+          "targets": [
+            {
+              "format": "time_series",
+              "group": [],
+              "metricColumn": "none",
+              "rawQuery": false,
+              "rawSql": "SELECT\n  $__time(time_column),\n  value1\nFROM\n  metric_table\nWHERE\n  $__timeFilter(time_column)\n",
+              "refId": "A",
+              "select": [
+                [
+                  {
+                    "params": [
+                      "value"
+                    ],
+                    "type": "column"
+                  }
+                ]
+              ],
+              "timeColumn": "time",
+              "where": [
+                {
+                  "name": "$__timeFilter",
+                  "params": [],
+                  "type": "macro"
+                }
+              ]
+            }
+          ],
+          "templateResponse": true,
+          "timeFrom": null,
+          "timeShift": null,
+          "title": "Last detected car",
+          "type": "ryantxu-ajax-panel",
+          "url": "https://{{ image_server_host }}/last_image",
+          "withCredentials": false
+        },
+        {
+          "datasource": "PostgreSQL",
+          "description": "",
+          "fieldConfig": {
+            "defaults": {
+              "custom": {
+                "align": null,
+                "filterable": false
+              },
+              "mappings": [],
+              "thresholds": {
+                "mode": "absolute",
+                "steps": [
+                  {
+                    "color": "green",
+                    "value": null
+                  },
+                  {
+                    "color": "red",
+                    "value": 80
+                  }
+                ]
+              }
+            },
+            "overrides": []
+          },
+          "gridPos": {
+            "h": 4,
+            "w": 5,
+            "x": 19,
+            "y": 11
+          },
+          "id": 16,
+          "options": {
+            "showHeader": true,
+            "sortBy": []
+          },
+          "pluginVersion": "7.3.10",
+          "targets": [
+            {
+              "format": "table",
+              "group": [],
+              "metricColumn": "none",
+              "rawQuery": true,
+              "rawSql": "SELECT e.event_vehicle_detected_plate_number AS \"Detected plate\"\n                    FROM event  AS e\n                    LEFT JOIN vehicle_metadata AS v\n                    ON e.event_vehicle_detected_plate_number = v.vehicle_registered_plate_number\n                    ORDER by e.date DESC\n                    LIMIT 1",
+              "refId": "A",
+              "select": [
+                [
+                  {
+                    "params": [
+                      "value"
+                    ],
+                    "type": "column"
+                  }
+                ]
+              ],
+              "timeColumn": "time",
+              "where": [
+                {
+                  "name": "$__timeFilter",
+                  "params": [],
+                  "type": "macro"
+                }
+              ]
+            }
+          ],
+          "timeFrom": null,
+          "timeShift": null,
+          "title": "Last detected car",
+          "transparent": true,
+          "type": "table"
+        },
+        {
+          "datasource": "PostgreSQL",
+          "description": "",
+          "fieldConfig": {
+            "defaults": {
+              "custom": {
+                "align": null,
+                "filterable": false
+              },
+              "mappings": [],
+              "thresholds": {
+                "mode": "absolute",
+                "steps": [
+                  {
+                    "color": "green",
+                    "value": null
+                  },
+                  {
+                    "color": "red",
+                    "value": 80
+                  }
+                ]
+              }
+            },
+            "overrides": [
+              {
+                "matcher": {
+                  "id": "byName",
+                  "options": "Vehicle make"
+                },
+                "properties": [
+                  {
+                    "id": "custom.width",
+                    "value": 368
+                  }
+                ]
+              },
+              {
+                "matcher": {
+                  "id": "byName",
+                  "options": "Vehicle color"
+                },
+                "properties": [
+                  {
+                    "id": "custom.width",
+                    "value": 102
+                  }
+                ]
+              },
+              {
+                "matcher": {
+                  "id": "byName",
+                  "options": "Vehicle type"
+                },
+                "properties": [
+                  {
+                    "id": "custom.width",
+                    "value": 116
+                  }
+                ]
+              },
+              {
+                "matcher": {
+                  "id": "byName",
+                  "options": "Model"
+                },
+                "properties": [
+                  {
+                    "id": "custom.width",
+                    "value": 357
+                  }
+                ]
+              }
+            ]
+          },
+          "gridPos": {
+            "h": 3,
+            "w": 5,
+            "x": 19,
+            "y": 15
+          },
+          "id": 18,
+          "options": {
+            "showHeader": true,
+            "sortBy": []
+          },
+          "pluginVersion": "7.3.10",
+          "targets": [
+            {
+              "format": "table",
+              "group": [],
+              "metricColumn": "none",
+              "rawQuery": true,
+              "rawSql": "SELECT              v.vehicle_make_model AS \"Model\"\n                    FROM event  AS e\n                    LEFT JOIN vehicle_metadata AS v\n                    ON e.event_vehicle_detected_plate_number = v.vehicle_registered_plate_number\n                    ORDER by e.date DESC\n                    LIMIT 1",
+              "refId": "A",
+              "select": [
+                [
+                  {
+                    "params": [
+                      "value"
+                    ],
+                    "type": "column"
+                  }
+                ]
+              ],
+              "timeColumn": "time",
+              "where": [
+                {
+                  "name": "$__timeFilter",
+                  "params": [],
+                  "type": "macro"
+                }
+              ]
+            }
+          ],
+          "timeFrom": null,
+          "timeShift": null,
+          "title": "",
+          "transparent": true,
+          "type": "table"
+        },
+        {
+          "datasource": "PostgreSQL",
+          "description": "",
+          "fieldConfig": {
+            "defaults": {
+              "custom": {
+                "align": null,
+                "filterable": false
+              },
+              "mappings": [],
+              "thresholds": {
+                "mode": "absolute",
+                "steps": [
+                  {
+                    "color": "green",
+                    "value": null
+                  },
+                  {
+                    "color": "red",
+                    "value": 80
+                  }
+                ]
+              }
+            },
+            "overrides": [
+              {
+                "matcher": {
+                  "id": "byName",
+                  "options": "Vehicle make"
+                },
+                "properties": [
+                  {
+                    "id": "custom.width",
+                    "value": 368
+                  }
+                ]
+              },
+              {
+                "matcher": {
+                  "id": "byName",
+                  "options": "Vehicle color"
+                },
+                "properties": [
+                  {
+                    "id": "custom.width",
+                    "value": 102
+                  }
+                ]
+              },
+              {
+                "matcher": {
+                  "id": "byName",
+                  "options": "Vehicle type"
+                },
+                "properties": [
+                  {
+                    "id": "custom.width",
+                    "value": 116
+                  }
+                ]
+              }
+            ]
+          },
+          "gridPos": {
+            "h": 3,
+            "w": 5,
+            "x": 19,
+            "y": 18
+          },
+          "id": 19,
+          "options": {
+            "showHeader": true,
+            "sortBy": []
+          },
+          "pluginVersion": "7.3.10",
+          "targets": [
+            {
+              "format": "table",
+              "group": [],
+              "metricColumn": "none",
+              "rawQuery": true,
+              "rawSql": "SELECT              v.vehicle_owner_name AS \"Owner\"\n                    FROM event  AS e\n                    LEFT JOIN vehicle_metadata AS v\n                    ON e.event_vehicle_detected_plate_number = v.vehicle_registered_plate_number\n                    ORDER by e.date DESC\n                    LIMIT 1",
+              "refId": "A",
+              "select": [
+                [
+                  {
+                    "params": [
+                      "value"
+                    ],
+                    "type": "column"
+                  }
+                ]
+              ],
+              "timeColumn": "time",
+              "where": [
+                {
+                  "name": "$__timeFilter",
+                  "params": [],
+                  "type": "macro"
+                }
+              ]
+            }
+          ],
+          "timeFrom": null,
+          "timeShift": null,
+          "title": "",
+          "transparent": true,
+          "type": "table"
+        }
+      ],
+      "refresh": "5s",
+      "schemaVersion": 26,
+      "style": "dark",
+      "tags": [],
+      "templating": {
+        "list": []
+      },
+      "time": {
+        "from": "now-30m",
+        "to": "now"
+      },
+      "timepicker": {},
+      "timezone": "",
+      "title": "Smart City - ULEV London",
+      "uid": "HQZA6drGz",
+      "version": 2
+    }
