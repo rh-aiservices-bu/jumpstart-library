@@ -10,7 +10,7 @@ spec:
   selector:
     app: odf-dns
   ports:
-  - name: dns
-    port: 5353
-    protocol: UDP
-    targetPort: 5353
+    - name: dns
+      port: 5353
+      protocol: UDP
+      targetPort: 5353

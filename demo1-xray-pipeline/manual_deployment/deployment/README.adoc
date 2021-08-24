@@ -4,7 +4,7 @@ Follow the different steps below to deploy the demo. If you want to have more de
 
 === OpenDataHub
 
-We will use ODH to launch a notebook that will help us configure the notifications. 
+We will use ODH to launch a notebook that will help us configure the notifications.
 
 * Create a project named `opendatahub` and make sure your oc client is using this project.
 
@@ -258,7 +258,3 @@ If it's your first time with Grafana you may have difficulties to find the dashb
 IMPORTANT: When your demo or your test is finished, scale down the `image-generator` deployment to 0. Otherwise it will just keep copying images indefinitely, filling up the storage, and ultimately crashing the cluster... You've been warned.
 
 Happy demo!
-
-
-
-

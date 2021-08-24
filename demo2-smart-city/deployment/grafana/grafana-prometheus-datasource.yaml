@@ -18,4 +18,3 @@ spec:
         tlsSkipVerify: true
       type: prometheus
   name: grafana-prometheus-datasource.yaml
-

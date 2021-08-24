@@ -44,7 +44,7 @@ seconds_wait = float(os.environ['SECONDS_WAIT'])
 # Code #
 ########
 def copy_file(source, image_key, destination, image_name):
-    """Copies an object from a URL source to a destination bucket.""" 
+    """Copies an object from a URL source to a destination bucket."""
 
     image_url = source + '/' + image_key
     req_for_file = requests.get(image_url, stream=True)

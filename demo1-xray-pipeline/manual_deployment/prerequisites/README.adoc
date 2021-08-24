@@ -55,6 +55,6 @@ From the output of this command, note and keep the following user informations:
 * *access_key*
 * *secret_key*
 
-Those are the credentials that will be used to deploy and run the demo. 
+Those are the credentials that will be used to deploy and run the demo.
 
 You should now be ready to go!

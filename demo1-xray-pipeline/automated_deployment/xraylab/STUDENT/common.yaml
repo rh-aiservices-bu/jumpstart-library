@@ -12,9 +12,9 @@ env_type: ocp-workloads
 
 # The workloads
 ocp_workloads:
-- ocp4_workload_rhtr_xraylab_user
-# Run Bookbag User workload last to pick up user.info from previous roles
-- ocp4_workload_bookbag_user
+  - ocp4_workload_rhtr_xraylab_user
+  # Run Bookbag User workload last to pick up user.info from previous roles
+  - ocp4_workload_bookbag_user
 
 # ---------------------------------------------------------
 # RHTR XRayLab User
@@ -33,19 +33,19 @@ ocp4_workload_rhtr_xraylab_user_quota:
     persistentvolumeclaims: "50"
     requests.storage: 500Gi
 ocp4_workload_rhtr_xraylab_user_limits:
-- type: Container
-  default:
-    cpu: 500m
-    memory: 512Mi
-  defaultRequest:
-    cpu: 100m
-    memory: 256Mi
+  - type: Container
+    default:
+      cpu: 500m
+      memory: 512Mi
+    defaultRequest:
+      cpu: 100m
+      memory: 256Mi
 ocp4_workload_rhtr_xraylab_user_project_permissions:
-- project: openshift-storage
-  role: view
+  - project: openshift-storage
+    role: view
 ocp4_workload_rhtr_xraylab_user_projects:
-- "xraylab-{{ guid }}"
-- "odh-{{ guid }}"
+  - "xraylab-{{ guid }}"
+  - "odh-{{ guid }}"
 ocp4_workload_rhtr_xraylab_install_grafana_operator: false
 
 # ---------------------------------------------------------

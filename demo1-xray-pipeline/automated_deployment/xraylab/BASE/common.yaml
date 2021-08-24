@@ -33,9 +33,9 @@ env_type: ocp-workloads
 # - ocp4_workload_le_certificates
 
 ocp_workloads:
-#- ocp4_workload_serverless
-#- ocp4_workload_rhtr_xraylab
-- ocp4_workload_bookbag_setup
+  # - ocp4_workload_serverless
+  # - ocp4_workload_rhtr_xraylab
+  - ocp4_workload_bookbag_setup
 
 # ---------------------------------------------------------
 # Authentication
@@ -76,24 +76,24 @@ ocp4_workload_rhtr_xraylab_install_kafkasource: true
 # Use a catalog snapshot
 ocp4_workload_rhtr_xraylab_use_catalog_snapshot: true
 ocp4_workload_rhtr_xraylab_catalogsources:
-- name: redhat-operators-snapshot-xraylab
-  namespace: openshift-marketplace
-  image: quay.io/gpte-devops-automation/olm_snapshot_redhat_catalog
-  tag: "v4.5_2020_10_01"
-- name: community-operators-snapshot-xraylab
-  namespace: openshift-marketplace
-  image: quay.io/gpte-devops-automation/olm_snapshot_community_catalog
-  tag: "v4.5_2020_10_01"
+  - name: redhat-operators-snapshot-xraylab
+    namespace: openshift-marketplace
+    image: quay.io/gpte-devops-automation/olm_snapshot_redhat_catalog
+    tag: "v4.5_2020_10_01"
+  - name: community-operators-snapshot-xraylab
+    namespace: openshift-marketplace
+    image: quay.io/gpte-devops-automation/olm_snapshot_community_catalog
+    tag: "v4.5_2020_10_01"
 
 # ---------------------------------------------------------
 # XRay Lab OCS Setup
 # ---------------------------------------------------------
 # OCS vars
 ocp4_workload_rhtr_xraylab_ocs_expected_crds:
-- backingstores.noobaa.io
-- bucketclasses.noobaa.io
-- noobaas.noobaa.io
-- objectbucketclaims.objectbucket.io
+  - backingstores.noobaa.io
+  - bucketclasses.noobaa.io
+  - noobaas.noobaa.io
+  - objectbucketclaims.objectbucket.io
 ocp4_workload_rhtr_xraylab_ocs_channel: stable-4.5
 ocp4_workload_rhtr_xraylab_ocs_install_mcg: false
 ocp4_workload_rhtr_xraylab_ocs_install_rgw: true
@@ -124,11 +124,9 @@ ocp4_workload_rhtr_xraylab_ocs_operator_workload_destroy: "{{ False if (ACTION==
 # XRay Lab AMQ Streams Operator Setup
 # ---------------------------------------------------------
 
-
 # ---------------------------------------------------------
 # XRay Lab Open Data Hub Operator Setup
 # ---------------------------------------------------------
-
 
 # ---------------------------------------------------------
 # XRay Lab Kafkasource Setup

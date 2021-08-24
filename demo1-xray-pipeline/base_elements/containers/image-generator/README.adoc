@@ -1,6 +1,6 @@
 = Image generator container
 
-This container image is used to randomly select *normal* (80%) and *pneumonia risk* (20%) images from a *source* bucket, and copy them to a *destination* bucket. 
+This container image is used to randomly select *normal* (80%) and *pneumonia risk* (20%) images from a *source* bucket, and copy them to a *destination* bucket.
 A small mysql-compatible database instance is used to keep track of the images uploaded.
 
 Required environment variables are: +

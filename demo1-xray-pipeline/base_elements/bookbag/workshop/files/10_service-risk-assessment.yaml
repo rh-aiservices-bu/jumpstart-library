@@ -1,68 +1,67 @@
-apiVersion: serving.knative.dev/v1 
+apiVersion: serving.knative.dev/v1
 kind: Service
 metadata:
   name: risk-assessment
 spec:
   template:
     metadata:
-        annotations:
-          autoscaling.knative.dev/maxScale: '2'
-          autoscaling.knative.dev/target: '2'
-          revisionTimestamp: ''
+      annotations:
+        autoscaling.knative.dev/maxScale: "2"
+        autoscaling.knative.dev/target: "2"
+        revisionTimestamp: ""
     spec:
       timeoutSeconds: 30
       containers:
-      - image: 'quay.io/guimou/xraylab-risk-assessment:rhtr_v1.4'
-        ports:
-              - containerPort: 5000
-        env:
-        - name: model_version
-          value: 'v1'
-        - name: AWS_ACCESS_KEY_ID
-          valueFrom:
-            secretKeyRef:
-              name: s3-secret
-              key: AWS_ACCESS_KEY_ID 
-        - name: AWS_SECRET_ACCESS_KEY
-          valueFrom:
-            secretKeyRef:
-              name: s3-secret
-              key: AWS_SECRET_ACCESS_KEY 
-        - name: service_point
-          valueFrom:
-            configMapKeyRef:
-              name: service-point
-              key: url
-        - name: database-user
-          valueFrom:
-            secretKeyRef:
-              name: db-secret
-              key:  database-user
-        - name: database-password
-          valueFrom:
-            secretKeyRef:
-              name: db-secret
-              key:  database-password
-        - name: database-host
-          valueFrom:
-            secretKeyRef:
-              name: db-secret
-              key:  database-host
-        - name: database-db
-          valueFrom:
-            secretKeyRef:
-              name: db-secret
-              key:  database-db
-        - name: bucket-base-name
-          valueFrom:
-            configMapKeyRef:
-              name: buckets-config
-              key: bucket-base-name
-        resources:
-          limits:
-            cpu: 600m
-            memory: 600M
-          requests:
-            cpu: 400m
-            memory: 500M
-
+        - image: "quay.io/guimou/xraylab-risk-assessment:rhtr_v1.4"
+          ports:
+            - containerPort: 5000
+          env:
+            - name: model_version
+              value: "v1"
+            - name: AWS_ACCESS_KEY_ID
+              valueFrom:
+                secretKeyRef:
+                  name: s3-secret
+                  key: AWS_ACCESS_KEY_ID
+            - name: AWS_SECRET_ACCESS_KEY
+              valueFrom:
+                secretKeyRef:
+                  name: s3-secret
+                  key: AWS_SECRET_ACCESS_KEY
+            - name: service_point
+              valueFrom:
+                configMapKeyRef:
+                  name: service-point
+                  key: url
+            - name: database-user
+              valueFrom:
+                secretKeyRef:
+                  name: db-secret
+                  key: database-user
+            - name: database-password
+              valueFrom:
+                secretKeyRef:
+                  name: db-secret
+                  key: database-password
+            - name: database-host
+              valueFrom:
+                secretKeyRef:
+                  name: db-secret
+                  key: database-host
+            - name: database-db
+              valueFrom:
+                secretKeyRef:
+                  name: db-secret
+                  key: database-db
+            - name: bucket-base-name
+              valueFrom:
+                configMapKeyRef:
+                  name: buckets-config
+                  key: bucket-base-name
+          resources:
+            limits:
+              cpu: 600m
+              memory: 600M
+            requests:
+              cpu: 400m
+              memory: 500M

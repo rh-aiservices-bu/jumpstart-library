@@ -8,7 +8,7 @@ spec:
       imageChangeParams:
         automatic: true
         containerNames:
-        - image-server
+          - image-server
         from:
           kind: ImageStreamTag
           name: image-server:latest
@@ -28,19 +28,19 @@ spec:
               valueFrom:
                 secretKeyRef:
                   name: postgresql
-                  key:  database-user
+                  key: database-user
             - name: DB_PASSWORD
               valueFrom:
                 secretKeyRef:
                   name: postgresql
-                  key:  database-password
+                  key: database-password
             - name: DB_HOST
               value: smartcity-db-service
             - name: DB_NAME
               valueFrom:
                 secretKeyRef:
                   name: postgresql
-                  key:  database-name
+                  key: database-name
             - name: SERVICE_POINT
               value: "RGW_SERVICE_ENDPOINT"
             - name: BUCKET_NAME
@@ -52,18 +52,18 @@ spec:
               valueFrom:
                 secretKeyRef:
                   name: generator-dataset
-                  key:  AWS_ACCESS_KEY_ID
+                  key: AWS_ACCESS_KEY_ID
             - name: AWS_SECRET_ACCESS_KEY
               valueFrom:
                 secretKeyRef:
                   name: generator-dataset
-                  key:  AWS_SECRET_ACCESS_KEY
+                  key: AWS_SECRET_ACCESS_KEY
           ports:
             - containerPort: 8080
           resources:
             limits:
-                cpu: '2'
-                memory: 1G
+              cpu: "2"
+              memory: 1G
             requests:
               cpu: 400m
               memory: 100M

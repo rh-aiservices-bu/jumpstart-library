@@ -7,7 +7,7 @@
 
 To stop the demo, we just have to patch the image-generator back to its idle state.
 
-IMPORTANT: Please stop the demo after a few minutes to make sure you don't fill up the cluster with thousands of copies of images... Ceph can https://www.redhat.com/en/blog/scaling-ceph-billion-objects-and-beyond[scale to a billion objects and beyond], but unfortunately we don't have enough storage to do that. 
+IMPORTANT: Please stop the demo after a few minutes to make sure you don't fill up the cluster with thousands of copies of images... Ceph can https://www.redhat.com/en/blog/scaling-ceph-billion-objects-and-beyond[scale to a billion objects and beyond], but unfortunately we don't have enough storage to do that.
 
 === Through the console
 

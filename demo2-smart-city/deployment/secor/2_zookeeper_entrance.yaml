@@ -19,7 +19,7 @@ spec:
     spec:
       containers:
         - name: zoo-entrance
-          image: 'quay.io/rh-data-services/zoo-entrance:latest'
+          image: "quay.io/rh-data-services/zoo-entrance:latest"
           command:
             - /opt/stunnel/stunnel_run.sh
           ports:
@@ -30,13 +30,13 @@ spec:
             - name: LOG_LEVEL
               value: notice
             - name: STRIMZI_ZOOKEEPER_CONNECT
-              value: 'core-kafka-zookeeper-client:2181'
+              value: "core-kafka-zookeeper-client:2181"
           imagePullPolicy: Always
           livenessProbe:
             exec:
               command:
                 - /opt/stunnel/stunnel_healthcheck.sh
-                - '2181'
+                - "2181"
             failureThreshold: 3
             initialDelaySeconds: 15
             periodSeconds: 10
@@ -46,7 +46,7 @@ spec:
             exec:
               command:
                 - /opt/stunnel/stunnel_healthcheck.sh
-                - '2181'
+                - "2181"
             failureThreshold: 3
             initialDelaySeconds: 15
             periodSeconds: 10
@@ -93,15 +93,15 @@ metadata:
   name: zoo-entrance
 spec:
   ingress:
-  - from:
-    - podSelector:
-        matchLabels:
-          app: zoo-entrance
-    ports:
-    - port: 2181
-      protocol: TCP
+    - from:
+        - podSelector:
+            matchLabels:
+              app: zoo-entrance
+      ports:
+        - port: 2181
+          protocol: TCP
   podSelector:
     matchLabels:
       strimzi.io/name: core-kafka-zookeeper
   policyTypes:
-  - Ingress
+    - Ingress

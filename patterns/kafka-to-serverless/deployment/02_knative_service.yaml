@@ -7,4 +7,4 @@ spec:
   template:
     spec:
       containers:
-      - image: quay.io/rhdevelopers/knative-tutorial-greeter:quarkus
+        - image: quay.io/rhdevelopers/knative-tutorial-greeter:quarkus

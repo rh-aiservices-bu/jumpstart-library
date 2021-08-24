@@ -20,13 +20,13 @@ import botocore
 import argparse
 
 # API Clients init
-s3 = boto3.client('s3', 
+s3 = boto3.client('s3',
                 endpoint_url=service_point,
                 aws_access_key_id=access_key,
                 aws_secret_access_key=secret_key,
                 use_ssl=True if 'https' in service_point else False)
 
-sns = boto3.client('sns', 
+sns = boto3.client('sns',
                 endpoint_url=service_point,
                 aws_access_key_id=access_key,
                 aws_secret_access_key=secret_key,

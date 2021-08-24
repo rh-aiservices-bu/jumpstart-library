@@ -8,7 +8,7 @@ spec:
       imageChangeParams:
         automatic: true
         containerNames:
-        - image-server
+          - image-server
         from:
           kind: ImageStreamTag
           name: image-server:latest
@@ -28,22 +28,22 @@ spec:
               valueFrom:
                 secretKeyRef:
                   name: db-secret
-                  key:  database-user
+                  key: database-user
             - name: database-password
               valueFrom:
                 secretKeyRef:
                   name: db-secret
-                  key:  database-password
+                  key: database-password
             - name: database-host
               valueFrom:
                 secretKeyRef:
                   name: db-secret
-                  key:  database-host
+                  key: database-host
             - name: database-db
               valueFrom:
                 secretKeyRef:
                   name: db-secret
-                  key:  database-db
+                  key: database-db
             - name: service_point
               valueFrom:
                 configMapKeyRef:
@@ -58,8 +58,8 @@ spec:
             - containerPort: 5000
           resources:
             limits:
-                cpu: '2'
-                memory: 1G
+              cpu: "2"
+              memory: 1G
             requests:
               cpu: 400m
               memory: 100M

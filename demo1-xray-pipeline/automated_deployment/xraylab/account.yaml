@@ -5,4 +5,3 @@ cloud_provider: none
 agnosticv_meta:
   params_to_variables:
     user: ocp_username
-

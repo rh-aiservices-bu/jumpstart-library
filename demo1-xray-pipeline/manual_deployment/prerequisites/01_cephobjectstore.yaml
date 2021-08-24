@@ -21,25 +21,25 @@ spec:
       nodeAffinity:
         requiredDuringSchedulingIgnoredDuringExecution:
           nodeSelectorTerms:
-          - matchExpressions:
-            - key: cluster.ocs.openshift.io/openshift-storage
-              operator: Exists
+            - matchExpressions:
+                - key: cluster.ocs.openshift.io/openshift-storage
+                  operator: Exists
       podAntiAffinity:
         preferredDuringSchedulingIgnoredDuringExecution:
-        - podAffinityTerm:
-            labelSelector:
-              matchExpressions:
-              - key: app
-                operator: In
-                values:
-                - rook-ceph-rgw
-            topologyKey: kubernetes.io/hostname
-          weight: 100
+          - podAffinityTerm:
+              labelSelector:
+                matchExpressions:
+                  - key: app
+                    operator: In
+                    values:
+                      - rook-ceph-rgw
+              topologyKey: kubernetes.io/hostname
+            weight: 100
       tolerations:
-      - effect: NoSchedule
-        key: node.ocs.openshift.io/storage
-        operator: Equal
-        value: "true"
+        - effect: NoSchedule
+          key: node.ocs.openshift.io/storage
+          operator: Equal
+          value: "true"
     port: 80
     resources:
       limits:
@@ -109,4 +109,3 @@ spec:
   port:
     targetPort: http
   wildcardPolicy: None
-  

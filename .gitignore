@@ -1,5 +1,6 @@
 *.env
 *.devel
+.venv
 !**/base/params.env
 *__pycache__
 pattern2-smart-city/
