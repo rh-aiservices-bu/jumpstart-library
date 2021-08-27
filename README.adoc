@@ -39,6 +39,11 @@ In this demo, we show how to implement this scenario:
 
 link:demo2-smart-city/README.adoc[See this demo]
 
+== Demo 3 - Industrial Condition Based Monitoring
+In this demo, we show how to implement industrial condition based monitoring using hybrid cloud ML approach. Machine inference-based anomaly detection on metric time-series sensor data at the edge, with a central data lake and ML model retraining. It also shows how hybrid deployments (cluster at the edge and in the cloud) can be managed, and how the CI/CD pipelines and Model Training/Execution flows can be implemented.
+link:demo3-industrial-condition-monitoring/README.adoc[See this demo]
+
+
 == Contributing
 
 We recommend to use a virtual python environment to develop for this repository. To create such an environment use
