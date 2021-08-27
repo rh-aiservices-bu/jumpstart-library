@@ -6,12 +6,12 @@ This demon is using OpenShift, ACM, AMQ Streams, OpenDataHub, and other products
 
 This is the frontend at the factory:
 
-image::https://github.com/redhat-edge-computing/industrial-edge-docs/blob/415778af7966150284c904b2ec0d573113212398/images/dashboard.png?raw=true[Factory Dashboard, 250]
+image::https://github.com/redhat-edge-computing/industrial-edge-docs/blob/415778af7966150284c904b2ec0d573113212398/images/dashboard.png?raw=true[Factory Dashboard]
 
 
 Overview of the architecure:
 
-image::https://github.com/redhat-edge-computing/industrial-edge-docs/blob/master/images/overview.png?raw=true[overview, 250]
+image::https://github.com/redhat-edge-computing/industrial-edge-docs/blob/master/images/overview.png?raw=true[overview]
 
 
 The demo is developed and maintained in this repository:
