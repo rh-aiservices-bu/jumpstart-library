@@ -1,0 +1,38 @@
+---
+- name: Install Database
+  import_tasks: database.yml
+
+- name: Install kafka
+  import_tasks: kafka.yml
+
+- name: Install lpr service
+  import_tasks: lpr.yml
+
+- name: Install events service
+  import_tasks: events.yml
+
+- name: Install image server
+  import_tasks: image_server.yml
+
+- name: Install load generator
+  import_tasks: load_generator.yml
+
+# TODO
+# - name: Install dataset
+#   import_tasks: dataset.yml
+
+# TODO start traffic
+# https://github.com/red-hat-data-services/jumpstart-library/blob/main/demo2-smart-city/deployment/README.adoc#68-start-traffic
+
+- name: Install fee calculation
+  import_tasks: fee_calculation.yml
+
+- name: Install secor
+  import_tasks: secor.yml
+
+# TODO ODH not finished
+- name: Install open data hub
+  import_tasks: open_data_hub.yml
+
+- name: Install grafana
+  import_tasks: grafana.yml
