@@ -8,52 +8,56 @@
     api_version: v1
     kind: Secret
     name: postgresql
-    namespace: smartcity
+    namespace: "{{ install_namespace }}"
   register: postgres_secret
 
 - name: Set PostgreQL facts
   set_fact:
-    db_database: "{{ postgres_secret.resources.spec.database-name }}"
-    db_user: "{{ postgres_secret.resources.spec.database-user }}"
-    db_password: "{{ postgres_secret.resources.spec.database-password }}"
+    db_database: "{{ postgres_secret.resources[0].data['database-name'] | b64decode }}"
+    db_user: "{{ postgres_secret.resources[0].data['database-user'] | b64decode }}"
+    db_password: "{{ postgres_secret.resources[0].data['database-password'] | b64decode }}"
 
-- name: Deployment Config/Service/Route for the image-server
+- name: Deploy Grafana PostgreSQL datasource
   k8s:
     state: present
-    definition: "{{ lookup('template', 'grafana/grafana-pgsql-datasource.yaml.j2') | from_yaml }}"
+    namespace: "{{ install_namespace }}"
+    definition: "{{ lookup('template', 'grafana/grafana-pgsql-datasource.yaml.j2') | from_yaml_all }}"
 
 # TODO oc adm policy add-cluster-role-to-user cluster-monitoring-view -z grafana-serviceaccount
 
 - name: Set Prometheus access token
   set_fact:
-    bearer_token: "{{ postgres_secret.resources.spec.database-name }}"
+    bearer_token: "{{ postgres_secret.resources[0].data['database-name'] | b64decode }}"
 
-- name: Deployment Config/Service/Route for the image-server
+- name: Deploy Grafana Prometheus datasource
   k8s:
     state: present
-    definition: "{{ lookup('template', 'grafana/grafana-prometheus-datasource.yaml.j2') | from_yaml }}"
+    namespace: "{{ install_namespace }}"
+    definition: "{{ lookup('template', 'grafana/grafana-prometheus-datasource.yaml.j2') | from_yaml_all }}"
 
 - name: Get image server route
   k8s_info:
     api_version: v1
     kind: Route
     name: image-server
-    namespace: smartcity
+    namespace: "{{ install_namespace }}"
   register: image_server_route_info
 
 - name: Set image server route
   set_fact:
-    image_server_host: "{{ image_server_route_info.spec.host }}"
+    image_server_host: "{{ image_server_route_info.resources[0].spec.host }}"
 
-- name: Deployment Config/Service/Route for the image-server
+- name: Deploy Grafana main dashboard
   k8s:
     state: present
-    definition: "{{ lookup('template', 'grafana/grafana-main-dashboard.yaml.j2') | from_yaml }}"
+    namespace: "{{ install_namespace }}"
+    definition: "{{ lookup('template', 'grafana/grafana-main-dashboard.yaml.j2') | from_yaml_all }}"
 
-- name: Deploy image server
+- name: Deploy Grafana pipeline dashboards
   k8s:
     state: present
-    resource_definition: "{{ lookup('file', item) | from_yaml }}"
+    resource_definition: "{{ item }}"
+    namespace: "{{ install_namespace }}"
   with_items:
-    - grafana/grafana-pipeline-cpu-dashboard.yaml # CPU Ops dashboard
-    - grafana/grafana-pipeline-ram-dashboard.yaml # RAM Ops dashboard
+    - "{{ lookup('file', 'grafana/grafana-pipeline-cpu-dashboard.yaml') | from_yaml_all }}" # CPU Ops dashboard
+    - "{{ lookup('file', 'grafana/grafana-pipeline-ram-dashboard.yaml') | from_yaml_all }}" # RAM Ops dashboard
