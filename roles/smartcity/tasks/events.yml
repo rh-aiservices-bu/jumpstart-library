@@ -5,7 +5,7 @@
 - name: Deploy Kafka to PostgreSQL bridge
   k8s:
     state: present
-    src: "{{ item }}"
+    resource_definition: "{{ lookup('file', item) | from_yaml }}"
   with_items:
     - events_service/is_events_service.yaml # ImageStream for the event service
     - events_service/bc_events_service.yaml # BuildConfiguration for the event service

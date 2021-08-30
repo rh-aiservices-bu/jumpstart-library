@@ -5,15 +5,18 @@
 - name: Deploy PostgreSQL DB and seed it
   k8s:
     state: present
-    src: "{{ item }}"
+    resource_definition: "{{ lookup('file', item) | from_yaml }}"
   with_items:
     # deploy steps
     - database/postgresql/secret_postgresql.yaml
     - database/postgresql/dc_postgresql.yaml
     - database/postgresql/service_postgresql.yaml
-    #  seed steps
+    # #  seed steps
     - database/seed_database/is_seed_database.yaml
     - database/seed_database/bc_seed_database.yaml
+
+- name: debug
+  meta: end_play
 
 - name: wait for ImageStream to be done
   k8s_info:

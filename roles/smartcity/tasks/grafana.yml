@@ -53,7 +53,7 @@
 - name: Deploy image server
   k8s:
     state: present
-    src: "{{ item }}"
+    resource_definition: "{{ lookup('file', item) | from_yaml }}"
   with_items:
     - grafana/grafana-pipeline-cpu-dashboard.yaml # CPU Ops dashboard
     - grafana/grafana-pipeline-ram-dashboard.yaml # RAM Ops dashboard

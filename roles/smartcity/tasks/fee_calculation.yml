@@ -6,7 +6,7 @@
 - name: Deploy load generator
   k8s:
     state: present
-    src: "{{ item }}"
+    resource_definition: "{{ lookup('file', item) | from_yaml }}"
   with_items:
     - fee_calculation/is_fee_calculation.yaml
     - fee_calculation/bc_fee_calculation.yaml

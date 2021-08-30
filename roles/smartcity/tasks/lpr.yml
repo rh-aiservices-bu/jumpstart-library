@@ -4,7 +4,7 @@
 - name: Deploy license plate reader service
   k8s:
     state: present
-    src: "{{ item }}"
+    resource_definition: "{{ lookup('file', item) | from_yaml }}"
   with_items:
     - lpr_service/is_lpr_service.yaml # ImageStream for the LPR service
     - lpr_service/bc_lpr_service.yaml # BuildConfiguration for the LPR service
