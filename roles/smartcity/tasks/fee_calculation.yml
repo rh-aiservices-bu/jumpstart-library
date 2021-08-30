@@ -3,11 +3,12 @@
 #   When any vehicle enters the ULEZ, a certain fee (aka toll fee) must be applied to that vehicle
 #   If the vehicle model is too old (older than 2014), apply addition fee (aka pollution fee) on that vehicle
 
-- name: Deploy load generator
+- name: Deploy fee calculation
   k8s:
     state: present
-    resource_definition: "{{ lookup('file', item) | from_yaml }}"
+    resource_definition: "{{ item }}"
+    namespace: "{{ install_namespace }}"
   with_items:
-    - fee_calculation/is_fee_calculation.yaml
-    - fee_calculation/bc_fee_calculation.yaml
-    - fee_calculation/cronjob_fee_calculation.yaml
+    - "{{ lookup('file', 'fee_calculation/is_fee_calculation.yaml') | from_yaml_all }}"
+    - "{{ lookup('file', 'fee_calculation/bc_fee_calculation.yaml') | from_yaml_all }}"
+    - "{{ lookup('file', 'fee_calculation/cronjob_fee_calculation.yaml') | from_yaml_all }}"

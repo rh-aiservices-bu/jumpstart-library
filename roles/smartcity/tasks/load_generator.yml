@@ -4,9 +4,10 @@
 - name: Deploy load generator
   k8s:
     state: present
-    resource_definition: "{{ lookup('file', item) | from_yaml }}"
+    resource_definition: "{{ item }}"
+    namespace: "{{ install_namespace }}"
   with_items:
-    - generator/obc_dataset_generator.yaml # Bucket to store the images dataset
-    - generator/is_generator.yaml # ImageStream for the load generator
-    - generator/bc_generator.yaml # BuildConfiguration to create the load generator image
-    - generator/dc_generator.yaml # Deployment Configuration for the load generator
+    - "{{ lookup('file', 'generator/obc_dataset_generator.yaml') | from_yaml_all }}" # Bucket to store the images dataset
+    - "{{ lookup('file', 'generator/is_generator.yaml') | from_yaml_all }}" # ImageStream for the load generator
+    - "{{ lookup('file', 'generator/bc_generator.yaml') | from_yaml_all }}" # BuildConfiguration to create the load generator image
+    - "{{ lookup('file', 'generator/dc_generator.yaml') | from_yaml_all }}" # Deployment Configuration for the load generator
