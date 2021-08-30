@@ -4,7 +4,7 @@
 - name: Deploy load generator
   k8s:
     state: present
-    src: "{{ item }}"
+    resource_definition: "{{ lookup('file', item) | from_yaml }}"
   with_items:
     - generator/obc_dataset_generator.yaml # Bucket to store the images dataset
     - generator/is_generator.yaml # ImageStream for the load generator

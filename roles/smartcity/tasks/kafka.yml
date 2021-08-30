@@ -6,7 +6,7 @@
 - name: Deploy Kafka clusters
   k8s:
     state: present
-    src: "{{ item }}"
+    resource_definition: "{{ lookup('file', item) | from_yaml }}"
   with_items:
     - kafka/core.yaml # Core Kafka instance
     - kafka/edge.yaml # Edge Kafka instance
@@ -32,7 +32,7 @@
 - name: Configure Kafka clusters
   k8s:
     state: present
-    src: "{{ item }}"
+    resource_definition: "{{ lookup('file', item) | from_yaml }}"
   with_items:
     - kafka/edge-topic.yaml # Edge topic
     - kafka/core-topic.yaml # Core topic
@@ -41,7 +41,7 @@
 - name: Deploy Kafka Drop UI
   k8s:
     state: present
-    src: "{{ item }}"
+    resource_definition: "{{ lookup('file', item) | from_yaml }}"
   with_items:
     - kafka/edge-kafdrop.yaml # Optional! Kafdrop is a UI interface to your Kafka cluster (to inspect messages)
     - kafka/core-kafdrop.yaml # Optional! Kafdrop is a UI interface to your Kafka cluster (to inspect messages)

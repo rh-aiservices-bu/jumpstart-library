@@ -4,7 +4,7 @@
 - name: Deploy image server
   k8s:
     state: present
-    src: "{{ item }}"
+    resource_definition: "{{ lookup('file', item) | from_yaml }}"
   with_items:
     - image_server/is_image-server.yaml # ImageStream for the image-server
     - image_server/bc_image-server.yaml # Build Config for the image-server

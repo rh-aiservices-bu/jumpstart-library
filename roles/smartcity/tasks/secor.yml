@@ -4,7 +4,7 @@
 - name: Deploy load generator
   k8s:
     state: present
-    src: "{{ item }}"
+    resource_definition: "{{ lookup('file', item) | from_yaml }}"
   with_items:
     - secor/1_obc_secor.yaml # Bucket to store the streamed data
     - secor/2_zookeeper_entrance.yaml # Connection to the Kafka-Core instance
