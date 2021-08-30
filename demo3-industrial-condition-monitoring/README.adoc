@@ -2,7 +2,7 @@
 
 This “AI/ML Industrial Edge” demo shows how  condition based monitoring can be implemented using AI/ML. Machine inference-based anomaly detection on metric time-series sensor data at the edge, with a central data lake and ML model retraining. It also shows how hybrid deployments (cluster at the edge and in the cloud) can be managed, and how the CI/CD pipelines and Model Training/Execution flows can be implemented. 
 
-This demon is using OpenShift, ACM, AMQ Streams, OpenDataHub, and other products from Red Hat’s portfolio 
+This demo is using OpenShift, ACM, AMQ Streams, OpenDataHub, and other products from Red Hat’s portfolio 
 
 This is the frontend at the factory:
 
