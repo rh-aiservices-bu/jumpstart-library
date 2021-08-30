@@ -5,29 +5,32 @@
 - name: Deploy PostgreSQL DB and seed it
   k8s:
     state: present
-    resource_definition: "{{ lookup('file', item) | from_yaml }}"
+    resource_definition: "{{ item }}"
+    namespace: "{{ install_namespace }}"
   with_items:
     # deploy steps
-    - database/postgresql/secret_postgresql.yaml
-    - database/postgresql/dc_postgresql.yaml
-    - database/postgresql/service_postgresql.yaml
+    - "{{ lookup('file', 'database/postgresql/secret_postgresql.yaml') | from_yaml_all }}"
+    - "{{ lookup('file', 'database/postgresql/dc_postgresql.yaml') | from_yaml_all }}"
+    - "{{ lookup('file', 'database/postgresql/service_postgresql.yaml') | from_yaml_all }}"
     # #  seed steps
-    - database/seed_database/is_seed_database.yaml
-    - database/seed_database/bc_seed_database.yaml
-
-- name: debug
-  meta: end_play
+    - "{{ lookup('file', 'database/seed_database/is_seed_database.yaml') | from_yaml_all }}"
+    - "{{ lookup('file', 'database/seed_database/bc_seed_database.yaml') | from_yaml_all }}"
 
 - name: wait for ImageStream to be done
   k8s_info:
     api_version: build.openshift.io/v1
-    kind: BuildConfig
-    name: seed-database
+    kind: Build
+    label_selectors:
+      - app = seed-database
+    namespace: "{{ install_namespace }}"
     wait: true
     wait_condition:
-      type: Available
+      type: Complete
+    wait_timeout: 600
 
 - name: Seed PostgreSQL
   k8s:
     state: present
-    src: database/seed_database/job_seed_database.yaml
+    namespace: "{{ install_namespace }}"
+    resource_definition: "{{ item }}"
+  loop: "{{ lookup('file', 'database/seed_database/job_seed_database.yaml') | from_yaml_all }}"
