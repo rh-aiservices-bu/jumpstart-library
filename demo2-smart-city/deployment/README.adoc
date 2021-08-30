@@ -7,6 +7,7 @@
 
 * A working OpenShift environment. Last tested version: 4.7
 * Cluster-admin access to OpenShift, or ability to deploy operators.
+* The image-registry Operator needs to be setup and working
 * The `oc` client.
 * Optional: the `jq` tool (JSON patcher).
 
