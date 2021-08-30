@@ -1,3 +1,0 @@
-= Demo 3 - Factory Floor Predictive Maintenance
-
-== Work in Progress

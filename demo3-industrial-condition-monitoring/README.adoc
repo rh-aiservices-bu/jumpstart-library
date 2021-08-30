@@ -1,0 +1,37 @@
+= Demo 3 - Industrial condition based monitoring with ML 
+
+This “AI/ML Industrial Edge” demo shows how  condition based monitoring can be implemented using AI/ML. Machine inference-based anomaly detection on metric time-series sensor data at the edge, with a central data lake and ML model retraining. It also shows how hybrid deployments (cluster at the edge and in the cloud) can be managed, and how the CI/CD pipelines and Model Training/Execution flows can be implemented. 
+
+This demo is using OpenShift, ACM, AMQ Streams, OpenDataHub, and other products from Red Hat’s portfolio 
+
+This is the frontend at the factory:
+
+image::https://github.com/redhat-edge-computing/industrial-edge-docs/blob/415778af7966150284c904b2ec0d573113212398/images/dashboard.png?raw=true[Factory Dashboard]
+
+
+Overview of the architecure:
+
+image::https://github.com/redhat-edge-computing/industrial-edge-docs/blob/master/images/overview.png?raw=true[overview]
+
+
+The demo is developed and maintained in this repository:
+
+https://github.com/redhat-edge-computing/industrial-edge-docs
+
+
+== Documentation
+All the detailed documentation can be found here:
+https://github.com/redhat-edge-computing/industrial-edge-docs/tree/master/docs
+
+== Slides
+link:slides/RedHatIndustrialEdgeDemo.pdf[Voilá]
+
+
+== Deployment
+The deployment is using pipelines, gitops and ACM. Description is here:
+https://github.com/redhat-edge-computing/industrial-edge-docs#preparing-for-deploying-the-blueprint
+
+== Source Code
+The source code for the various component is located in this github repo:
+https://github.com/redhat-edge-computing/manuela-dev
+
