@@ -3,7 +3,6 @@
 
 - name: Get RGW route info
   k8s_info:
-    api_version: route.openshift.io/v1
     kind: Service
     name: rook-ceph-rgw-ocs-storagecluster-cephobjectstore
     namespace: openshift-storage
@@ -11,27 +10,33 @@
 
 - name: Set RGW_SERVICE_ENDPOINT for template
   set_fact:
-    rgw_ip: "https://{{ rgw_svc.spec.clusterIP }}"
+    rgw_ip: "https://{{ rgw_svc.resources[0].spec.clusterIP }}"
 
-- name: Deployment Open Data Hub
+- name: Deploy Open Data Hub
   k8s:
     state: present
+    namespace: "{{ install_namespace }}"
     definition: "{{ lookup('template', 'opendatahub/kfdef.yaml.j2') | from_yaml }}"
 
-- name: Search the superset pod to get the deployment name
+- name: Get infos about the superset pod
   k8s_info:
     kind: Pod
+    namespace: "{{ install_namespace }}"
     label_selectors:
       - app = superset
+    wait: true
+    wait_condition:
+      type: Ready
+    wait_timeout: 120
   register: superset_pod_info
-  until: superset_pod_info.resources.length > 0
 
 - name: Add Superset Pod to inventory
   add_host:
     name: superset-pod
     ansible_connection: kubectl
     ansible_kubectl_pod: "{{ superset_pod_info.resources[0].metadata.name }}"
-    ansible_kubectl_namespace: smartcity
+    ansible_kubectl_container: superset
+    ansible_kubectl_namespace: "{{ install_namespace }}"
 
 - name: Copy superset config to Pod
   copy:
@@ -39,9 +44,13 @@
     dest: /tmp
     mode: 0777
   delegate_to: superset-pod
+  vars:
+    ansible_remote_tmp: "/tmp"
 
 - name: Import the datasources into Superset (PostgreSQL and Hive from Trino)
   command: superset import_datasources -p /tmp/config/superset-datasources.yaml
   delegate_to: superset-pod
   changed_when: true
+  vars:
+    ansible_remote_tmp: "/tmp"
 # TODO Trinio setup
