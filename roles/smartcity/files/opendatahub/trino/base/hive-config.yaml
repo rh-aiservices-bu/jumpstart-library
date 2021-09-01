@@ -3,7 +3,7 @@ kind: ConfigMap
 metadata:
   name: hive-config
 data:
-  hive-exec-log4j2.properties: 'status = INFO
+  hive-exec-log4j2.properties: "status = INFO
 
     name = HiveLog4j2
 
@@ -77,8 +77,8 @@ data:
 
     rootLogger.appenderRef.root.ref = ${sys:hive.root.logger}
 
-    '
-  hive-log4j2.properties: 'status = INFO
+    "
+  hive-log4j2.properties: "status = INFO
 
     name = HiveLog4j2
 
@@ -152,8 +152,9 @@ data:
 
     rootLogger.appenderRef.root.ref = ${sys:hive.root.logger}
 
-    '
-  hive-site.xml: "<configuration>\n  <property>\n    <name>hive.server2.enable.doAs</name>\n\
+    "
+  hive-site.xml:
+    "<configuration>\n  <property>\n    <name>hive.server2.enable.doAs</name>\n\
     \    <value>false</value>\n  </property>\n  <property>\n    <name>hive.server2.use.SSL</name>\n\
     \    <value>false</value>\n  </property>\n  <property>\n    <name>hive.server2.authentication</name>\n\
     \    <value>NOSASL</value>\n  </property>\n  <property>\n    <name>hive.metastore.metrics.enabled</name>\n\

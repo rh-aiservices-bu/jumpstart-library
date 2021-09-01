@@ -8,7 +8,6 @@ agnosticv_meta:
 ocp4_workload_rhtr_xraylab_user_create_quota: false
 ocp4_workload_rhtr_xraylab_install_grafana_operator: true
 
-
 __meta__:
   deployer:
     scm_ref: development

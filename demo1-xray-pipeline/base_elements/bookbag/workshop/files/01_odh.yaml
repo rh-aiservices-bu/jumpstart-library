@@ -24,7 +24,7 @@ apiVersion: kfdef.apps.kubeflow.org/v1
 kind: KfDef
 metadata:
   annotations:
-    kfctl.kubeflow.io/force-delete: 'false'
+    kfctl.kubeflow.io/force-delete: "false"
   name: opendatahub
 spec:
   applications:
@@ -53,5 +53,5 @@ spec:
       uri: >-
         https://github.com/opendatahub-io/manifests/tarball/v1.0-branch-openshift
     - name: manifests
-      uri: 'https://github.com/opendatahub-io/odh-manifests/tarball/v1.0.4'
+      uri: "https://github.com/opendatahub-io/odh-manifests/tarball/v1.0.4"
   version: v1.0.4
