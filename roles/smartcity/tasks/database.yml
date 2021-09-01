@@ -32,5 +32,8 @@
   k8s:
     state: present
     namespace: "{{ install_namespace }}"
-    resource_definition: "{{ item }}"
-  loop: "{{ lookup('file', 'database/seed_database/job_seed_database.yaml') | from_yaml_all }}"
+    resource_definition: "{{ lookup('file', 'database/seed_database/job_seed_database.yaml') | from_yaml }}"
+  register: seed_job_result
+  # On error 422 we had the job there already and fail because we can't recreated a "done" job
+  failed_when: "'error' in seed_job_result and seed_job_result.error != 422"
+  changed_when: "'error' not in seed_job_result"
