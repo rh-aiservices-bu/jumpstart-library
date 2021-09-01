@@ -1,15 +1,15 @@
-  apiVersion: kafka.strimzi.io/v1beta2
-  kind: KafkaMirrorMaker2
-  metadata:
-    name: edge-to-core-mirror-maker
-  spec:
-    connectCluster: "core-target-cluster"
-    clusters:
+apiVersion: kafka.strimzi.io/v1beta2
+kind: KafkaMirrorMaker2
+metadata:
+  name: edge-to-core-mirror-maker
+spec:
+  connectCluster: "core-target-cluster"
+  clusters:
     - alias: "edge-source-cluster"
       bootstrapServers: edge-kafka-kafka-bootstrap:9092
     - alias: "core-target-cluster"
       bootstrapServers: core-kafka-kafka-bootstrap:9092
-    mirrors:
+  mirrors:
     - sourceCluster: "edge-source-cluster"
       targetCluster: "core-target-cluster"
       sourceConnector: {}
