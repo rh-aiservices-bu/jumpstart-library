@@ -1,0 +1,36 @@
+---
+# Upload the sample images to the S3 bucket
+
+- name: Get generator-dataset configmap
+  k8s_info:
+    kind: ConfigMap
+    namespace: "{{ install_namespace }}"
+    name: generator-dataset
+  register: generator_dataset_cm
+  until: (generator_dataset_cm | length) > 0
+
+- name: Get generator-dataset secret
+  k8s_info:
+    kind: Secret
+    namespace: "{{ install_namespace }}"
+    name: generator-dataset
+  register: generator_dataset_secret
+  until: (generator_dataset_secret | length) > 0
+
+- name: Get RGW route info
+  k8s_info:
+    api_version: route.openshift.io/v1
+    kind: Route
+    name: ocs-storagecluster-cephobjectstore
+    namespace: openshift-storage
+  register: rgw_route
+
+- name: Upload sample images to bucket
+  s3_sync:
+    bucket: "{{ generator_dataset_cm.resources[0].data['BUCKET_NAME'] }}"
+    region: "{{ generator_dataset_cm.resources[0].data['BUCKET_REGION'] }}"
+    ec2_url: "http://{{ rgw_route.resources[0].spec.host }}"
+    aws_access_key: "{{ generator_dataset_secret.resources[0].data['AWS_ACCESS_KEY_ID'] | b64decode }}"
+    aws_secret_key: "{{ generator_dataset_secret.resources[0].data['AWS_SECRET_ACCESS_KEY'] | b64decode }}"
+    file_root: demo2-smart-city/source/dataset/
+    permission: public-read
