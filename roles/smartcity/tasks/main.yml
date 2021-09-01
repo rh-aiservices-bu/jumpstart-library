@@ -20,9 +20,6 @@
 - name: Install dataset
   import_tasks: dataset.yml
 
-# TODO start traffic
-# https://github.com/red-hat-data-services/jumpstart-library/blob/main/demo2-smart-city/deployment/README.adoc#68-start-traffic
-
 - name: Install fee calculation
   import_tasks: fee_calculation.yml
 
@@ -34,3 +31,11 @@
 
 - name: Install grafana
   import_tasks: grafana.yml
+
+- name: Scale the generator to start traffic
+  k8s_scale:
+    api_version: apps.openshift.io/v1
+    kind: DeploymentConfig
+    name: generator
+    namespace: "{{ install_namespace }}"
+    replicas: 1
