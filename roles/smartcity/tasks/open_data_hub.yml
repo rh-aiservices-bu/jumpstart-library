@@ -10,7 +10,7 @@
 
 - name: Set RGW_SERVICE_ENDPOINT for template
   set_fact:
-    rgw_ip: "https://{{ rgw_svc.resources[0].spec.clusterIP }}"
+    rgw_ip: "{{ rgw_svc.resources[0].spec.clusterIP }}"
 
 - name: Deploy Open Data Hub
   k8s:
@@ -44,6 +44,7 @@
     dest: /tmp
     mode: 0777
   delegate_to: superset-pod
+  register: superset_copy
   vars:
     ansible_remote_tmp: "/tmp"
 
@@ -51,6 +52,55 @@
   command: superset import_datasources -p /tmp/config/superset-datasources.yaml
   delegate_to: superset-pod
   changed_when: true
+  when: superset_copy.changed # noqa no-handler
   vars:
     ansible_remote_tmp: "/tmp"
-# TODO Trinio setup
+
+- name: Get secor-obc configmap
+  k8s_info:
+    kind: ConfigMap
+    namespace: "{{ install_namespace }}"
+    name: secor-obc
+  register: secor_obc_cm
+
+- name: Get infos about the trino coordinator pod
+  k8s_info:
+    kind: Pod
+    namespace: "{{ install_namespace }}"
+    label_selectors:
+      - role = trino-coordinator
+    wait: true
+    wait_condition:
+      type: Ready
+    wait_timeout: 120
+  register: trino_pod_info
+
+- name: Add trino Pod to inventory
+  add_host:
+    name: trino-pod
+    ansible_connection: kubectl
+    ansible_kubectl_pod: "{{ trino_pod_info.resources[0].metadata.name }}"
+    ansible_kubectl_container: trino-coordinator
+    ansible_kubectl_namespace: "{{ install_namespace }}"
+
+- name: Create trino import config
+  copy:
+    content: |
+      CREATE SCHEMA hive.odf WITH (location = 's3a://{{ secor_obc_cm.resources[0].data['BUCKET_NAME'] }}/');
+      CREATE TABLE IF NOT EXISTS hive.odf.event(event_timestamp timestamp, event_id varchar, event_vehicle_detected_plate_number varchar, event_vehicle_detected_lat varchar, event_vehicle_detected_long varchar, event_vehicle_lpn_detection_status varchar, stationa1 boolean, stationa5201 boolean, stationa13 boolean, stationa2 boolean, stationa23 boolean, stationb313 boolean, stationa4202 boolean, stationa41 boolean, stationb504 boolean, dt varchar) with ( external_location = 's3a://{{ secor_obc_cm.resources[0].data['BUCKET_NAME'] }}/raw_logs/lpr/', format = 'ORC', partitioned_by=ARRAY['dt']);
+      CALL system.sync_partition_metadata(schema_name=>'odf', table_name=>'event', mode=>'FULL');
+      SELECT event_timestamp,event_vehicle_detected_plate_number,event_vehicle_lpn_detection_status FROM hive.odf.event LIMIT 10;
+    dest: /tmp/trino.import
+    mode: 0777
+  delegate_to: trino-pod
+  register: trino_copy
+  vars:
+    ansible_remote_tmp: "/tmp"
+
+- name: Import Trino config
+  command: trino --server localhost:8080 --catalog hive --schema default --file /tmp/trino.import
+  delegate_to: trino-pod
+  changed_when: true
+  when: trino_copy.changed # noqa no-handler
+  vars:
+    ansible_remote_tmp: "/tmp"
