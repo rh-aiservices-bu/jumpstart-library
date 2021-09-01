@@ -14,10 +14,10 @@ To install Trino, add the following to the `kfctl` file:
 ```yaml
 - kustomizeConfig:
     parameters:
-    - name: s3_endpoint_url
-      value: s3.odh.com
-    - name: s3_credentials_secret
-      value: s3-credentials
+      - name: s3_endpoint_url
+        value: s3.odh.com
+      - name: s3_credentials_secret
+        value: s3-credentials
     repoRef:
       name: manifests
       path: trino

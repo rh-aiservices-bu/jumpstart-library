@@ -9,7 +9,7 @@ spec:
   output:
     to:
       kind: ImageStreamTag
-      name: 'image-server:latest'
+      name: "image-server:latest"
   resources: {}
   successfulBuildsHistoryLimit: 5
   failedBuildsHistoryLimit: 5
@@ -19,7 +19,7 @@ spec:
   source:
     type: Git
     git:
-      uri: 'https://github.com/red-hat-data-services/jumpstart-library'
+      uri: "https://github.com/red-hat-data-services/jumpstart-library"
     contextDir: demo2-smart-city/source/SC_Image_Server
   triggers:
     - type: ConfigChange

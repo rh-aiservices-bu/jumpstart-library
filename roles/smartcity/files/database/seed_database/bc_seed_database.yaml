@@ -8,7 +8,7 @@ spec:
   output:
     to:
       kind: ImageStreamTag
-      name: 'seed-database:latest'
+      name: "seed-database:latest"
   resources: {}
   successfulBuildsHistoryLimit: 5
   failedBuildsHistoryLimit: 5
@@ -17,12 +17,12 @@ spec:
     sourceStrategy:
       from:
         kind: DockerImage
-        name: 'registry.access.redhat.com/ubi8/python-38:latest'
+        name: "registry.access.redhat.com/ubi8/python-38:latest"
   postCommit: {}
   source:
     type: Git
     git:
-      uri: 'https://github.com/red-hat-data-services/jumpstart-library'
+      uri: "https://github.com/red-hat-data-services/jumpstart-library"
     contextDir: demo2-smart-city/source/SC_Seed_Database
   triggers:
     - type: ConfigChange

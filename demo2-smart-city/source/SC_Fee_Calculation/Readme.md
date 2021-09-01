@@ -1,4 +1,5 @@
 ### Sample Output
+
 ```
 -------------------------------------------------------------------
 Applying fee for vehicle: {'vehicle_model_year': 2014, 'vehicle_registered_plate_number': 'CH00SE', 'customer_toll_fee_balance': 50, 'customer_pollution_fee_balance': 10}

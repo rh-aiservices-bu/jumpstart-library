@@ -23,7 +23,7 @@ spec:
           - generator
         from:
           kind: ImageStreamTag
-          name: 'generator:latest'
+          name: "generator:latest"
     - type: ConfigChange
   replicas: 0
   revisionHistoryLimit: 5
@@ -70,7 +70,7 @@ spec:
             - name: KAFKA_TOPIC
               value: lpr
             - name: SECONDS_WAIT
-              value: '1'
+              value: "1"
             - name: LPR_SERVICE_URL
               value: lpr-service:8080
           resources: {}

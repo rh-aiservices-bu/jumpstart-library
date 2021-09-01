@@ -23,7 +23,7 @@ spec:
           - lpr-service
         from:
           kind: ImageStreamTag
-          name: 'lpr-service:latest'
+          name: "lpr-service:latest"
     - type: ConfigChange
   replicas: 1
   revisionHistoryLimit: 5

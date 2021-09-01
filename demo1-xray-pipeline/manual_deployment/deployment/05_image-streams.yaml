@@ -10,7 +10,7 @@ spec:
     - name: latest
       from:
         kind: DockerImage
-        name: 'quay.io/rh-data-services/xraylab-risk-assessment:latest'
+        name: "quay.io/rh-data-services/xraylab-risk-assessment:latest"
       importPolicy: {}
       referencePolicy:
         type: Source
@@ -26,7 +26,7 @@ spec:
     - name: latest
       from:
         kind: DockerImage
-        name: 'quay.io/rh-data-services/xraylab-image-generator:latest'
+        name: "quay.io/rh-data-services/xraylab-image-generator:latest"
       importPolicy: {}
       referencePolicy:
         type: Source
@@ -42,7 +42,7 @@ spec:
     - name: latest
       from:
         kind: DockerImage
-        name: 'quay.io/rh-data-services/xraylab-image-server:latest'
+        name: "quay.io/rh-data-services/xraylab-image-server:latest"
       importPolicy: {}
       referencePolicy:
         type: Source

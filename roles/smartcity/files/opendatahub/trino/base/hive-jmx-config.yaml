@@ -5,7 +5,8 @@ metadata:
     app: hive
   name: hive-jmx-config
 data:
-  config.yml: "---\nlowercaseOutputName: true\nlowercaseOutputLabelNames: true\n\
+  config.yml:
+    "---\nlowercaseOutputName: true\nlowercaseOutputLabelNames: true\n\
     attrNameSnakeCase: true\nwhitelistObjectNames:\n  - 'metrics:name=active_calls_*'\n\
     \  - 'metrics:name=api_*'\n  - 'metrics:name=create_*'\n  - 'metrics:name=delete_*'\n\
     \  - 'metrics:name=init_*'\n  - 'metrics:name=exec_*'\n  - 'metrics:name=hs2_*'\n\

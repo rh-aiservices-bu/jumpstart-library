@@ -1,7 +1,9 @@
 - Connect to trino
+
 ```
  ./trino --server localhost:8080 --catalog hive --schema default`
 ```
+
 ```
 show catalogs;
 
