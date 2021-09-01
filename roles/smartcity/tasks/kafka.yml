@@ -12,7 +12,7 @@
     - "{{ lookup('file', 'kafka/core.yaml') | from_yaml_all }}" # Core Kafka instance
     - "{{ lookup('file', 'kafka/edge.yaml') | from_yaml_all }}" # Edge Kafka instance
 
-- name: "wait for {{ item }} to be ready"
+- name: "wait for core and edge kafka to be ready"
   k8s_info:
     api_version: kafka.strimzi.io/v1beta2
     kind: Kafka
@@ -21,7 +21,7 @@
     wait: true
     wait_condition:
       type: Ready
-    wait_timeout: 300
+    wait_timeout: 900
   with_items:
     - core-kafka
     - edge-kafka
