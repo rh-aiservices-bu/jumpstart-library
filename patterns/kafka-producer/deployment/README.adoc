@@ -13,7 +13,7 @@ An image stream comprises any number of Docker-formatted container images identi
 
 [source,bash]
 ----
-oc create -f patterns/Inference-to-kafka/deployment/1_image_stream.yaml
+oc create -f patterns/kafka-producer/deployment/1_image_stream.yaml
 ----
 
 === Part 2: Build Config
@@ -26,7 +26,7 @@ Source-to-Image (S2I) is a tool for building reproducible, Docker-formatted cont
 
 [source,bash]
 ----
-oc create -f patterns/Inference-to-kafka/deployment/2_build_config.yaml
+oc create -f patterns/kafka-producer/deployment/2_build_config.yaml
 ----
 
 === Part 3: Deployment Config
@@ -37,5 +37,5 @@ Building on ReplicationControllers, OpenShift Container Platform adds expanded s
 
 [source,bash]
 ----
-oc create -f patterns/Inference-to-kafka/deployment/3_deployment_config.yaml
+oc create -f patterns/kafka-producer/deployment/3_deployment_config.yaml
 ----
