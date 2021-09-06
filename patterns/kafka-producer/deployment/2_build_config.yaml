@@ -23,7 +23,7 @@ spec:
     type: Git
     git:
       uri: 'https://github.com/red-hat-data-services/jumpstart-library'
-    contextDir: patterns/Inference-to-kafka/src/kafka_producer_app
+    contextDir: patterns/kafka-producer/src/kafka_producer_app
   triggers:
     - type: ConfigChange
   runPolicy: Serial
