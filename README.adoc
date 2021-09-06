@@ -57,7 +57,7 @@ source .venv/bin/activate
 Then install the dependencies with:
 
 ```bash
-pip -r requirements.txt
+pip install -r requirements.txt
 ```
 
 NOTE: This file is generated with `pip3 freeze > requirements.txt`
