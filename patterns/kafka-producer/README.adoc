@@ -16,6 +16,6 @@ This pattern implements Kafka Producer, that can be used to produce kafka events
 
 === Pattern Implementation
 
-* Code Implementation : link:https://github.com/red-hat-data-services/jumpstart-library/blob/main/patterns/Inference-to-kafka/src/kafka_producer_app/app.py[Link]
-* Deployment Instruction : link:https://github.com/red-hat-data-services/jumpstart-library/blob/main/patterns/Inference-to-kafka/deployment/README.adoc[Link]
+* Code Implementation : link:https://github.com/red-hat-data-services/jumpstart-library/blob/main/patterns/kafka-producer/src/kafka_producer_app/app.py[Link]
+* Deployment Instruction : link:https://github.com/red-hat-data-services/jumpstart-library/blob/main/patterns/kafka-producer/deployment/README.adoc[Link]
 * Video Demo:  link:https://www.youtube.com/xxxxxxx[Link]
