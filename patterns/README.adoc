@@ -23,7 +23,8 @@ Each pattern that you will find in this folder is documented in the same way:
 
 === List of patterns
 
-* link:https://github.com/red-hat-data-services/jumpstart-library/blob/main/patterns/Inference-to-kafka/README.adoc[Inference to Kafka] (Kafka Producer) : Produce kafka events from ML inference output
-* Kafka to Serverless : Triggers a serverless function from a Kafka event
-* Kafka Edge-to-Core : Store-and-forward kafka events from edge to core
-*
+* link:kafka-producer/README.adoc[Kafka Producer]: Produce kafka events from your application code
+* link:kafka-consumer/README.adoc[Kafka Consumer]: Consume Kafka events from your application code
+* link:kafka-edge-to-core/README.adoc[Kafka Edge-to-Core]: Store-and-forward kafka events from edge to core
+* link:kafka-to-serverless/README.adoc[Kafka to Serverless]: Use Kafka as an event source to trigger OpenShift Serverless functions
+* link:bucket-notification/README.adoc[Bucket notification]: Send events to various endpoints when something occurs on your Ceph-based object storage

@@ -192,7 +192,7 @@ This component will return the image of the last identified vehicle to be displa
 - Get the RGW Endpoint Name and update `image_server/dc_image-server.yaml`
 ```
 export RGW_ROUTE=https://$(oc get routes -n openshift-storage | grep rgw | awk '{ print $2 }')
-sed -i " " 's/RGW_SERVICE_ENDPOINT/'$RGW_ROUTE'/' image_server/dc_image-server.yaml
+sed -i 's@RGW_SERVICE_ENDPOINT@'$RGW_ROUTE'@' image_server/dc_image-server.yaml
 ```
 
 * `image_server/is_image-server.yaml`: ImageStream for the image-server
@@ -298,9 +298,9 @@ echo "https://$(oc get route | grep -i odh-dashboard | awk '{print $2}')"
 
 [source, bash]
 ----
-sed -i " " "s/DB_USER/dbadmin/" superset/config/superset-datasources.yaml
-sed -i " " "s/DB_PASSWORD/dbpassword/" superset/config/superset-datasources.yaml
-sed -i " " "s/DB_NAME/pgdb/" superset/config/superset-datasources.yaml
+sed -i "s/DB_USER/dbadmin/" superset/config/superset-datasources.yaml
+sed -i "s/DB_PASSWORD/dbpassword/" superset/config/superset-datasources.yaml
+sed -i "s/DB_NAME/pgdb/" superset/config/superset-datasources.yaml
 ----
 
 * Transfer the DataSources configuration file into the Superset pod.
