@@ -1,21 +1,21 @@
 == Kafka Consumer
 
 === Description
-Kafka Consumers are those client applications that publish (write) events to Kafka topics. Implementation of Kafka Consumers in applications is a key design element to achieve decoupled event-driven microservices architecture
+Kafka Consumers are those client applications that consumers (read) messages from Kafka topics. Implementation of Kafka Consumers in applications is a key design element to achieve decoupled event-driven microservices architecture
 
-This pattern implements Kafka Consumer, that can be used to produce kafka events from ML inference output (or your business logic) and is used in the following demos:
+This pattern implements Kafka Consumer, that can be used to consume kafka events messages from kafka topic and is used in the following demos:
 
 * link:https://github.com/red-hat-data-services/jumpstart-library/tree/main/demo1-xray-pipeline/base_elements/model_training[Demo-1 Assisted X-ray Diagnosis]
-* link:https://github.com/red-hat-data-services/jumpstart-library/blob/main/demo2-smart-city/source/SC_Generator/app.py#L74-L98[Demo-2 Smart City]
+* link:https://github.com/red-hat-data-services/jumpstart-library/blob/main/demo2-smart-city/source/SC_Event_Service/app.py#L42-L52[Demo-2 Smart City]
 * Demo-3 Factory Floor Predictive Maintenance (WIP)
 
 === Use cases
-- Moving data from edge-to-core
 - Decoupled Microservices architecture
 - Real-time data processing
+- Event-driven microservices
 
 === Pattern Implementation
 
-* Code Implementation : link:https://github.com/red-hat-data-services/jumpstart-library/blob/main/patterns/Inference-to-kafka/src/kafka_producer_app/app.py[Link]
-* Deployment Instruction : link:https://github.com/red-hat-data-services/jumpstart-library/blob/main/patterns/Inference-to-kafka/deployment/README.adoc[Link]
+* Code Implementation : link:https://github.com/red-hat-data-services/jumpstart-library/blob/main/patterns/kafka_consumer/src/kafka_consumer_app/app.py[Link]
+* Deployment Instruction : link:https://github.com/red-hat-data-services/jumpstart-library/blob/main/patterns/kafka_consumer/deployment/README.adoc[Link]
 * Video Demo:  link:https://www.youtube.com/xxxxxxx[Link]
