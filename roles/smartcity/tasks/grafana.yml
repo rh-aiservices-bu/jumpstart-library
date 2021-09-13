@@ -1,7 +1,7 @@
 ---
-# Grafana will allow us to create dashbord to visualize the data workflow (Ops dashboard)
-# and the Business Application itself (Main dashboard).
-# All the deployments are taken care of by the Grafana operator deployed previously (see requirements).
+ # Grafana will allow us to create dashbord to visualize the data workflow (Ops dashboard)
+ # and the Business Application itself (Main dashboard).
+ # All the deployments are taken care of by the Grafana operator deployed previously (see requirements).
 
 - name: Get PostgreSQL connection info
   k8s_info:
@@ -37,7 +37,7 @@
 
 - name: Get image server route
   k8s_info:
-    api_version: v1
+    api_version: route.openshift.io/v1
     kind: Route
     name: image-server
     namespace: "{{ install_namespace }}"
