@@ -14,7 +14,7 @@
   k8s_info:
     api_version: route.openshift.io/v1
     kind: Route
-    name: ocs-storagecluster-cephobjectstore
+    name: s3-rgw
     namespace: openshift-storage
   register: rgw_route
 
