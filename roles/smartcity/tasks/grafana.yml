@@ -23,11 +23,20 @@
     namespace: "{{ install_namespace }}"
     definition: "{{ lookup('template', 'grafana/grafana-pgsql-datasource.yaml.j2') | from_yaml_all }}"
 
-# TODO oc adm policy add-cluster-role-to-user cluster-monitoring-view -z grafana-serviceaccount
+- name: Add cluster-monitoring-view role to grafana-serviceaccount
+  k8s:
+    state: present
+    definition: "{{ lookup('template', 'grafana/cluster-monitoring-view.yaml.j2') | from_yaml_all }}"
 
-- name: Set Prometheus access token
+- name: Retrieve the bearer token to authenticate against Prometheus
+  ansible.builtin.command: oc serviceaccounts get-token grafana-serviceaccount
+  delegate_to: 127.0.0.1
+  register: grafana_serviceaccount_token
+  changed_when: grafana_serviceaccount_token != 0
+
+- name: Set bearer_token for template
   set_fact:
-    bearer_token: "{{ postgres_secret.resources[0].data['database-name'] | b64decode }}"
+    bearer_token: "{{ grafana_serviceaccount_token.stdout }}"
 
 - name: Deploy Grafana Prometheus datasource
   k8s:

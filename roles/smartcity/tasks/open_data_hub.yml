@@ -27,7 +27,7 @@
     wait: true
     wait_condition:
       type: Ready
-    wait_timeout: 120
+    wait_timeout: 300
   register: superset_pod_info
 
 - name: Add Superset Pod to inventory

@@ -14,23 +14,23 @@
 - name: Install image server
   import_tasks: image_server.yml
 
+- name: Install fee calculation
+  import_tasks: fee_calculation.yml
+
+- name: Install grafana
+  import_tasks: grafana.yml
+
 - name: Install load generator
   import_tasks: load_generator.yml
 
 - name: Install dataset
   import_tasks: dataset.yml
 
-- name: Install fee calculation
-  import_tasks: fee_calculation.yml
-
 - name: Install secor
   import_tasks: secor.yml
 
 - name: Install open data hub
   import_tasks: open_data_hub.yml
-
-- name: Install grafana
-  import_tasks: grafana.yml
 
 - name: Scale the generator to start traffic
   k8s_scale:

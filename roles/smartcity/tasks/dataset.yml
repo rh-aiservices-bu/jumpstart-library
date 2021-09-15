@@ -34,17 +34,3 @@
     aws_secret_key: "{{ generator_dataset_secret.resources[0].data['AWS_SECRET_ACCESS_KEY'] | b64decode }}"
     file_root: demo2-smart-city/source/dataset/
     permission: public-read
-
-# - name: Set S3 Bucket Name fact
-#  set_fact:
-#    bucket_name: "{{ generator_dataset_cm.resources[0].data['BUCKET_NAME'] }}"
-#
-# - name: Apply the anonymous readonly policy to the S3 bucket
-#  amazon.aws.s3_bucket:
-#    name: "{{ generator_dataset_cm.resources[0].data['BUCKET_NAME'] }}"
-#    ceph: "yes"
-#    region: "{{ generator_dataset_cm.resources[0].data['BUCKET_REGION'] }}"
-#    s3_url: "http://{{ rgw_route.resources[0].spec.host }}"
-#    aws_access_key: "{{ generator_dataset_secret.resources[0].data['AWS_ACCESS_KEY_ID'] | b64decode }}"
-#    aws_secret_key: "{{ generator_dataset_secret.resources[0].data['AWS_SECRET_ACCESS_KEY'] | b64decode }}"
-#    policy: "{{ lookup('template', 'image_server/policy.json.j2') }}"
