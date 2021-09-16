@@ -1,7 +1,7 @@
 ---
- # Grafana will allow us to create dashbord to visualize the data workflow (Ops dashboard)
- # and the Business Application itself (Main dashboard).
- # All the deployments are taken care of by the Grafana operator deployed previously (see requirements).
+# Grafana will allow us to create dashbord to visualize the data workflow (Ops dashboard)
+# and the Business Application itself (Main dashboard).
+# All the deployments are taken care of by the Grafana operator deployed previously (see requirements).
 
 - name: Get PostgreSQL connection info
   k8s_info:
