@@ -43,6 +43,8 @@
       type: Ready
     wait_timeout: 300
   register: superset_pod_info
+  tags:
+    - superset
 
 - name: Add Superset Pod to inventory
   add_host:
@@ -54,7 +56,7 @@
 
 - name: Copy superset config to Pod
   copy:
-    src: superset/config
+    src: superset/
     dest: /tmp
     mode: 0777
   delegate_to: superset-pod
@@ -64,6 +66,14 @@
 
 - name: Import the datasources into Superset (PostgreSQL and Hive from Trino)
   command: superset import_datasources -p /tmp/config/superset-datasources.yaml
+  delegate_to: superset-pod
+  changed_when: true
+  when: superset_copy.changed # noqa no-handler
+  vars:
+    ansible_remote_tmp: "/tmp"
+
+- name: Import the dashboard to Superset
+  command: superset import-dashboards --path /tmp/dashboard/dashboard.json --username admin
   delegate_to: superset-pod
   changed_when: true
   when: superset_copy.changed # noqa no-handler
