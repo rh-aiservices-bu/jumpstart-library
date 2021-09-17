@@ -10,11 +10,19 @@
     - "{{ lookup('file', 'image_server/is_image-server.yaml') | from_yaml_all }}" # ImageStream for the image-server
     - "{{ lookup('file', 'image_server/bc_image-server.yaml') | from_yaml_all }}" # Build Config for the image-server
 
+- name: Create ODF S3 Route
+  k8s:
+    state: present
+    resource_definition: "{{ item }}"
+    namespace: openshift-storage
+  with_items:
+    - "{{ lookup('file', 'image_server/s3-rgw-route.yaml') | from_yaml_all }}"
+
 - name: Get RGW route info
   k8s_info:
     api_version: route.openshift.io/v1
     kind: Route
-    name: s3
+    name: s3-rgw
     namespace: openshift-storage
   register: rgw_route
 

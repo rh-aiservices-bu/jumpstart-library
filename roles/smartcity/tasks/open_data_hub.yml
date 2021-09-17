@@ -18,6 +18,20 @@
     namespace: "{{ install_namespace }}"
     definition: "{{ lookup('template', 'opendatahub/kfdef.yaml.j2') | from_yaml }}"
 
+## Investigation Needed : Had to add pod created check , because for some unknown reason "Get Info about superset pod"
+## was failing even though the pod was created and in ready state.
+
+- name: Wait for superset pod to be created
+  k8s_info:
+    kind: Pod
+    wait: true
+    name: "waiting for superset pod to be created"
+    namespace: "{{ install_namespace }}"
+    label_selectors:
+      - app = superset
+    wait_sleep: 10
+    wait_timeout: 300
+
 - name: Get infos about the superset pod
   k8s_info:
     kind: Pod
@@ -27,8 +41,10 @@
     wait: true
     wait_condition:
       type: Ready
-    wait_timeout: 120
+    wait_timeout: 300
   register: superset_pod_info
+  tags:
+    - superset
 
 - name: Add Superset Pod to inventory
   add_host:
@@ -40,7 +56,7 @@
 
 - name: Copy superset config to Pod
   copy:
-    src: superset/config
+    src: superset/
     dest: /tmp
     mode: 0777
   delegate_to: superset-pod
@@ -50,6 +66,14 @@
 
 - name: Import the datasources into Superset (PostgreSQL and Hive from Trino)
   command: superset import_datasources -p /tmp/config/superset-datasources.yaml
+  delegate_to: superset-pod
+  changed_when: true
+  when: superset_copy.changed # noqa no-handler
+  vars:
+    ansible_remote_tmp: "/tmp"
+
+- name: Import the dashboard to Superset
+  command: superset import-dashboards --path /tmp/dashboard/dashboard.json --username admin
   delegate_to: superset-pod
   changed_when: true
   when: superset_copy.changed # noqa no-handler
@@ -72,7 +96,7 @@
     wait: true
     wait_condition:
       type: Ready
-    wait_timeout: 120
+    wait_timeout: 300
   register: trino_pod_info
 
 - name: Add trino Pod to inventory
@@ -96,6 +120,17 @@
   register: trino_copy
   vars:
     ansible_remote_tmp: "/tmp"
+
+- name: Get infos about the hive metastore pod
+  k8s_info:
+    kind: Pod
+    namespace: "{{ install_namespace }}"
+    label_selectors:
+      - hive = metastore
+    wait: true
+    wait_condition:
+      type: Ready
+    wait_timeout: 300
 
 - name: Import Trino config
   command: trino --server localhost:8080 --catalog hive --schema default --file /tmp/trino.import
