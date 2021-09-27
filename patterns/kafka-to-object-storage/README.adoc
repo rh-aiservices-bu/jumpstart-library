@@ -1,4 +1,4 @@
-== Kafka to Object Storage
+== Kafka to Object Storage (using Secor)
 
 === Description
 Kafka is a distributed event stream processing system which is great for storing hot relevant data. Based on the retention policy of the data, it can be used to store data for a long time. However, it is not suitable for storing data for a long time. This is where we need a mechanism to move data from Kafka to the object storage.  This pattern implements Secor a Kafka Consumer, that can be used to consume kafka  messages from kafka topic and store that to S3 compatible ODF Objet Buckets.
