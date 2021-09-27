@@ -3,7 +3,7 @@ kind: Deployment
 metadata:
   labels:
     app: secor
-  name: secor
+  name: kafka-to-object-storage-secor
 spec:
   replicas: 1
   selector:
@@ -65,7 +65,7 @@ spec:
             - name: DEBUG
               value: "True"
             - name: SECOR_KAFKA_TOPIC_FILTER
-              value: "lpr"  ## Add your Kafka Topic name here
+              value: "topic-1"  ## Add your Kafka Topic name here
             - name: SECOR_WRITER_FACTORY
               value: "com.pinterest.secor.io.impl.JsonORCFileReaderWriterFactory"
             - name: SECOR_COMPRESSION_CODEC
