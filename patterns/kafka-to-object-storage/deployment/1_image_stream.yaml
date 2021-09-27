@@ -1,9 +1,0 @@
-kind: ImageStream
-apiVersion: image.openshift.io/v1
-metadata:
-  name: kafka-consumer
-  labels:
-    app: kafka-consumer
-spec:
-  lookupPolicy:
-    local: false

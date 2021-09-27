@@ -4,6 +4,7 @@
 
 - Red Hat OpenShift Container Platform
 - Red Hat AMQ Streams
+- Red Hat OpenShift Data Foundation : Object Bucket Claim Storage class with name `ocs-storagecluster-ceph-rgw`
 
 === Part 1: Image Streams
 
