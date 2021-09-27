@@ -12,7 +12,22 @@ async def main():
     await kafkaproducer.start()
     while True:
         ### Your business logic Starts Here ###
-        message = "This is a sample message"
+        #message = "This is a sample message"
+        message = {
+        "event_timestamp": "2021-09-21T19:51:32.903077",
+        "event_id": "3aa9152d70f543e7bbe61bfa1d62d0e7",
+        "event_vehicle_detected_plate_number": "DAN54P",
+        "event_vehicle_lpn_detection_status": "Successful",
+        "stationa1": "true",
+        "stationa5201": "false",
+        "stationa13": "false",
+        "stationa2": "false",
+        "stationa23": "false",
+        "stationb313": "false",
+        "stationa4202": "false",
+        "stationa41": "false",
+        "stationb504": "false"
+        }
         time.sleep(5)
         ### Your buiness logic Ends here ###
         try:

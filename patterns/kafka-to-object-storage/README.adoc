@@ -1,4 +1,4 @@
-== Kafka Consumer
+== Kafka to Object Storage
 
 === Description
 Kafka Consumers are those client applications that consumers (read) messages from Kafka topics. Implementation of Kafka Consumers in applications is a key design element to achieve decoupled event-driven microservices architecture

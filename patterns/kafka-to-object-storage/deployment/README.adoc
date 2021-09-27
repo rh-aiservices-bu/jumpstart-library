@@ -1,0 +1,42 @@
+== Kafka Consumer Pattern deployment instructions
+
+=== Requirements
+
+- Red Hat OpenShift Container Platform
+- Red Hat AMQ Streams
+- Red Hat OpenShift Data Foundation : Object Bucket Claim Storage class with name `ocs-storagecluster-ceph-rgw`
+
+=== Part 1: Image Streams
+
+An image stream comprises any number of Docker-formatted container images identified by tags. It presents a single virtual view of related images, similar to an image repository. Image streams can be used to automatically perform an action when new images are created. Builds and deployments can watch an image stream to receive notifications when new images are added and react by performing a build or deployment, respectively.
+
+==== Step 1: Create ImageStream
+
+[source,bash]
+----
+oc create -f patterns/kafka-consumer/deployment/1_image_stream.yaml
+----
+
+=== Part 2: Build Config
+
+A build is the process of transforming input parameters into a resulting object. Most often, the process is used to transform input parameters or source code into a runnable image. A BuildConfig object is the definition of the entire build process.
+
+Source-to-Image (S2I) is a tool for building reproducible, Docker-formatted container images. It produces ready-to-run images by injecting application source into a container image and assembling a new image. The new image incorporates the base image (the builder) and built source and is ready to use with the docker run command. S2I supports incremental builds, which re-use previously downloaded dependencies, previously built artifacts
+
+==== Step 1: Create BuildConfig
+
+[source,bash]
+----
+oc create -f patterns/kafka-consumer/deployment/2_build_config.yaml
+----
+
+=== Part 3: Deployment Config
+Building on ReplicationControllers, OpenShift Container Platform adds expanded support for the software development and deployment lifecycle with the concept of DeploymentConfigs. In the simplest case, a DeploymentConfig creates a new ReplicationController and lets it start up Pods.
+
+
+==== Step 1: Create DeploymentConfig
+
+[source,bash]
+----
+oc create -f patterns/kafka-consumer/deployment/3_deployment_config.yaml
+----
