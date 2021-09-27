@@ -1,4 +1,4 @@
-import asyncio, os, time
+import asyncio, os, time, json
 from aiokafka import AIOKafkaProducer
 
 ## Global Variables to define Kafka Endpoint and Kafka Topic
@@ -32,7 +32,7 @@ async def main():
         ### Your buiness logic Ends here ###
         try:
             ## Sending message to Kafka Topic
-            response = await kafkaproducer.send_and_wait(KAFKA_TOPIC, message.encode('utf-8'))
+            response = await kafkaproducer.send_and_wait(KAFKA_TOPIC, json.dumps(message).encode('utf-8'))
             await asyncio.sleep(1)
             print("[producer] Message successfully written to Kafka Topic ...")
             print("[producer] Printing RecordMetadata ...")
