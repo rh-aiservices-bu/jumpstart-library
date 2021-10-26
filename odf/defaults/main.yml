@@ -1,0 +1,40 @@
+---
+# --------------------------------
+# ODF Operator
+# --------------------------------
+odf_operator_name: ocs-operator
+odf_channel: stable-4.8
+odf_automatic_install_plan_approval: true
+odf_catalogsource_setup: false
+odf_catalogsource_name: redhat-operators-snapshot-odf
+odf_catalogsource_image: ""
+odf_catalogsource_image_tag: ""
+
+# --------------------------------
+# ODF parameters
+# --------------------------------
+odf_expected_crds:
+  - backingstores.noobaa.io
+  - bucketclasses.noobaa.io
+  - noobaas.noobaa.io
+  - objectbucketclaims.objectbucket.io
+odf_install_rgw: true
+odf_install_toolbox: true
+odf_mcg_core_cpu: 1
+odf_mcg_core_mem: 4Gi
+odf_mcg_db_cpu: 1
+odf_mcg_db_mem: 4Gi
+odf_ceph_mds_cpu: 3
+odf_ceph_mds_mem: 8Gi
+odf_ceph_mon_cpu: 1
+odf_ceph_mon_mem: 2Gi
+odf_ceph_mgr_cpu: 1
+odf_ceph_mgr_mem: 3Gi
+odf_ceph_osd_cpu: 2
+odf_ceph_osd_mem: 5Gi
+odf_ceph_storage_class_name: gp2
+odf_ceph_storage_osd_size: 500Gi
+odf_namespace: openshift-storage
+odf_release: v4.7.1
+odf_operator_workload_destroy: >
+  "{{ False if (ACTION=='create' or ACTION=='provision') else True }}"
