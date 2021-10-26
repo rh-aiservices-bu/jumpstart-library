@@ -11,7 +11,51 @@
 * The `oc` client.
 * Optional: the `jq` tool (JSON patcher).
 
-== Operators
+== Automated install
+
+== Requirements
+
+Follow these steps to ensure you have the right Ansible version and all requirements.
+
+Clone this repository, then cd into it's directory
+
+```bash
+git clone https://github.com/red-hat-data-services/jumpstart-library.git
+cd jumpstart-library
+```
+
+Setup the python venv
+
+```bash
+python3 -m venv .venv
+source .venv/bin/activate
+```
+
+Then install the dependencies with:
+
+```bash
+pip -r requirements.txt
+```
+
+=== Start the install
+
+After you installed all requirements, you can start the install.
+
+Login to your cluster and check with
+
+```bash
+oc get nodes
+```
+
+Now make Ansible work for you
+
+```bash
+ansible-playbook smartcity-playbook.yaml
+```
+
+== Manual install
+
+=== Operators
 
 If not already available, deploy the following operators from OperatorHub:
 
@@ -19,18 +63,18 @@ If not already available, deploy the following operators from OperatorHub:
 * Red Hat AMQ Streams (all namespaces)
 * Open Data Hub (all namespaces)
 
-== Deploy OpenShift Container Storage
+=== Deploy OpenShift Container Storage
 - select project `openshift-storage` > Installed Operators > OpenShift Container Storage > Create Storage Cluster
 - Select Capacity & Nodes  > Configure > Review and Create
 - Wait for OpenShift Container Storage to be ready
 - Once OCS deployment is completed, verify storage classes ` oc get sc`
 - Depending on your OCP environment, you might need to deploy OCS RGW. [Read More](https://red-hat-storage.github.io/ocs-training/training/ocs4/ocs4-enable-rgw.html)
 
-== OpenShift/ODF Patch
+=== OpenShift/ODF Patch
 
 To circumvent some issues related to bucket access-style (DNS vs Path), we have to make some changes.
 
-IMPORTANT: All the files used in the following commands are in the `ocp-odf-patch` folder.
+IMPORTANT: All the files used in the following commands are in the `roles/smartcity/files` or `roles/smartcity/templates` folder.
 
 === Deploy CoreDNS into the `openshift-storage` namespace:
 
@@ -113,7 +157,7 @@ oc rsync . $(oc get pods -n openshift-storage | grep rook-ceph-tools | grep Runn
 oc exec -n openshift-storage deploy/rook-ceph-tools -- radosgw-admin zonegroup set --rgw-zonegroup=ocs-storagecluster-cephobjectstore --infile=/tmp/config.json
 ----
 
-== Namespace
+=== Namespace
 
 Create an OpenShift project/namespace to deploy the environment. In this documentation we'll use `smartcity`.
 
@@ -124,7 +168,7 @@ oc new-project smartcity
 
 TIP: If you did not use `smartcity` as the name of your project, don't forget to change it in the commands or the config files used for the deployment.
 
-== Deployment
+=== Deployment
 
 From the `deploy` folder and subfolders, create the OpenShift resources in this order.
 

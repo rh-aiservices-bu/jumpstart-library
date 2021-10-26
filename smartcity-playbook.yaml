@@ -2,4 +2,5 @@
 - hosts: localhost
   gather_facts: false
   roles:
+    - role: odf
     - role: smartcity

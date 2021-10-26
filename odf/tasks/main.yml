@@ -33,8 +33,7 @@
   loop: "{{ ceph_worker_nodes }}"
 
 - name: Install Operator
-  include_task:
-    file: install_operator.yml
+  include: install_operator.yml
   vars:
     install_operator_action: install
     install_operator_name: "{{ odf_operator_name }}"
