@@ -1,4 +1,11 @@
 ---
+- name: Ensure namespace exists
+  k8s:
+    api_version: v1
+    kind: Namespace
+    name: "{{ install_namespace }}"
+    state: present
+
 - name: Install Database
   import_tasks: database.yml
 
