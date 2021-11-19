@@ -39,6 +39,8 @@
     install_operator_name: "{{ odf_operator_name }}"
     install_operator_namespace: openshift-storage
     install_operator_catalog: redhat-operators
+    install_operator_packagemanifest_name: ocs-operator
+    install_operator_csv_nameprefix: ocs-operator
     install_operator_channel: "{{ odf_channel }}"
     install_operator_automatic_install_plan_approval: "{{ odf_automatic_install_plan_approval | default(true) }}"
     install_operator_manage_namespaces:
@@ -69,7 +71,7 @@
 
 - name: "Create ODF Storage cluster"
   k8s:
-    definition: "{{ lookup('template', 'storage/storagecluster.yaml.j2') }}"
+    definition: "{{ lookup('template', 'storagecluster.yaml.j2') }}"
 
 - name: "Wait for ODF Cluster to deploy"
   when: not odf_operator_workload_destroy|bool
@@ -88,7 +90,6 @@
 - name: "Deploy Ceph Toolbox"
   when: odf_install_toolbox
   k8s:
-    api_version: odf.openshift.io/v1
     kind: OCSInitialization
     namespace: openshift-storage
     name: ocsinit

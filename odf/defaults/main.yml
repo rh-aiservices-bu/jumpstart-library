@@ -36,5 +36,5 @@ odf_ceph_storage_class_name: gp2
 odf_ceph_storage_osd_size: 500Gi
 odf_namespace: openshift-storage
 odf_release: v4.7.1
-odf_operator_workload_destroy: >
-  "{{ False if (ACTION=='create' or ACTION=='provision') else True }}"
+odf_operator_workload_destroy: false
+install_operator_install_csv_ignore_error: true
