@@ -27,14 +27,14 @@ cd jumpstart-library
 Setup the python venv
 
 ```bash
-python3 -m venv .venv
+python3 -m venv .venv --system-site-packages
 source .venv/bin/activate
 ```
 
 Then install the dependencies with:
 
 ```bash
-pip -r requirements.txt
+pip install -r requirements.txt
 ```
 
 === Start the install
