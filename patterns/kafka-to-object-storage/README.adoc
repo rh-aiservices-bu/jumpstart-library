@@ -17,4 +17,4 @@ This pattern has been used  in the following demos:
 
 * Code Implementation : link:https://github.com/red-hat-data-services/jumpstart-library/tree/main/demo2-smart-city/deployment/secor[Link]
 * Deployment Instruction : link:https://github.com/red-hat-data-services/jumpstart-library/tree/main/demo2-smart-city/deployment#secor[Link]
-* Video Demo:  link:https://www.youtube.com/xxxxxxx[Link]
+* Video Demo:  link:https://youtu.be/HmDpIs_1yYk[Link]
