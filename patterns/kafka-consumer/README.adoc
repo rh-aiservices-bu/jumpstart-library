@@ -20,4 +20,4 @@ This pattern implements Kafka Consumer, that can be used to consume kafka events
 
 * Code Implementation : link:https://github.com/red-hat-data-services/jumpstart-library/blob/main/patterns/kafka-consumer/src/kafka_consumer_app/app.py[Link]
 * Deployment Instruction : link:https://github.com/red-hat-data-services/jumpstart-library/blob/main/patterns/kafka-consumer/deployment/README.adoc[Link]
-* Video Demo:  link:https://www.youtube.com/xxxxxxx[Link]
+* Video Demo:  link:https://youtu.be/qQRgHTupCtA[Link]
