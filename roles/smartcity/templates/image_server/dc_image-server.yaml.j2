@@ -1,0 +1,102 @@
+kind: DeploymentConfig
+apiVersion: apps.openshift.io/v1
+metadata:
+  name: image-server
+spec:
+  triggers:
+    - type: ImageChange
+      imageChangeParams:
+        automatic: true
+        containerNames:
+          - image-server
+        from:
+          kind: ImageStreamTag
+          name: image-server:latest
+    - type: ConfigChange
+  replicas: 1
+  revisionHistoryLimit: 3
+  template:
+    metadata:
+      labels:
+        name: image-server
+    spec:
+      containers:
+        - name: image-server
+          image: image-server:latest
+          env:
+            - name: DB_USER
+              valueFrom:
+                secretKeyRef:
+                  name: postgresql
+                  key: database-user
+            - name: DB_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: postgresql
+                  key: database-password
+            - name: DB_HOST
+              value: smartcity-db-service
+            - name: DB_NAME
+              valueFrom:
+                secretKeyRef:
+                  name: postgresql
+                  key: database-name
+            - name: SERVICE_POINT
+              value: "{{ rgw_service_endpoint }}"
+            - name: BUCKET_NAME
+              valueFrom:
+                configMapKeyRef:
+                  name: generator-dataset
+                  key: BUCKET_NAME
+            - name: AWS_ACCESS_KEY_ID
+              valueFrom:
+                secretKeyRef:
+                  name: generator-dataset
+                  key: AWS_ACCESS_KEY_ID
+            - name: AWS_SECRET_ACCESS_KEY
+              valueFrom:
+                secretKeyRef:
+                  name: generator-dataset
+                  key: AWS_SECRET_ACCESS_KEY
+          ports:
+            - containerPort: 8080
+          resources:
+            limits:
+              cpu: "2"
+              memory: 1G
+            requests:
+              cpu: 400m
+              memory: 100M
+          imagePullPolicy: IfNotPresent
+      restartPolicy: Always
+      terminationGracePeriodSeconds: 30
+      dnsPolicy: ClusterFirst
+      securityContext: {}
+      schedulerName: default-scheduler
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: image-server
+spec:
+  ports:
+    - protocol: TCP
+      port: 80
+      targetPort: 8080
+  selector:
+    name: image-server
+---
+kind: Route
+apiVersion: route.openshift.io/v1
+metadata:
+  name: image-server
+spec:
+  to:
+    kind: Service
+    name: image-server
+    weight: 100
+  port:
+    targetPort: 8080
+  tls:
+    termination: edge
+  wildcardPolicy: None

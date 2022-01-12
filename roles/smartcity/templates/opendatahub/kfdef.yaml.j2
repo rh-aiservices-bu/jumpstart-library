@@ -1,0 +1,61 @@
+apiVersion: kfdef.apps.kubeflow.org/v1
+kind: KfDef
+metadata:
+  name: opendatahub
+spec:
+  applications:
+    - kustomizeConfig:
+        repoRef:
+          name: manifests
+          path: odh-common
+      name: odh-common
+    - kustomizeConfig:
+        parameters:
+          - name: SUPERSET_ADMIN_PASSWORD
+            value: admin
+          - name: SUPERSET_IMAGE
+            value: quay.io/rh-data-services/superset:1.1.0_trino
+        repoRef:
+          name: manifests
+          path: superset
+      name: superset
+    - kustomizeConfig:
+        repoRef:
+          name: manifests
+          path: grafana/cluster
+      name: grafana-cluster
+    - kustomizeConfig:
+        repoRef:
+          name: manifests
+          path: grafana/grafana
+      name: grafana-instance
+    - kustomizeConfig:
+        repoRef:
+          name: manifests
+          path: odh-dashboard
+      name: odh-dashboard
+    - kustomizeConfig:
+        overlays:
+          - storage-class
+        parameters:
+          - name: s3_endpoint_url
+            value: {{ rgw_ip }}
+          - name: s3_endpoint_url_prefix
+            value: "http://"
+          - name: s3_credentials_secret
+            value: secor-obc
+          - name: s3_bucket
+            value: secor-obc
+          - name: storage_class
+            value: ocs-storagecluster-ceph-rbd
+        repoRef:
+          name: manifests-trino
+          path: demo2-smart-city/deployment/opendatahub/trino
+      name: trino
+  repos:
+    - name: kf-manifests
+      uri: "https://github.com/kubeflow/manifests/tarball/v1.2-branch"
+    - name: manifests
+      uri: "https://github.com/opendatahub-io/odh-manifests/tarball/11ac02a3c2a92fcc2634d143dea578f2f69348ba"
+    - name: manifests-trino
+      uri: "https://github.com/red-hat-data-services/jumpstart-library/tarball/main"

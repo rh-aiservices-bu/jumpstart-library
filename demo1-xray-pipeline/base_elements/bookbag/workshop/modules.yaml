@@ -2,72 +2,72 @@
 modules:
   overview:
     name: Overview
-    exit_sign: 'Next: Bookbag'
+    exit_sign: "Next: Bookbag"
   bookbag:
     name: Bookbag
-    exit_sign: 'Next: Lab Environment'
+    exit_sign: "Next: Lab Environment"
   environment:
     name: Lab Environment
-    exit_sign: 'Next: OpenDataHub'
+    exit_sign: "Next: OpenDataHub"
   opendatahub:
     name: OpenDataHub
-    exit_sign: 'Next: ConfigMaps and Secrets'
+    exit_sign: "Next: ConfigMaps and Secrets"
   envvar:
     name: ConfigMaps and Secrets
-    exit_sign: 'Next: Helper Database'
+    exit_sign: "Next: Helper Database"
   database:
     name: Helper Database
-    exit_sign: 'Next: Image Streams'
+    exit_sign: "Next: Image Streams"
   imagestreams:
     name: Image Streams
-    exit_sign: 'Next: Kafka Cluster'
+    exit_sign: "Next: Kafka Cluster"
   kafkacluster:
     name: Kafka Cluster
-    exit_sign: 'Next: Kafka Topic'
+    exit_sign: "Next: Kafka Topic"
   topic:
     name: Kafka Topic
-    exit_sign: 'Next: Kafdrop'
+    exit_sign: "Next: Kafdrop"
   kafdrop:
     name: Kafdrop
-    exit_sign: 'Next: Image Server'
+    exit_sign: "Next: Image Server"
   imageserver:
     name: Image Server
-    exit_sign: 'Next: Serverless Service'
+    exit_sign: "Next: Serverless Service"
   service:
     name: Serverless Service
-    exit_sign: 'Next: KafkaSource'
+    exit_sign: "Next: KafkaSource"
   kafkasource:
     name: KafkaSource
-    exit_sign: 'Next: Image Generator'
+    exit_sign: "Next: Image Generator"
   imagegenerator:
     name: Image Generator
-    exit_sign: 'Next:Grafana MySQL DataSource'
+    exit_sign: "Next:Grafana MySQL DataSource"
   grafanamysql:
     name: Grafana MySQL DataSource
-    exit_sign: 'Next: Grafana Images Dashboard'
+    exit_sign: "Next: Grafana Images Dashboard"
   grafanaimages:
     name: Grafana Images Dashboard
-    exit_sign: 'Next: Grafana Main Dashboard'
+    exit_sign: "Next: Grafana Main Dashboard"
   grafanadashboard:
     name: Grafana Main Dashboard
-    exit_sign: 'Next: Grafana'
+    exit_sign: "Next: Grafana"
   grafana:
     name: Grafana
-    exit_sign: 'Next: Buckets'
+    exit_sign: "Next: Buckets"
   buckets:
     name: Buckets
-    exit_sign: 'Next: Run the demo!'
+    exit_sign: "Next: Run the demo!"
   rundemo:
     name: Run the demo!
-    exit_sign: 'Next: Increase Images Rate'
+    exit_sign: "Next: Increase Images Rate"
   imagesrate:
     name: Increase images rate
-    exit_sign: 'Next: Change Model Version'
+    exit_sign: "Next: Change Model Version"
   changeversion:
     name: Change Model Version
-    exit_sign: 'Next: Stop the demo!'
+    exit_sign: "Next: Stop the demo!"
   stopdemo:
     name: Stop the demo!
-    exit_sign: 'Next: Review'
+    exit_sign: "Next: Review"
   review:
     name: Review

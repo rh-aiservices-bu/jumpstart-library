@@ -1,0 +1,26 @@
+kind: BuildConfig
+apiVersion: build.openshift.io/v1
+metadata:
+  name: lpr-service
+  labels:
+    app: lpr-service
+spec:
+  nodeSelector: null
+  output:
+    to:
+      kind: ImageStreamTag
+      name: "lpr-service:latest"
+  resources: {}
+  successfulBuildsHistoryLimit: 5
+  failedBuildsHistoryLimit: 5
+  strategy:
+    dockerStrategy: {}
+  postCommit: {}
+  source:
+    type: Git
+    git:
+      uri: "https://github.com/red-hat-data-services/jumpstart-library"
+    contextDir: demo2-smart-city/source/SC_LPR_Service
+  triggers:
+    - type: ConfigChange
+  runPolicy: Serial

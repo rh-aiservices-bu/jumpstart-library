@@ -24,7 +24,7 @@ spec:
           - kafka-producer
         from:
           kind: ImageStreamTag
-          name: 'kafka-producer:latest'
+          name: "kafka-producer:latest"
   replicas: 1
   revisionHistoryLimit: 5
   test: false

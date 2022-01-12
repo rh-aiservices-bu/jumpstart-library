@@ -1,7 +1,7 @@
 ---
 # Red Hat RHTR 2020 - Hands on data pipelines: automated X-Ray images analysis!
 platform: labs
-purpose: rhtr2020-test   ## This is a cost tag, please make sure it's correct.
+purpose: rhtr2020-test ## This is a cost tag, please make sure it's correct.
 
 # ---------------------------------------------------------
 # OCP configuration
@@ -20,5 +20,5 @@ agnosticv_meta:
 
 __meta__:
   deployer:
-# Using the same tags as summit?
+    # Using the same tags as summit?
     scm_ref: rhtr-2020-xray-data-pipelines-test-0.3

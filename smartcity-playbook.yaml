@@ -1,0 +1,8 @@
+---
+- hosts: localhost
+  gather_facts: false
+  roles:
+    - role: odf
+      tags: operator_install
+    - role: smartcity
+      tags: demo

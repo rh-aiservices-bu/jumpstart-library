@@ -1,0 +1,39 @@
+---
+# We will need a database to store informations about the workflow, as well as registration information for the vehicles.
+# You can edit the Secret file if you want change the default values.
+
+- name: Deploy PostgreSQL DB and seed it
+  k8s:
+    state: present
+    resource_definition: "{{ item }}"
+    namespace: "{{ install_namespace }}"
+  with_items:
+    # deploy steps
+    - "{{ lookup('file', 'database/postgresql/secret_postgresql.yaml') | from_yaml_all }}"
+    - "{{ lookup('file', 'database/postgresql/dc_postgresql.yaml') | from_yaml_all }}"
+    - "{{ lookup('file', 'database/postgresql/service_postgresql.yaml') | from_yaml_all }}"
+    # #  seed steps
+    - "{{ lookup('file', 'database/seed_database/is_seed_database.yaml') | from_yaml_all }}"
+    - "{{ lookup('file', 'database/seed_database/bc_seed_database.yaml') | from_yaml_all }}"
+
+- name: wait for ImageStream to be done
+  k8s_info:
+    api_version: build.openshift.io/v1
+    kind: Build
+    label_selectors:
+      - app = seed-database
+    namespace: "{{ install_namespace }}"
+    wait: true
+    wait_condition:
+      type: Complete
+    wait_timeout: 600
+
+- name: Seed PostgreSQL
+  k8s:
+    state: present
+    namespace: "{{ install_namespace }}"
+    resource_definition: "{{ lookup('file', 'database/seed_database/job_seed_database.yaml') | from_yaml }}"
+  register: seed_job_result
+  # On error 422 we had the job there already and fail because we can't recreated a "done" job
+  failed_when: "'error' in seed_job_result and seed_job_result.error != 422"
+  changed_when: "'error' not in seed_job_result"

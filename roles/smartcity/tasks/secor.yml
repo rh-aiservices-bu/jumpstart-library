@@ -1,0 +1,12 @@
+---
+# Secor is the component that will listen to the Kafka Stream and write the aggregated data to an object Bucket.
+
+- name: Deploy secor
+  k8s:
+    state: present
+    resource_definition: "{{ item }}"
+    namespace: "{{ install_namespace }}"
+  with_items:
+    - "{{ lookup('file', 'secor/1_obc_secor.yaml') | from_yaml_all }}" # Bucket to store the streamed data
+    - "{{ lookup('file', 'secor/2_zookeeper_entrance.yaml') | from_yaml_all }}" # Connection to the Kafka-Core instance
+    - "{{ lookup('file', 'secor/3_secor.yaml') | from_yaml_all }}" # Deploys the Secor instance

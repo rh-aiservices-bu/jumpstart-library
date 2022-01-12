@@ -34,7 +34,7 @@ spec:
         from:
           kind: ImageStreamTag
           namespace: openshift
-          name: 'mariadb:10.2'
+          name: "mariadb:10.2"
     - type: ConfigChange
   replicas: 1
   revisionHistoryLimit: 3
@@ -54,8 +54,8 @@ spec:
             exec:
               command:
                 - /bin/sh
-                - '-i'
-                - '-c'
+                - "-i"
+                - "-c"
                 - >-
                   MYSQL_PWD="$MYSQL_PASSWORD" mysql -h 127.0.0.1 -u $MYSQL_USER
                   -D $MYSQL_DATABASE -e 'SELECT 1'

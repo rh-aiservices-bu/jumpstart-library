@@ -1,0 +1,835 @@
+{
+  "dashboards": [
+    {
+      "__Dashboard__": {
+        "css": "",
+        "dashboard_title": "London Smart City:Toll Control Room",
+        "description": null,
+        "json_metadata": "{\"timed_refresh_immune_slices\": [], \"expanded_slices\": {}, \"refresh_frequency\": 0, \"default_filters\": \"{}\", \"color_scheme\": null, \"remote_id\": 1}",
+        "position_json": "{\"CHART-8y72nlsp_R\":{\"children\":[],\"id\":\"CHART-8y72nlsp_R\",\"meta\":{\"chartId\":6,\"height\":78,\"sliceName\":\"Vehicle by Station ID\",\"uuid\":\"6e632937-ec53-48fc-a4b0-0ea97b979bd4\",\"width\":6},\"parents\":[\"ROOT_ID\",\"GRID_ID\",\"ROW-iBUJOAJmW\"],\"type\":\"CHART\"},\"CHART-JJWgaiE-jV\":{\"children\":[],\"id\":\"CHART-JJWgaiE-jV\",\"meta\":{\"chartId\":7,\"height\":50,\"sliceName\":\"Vehicle by Make Model\",\"uuid\":\"a68c0b60-209e-47ae-88a1-1de90b572865\",\"width\":6},\"parents\":[\"ROOT_ID\",\"GRID_ID\",\"ROW-YGvW76Wej\"],\"type\":\"CHART\"},\"CHART-RPN9-gUE7w\":{\"children\":[],\"id\":\"CHART-RPN9-gUE7w\",\"meta\":{\"chartId\":5,\"height\":48,\"sliceName\":\"Top customers with Pollution Fee\",\"uuid\":\"2d2e1fa3-9354-4727-ab89-529e432168af\",\"width\":6},\"parents\":[\"ROOT_ID\",\"GRID_ID\",\"ROW-YGvW76Wej\"],\"type\":\"CHART\"},\"CHART-cPiqM8zWKg\":{\"children\":[],\"id\":\"CHART-cPiqM8zWKg\",\"meta\":{\"chartId\":12,\"height\":50,\"sliceName\":\"Total Vehicles Passed Toll Station\",\"uuid\":\"8597847c-3cf9-45c9-8cdb-0e8c331edde4\",\"width\":4},\"parents\":[\"ROOT_ID\",\"GRID_ID\",\"ROW-xFRq0TVCx\"],\"type\":\"CHART\"},\"CHART-sEEGwXijif\":{\"children\":[],\"id\":\"CHART-sEEGwXijif\",\"meta\":{\"chartId\":10,\"height\":50,\"sliceName\":\"Total Toll Fee Collection \\u00a3\",\"uuid\":\"04ceb416-1742-4179-b42a-88e98c76365c\",\"width\":4},\"parents\":[\"ROOT_ID\",\"GRID_ID\",\"ROW-xFRq0TVCx\"],\"type\":\"CHART\"},\"CHART-uHEK7SDPqB\":{\"children\":[],\"id\":\"CHART-uHEK7SDPqB\",\"meta\":{\"chartId\":4,\"height\":78,\"sliceName\":\"Top 20 Customers with Toll Fee Balance\",\"uuid\":\"4351c6b4-9cba-4907-8193-c8848491b873\",\"width\":6},\"parents\":[\"ROOT_ID\",\"GRID_ID\",\"ROW-iBUJOAJmW\"],\"type\":\"CHART\"},\"CHART-v00Aew8Dn_\":{\"children\":[],\"id\":\"CHART-v00Aew8Dn_\",\"meta\":{\"chartId\":11,\"height\":50,\"sliceName\":\"Total Pollution Fee Collection \\u00a3\",\"uuid\":\"2b0fc187-0561-40b9-a147-eaa7f5d2cfb6\",\"width\":4},\"parents\":[\"ROOT_ID\",\"GRID_ID\",\"ROW-xFRq0TVCx\"],\"type\":\"CHART\"},\"DASHBOARD_VERSION_KEY\":\"v2\",\"GRID_ID\":{\"children\":[\"ROW-xFRq0TVCx\",\"ROW-iBUJOAJmW\",\"ROW-YGvW76Wej\"],\"id\":\"GRID_ID\",\"parents\":[\"ROOT_ID\"],\"type\":\"GRID\"},\"HEADER_ID\":{\"id\":\"HEADER_ID\",\"meta\":{\"text\":\"London Smart City:Toll Control Room\"},\"type\":\"HEADER\"},\"ROOT_ID\":{\"children\":[\"GRID_ID\"],\"id\":\"ROOT_ID\",\"type\":\"ROOT\"},\"ROW-YGvW76Wej\":{\"children\":[\"CHART-RPN9-gUE7w\",\"CHART-JJWgaiE-jV\"],\"id\":\"ROW-YGvW76Wej\",\"meta\":{\"background\":\"BACKGROUND_TRANSPARENT\"},\"parents\":[\"ROOT_ID\",\"GRID_ID\"],\"type\":\"ROW\"},\"ROW-iBUJOAJmW\":{\"children\":[\"CHART-uHEK7SDPqB\",\"CHART-8y72nlsp_R\"],\"id\":\"ROW-iBUJOAJmW\",\"meta\":{\"0\":\"ROOT_ID\",\"background\":\"BACKGROUND_TRANSPARENT\"},\"parents\":[\"ROOT_ID\",\"GRID_ID\"],\"type\":\"ROW\"},\"ROW-xFRq0TVCx\":{\"children\":[\"CHART-sEEGwXijif\",\"CHART-v00Aew8Dn_\",\"CHART-cPiqM8zWKg\"],\"id\":\"ROW-xFRq0TVCx\",\"meta\":{\"background\":\"BACKGROUND_TRANSPARENT\"},\"parents\":[\"ROOT_ID\",\"GRID_ID\"],\"type\":\"ROW\"}}",
+        "slices": [
+          {
+            "__Slice__": {
+              "cache_timeout": null,
+              "datasource_name": "public.Top Customers with Toll Fee Balance",
+              "datasource_type": "table",
+              "id": 4,
+              "params": "{\"adhoc_filters\": [], \"all_columns\": [\"vehicle_owner_name\", \"vehicle_registered_plate_number\", \"toll_fee_balance\", \"vehicle_owner_address\", \"vehicle_owner_city\"], \"color_pn\": true, \"datasource\": \"9__table\", \"groupby\": [], \"metrics\": [], \"order_by_cols\": [], \"order_desc\": true, \"percent_metrics\": [], \"query_mode\": \"raw\", \"row_limit\": \"20\", \"show_cell_bars\": true, \"slice_id\": 4, \"table_timestamp_format\": \"smart_date\", \"time_grain_sqla\": \"P1D\", \"time_range\": \"No filter\", \"time_range_endpoints\": [\"inclusive\", \"exclusive\"], \"url_params\": {}, \"viz_type\": \"table\", \"remote_id\": 4, \"datasource_name\": \"Top Customers with Toll Fee Balance\", \"schema\": \"public\", \"database_name\": \"PostgreSQL\"}",
+              "slice_name": "Top 20 Customers with Toll Fee Balance",
+              "viz_type": "table"
+            }
+          },
+          {
+            "__Slice__": {
+              "cache_timeout": null,
+              "datasource_name": "public.Top customers with Pollution Fee",
+              "datasource_type": "table",
+              "id": 5,
+              "params": "{\"adhoc_filters\": [], \"all_columns\": [\"vehicle_owner_name\", \"vehicle_registered_plate_number\", \"vehicle_model_year\", \"pollution_fee_balance\", \"vehicle_owner_address\", \"vehicle_owner_city\"], \"color_pn\": true, \"datasource\": \"10__table\", \"groupby\": [], \"metrics\": [], \"order_by_cols\": [], \"order_desc\": true, \"percent_metrics\": [], \"query_mode\": \"raw\", \"row_limit\": 1000, \"show_cell_bars\": true, \"table_timestamp_format\": \"smart_date\", \"time_grain_sqla\": \"P1D\", \"time_range\": \"No filter\", \"time_range_endpoints\": [\"inclusive\", \"exclusive\"], \"viz_type\": \"table\", \"remote_id\": 5, \"datasource_name\": \"Top customers with Pollution Fee\", \"schema\": \"public\", \"database_name\": \"PostgreSQL\"}",
+              "slice_name": "Top customers with Pollution Fee",
+              "viz_type": "table"
+            }
+          },
+          {
+            "__Slice__": {
+              "cache_timeout": null,
+              "datasource_name": "Vehicle by Station ID",
+              "datasource_type": "table",
+              "id": 6,
+              "params": "{\"adhoc_filters\": [], \"color_scheme\": \"supersetColors\", \"datasource\": \"11__table\", \"groupby\": [\"station\"], \"linear_color_scheme\": \"superset_seq_1\", \"metric\": \"count\", \"row_limit\": 1000, \"sort_by_metric\": false, \"time_range\": \"No filter\", \"time_range_endpoints\": [\"inclusive\", \"exclusive\"], \"viz_type\": \"sunburst\", \"remote_id\": 6, \"datasource_name\": \"Vehicle by Station ID\", \"schema\": null, \"database_name\": \"PostgreSQL\"}",
+              "slice_name": "Vehicle by Station ID",
+              "viz_type": "sunburst"
+            }
+          },
+          {
+            "__Slice__": {
+              "cache_timeout": null,
+              "datasource_name": "Vehicle by Make Model",
+              "datasource_type": "table",
+              "id": 7,
+              "params": "{\"adhoc_filters\": [{\"clause\": \"WHERE\", \"expressionType\": \"SIMPLE\", \"filterOptionName\": \"filter_dvgxl880w4h_l5vqiurphf\", \"isExtra\": false, \"isNew\": false, \"operator\": \"IS NOT NULL\", \"sqlExpression\": null, \"subject\": \"Vehicle Make Model\"}], \"color_scheme\": \"supersetColors\", \"datasource\": \"12__table\", \"groupby\": [\"Vehicle Make Model\"], \"innerRadius\": 30, \"label_type\": \"key\", \"labels_outside\": true, \"legendOrientation\": \"top\", \"legendType\": \"scroll\", \"metric\": \"count\", \"number_format\": \"SMART_NUMBER\", \"outerRadius\": 70, \"row_limit\": 1000, \"show_labels\": true, \"slice_id\": 7, \"time_range\": \"No filter\", \"time_range_endpoints\": [\"inclusive\", \"exclusive\"], \"url_params\": {}, \"viz_type\": \"pie\", \"remote_id\": 7, \"datasource_name\": \"Vehicle by Make Model\", \"schema\": null, \"database_name\": \"PostgreSQL\"}",
+              "slice_name": "Vehicle by Make Model",
+              "viz_type": "pie"
+            }
+          },
+          {
+            "__Slice__": {
+              "cache_timeout": null,
+              "datasource_name": "public.Total_Toll_Fee_Collection",
+              "datasource_type": "table",
+              "id": 10,
+              "params": "{\"adhoc_filters\": [], \"datasource\": \"13__table\", \"header_font_size\": 0.4, \"metric\": {\"aggregate\": \"SUM\", \"column\": {\"column_name\": \"total_toll_fee_collection\", \"description\": null, \"expression\": null, \"filterable\": true, \"groupby\": true, \"id\": 50, \"is_dttm\": false, \"python_date_format\": null, \"type\": null, \"verbose_name\": null}, \"expressionType\": \"SIMPLE\", \"hasCustomLabel\": false, \"isNew\": false, \"label\": \"SUM(total_toll_fee_collection)\", \"optionName\": \"metric_0grlidry61k6_mvbkzm16fvg\", \"sqlExpression\": null}, \"slice_id\": 10, \"subheader_font_size\": 0.15, \"time_range\": \"No filter\", \"time_range_endpoints\": [\"inclusive\", \"exclusive\"], \"url_params\": {}, \"viz_type\": \"big_number_total\", \"y_axis_format\": \"SMART_NUMBER\", \"remote_id\": 10, \"datasource_name\": \"Total_Toll_Fee_Collection\", \"schema\": \"public\", \"database_name\": \"PostgreSQL\"}",
+              "slice_name": "Total Toll Fee Collection \u00a3",
+              "viz_type": "big_number_total"
+            }
+          },
+          {
+            "__Slice__": {
+              "cache_timeout": null,
+              "datasource_name": "public.Total Pollution Fee Collection",
+              "datasource_type": "table",
+              "id": 11,
+              "params": "{\"adhoc_filters\": [], \"datasource\": \"14__table\", \"header_font_size\": 0.4, \"metric\": {\"aggregate\": \"SUM\", \"column\": {\"column_name\": \"total_pollution_fee_collection\", \"description\": null, \"expression\": null, \"filterable\": true, \"groupby\": true, \"id\": 51, \"is_dttm\": false, \"python_date_format\": null, \"type\": \"INT\", \"verbose_name\": null}, \"expressionType\": \"SIMPLE\", \"hasCustomLabel\": false, \"isNew\": false, \"label\": \"SUM(total_pollution_fee_collection)\", \"optionName\": \"metric_vxlemhwqzm_40svu62q6na\", \"sqlExpression\": null}, \"subheader_font_size\": 0.15, \"time_range\": \"No filter\", \"time_range_endpoints\": [\"inclusive\", \"exclusive\"], \"viz_type\": \"big_number_total\", \"y_axis_format\": \"SMART_NUMBER\", \"remote_id\": 11, \"datasource_name\": \"Total Pollution Fee Collection\", \"schema\": \"public\", \"database_name\": \"PostgreSQL\"}",
+              "slice_name": "Total Pollution Fee Collection \u00a3",
+              "viz_type": "big_number_total"
+            }
+          },
+          {
+            "__Slice__": {
+              "cache_timeout": null,
+              "datasource_name": "public.Total_vehicle_passed_toll_stations",
+              "datasource_type": "table",
+              "id": 12,
+              "params": "{\"adhoc_filters\": [], \"datasource\": \"15__table\", \"header_font_size\": 0.4, \"metric\": {\"aggregate\": \"SUM\", \"column\": {\"column_name\": \"count\", \"description\": null, \"expression\": null, \"filterable\": true, \"groupby\": true, \"id\": 52, \"is_dttm\": false, \"python_date_format\": null, \"type\": \"INT\", \"verbose_name\": null}, \"expressionType\": \"SIMPLE\", \"hasCustomLabel\": false, \"isNew\": false, \"label\": \"SUM(count)\", \"optionName\": \"metric_v3o10wrupa_hncj2et7jdw\", \"sqlExpression\": null}, \"subheader_font_size\": 0.15, \"time_range\": \"No filter\", \"time_range_endpoints\": [\"inclusive\", \"exclusive\"], \"viz_type\": \"big_number_total\", \"y_axis_format\": \"SMART_NUMBER\", \"remote_id\": 12, \"datasource_name\": \"Total_vehicle_passed_toll_stations\", \"schema\": \"public\", \"database_name\": \"PostgreSQL\"}",
+              "slice_name": "Total Vehicles Passed Toll Station",
+              "viz_type": "big_number_total"
+            }
+          }
+        ],
+        "slug": null
+      }
+    }
+  ],
+  "datasources": [
+    {
+      "__SqlaTable__": {
+        "cache_timeout": null,
+        "columns": [
+          {
+            "__TableColumn__": {
+              "changed_by_fk": 1,
+              "changed_on": {
+                "__datetime__": "2021-06-16T10:51:14"
+              },
+              "column_name": "Vehicle Make Model",
+              "created_by_fk": 1,
+              "created_on": {
+                "__datetime__": "2021-06-16T10:51:14"
+              },
+              "description": null,
+              "expression": null,
+              "filterable": true,
+              "groupby": true,
+              "id": 46,
+              "is_active": true,
+              "is_dttm": false,
+              "python_date_format": null,
+              "table_id": 12,
+              "type": "STRING",
+              "uuid": "c3b72aaa-08eb-40dc-a131-a2ff509bb98e",
+              "verbose_name": null
+            }
+          }
+        ],
+        "database_id": 1,
+        "default_endpoint": null,
+        "description": null,
+        "extra": null,
+        "fetch_values_predicate": null,
+        "filter_select_enabled": false,
+        "main_dttm_col": null,
+        "metrics": [
+          {
+            "__SqlMetric__": {
+              "changed_by_fk": 1,
+              "changed_on": {
+                "__datetime__": "2021-06-16T10:51:14"
+              },
+              "created_by_fk": 1,
+              "created_on": {
+                "__datetime__": "2021-06-16T10:51:14"
+              },
+              "d3format": null,
+              "description": null,
+              "expression": "count(*)",
+              "extra": null,
+              "id": 12,
+              "metric_name": "count",
+              "metric_type": null,
+              "table_id": 12,
+              "uuid": "f4d2ecd3-1e49-481a-b6c1-f99c950f33d9",
+              "verbose_name": null,
+              "warning_text": null
+            }
+          }
+        ],
+        "offset": 0,
+        "params": "{\"remote_id\": 12, \"database_name\": \"PostgreSQL\"}",
+        "schema": null,
+        "sql": "SELECT v.vehicle_make_model AS \"Vehicle Make Model\"\nFROM public.event AS e\nLEFT JOIN public.vehicle_metadata AS v\nON e.event_vehicle_detected_plate_number = v.vehicle_registered_plate_number",
+        "table_name": "Vehicle by Make Model",
+        "template_params": null
+      }
+    },
+    {
+      "__SqlaTable__": {
+        "cache_timeout": null,
+        "columns": [
+          {
+            "__TableColumn__": {
+              "changed_by_fk": 1,
+              "changed_on": {
+                "__datetime__": "2021-06-16T11:08:13"
+              },
+              "column_name": "total_toll_fee_collection",
+              "created_by_fk": 1,
+              "created_on": {
+                "__datetime__": "2021-06-16T11:08:13"
+              },
+              "description": null,
+              "expression": null,
+              "filterable": true,
+              "groupby": true,
+              "id": 50,
+              "is_active": true,
+              "is_dttm": false,
+              "python_date_format": null,
+              "table_id": 13,
+              "type": null,
+              "uuid": "a644d984-b5c3-4b0c-b162-4666b7378b56",
+              "verbose_name": null
+            }
+          }
+        ],
+        "database_id": 1,
+        "default_endpoint": null,
+        "description": null,
+        "extra": null,
+        "fetch_values_predicate": null,
+        "filter_select_enabled": false,
+        "main_dttm_col": null,
+        "metrics": [
+          {
+            "__SqlMetric__": {
+              "changed_by_fk": 1,
+              "changed_on": {
+                "__datetime__": "2021-06-16T11:01:08"
+              },
+              "created_by_fk": 1,
+              "created_on": {
+                "__datetime__": "2021-06-16T11:01:08"
+              },
+              "d3format": null,
+              "description": null,
+              "expression": "count(*)",
+              "extra": null,
+              "id": 13,
+              "metric_name": "count",
+              "metric_type": null,
+              "table_id": 13,
+              "uuid": "9c4a4319-1a2d-42d5-bb71-c695994952cc",
+              "verbose_name": null,
+              "warning_text": null
+            }
+          }
+        ],
+        "offset": 0,
+        "params": "{\"remote_id\": 13, \"database_name\": \"PostgreSQL\"}",
+        "schema": "public",
+        "sql": "select SUM(customer_toll_fee_balance)  as Total_Toll_Fee_Collection\nFROM vehicle_metadata \nwhere customer_toll_fee_balance  > 0",
+        "table_name": "Total_Toll_Fee_Collection",
+        "template_params": null
+      }
+    },
+    {
+      "__SqlaTable__": {
+        "cache_timeout": null,
+        "columns": [
+          {
+            "__TableColumn__": {
+              "changed_by_fk": 1,
+              "changed_on": {
+                "__datetime__": "2021-06-16T11:12:39"
+              },
+              "column_name": "total_pollution_fee_collection",
+              "created_by_fk": 1,
+              "created_on": {
+                "__datetime__": "2021-06-16T11:12:39"
+              },
+              "description": null,
+              "expression": null,
+              "filterable": true,
+              "groupby": true,
+              "id": 51,
+              "is_active": true,
+              "is_dttm": false,
+              "python_date_format": null,
+              "table_id": 14,
+              "type": "INT",
+              "uuid": "64622ba1-739a-40ff-a2fe-17ca08207417",
+              "verbose_name": null
+            }
+          }
+        ],
+        "database_id": 1,
+        "default_endpoint": null,
+        "description": null,
+        "extra": null,
+        "fetch_values_predicate": null,
+        "filter_select_enabled": false,
+        "main_dttm_col": null,
+        "metrics": [
+          {
+            "__SqlMetric__": {
+              "changed_by_fk": 1,
+              "changed_on": {
+                "__datetime__": "2021-06-16T11:12:39"
+              },
+              "created_by_fk": 1,
+              "created_on": {
+                "__datetime__": "2021-06-16T11:12:39"
+              },
+              "d3format": null,
+              "description": null,
+              "expression": "count(*)",
+              "extra": null,
+              "id": 14,
+              "metric_name": "count",
+              "metric_type": null,
+              "table_id": 14,
+              "uuid": "143eead7-768c-4168-8ce4-bc1f79b8c5bc",
+              "verbose_name": null,
+              "warning_text": null
+            }
+          }
+        ],
+        "offset": 0,
+        "params": "{\"remote_id\": 14, \"database_name\": \"PostgreSQL\"}",
+        "schema": "public",
+        "sql": "select SUM(customer_pollution_fee_balance)  as Total_Pollution_Fee_Collection\nFROM vehicle_metadata \nwhere customer_pollution_fee_balance  > 0",
+        "table_name": "Total Pollution Fee Collection",
+        "template_params": null
+      }
+    },
+    {
+      "__SqlaTable__": {
+        "cache_timeout": null,
+        "columns": [
+          {
+            "__TableColumn__": {
+              "changed_by_fk": 1,
+              "changed_on": {
+                "__datetime__": "2021-06-16T11:28:12"
+              },
+              "column_name": "count",
+              "created_by_fk": 1,
+              "created_on": {
+                "__datetime__": "2021-06-16T11:28:12"
+              },
+              "description": null,
+              "expression": null,
+              "filterable": true,
+              "groupby": true,
+              "id": 52,
+              "is_active": true,
+              "is_dttm": false,
+              "python_date_format": null,
+              "table_id": 15,
+              "type": "INT",
+              "uuid": "587acdde-c8c7-4dc7-9754-9043081a5fe6",
+              "verbose_name": null
+            }
+          }
+        ],
+        "database_id": 1,
+        "default_endpoint": null,
+        "description": null,
+        "extra": null,
+        "fetch_values_predicate": null,
+        "filter_select_enabled": false,
+        "main_dttm_col": null,
+        "metrics": [
+          {
+            "__SqlMetric__": {
+              "changed_by_fk": 1,
+              "changed_on": {
+                "__datetime__": "2021-06-16T11:28:12"
+              },
+              "created_by_fk": 1,
+              "created_on": {
+                "__datetime__": "2021-06-16T11:28:12"
+              },
+              "d3format": null,
+              "description": null,
+              "expression": "count(*)",
+              "extra": null,
+              "id": 15,
+              "metric_name": "count",
+              "metric_type": null,
+              "table_id": 15,
+              "uuid": "ab48cea7-470f-4623-a440-8f89c042cc6f",
+              "verbose_name": null,
+              "warning_text": null
+            }
+          }
+        ],
+        "offset": 0,
+        "params": "{\"remote_id\": 15, \"database_name\": \"PostgreSQL\"}",
+        "schema": "public",
+        "sql": "select COUNT(*) from public.event",
+        "table_name": "Total_vehicle_passed_toll_stations",
+        "template_params": null
+      }
+    },
+    {
+      "__SqlaTable__": {
+        "cache_timeout": null,
+        "columns": [
+          {
+            "__TableColumn__": {
+              "changed_by_fk": 1,
+              "changed_on": {
+                "__datetime__": "2021-06-16T10:31:12"
+              },
+              "column_name": "vehicle_owner_name",
+              "created_by_fk": 1,
+              "created_on": {
+                "__datetime__": "2021-06-16T10:31:12"
+              },
+              "description": null,
+              "expression": null,
+              "filterable": true,
+              "groupby": true,
+              "id": 39,
+              "is_active": true,
+              "is_dttm": false,
+              "python_date_format": null,
+              "table_id": 10,
+              "type": "STRING",
+              "uuid": "70e8e563-a3aa-413f-8040-4b51835dbb19",
+              "verbose_name": null
+            }
+          },
+          {
+            "__TableColumn__": {
+              "changed_by_fk": 1,
+              "changed_on": {
+                "__datetime__": "2021-06-16T10:31:12"
+              },
+              "column_name": "vehicle_registered_plate_number",
+              "created_by_fk": 1,
+              "created_on": {
+                "__datetime__": "2021-06-16T10:31:12"
+              },
+              "description": null,
+              "expression": null,
+              "filterable": true,
+              "groupby": true,
+              "id": 40,
+              "is_active": true,
+              "is_dttm": false,
+              "python_date_format": null,
+              "table_id": 10,
+              "type": "STRING",
+              "uuid": "0fee9412-19e5-4f73-9be5-dc8322f30601",
+              "verbose_name": null
+            }
+          },
+          {
+            "__TableColumn__": {
+              "changed_by_fk": 1,
+              "changed_on": {
+                "__datetime__": "2021-06-16T10:31:12"
+              },
+              "column_name": "vehicle_model_year",
+              "created_by_fk": 1,
+              "created_on": {
+                "__datetime__": "2021-06-16T10:31:12"
+              },
+              "description": null,
+              "expression": null,
+              "filterable": true,
+              "groupby": true,
+              "id": 41,
+              "is_active": true,
+              "is_dttm": false,
+              "python_date_format": null,
+              "table_id": 10,
+              "type": "INT",
+              "uuid": "739b1d8b-a7c8-4d05-a891-cfc2f4aa5309",
+              "verbose_name": null
+            }
+          },
+          {
+            "__TableColumn__": {
+              "changed_by_fk": 1,
+              "changed_on": {
+                "__datetime__": "2021-06-16T10:31:12"
+              },
+              "column_name": "pollution_fee_balance",
+              "created_by_fk": 1,
+              "created_on": {
+                "__datetime__": "2021-06-16T10:31:12"
+              },
+              "description": null,
+              "expression": null,
+              "filterable": true,
+              "groupby": true,
+              "id": 42,
+              "is_active": true,
+              "is_dttm": false,
+              "python_date_format": null,
+              "table_id": 10,
+              "type": "INT",
+              "uuid": "6cb1b32f-2492-4288-b1a5-a320fb9a6f77",
+              "verbose_name": null
+            }
+          },
+          {
+            "__TableColumn__": {
+              "changed_by_fk": 1,
+              "changed_on": {
+                "__datetime__": "2021-06-16T10:31:12"
+              },
+              "column_name": "vehicle_owner_address",
+              "created_by_fk": 1,
+              "created_on": {
+                "__datetime__": "2021-06-16T10:31:12"
+              },
+              "description": null,
+              "expression": null,
+              "filterable": true,
+              "groupby": true,
+              "id": 43,
+              "is_active": true,
+              "is_dttm": false,
+              "python_date_format": null,
+              "table_id": 10,
+              "type": "STRING",
+              "uuid": "e1a89571-929e-4474-a75b-42b0133b224c",
+              "verbose_name": null
+            }
+          },
+          {
+            "__TableColumn__": {
+              "changed_by_fk": 1,
+              "changed_on": {
+                "__datetime__": "2021-06-16T10:31:12"
+              },
+              "column_name": "vehicle_owner_city",
+              "created_by_fk": 1,
+              "created_on": {
+                "__datetime__": "2021-06-16T10:31:12"
+              },
+              "description": null,
+              "expression": null,
+              "filterable": true,
+              "groupby": true,
+              "id": 44,
+              "is_active": true,
+              "is_dttm": false,
+              "python_date_format": null,
+              "table_id": 10,
+              "type": "STRING",
+              "uuid": "bc73973e-fab0-4eac-8dc8-b8c7a0312176",
+              "verbose_name": null
+            }
+          }
+        ],
+        "database_id": 1,
+        "default_endpoint": null,
+        "description": null,
+        "extra": null,
+        "fetch_values_predicate": null,
+        "filter_select_enabled": false,
+        "main_dttm_col": null,
+        "metrics": [
+          {
+            "__SqlMetric__": {
+              "changed_by_fk": 1,
+              "changed_on": {
+                "__datetime__": "2021-06-16T10:31:12"
+              },
+              "created_by_fk": 1,
+              "created_on": {
+                "__datetime__": "2021-06-16T10:31:12"
+              },
+              "d3format": null,
+              "description": null,
+              "expression": "count(*)",
+              "extra": null,
+              "id": 10,
+              "metric_name": "count",
+              "metric_type": null,
+              "table_id": 10,
+              "uuid": "6b405dcb-d78d-453b-8582-90fd0ccfe659",
+              "verbose_name": null,
+              "warning_text": null
+            }
+          }
+        ],
+        "offset": 0,
+        "params": "{\"remote_id\": 10, \"database_name\": \"PostgreSQL\"}",
+        "schema": "public",
+        "sql": "select vehicle_owner_name, vehicle_registered_plate_number, vehicle_model_year, customer_pollution_fee_balance  as Pollution_Fee_Balance, vehicle_owner_address, vehicle_owner_city\nFROM vehicle_metadata \nwhere customer_pollution_fee_balance  > 0\nORDER by customer_pollution_fee_balance DESC",
+        "table_name": "Top customers with Pollution Fee",
+        "template_params": null
+      }
+    },
+    {
+      "__SqlaTable__": {
+        "cache_timeout": null,
+        "columns": [
+          {
+            "__TableColumn__": {
+              "changed_by_fk": 1,
+              "changed_on": {
+                "__datetime__": "2021-06-16T10:28:41"
+              },
+              "column_name": "vehicle_owner_name",
+              "created_by_fk": 1,
+              "created_on": {
+                "__datetime__": "2021-06-16T10:28:41"
+              },
+              "description": null,
+              "expression": null,
+              "filterable": true,
+              "groupby": true,
+              "id": 33,
+              "is_active": true,
+              "is_dttm": false,
+              "python_date_format": null,
+              "table_id": 9,
+              "type": "STRING",
+              "uuid": "36f75c8f-412e-4da8-aff1-b9e80175edb0",
+              "verbose_name": null
+            }
+          },
+          {
+            "__TableColumn__": {
+              "changed_by_fk": 1,
+              "changed_on": {
+                "__datetime__": "2021-06-16T10:28:41"
+              },
+              "column_name": "vehicle_registered_plate_number",
+              "created_by_fk": 1,
+              "created_on": {
+                "__datetime__": "2021-06-16T10:28:41"
+              },
+              "description": null,
+              "expression": null,
+              "filterable": true,
+              "groupby": true,
+              "id": 34,
+              "is_active": true,
+              "is_dttm": false,
+              "python_date_format": null,
+              "table_id": 9,
+              "type": "STRING",
+              "uuid": "975465d6-7016-4b6d-b6f1-51fb2294ac14",
+              "verbose_name": null
+            }
+          },
+          {
+            "__TableColumn__": {
+              "changed_by_fk": 1,
+              "changed_on": {
+                "__datetime__": "2021-06-16T10:28:41"
+              },
+              "column_name": "toll_fee_balance",
+              "created_by_fk": 1,
+              "created_on": {
+                "__datetime__": "2021-06-16T10:28:41"
+              },
+              "description": null,
+              "expression": null,
+              "filterable": true,
+              "groupby": true,
+              "id": 35,
+              "is_active": true,
+              "is_dttm": false,
+              "python_date_format": null,
+              "table_id": 9,
+              "type": "INT",
+              "uuid": "8fd91f72-6bdf-4849-865d-28fb90c3ff21",
+              "verbose_name": null
+            }
+          },
+          {
+            "__TableColumn__": {
+              "changed_by_fk": 1,
+              "changed_on": {
+                "__datetime__": "2021-06-16T10:28:41"
+              },
+              "column_name": "vehicle_owner_address",
+              "created_by_fk": 1,
+              "created_on": {
+                "__datetime__": "2021-06-16T10:28:41"
+              },
+              "description": null,
+              "expression": null,
+              "filterable": true,
+              "groupby": true,
+              "id": 36,
+              "is_active": true,
+              "is_dttm": false,
+              "python_date_format": null,
+              "table_id": 9,
+              "type": "STRING",
+              "uuid": "02696a0c-b47a-4dc5-8591-012598137355",
+              "verbose_name": null
+            }
+          },
+          {
+            "__TableColumn__": {
+              "changed_by_fk": 1,
+              "changed_on": {
+                "__datetime__": "2021-06-16T10:28:41"
+              },
+              "column_name": "vehicle_owner_city",
+              "created_by_fk": 1,
+              "created_on": {
+                "__datetime__": "2021-06-16T10:28:41"
+              },
+              "description": null,
+              "expression": null,
+              "filterable": true,
+              "groupby": true,
+              "id": 37,
+              "is_active": true,
+              "is_dttm": false,
+              "python_date_format": null,
+              "table_id": 9,
+              "type": "STRING",
+              "uuid": "5bb52f95-af04-4b2c-aaa5-4b02740a9bac",
+              "verbose_name": null
+            }
+          },
+          {
+            "__TableColumn__": {
+              "changed_by_fk": 1,
+              "changed_on": {
+                "__datetime__": "2021-06-16T10:28:41"
+              },
+              "column_name": "customer_id",
+              "created_by_fk": 1,
+              "created_on": {
+                "__datetime__": "2021-06-16T10:28:41"
+              },
+              "description": null,
+              "expression": null,
+              "filterable": true,
+              "groupby": true,
+              "id": 38,
+              "is_active": true,
+              "is_dttm": false,
+              "python_date_format": null,
+              "table_id": 9,
+              "type": "STRING",
+              "uuid": "7ee552a0-bc49-4125-afa0-0b1f404248c3",
+              "verbose_name": null
+            }
+          }
+        ],
+        "database_id": 1,
+        "default_endpoint": null,
+        "description": null,
+        "extra": null,
+        "fetch_values_predicate": null,
+        "filter_select_enabled": false,
+        "main_dttm_col": null,
+        "metrics": [
+          {
+            "__SqlMetric__": {
+              "changed_by_fk": 1,
+              "changed_on": {
+                "__datetime__": "2021-06-16T10:28:41"
+              },
+              "created_by_fk": 1,
+              "created_on": {
+                "__datetime__": "2021-06-16T10:28:41"
+              },
+              "d3format": null,
+              "description": null,
+              "expression": "count(*)",
+              "extra": null,
+              "id": 9,
+              "metric_name": "count",
+              "metric_type": null,
+              "table_id": 9,
+              "uuid": "2902f51a-c0ae-463f-81f1-7294a3fff6fa",
+              "verbose_name": null,
+              "warning_text": null
+            }
+          }
+        ],
+        "offset": 0,
+        "params": "{\"remote_id\": 9, \"database_name\": \"PostgreSQL\"}",
+        "schema": "public",
+        "sql": "-- Note: Unless you save your query, these tabs will NOT persist if you clear your cookies or change browsers.\nselect vehicle_owner_name, vehicle_registered_plate_number, customer_toll_fee_balance as Toll_Fee_Balance, vehicle_owner_address, vehicle_owner_city, customer_id as customer_ID\nFROM vehicle_metadata \nwhere customer_toll_fee_balance > 0\nORDER by customer_toll_fee_balance DESC",
+        "table_name": "Top Customers with Toll Fee Balance",
+        "template_params": null
+      }
+    },
+    {
+      "__SqlaTable__": {
+        "cache_timeout": null,
+        "columns": [
+          {
+            "__TableColumn__": {
+              "changed_by_fk": 1,
+              "changed_on": {
+                "__datetime__": "2021-06-16T10:38:08"
+              },
+              "column_name": "station",
+              "created_by_fk": 1,
+              "created_on": {
+                "__datetime__": "2021-06-16T10:38:08"
+              },
+              "description": null,
+              "expression": null,
+              "filterable": true,
+              "groupby": true,
+              "id": 45,
+              "is_active": true,
+              "is_dttm": false,
+              "python_date_format": null,
+              "table_id": 11,
+              "type": "STRING",
+              "uuid": "5320362f-f511-46a0-952d-1f2c4c717842",
+              "verbose_name": null
+            }
+          }
+        ],
+        "database_id": 1,
+        "default_endpoint": null,
+        "description": null,
+        "extra": null,
+        "fetch_values_predicate": null,
+        "filter_select_enabled": false,
+        "main_dttm_col": null,
+        "metrics": [
+          {
+            "__SqlMetric__": {
+              "changed_by_fk": 1,
+              "changed_on": {
+                "__datetime__": "2021-06-16T10:38:08"
+              },
+              "created_by_fk": 1,
+              "created_on": {
+                "__datetime__": "2021-06-16T10:38:08"
+              },
+              "d3format": null,
+              "description": null,
+              "expression": "count(*)",
+              "extra": null,
+              "id": 11,
+              "metric_name": "count",
+              "metric_type": null,
+              "table_id": 11,
+              "uuid": "ff04e1e9-dabe-4055-be28-8fc01bde2136",
+              "verbose_name": null,
+              "warning_text": null
+            }
+          }
+        ],
+        "offset": 0,
+        "params": "{\"remote_id\": 11, \"database_name\": \"PostgreSQL\"}",
+        "schema": null,
+        "sql": "SELECT \n  CASE WHEN stationa1 = true THEN 'stationa1'\n       WHEN stationa13 = true THEN 'stationa13' \n       WHEN stationa2 = true THEN 'stationa2'\n       WHEN stationa23 = true THEN 'stationa23'\n       WHEN stationb313 = true THEN 'stationb313'\n       WHEN stationa4202 = true THEN 'stationa4202'\n       WHEN stationb504 = true THEN 'stationb504'\n       WHEN stationa41 = true THEN 'stationa41'\n       WHEN stationa5201 = true THEN 'stationa5201'\n       END AS station\nFROM public.event AS e\nLEFT JOIN public.vehicle_metadata AS v\nON e.event_vehicle_detected_plate_number = v.vehicle_registered_plate_number",
+        "table_name": "Vehicle by Station ID",
+        "template_params": null
+      }
+    }
+  ]
+}

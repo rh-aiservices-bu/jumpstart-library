@@ -1,0 +1,49 @@
+---
+# We will need two different Kafka instances. One will simulate the "Edges", the toll station,
+# the other one the "Core". We will also create the different topics that are needed,
+# as well as the Kafka Mirror Maker to replicate the topics from the Edge to the Core.
+
+- name: Deploy Kafka clusters
+  k8s:
+    state: present
+    resource_definition: "{{ item }}"
+    namespace: "{{ install_namespace }}"
+  with_items:
+    - "{{ lookup('file', 'kafka/core.yaml') | from_yaml_all }}" # Core Kafka instance
+    - "{{ lookup('file', 'kafka/edge.yaml') | from_yaml_all }}" # Edge Kafka instance
+
+- name: "wait for core and edge kafka to be ready"
+  k8s_info:
+    api_version: kafka.strimzi.io/v1beta2
+    kind: Kafka
+    name: "{{ item }}"
+    namespace: "{{ install_namespace }}"
+    wait: true
+    wait_condition:
+      type: Ready
+    wait_timeout: 900
+  with_items:
+    - core-kafka
+    - edge-kafka
+
+- name: Configure Kafka clusters
+  k8s:
+    state: present
+    resource_definition: "{{ item }}"
+    namespace: "{{ install_namespace }}"
+  with_items:
+    - "{{ lookup('file', 'kafka/edge-topic.yaml') | from_yaml_all }}" # Edge topic
+    - "{{ lookup('file', 'kafka/core-topic.yaml') | from_yaml_all }}" # Core topic
+    - "{{ lookup('file', 'kafka/mirror-maker.yaml') | from_yaml_all }}" # Mirror maker
+
+- name: Deploy Kafka Drop UI
+  k8s:
+    state: present
+    resource_definition: "{{ item }}"
+    namespace: "{{ install_namespace }}"
+  with_items:
+    - "{{ lookup('file', 'kafka/edge-kafdrop.yaml') | from_yaml_all }}" # Optional! Kafdrop is a UI interface to your Kafka cluster (to inspect messages)
+    - "{{ lookup('file', 'kafka/core-kafdrop.yaml') | from_yaml_all }}" # Optional! Kafdrop is a UI interface to your Kafka cluster (to inspect messages)
+  tags:
+    - kafkadrop
+    - extra

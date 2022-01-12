@@ -1,0 +1,48 @@
+---
+- name: Ensure namespace exists
+  k8s:
+    api_version: v1
+    kind: Namespace
+    name: "{{ install_namespace }}"
+    state: present
+
+- name: Install Database
+  import_tasks: database.yml
+
+- name: Install kafka
+  import_tasks: kafka.yml
+
+- name: Install lpr service
+  import_tasks: lpr.yml
+
+- name: Install events service
+  import_tasks: events.yml
+
+- name: Install image server
+  import_tasks: image_server.yml
+
+- name: Install load generator
+  import_tasks: load_generator.yml
+
+- name: Install dataset
+  import_tasks: dataset.yml
+
+- name: Install fee calculation
+  import_tasks: fee_calculation.yml
+
+- name: Install secor
+  import_tasks: secor.yml
+
+- name: Install open data hub
+  import_tasks: open_data_hub.yml
+
+- name: Install grafana
+  import_tasks: grafana.yml
+
+- name: Scale the generator to start traffic
+  k8s_scale:
+    api_version: apps.openshift.io/v1
+    kind: DeploymentConfig
+    name: generator
+    namespace: "{{ install_namespace }}"
+    replicas: 1

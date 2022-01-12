@@ -1,0 +1,591 @@
+{
+  "datasource": "PostgreSQL",
+  "fieldConfig": {
+    "defaults": {
+      "custom": {}
+    },
+    "overrides": []
+  },
+  "gridPos": {
+    "h": 22,
+    "w": 14,
+    "x": 0,
+    "y": 8
+  },
+  "id": 2,
+  "options": {
+    "imageUrl": "http://jumpstart-library.s3.amazonaws.com/lpr-demo/london-ulev.png",
+    "forceImageRefresh": false,
+    "lockSensors": true,
+    "sensorsTextSize": 10,
+    "sensors": [
+      {
+        "backgroundBlink": false,
+        "backgroundColor": "#000",
+        "bold": false,
+        "decimals": 0,
+        "fontColor": "#FFF",
+        "link": "",
+        "mappingId": "",
+        "name": "Station A23",
+        "position": {
+          "x": 54.55259026687598,
+          "y": 84.93723849372385
+        },
+        "query": {
+          "alias": "",
+          "id": "A"
+        },
+        "valueBlink": false,
+        "visible": true
+      },
+      {
+        "backgroundBlink": false,
+        "backgroundColor": "#000",
+        "bold": false,
+        "decimals": 0,
+        "fontColor": "#FFF",
+        "link": "",
+        "mappingId": "",
+        "name": "Station A2",
+        "position": {
+          "x": 75.27472527472527,
+          "y": 74.47698744769875
+        },
+        "query": {
+          "alias": "",
+          "id": "B"
+        },
+        "valueBlink": false,
+        "visible": true
+      },
+      {
+        "backgroundBlink": false,
+        "backgroundColor": "#000",
+        "bold": false,
+        "decimals": 0,
+        "fontColor": "#FFF",
+        "link": "",
+        "mappingId": "",
+        "name": "Station B313",
+        "position": {
+          "x": 20.38519681376824,
+          "y": 70.056304561186
+        },
+        "query": {
+          "alias": "",
+          "id": "C"
+        },
+        "valueBlink": false,
+        "visible": true
+      },
+      {
+        "backgroundBlink": false,
+        "backgroundColor": "#000",
+        "bold": false,
+        "decimals": 0,
+        "fontColor": "#FFF",
+        "link": "",
+        "mappingId": "",
+        "name": "Station B504",
+        "position": {
+          "x": 34.34095005523578,
+          "y": 5.494601993904643
+        },
+        "query": {
+          "alias": "",
+          "id": "D"
+        },
+        "valueBlink": false,
+        "visible": true
+      },
+      {
+        "backgroundBlink": false,
+        "backgroundColor": "#000",
+        "bold": false,
+        "decimals": 0,
+        "fontColor": "#FFF",
+        "link": "",
+        "mappingId": "",
+        "name": "Station A4202",
+        "position": {
+          "x": 6.917698703412988,
+          "y": 41.878712743426824
+        },
+        "query": {
+          "alias": "",
+          "id": "E"
+        },
+        "valueBlink": false,
+        "visible": true
+      },
+      {
+        "backgroundBlink": false,
+        "backgroundColor": "#000",
+        "bold": false,
+        "decimals": 0,
+        "fontColor": "#FFF",
+        "link": "",
+        "mappingId": "",
+        "name": "Station A1",
+        "position": {
+          "x": 59.89010989010989,
+          "y": 1.8828451882845187
+        },
+        "query": {
+          "alias": "",
+          "id": "F"
+        },
+        "valueBlink": false,
+        "visible": true
+      },
+      {
+        "backgroundBlink": false,
+        "backgroundColor": "#000",
+        "bold": false,
+        "decimals": 0,
+        "fontColor": "#FFF",
+        "link": "",
+        "mappingId": "",
+        "name": "Station A13",
+        "position": {
+          "x": 87.36263736263736,
+          "y": 38.70292887029289
+        },
+        "query": {
+          "alias": "",
+          "id": "G"
+        },
+        "valueBlink": false,
+        "visible": true
+      },
+      {
+        "backgroundBlink": false,
+        "backgroundColor": "#000",
+        "bold": false,
+        "decimals": 0,
+        "fontColor": "#FFF",
+        "link": "",
+        "mappingId": "",
+        "name": "Station A41",
+        "position": {
+          "x": 8.338566195709053,
+          "y": 17.07939459682835
+        },
+        "query": {
+          "alias": "",
+          "id": "I"
+        },
+        "valueBlink": false,
+        "visible": true
+      },
+      {
+        "backgroundBlink": false,
+        "backgroundColor": "#000",
+        "bold": false,
+        "decimals": 0,
+        "fontColor": "#FFF",
+        "link": "",
+        "mappingId": "",
+        "name": "Station A5201",
+        "position": {
+          "x": 74.80376766091052,
+          "y": 11.715481171548117
+        },
+        "query": {
+          "alias": "",
+          "id": "H"
+        },
+        "valueBlink": false,
+        "visible": true
+      }
+    ],
+    "mappings": []
+  },
+  "pluginVersion": "7.3.10",
+  "targets": [
+    {
+      "format": "time_series",
+      "group": [
+        {
+          "params": ["$__interval", "none"],
+          "type": "time"
+        }
+      ],
+      "hide": false,
+      "metricColumn": "event_vehicle_detected_plate_number",
+      "rawQuery": true,
+      "rawSql": "SELECT\n  count(event_id) as \"value\",\n  max(date) as \"time\"\nFROM event\nWHERE\n  $__timeFilter(date) AND stationa23 = 'true'\n",
+      "refId": "A",
+      "select": [
+        [
+          {
+            "params": ["event_id"],
+            "type": "column"
+          },
+          {
+            "params": ["count"],
+            "type": "aggregate"
+          }
+        ]
+      ],
+      "table": "event",
+      "timeColumn": "date",
+      "timeColumnType": "timestamp",
+      "where": [
+        {
+          "name": "$__timeFilter",
+          "params": [],
+          "type": "macro"
+        },
+        {
+          "datatype": "bool",
+          "name": "",
+          "params": ["stationA23", "=", "'true'"],
+          "type": "expression"
+        }
+      ]
+    },
+    {
+      "format": "time_series",
+      "group": [
+        {
+          "params": ["$__interval", "none"],
+          "type": "time"
+        }
+      ],
+      "hide": false,
+      "metricColumn": "event_vehicle_detected_plate_number",
+      "rawQuery": true,
+      "rawSql": "SELECT\n  count(event_id) as \"value\",\n  max(date) as \"time\"\nFROM event\nWHERE\n  $__timeFilter(date) AND stationa2 = 'true'",
+      "refId": "B",
+      "select": [
+        [
+          {
+            "params": ["event_id"],
+            "type": "column"
+          },
+          {
+            "params": ["count"],
+            "type": "aggregate"
+          }
+        ]
+      ],
+      "table": "event",
+      "timeColumn": "date",
+      "timeColumnType": "timestamp",
+      "where": [
+        {
+          "name": "$__timeFilter",
+          "params": [],
+          "type": "macro"
+        },
+        {
+          "datatype": "bool",
+          "name": "",
+          "params": ["stationA2", "=", "'true'"],
+          "type": "expression"
+        }
+      ]
+    },
+    {
+      "format": "time_series",
+      "group": [
+        {
+          "params": ["$__interval", "none"],
+          "type": "time"
+        }
+      ],
+      "hide": false,
+      "metricColumn": "event_vehicle_detected_plate_number",
+      "rawQuery": true,
+      "rawSql": "SELECT\n  count(event_id) as \"value\",\n  max(date) as \"time\"\nFROM event\nWHERE\n  $__timeFilter(date) AND stationb313 = 'true'",
+      "refId": "C",
+      "select": [
+        [
+          {
+            "params": ["event_id"],
+            "type": "column"
+          },
+          {
+            "params": ["count"],
+            "type": "aggregate"
+          }
+        ]
+      ],
+      "table": "event",
+      "timeColumn": "date",
+      "timeColumnType": "timestamp",
+      "where": [
+        {
+          "name": "$__timeFilter",
+          "params": [],
+          "type": "macro"
+        },
+        {
+          "datatype": "bool",
+          "name": "",
+          "params": ["stationB313", "=", "'true'"],
+          "type": "expression"
+        }
+      ]
+    },
+    {
+      "format": "time_series",
+      "group": [
+        {
+          "params": ["$__interval", "none"],
+          "type": "time"
+        }
+      ],
+      "hide": false,
+      "metricColumn": "event_vehicle_detected_plate_number",
+      "rawQuery": true,
+      "rawSql": "SELECT\n  count(event_id) as \"value\",\n  max(date) as \"time\"\nFROM event\nWHERE\n  $__timeFilter(date) AND stationb504 = 'true'",
+      "refId": "D",
+      "select": [
+        [
+          {
+            "params": ["event_id"],
+            "type": "column"
+          },
+          {
+            "params": ["count"],
+            "type": "aggregate"
+          }
+        ]
+      ],
+      "table": "event",
+      "timeColumn": "date",
+      "timeColumnType": "timestamp",
+      "where": [
+        {
+          "name": "$__timeFilter",
+          "params": [],
+          "type": "macro"
+        },
+        {
+          "datatype": "bool",
+          "name": "",
+          "params": ["stationB504", "=", "'true'"],
+          "type": "expression"
+        }
+      ]
+    },
+    {
+      "format": "time_series",
+      "group": [
+        {
+          "params": ["$__interval", "none"],
+          "type": "time"
+        }
+      ],
+      "hide": false,
+      "metricColumn": "event_vehicle_detected_plate_number",
+      "rawQuery": true,
+      "rawSql": "SELECT\n  count(event_id) as \"value\",\n  max(date) as \"time\"\nFROM event\nWHERE\n  $__timeFilter(date) AND stationa4202 = 'true'",
+      "refId": "E",
+      "select": [
+        [
+          {
+            "params": ["event_id"],
+            "type": "column"
+          },
+          {
+            "params": ["count"],
+            "type": "aggregate"
+          }
+        ]
+      ],
+      "table": "event",
+      "timeColumn": "date",
+      "timeColumnType": "timestamp",
+      "where": [
+        {
+          "name": "$__timeFilter",
+          "params": [],
+          "type": "macro"
+        },
+        {
+          "datatype": "bool",
+          "name": "",
+          "params": ["stationA4202", "=", "'true'"],
+          "type": "expression"
+        }
+      ]
+    },
+    {
+      "format": "time_series",
+      "group": [
+        {
+          "params": ["$__interval", "none"],
+          "type": "time"
+        }
+      ],
+      "hide": false,
+      "metricColumn": "event_vehicle_detected_plate_number",
+      "rawQuery": true,
+      "rawSql": "SELECT\n  count(event_id) as \"value\",\n  max(date) as \"time\"\nFROM event\nWHERE\n  $__timeFilter(date) AND stationa1 = 'true'",
+      "refId": "F",
+      "select": [
+        [
+          {
+            "params": ["event_id"],
+            "type": "column"
+          },
+          {
+            "params": ["count"],
+            "type": "aggregate"
+          }
+        ]
+      ],
+      "table": "event",
+      "timeColumn": "date",
+      "timeColumnType": "timestamp",
+      "where": [
+        {
+          "name": "$__timeFilter",
+          "params": [],
+          "type": "macro"
+        },
+        {
+          "datatype": "bool",
+          "name": "",
+          "params": ["stationA1", "=", "'true'"],
+          "type": "expression"
+        }
+      ]
+    },
+    {
+      "format": "time_series",
+      "group": [
+        {
+          "params": ["$__interval", "none"],
+          "type": "time"
+        }
+      ],
+      "hide": false,
+      "metricColumn": "event_vehicle_detected_plate_number",
+      "rawQuery": true,
+      "rawSql": "SELECT\n  count(event_id) as \"value\",\n  max(date) as \"time\"\nFROM event\nWHERE\n  $__timeFilter(date) AND stationa13 = 'true'",
+      "refId": "G",
+      "select": [
+        [
+          {
+            "params": ["event_id"],
+            "type": "column"
+          },
+          {
+            "params": ["count"],
+            "type": "aggregate"
+          }
+        ]
+      ],
+      "table": "event",
+      "timeColumn": "date",
+      "timeColumnType": "timestamp",
+      "where": [
+        {
+          "name": "$__timeFilter",
+          "params": [],
+          "type": "macro"
+        },
+        {
+          "datatype": "bool",
+          "name": "",
+          "params": ["stationA13", "=", "'true'"],
+          "type": "expression"
+        }
+      ]
+    },
+    {
+      "format": "time_series",
+      "group": [
+        {
+          "params": ["$__interval", "none"],
+          "type": "time"
+        }
+      ],
+      "hide": false,
+      "metricColumn": "event_vehicle_detected_plate_number",
+      "rawQuery": true,
+      "rawSql": "SELECT\n  count(event_id) as \"value\",\n  max(date) as \"time\"\nFROM event\nWHERE\n  $__timeFilter(date) AND stationa5201 = 'true'",
+      "refId": "H",
+      "select": [
+        [
+          {
+            "params": ["event_id"],
+            "type": "column"
+          },
+          {
+            "params": ["count"],
+            "type": "aggregate"
+          }
+        ]
+      ],
+      "table": "event",
+      "timeColumn": "date",
+      "timeColumnType": "timestamp",
+      "where": [
+        {
+          "name": "$__timeFilter",
+          "params": [],
+          "type": "macro"
+        },
+        {
+          "datatype": "bool",
+          "name": "",
+          "params": ["stationA5201", "=", "'true'"],
+          "type": "expression"
+        }
+      ]
+    },
+    {
+      "format": "time_series",
+      "group": [
+        {
+          "params": ["$__interval", "none"],
+          "type": "time"
+        }
+      ],
+      "hide": false,
+      "metricColumn": "event_vehicle_detected_plate_number",
+      "rawQuery": true,
+      "rawSql": "SELECT\n  count(event_id) as \"value\",\n  max(date) as \"time\"\nFROM event\nWHERE\n  $__timeFilter(date) AND stationa41 = 'true'",
+      "refId": "I",
+      "select": [
+        [
+          {
+            "params": ["event_id"],
+            "type": "column"
+          },
+          {
+            "params": ["count"],
+            "type": "aggregate"
+          }
+        ]
+      ],
+      "table": "event",
+      "timeColumn": "date",
+      "timeColumnType": "timestamp",
+      "where": [
+        {
+          "name": "$__timeFilter",
+          "params": [],
+          "type": "macro"
+        },
+        {
+          "datatype": "bool",
+          "name": "",
+          "params": ["stationA41", "=", "'true'"],
+          "type": "expression"
+        }
+      ]
+    }
+  ],
+  "transparent": true,
+  "type": "pierosavi-imageit-panel",
+  "timeFrom": null,
+  "timeShift": null,
+  "title": ""
+}

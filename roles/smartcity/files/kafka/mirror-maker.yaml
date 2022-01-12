@@ -1,0 +1,13 @@
+apiVersion: kafka.strimzi.io/v1beta2
+kind: KafkaMirrorMaker
+metadata:
+  name: mirror-maker
+spec:
+  consumer:
+    bootstrapServers: "edge-kafka-kafka-bootstrap:9092"
+    groupId: mirror-maker-group-id
+  producer:
+    bootstrapServers: "core-kafka-kafka-bootstrap:9092"
+  replicas: 1
+  version: 2.7.0
+  whitelist: lpr

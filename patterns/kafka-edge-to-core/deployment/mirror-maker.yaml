@@ -9,7 +9,7 @@ spec:
       bootstrapServers: edge-kafka-kafka-bootstrap:9092
     - alias: "core-target-cluster"
       bootstrapServers: core-kafka-kafka-bootstrap:9092
-      mirrors:
+  mirrors:
     - sourceCluster: "edge-source-cluster"
       targetCluster: "core-target-cluster"
       sourceConnector: {}

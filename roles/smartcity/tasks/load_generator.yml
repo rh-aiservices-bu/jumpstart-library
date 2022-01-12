@@ -1,0 +1,13 @@
+---
+# This is the component that injects car images into the pipeline.
+
+- name: Deploy load generator
+  k8s:
+    state: present
+    resource_definition: "{{ item }}"
+    namespace: "{{ install_namespace }}"
+  with_items:
+    - "{{ lookup('file', 'generator/obc_dataset_generator.yaml') | from_yaml_all }}" # Bucket to store the images dataset
+    - "{{ lookup('file', 'generator/is_generator.yaml') | from_yaml_all }}" # ImageStream for the load generator
+    - "{{ lookup('file', 'generator/bc_generator.yaml') | from_yaml_all }}" # BuildConfiguration to create the load generator image
+    - "{{ lookup('file', 'generator/dc_generator.yaml') | from_yaml_all }}" # Deployment Configuration for the load generator

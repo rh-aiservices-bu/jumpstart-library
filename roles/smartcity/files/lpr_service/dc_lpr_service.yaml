@@ -1,0 +1,58 @@
+kind: DeploymentConfig
+apiVersion: apps.openshift.io/v1
+metadata:
+  name: lpr-service
+  labels:
+    app: lpr-service
+spec:
+  strategy:
+    type: Rolling
+    rollingParams:
+      updatePeriodSeconds: 1
+      intervalSeconds: 1
+      timeoutSeconds: 600
+      maxUnavailable: 25%
+      maxSurge: 25%
+    resources: {}
+    activeDeadlineSeconds: 21600
+  triggers:
+    - type: ImageChange
+      imageChangeParams:
+        automatic: true
+        containerNames:
+          - lpr-service
+        from:
+          kind: ImageStreamTag
+          name: "lpr-service:latest"
+    - type: ConfigChange
+  replicas: 1
+  revisionHistoryLimit: 5
+  test: false
+  selector:
+    app: lpr-service
+    deploymentconfig: lpr-service
+  template:
+    metadata:
+      creationTimestamp: null
+      labels:
+        app: lpr-service
+        deploymentconfig: lpr-service
+    spec:
+      containers:
+        - name: lpr-service
+          image: lpr-service:latest
+          env:
+            - name: MAX_WORKERS
+              value: "1"
+          ports:
+            - containerPort: 8080
+              protocol: TCP
+          resources: {}
+          terminationMessagePath: /dev/termination-log
+          terminationMessagePolicy: File
+          imagePullPolicy: Always
+      restartPolicy: Always
+      terminationGracePeriodSeconds: 30
+      dnsPolicy: ClusterFirst
+      securityContext: {}
+      schedulerName: default-scheduler

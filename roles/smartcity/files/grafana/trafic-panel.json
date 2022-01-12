@@ -1,0 +1,291 @@
+{
+  "cards": {
+    "cardHSpacing": 2,
+    "cardMinWidth": 20,
+    "cardRound": null,
+    "cardVSpacing": 2
+  },
+  "color": {
+    "cardColor": "#b4ff00",
+    "colorScale": "sqrt",
+    "colorScheme": "interpolateRdYlGn",
+    "defaultColor": "#757575",
+    "exponent": 0.5,
+    "mode": "spectrum",
+    "thresholds": []
+  },
+  "fieldConfig": {
+    "defaults": {
+      "custom": {}
+    },
+    "overrides": []
+  },
+  "gridPos": {
+    "h": 13,
+    "w": 10,
+    "x": 14,
+    "y": 8
+  },
+  "highlightCards": true,
+  "id": 12,
+  "legend": {
+    "show": true
+  },
+  "nullPointMode": "as empty",
+  "pageSize": 15,
+  "pluginVersion": "7.3.10",
+  "seriesFilterIndex": -1,
+  "statusmap": {
+    "ConfigVersion": "v1"
+  },
+  "title": "Hourly ingress by station",
+  "tooltip": {
+    "extraInfo": "",
+    "freezeOnClick": true,
+    "items": [],
+    "show": true,
+    "showExtraInfo": false,
+    "showItems": false
+  },
+  "transparent": true,
+  "type": "flant-statusmap-panel",
+  "useMax": true,
+  "xAxis": {
+    "show": true
+  },
+  "yAxis": {
+    "maxWidth": -1,
+    "minWidth": -1,
+    "show": true
+  },
+  "yAxisSort": "a → z",
+  "yLabel": {
+    "delimiter": "",
+    "labelTemplate": "",
+    "usingSplitLabel": false
+  },
+  "targets": [
+    {
+      "refId": "A",
+      "format": "time_series",
+      "timeColumn": "date",
+      "metricColumn": "none",
+      "group": [],
+      "where": [
+        {
+          "type": "macro",
+          "name": "$__timeFilter",
+          "params": []
+        }
+      ],
+      "select": [
+        [
+          {
+            "type": "column",
+            "params": ["value"]
+          }
+        ]
+      ],
+      "rawQuery": true,
+      "rawSql": "SELECT\n  $__timeGroupAlias(date,$__interval),\n  count(event_id) as \"Station A23\"\nFROM event\nWHERE\n  $__timeFilter(date) AND stationa23 = 'true'\nGROUP BY 1",
+      "table": "event",
+      "timeColumnType": "timestamptz"
+    },
+    {
+      "refId": "B",
+      "format": "time_series",
+      "timeColumn": "time",
+      "metricColumn": "none",
+      "group": [],
+      "where": [
+        {
+          "type": "macro",
+          "name": "$__timeFilter",
+          "params": []
+        }
+      ],
+      "select": [
+        [
+          {
+            "type": "column",
+            "params": ["value"]
+          }
+        ]
+      ],
+      "rawQuery": true,
+      "rawSql": "SELECT\n  $__timeGroupAlias(date,$__interval),\n  count(event_id) as \"Station A1\"\nFROM event\nWHERE\n  $__timeFilter(date) AND stationa1 = 'true'\nGROUP BY 1\n"
+    },
+    {
+      "refId": "C",
+      "format": "time_series",
+      "timeColumn": "time",
+      "metricColumn": "none",
+      "group": [],
+      "where": [
+        {
+          "type": "macro",
+          "name": "$__timeFilter",
+          "params": []
+        }
+      ],
+      "select": [
+        [
+          {
+            "type": "column",
+            "params": ["value"]
+          }
+        ]
+      ],
+      "rawQuery": true,
+      "rawSql": "SELECT\n  $__timeGroupAlias(date,$__interval),\n  count(event_id) as \"Station A4202\"\nFROM event\nWHERE\n  $__timeFilter(date) AND stationa4202 = 'true'\nGROUP BY 1\n"
+    },
+    {
+      "refId": "D",
+      "format": "time_series",
+      "timeColumn": "time",
+      "metricColumn": "none",
+      "group": [],
+      "where": [
+        {
+          "type": "macro",
+          "name": "$__timeFilter",
+          "params": []
+        }
+      ],
+      "select": [
+        [
+          {
+            "type": "column",
+            "params": ["value"]
+          }
+        ]
+      ],
+      "rawQuery": true,
+      "rawSql": "SELECT\n  $__timeGroupAlias(date,$__interval),\n  count(event_id) as \"Station A41\"\nFROM event\nWHERE\n  $__timeFilter(date) AND stationa41 = 'true'\nGROUP BY 1\n"
+    },
+    {
+      "refId": "E",
+      "format": "time_series",
+      "timeColumn": "time",
+      "metricColumn": "none",
+      "group": [],
+      "where": [
+        {
+          "type": "macro",
+          "name": "$__timeFilter",
+          "params": []
+        }
+      ],
+      "select": [
+        [
+          {
+            "type": "column",
+            "params": ["value"]
+          }
+        ]
+      ],
+      "rawQuery": true,
+      "rawSql": "SELECT\n  $__timeGroupAlias(date,$__interval),\n  count(event_id) as \"Station B504\"\nFROM event\nWHERE\n  $__timeFilter(date) AND stationb504 = 'true'\nGROUP BY 1\n"
+    },
+    {
+      "refId": "F",
+      "format": "time_series",
+      "timeColumn": "time",
+      "metricColumn": "none",
+      "group": [],
+      "where": [
+        {
+          "type": "macro",
+          "name": "$__timeFilter",
+          "params": []
+        }
+      ],
+      "select": [
+        [
+          {
+            "type": "column",
+            "params": ["value"]
+          }
+        ]
+      ],
+      "rawQuery": true,
+      "rawSql": "SELECT\n  $__timeGroupAlias(date,$__interval),\n  count(event_id) as \"Station A5201\"\nFROM event\nWHERE\n  $__timeFilter(date) AND stationa5201 = 'true'\nGROUP BY 1\n"
+    },
+    {
+      "refId": "G",
+      "format": "time_series",
+      "timeColumn": "time",
+      "metricColumn": "none",
+      "group": [],
+      "where": [
+        {
+          "type": "macro",
+          "name": "$__timeFilter",
+          "params": []
+        }
+      ],
+      "select": [
+        [
+          {
+            "type": "column",
+            "params": ["value"]
+          }
+        ]
+      ],
+      "rawQuery": true,
+      "rawSql": "SELECT\n  $__timeGroupAlias(date,$__interval),\n  count(event_id) as \"Station A13\"\nFROM event\nWHERE\n  $__timeFilter(date) AND stationa13 = 'true'\nGROUP BY 1\n"
+    },
+    {
+      "refId": "H",
+      "format": "time_series",
+      "timeColumn": "time",
+      "metricColumn": "none",
+      "group": [],
+      "where": [
+        {
+          "type": "macro",
+          "name": "$__timeFilter",
+          "params": []
+        }
+      ],
+      "select": [
+        [
+          {
+            "type": "column",
+            "params": ["value"]
+          }
+        ]
+      ],
+      "rawQuery": true,
+      "rawSql": "SELECT\n  $__timeGroupAlias(date,$__interval),\n  count(event_id) as \"Station B313\"\nFROM event\nWHERE\n  $__timeFilter(date) AND stationb313 = 'true'\nGROUP BY 1\n"
+    },
+    {
+      "refId": "I",
+      "format": "time_series",
+      "timeColumn": "time",
+      "metricColumn": "none",
+      "group": [],
+      "where": [
+        {
+          "type": "macro",
+          "name": "$__timeFilter",
+          "params": []
+        }
+      ],
+      "select": [
+        [
+          {
+            "type": "column",
+            "params": ["value"]
+          }
+        ]
+      ],
+      "rawQuery": true,
+      "rawSql": "SELECT\n  $__timeGroupAlias(date,$__interval),\n  count(event_id) as \"Station A2\"\nFROM event\nWHERE\n  $__timeFilter(date) AND stationa2 = 'true'\nGROUP BY 1\n"
+    }
+  ],
+  "timeFrom": null,
+  "timeShift": null,
+  "usingPagination": false,
+  "datasource": null
+}

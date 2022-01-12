@@ -1,0 +1,26 @@
+kind: BuildConfig
+apiVersion: build.openshift.io/v1
+metadata:
+  name: image-server
+  labels:
+    app: image-server
+spec:
+  nodeSelector: null
+  output:
+    to:
+      kind: ImageStreamTag
+      name: "image-server:latest"
+  resources: {}
+  successfulBuildsHistoryLimit: 5
+  failedBuildsHistoryLimit: 5
+  strategy:
+    dockerStrategy: {}
+  postCommit: {}
+  source:
+    type: Git
+    git:
+      uri: "https://github.com/red-hat-data-services/jumpstart-library"
+    contextDir: demo2-smart-city/source/SC_Image_Server
+  triggers:
+    - type: ConfigChange
+  runPolicy: Serial
