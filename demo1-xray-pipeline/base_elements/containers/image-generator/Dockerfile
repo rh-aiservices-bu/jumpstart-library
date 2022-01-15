@@ -1,4 +1,4 @@
-FROM python:3.7
+FROM registry.access.redhat.com/ubi8/python-39:1-24
 
 WORKDIR /usr/src/app
 

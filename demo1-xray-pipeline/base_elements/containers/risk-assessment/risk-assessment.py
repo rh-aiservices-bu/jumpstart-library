@@ -8,7 +8,9 @@ from io import BytesIO
 
 import boto3
 import numpy as np
-import tensorflow as tf
+from tensorflow.keras.preprocessing.image import load_img, img_to_array
+from tensorflow.keras.models import load_model
+from tensorflow.keras.backend import clear_session
 from cloudevents.http import from_http
 from flask import Flask, request
 from PIL import Image, ImageDraw, ImageFilter, ImageFont
@@ -133,8 +135,8 @@ def load_image(bucket_name, img_path):
     logging.info(img_path)
     obj = s3client.get_object(Bucket=bucket_name, Key=img_path)
     img_stream = io.BytesIO(obj['Body'].read())
-    img = tf.keras.preprocessing.image.load_img(img_stream, target_size=(150, 150))
-    img_tensor = tf.keras.preprocessing.image.img_to_array(img)                    # (height, width, channels)
+    img = load_img(img_stream, target_size=(150, 150))
+    img_tensor = img_to_array(img)                    # (height, width, channels)
     img_tensor = np.expand_dims(img_tensor, axis=0)         # (1, height, width, channels), add a dimension because the model expects this shape: (batch_size, height, width, channels)
     img_tensor /= 255.                                      # imshow expects values in the range [0, 1]
 
@@ -143,10 +145,10 @@ def load_image(bucket_name, img_path):
 def prediction(new_image):
     logging.info('prediction')
     try:
-        model = tf.keras.models.load_model('./pneumonia_model.h5')
+        model = load_model('./pneumonia_model.h5')
         logging.info('model loaded')
         pred = model.predict_on_batch(new_image)
-        pred_result = pred[0][0].numpy()
+        pred_result = pred[0][0]
         logging.info('prediction made')
 
         if pred_result > 0.80:
@@ -155,7 +157,7 @@ def prediction(new_image):
             label='Normal, risk=' + str(round(pred_result*100,2)) + '%'
         else:
             label='Unsure, risk=' + str(round(pred_result*100,2)) + '%'
-        tf.keras.backend.clear_session()
+        clear_session()
         gc.collect()
     except Exception as e:
         logging.error(f"Prediction error: {e}")

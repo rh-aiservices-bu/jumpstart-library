@@ -1,0 +1,14 @@
+= Image initialization container
+
+This container image is used to initialize the  *source* bucket with a stock of images.
+
+Required environment variables are: +
+*Object storage*
+
+* `AWS_ACCESS_KEY_ID`: S3 storage access key
+* `AWS_SECRET_ACCESS_KEY`: S3 storage secret key
+* `SERVICE_POINT`: S3 storage endpoint, http(s)://myendpoint.address
+
+*Buckets*
+
+* `BUCKET_SOURCE`: name of the source bucket where the images will be initialized

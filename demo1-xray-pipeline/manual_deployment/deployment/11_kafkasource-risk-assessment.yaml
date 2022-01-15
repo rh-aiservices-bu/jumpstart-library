@@ -5,7 +5,7 @@ metadata:
 spec:
   consumerGroup: risk-assessment
   bootstrapServers:
-    - my-cluster-kafka-bootstrap:9092
+    - my-cluster-kafka-bootstrap.xraylab-001.svc.cluster.local:9092
   topics:
     - xray-images
   sink:
