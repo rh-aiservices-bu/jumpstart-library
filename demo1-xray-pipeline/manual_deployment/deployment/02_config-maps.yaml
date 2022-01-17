@@ -18,5 +18,5 @@ kind: ConfigMap
 metadata:
   name: buckets-config
 data:
-  bucket-source: "https://s3.us-east-1.amazonaws.com/com.redhat.csds.guimou.xray-source"
+  bucket-source: "xray_source"
   bucket-base-name: "replace_me"

@@ -10,7 +10,7 @@ spec:
         revisionTimestamp: ""
     spec:
       containers:
-        - image: quay.io/rh-data-services/xraylab-risk-assessment:latest
+        - image: quay.io/rh-data-services/xraylab-risk-assessment:v2.0
           ports:
             - containerPort: 5000
           env:
