@@ -74,7 +74,7 @@ def process_event(data):
         img_name = img_key.split('/')[-1]
         logging.info(bucket_eventName + ' ' + bucket_name + ' ' + img_key)
 
-        if 's3:ObjectCreated' in bucket_eventName:
+        if 'ObjectCreated' in bucket_eventName:
             # Load image and make prediction
             new_image = load_image(bucket_name,img_key)
             result = prediction(new_image)
