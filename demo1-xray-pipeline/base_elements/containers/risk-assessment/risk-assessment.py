@@ -8,7 +8,8 @@ from io import BytesIO
 
 import boto3
 import numpy as np
-from tensorflow.keras.preprocessing.image import load_img, img_to_array
+from keras_preprocessing.image import load_img
+from tensorflow.keras.preprocessing.image import img_to_array
 from tensorflow.keras.models import load_model
 from tensorflow.keras.backend import clear_session
 from cloudevents.http import from_http
@@ -74,7 +75,7 @@ def process_event(data):
         img_name = img_key.split('/')[-1]
         logging.info(bucket_eventName + ' ' + bucket_name + ' ' + img_key)
 
-        if 's3:ObjectCreated' in bucket_eventName:
+        if 'ObjectCreated' in bucket_eventName:
             # Load image and make prediction
             new_image = load_image(bucket_name,img_key)
             result = prediction(new_image)
