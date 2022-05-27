@@ -8,7 +8,8 @@ from io import BytesIO
 
 import boto3
 import numpy as np
-from tensorflow.keras.preprocessing.image import load_img, img_to_array
+from keras_preprocessing.image import load_img
+from tensorflow.keras.preprocessing.image import img_to_array
 from tensorflow.keras.models import load_model
 from tensorflow.keras.backend import clear_session
 from cloudevents.http import from_http

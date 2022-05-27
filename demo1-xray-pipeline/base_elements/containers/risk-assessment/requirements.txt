@@ -1,9 +1,9 @@
 tensorflow==2.7.0
 git+https://github.com/keras-team/keras-preprocessing.git@6701f27afa62712b34a17d4b0ff879156b0c7937#egg=Keras-Preprocessing
-boto3==1.20.35
+boto3==1.22.4
 pillow==9.0.0
 cloudevents==1.2.0
 mysql-connector-python==8.0.27
-Flask==2.0.2
+Flask==2.1.2
 flask-cors==3.0.10
 h5py==3.6.0
