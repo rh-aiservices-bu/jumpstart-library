@@ -1,0 +1,10 @@
+kind: ImageStream
+apiVersion: image.openshift.io/v1
+metadata:
+  name: events-service
+  namespace: smartcity
+  labels:
+    app: events-service
+spec:
+  lookupPolicy:
+    local: false

@@ -1,0 +1,8 @@
+apiVersion: objectbucket.io/v1alpha1
+kind: ObjectBucketClaim
+metadata:
+  name: secor-obc
+  namespace: smartcity
+spec:
+  generateBucketName: secor
+  storageClassName: ocs-storagecluster-ceph-rgw

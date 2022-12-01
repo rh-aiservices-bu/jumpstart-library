@@ -1,0 +1,10 @@
+kind: ImageStream
+apiVersion: image.openshift.io/v1
+metadata:
+  name: lpr-service
+  namespace: smartcity
+  labels:
+    app: lpr-service
+spec:
+  lookupPolicy:
+    local: false

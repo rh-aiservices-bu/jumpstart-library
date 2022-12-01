@@ -1,0 +1,10 @@
+kind: ImageStream
+apiVersion: image.openshift.io/v1
+metadata:
+  name: seed-database
+  namespace: smartcity
+  labels:
+    app: seed-database
+spec:
+  lookupPolicy:
+    local: true

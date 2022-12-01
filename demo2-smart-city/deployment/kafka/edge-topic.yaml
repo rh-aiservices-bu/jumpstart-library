@@ -1,0 +1,13 @@
+apiVersion: kafka.strimzi.io/v1beta2
+kind: KafkaTopic
+metadata:
+  name: lpr-edge
+  namespace: smartcity
+  labels:
+    strimzi.io/cluster: edge-kafka
+spec:
+  config:
+    retention.ms: 86400000
+  partitions: 3
+  replicas: 3
+  topicName: lpr

@@ -1,0 +1,69 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  annotations:
+    template.alpha.openshift.io/wait-for-ready: "true"
+  labels:
+    app: supersetdb
+  name: supersetdb
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      name: supersetdb
+  strategy:
+    type: Recreate
+  template:
+    metadata:
+      labels:
+        name: supersetdb
+    spec:
+      containers:
+      - name: postgresql
+        image: supersetdb
+        env:
+        - name: POSTGRESQL_USER
+          valueFrom:
+            secretKeyRef:
+              key: database-user
+              name: $(superset_db_secret)
+        - name: POSTGRESQL_PASSWORD
+          valueFrom:
+            secretKeyRef:
+              key: database-password
+              name: $(superset_db_secret)
+        - name: POSTGRESQL_DATABASE
+          valueFrom:
+            secretKeyRef:
+              key: database-name
+              name: $(superset_db_secret)
+        imagePullPolicy: Always
+        livenessProbe:
+          exec:
+            command:
+            - /usr/libexec/check-container
+            - --live
+          initialDelaySeconds: 120
+          timeoutSeconds: 10
+        ports:
+        - containerPort: 5432
+        readinessProbe:
+          exec:
+            command:
+            - /usr/libexec/check-container
+          initialDelaySeconds: 5
+          timeoutSeconds: 1
+        resources:
+          requests:
+            cpu: $(superset_db_cpu_requests)
+            memory: $(superset_db_memory_requests)
+          limits:
+            cpu: $(superset_db_cpu_limits)
+            memory: $(superset_db_memory_limits)
+        volumeMounts:
+        - mountPath: /var/lib/pgsql/data
+          name: "supersetdb-data"
+      volumes:
+      - name: "supersetdb-data"
+        persistentVolumeClaim:
+          claimName: supersetdb-data

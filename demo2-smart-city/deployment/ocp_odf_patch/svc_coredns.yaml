@@ -1,0 +1,16 @@
+kind: Service
+apiVersion: v1
+metadata:
+  name: odf-dns
+  namespace: openshift-storage
+  labels:
+    app: odf-dns
+spec:
+  type: ClusterIP
+  selector:
+    app: odf-dns
+  ports:
+    - name: dns
+      port: 5353
+      protocol: UDP
+      targetPort: 5353
