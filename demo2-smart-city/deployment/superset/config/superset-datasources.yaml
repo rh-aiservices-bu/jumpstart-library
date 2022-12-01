@@ -1,0 +1,177 @@
+databases:
+  - database_name: PostgreSQL
+    sqlalchemy_uri: postgresql://dbadmin:dbpassword@smartcity-db-service/pgdb
+    tables:
+      - columns:
+          - column_name: station
+            type: STRING
+        metrics:
+          - expression: count(*)
+            metric_name: count
+        sql:
+          "SELECT \n  CASE WHEN stationa1 = true THEN 'stationa1'\n       WHEN stationa13\
+          \ = true THEN 'stationa13' \n       WHEN stationa2 = true THEN 'stationa2'\n\
+          \       WHEN stationa23 = true THEN 'stationa23'\n       WHEN stationb313 =\
+          \ true THEN 'stationb313'\n       WHEN stationa4202 = true THEN 'stationa4202'\n\
+          \       WHEN stationb504 = true THEN 'stationb504'\n       WHEN stationa41 =\
+          \ true THEN 'stationa41'\n       WHEN stationa5201 = true THEN 'stationa5201'\n\
+          \       END AS station\nFROM public.event AS e\nLEFT JOIN public.vehicle_metadata\
+          \ AS v\nON e.event_vehicle_detected_plate_number = v.vehicle_registered_plate_number"
+        table_name: Vehicle by Station ID
+      - columns:
+          - column_name: vehicle_registered_plate_number
+            type: STRING
+          - column_name: vehicle_owner_address
+            type: STRING
+          - column_name: vehicle_owner_name
+            type: STRING
+          - column_name: vehicle_owner_city
+            type: STRING
+          - column_name: customer_id
+            type: STRING
+          - column_name: toll_fee_balance
+            type: INT
+        metrics:
+          - expression: count(*)
+            metric_name: count
+        schema: public
+        sql:
+          "-- Note: Unless you save your query, these tabs will NOT persist if you\
+          \ clear your cookies or change browsers.\nselect vehicle_owner_name, vehicle_registered_plate_number,\
+          \ customer_toll_fee_balance as Toll_Fee_Balance, vehicle_owner_address, vehicle_owner_city,\
+          \ customer_id as customer_ID\nFROM vehicle_metadata \nwhere customer_toll_fee_balance\
+          \ > 0\nORDER by customer_toll_fee_balance DESC"
+        table_name: Top Customers with Toll Fee Balance
+      - columns:
+          - column_name: vehicle_registered_plate_number
+            type: STRING
+          - column_name: vehicle_owner_address
+            type: STRING
+          - column_name: vehicle_owner_name
+            type: STRING
+          - column_name: vehicle_owner_city
+            type: STRING
+          - column_name: pollution_fee_balance
+            type: INT
+          - column_name: vehicle_model_year
+            type: INT
+        metrics:
+          - expression: count(*)
+            metric_name: count
+        schema: public
+        sql:
+          "select vehicle_owner_name, vehicle_registered_plate_number, vehicle_model_year,\
+          \ customer_pollution_fee_balance  as Pollution_Fee_Balance, vehicle_owner_address,\
+          \ vehicle_owner_city\nFROM vehicle_metadata \nwhere customer_pollution_fee_balance\
+          \  > 0\nORDER by customer_pollution_fee_balance DESC"
+        table_name: Top customers with Pollution Fee
+      - columns:
+          - column_name: Vehicle Make Model
+            type: STRING
+        metrics:
+          - expression: count(*)
+            metric_name: count
+        sql: 'SELECT v.vehicle_make_model AS "Vehicle Make Model"
+
+          FROM public.event AS e
+
+          LEFT JOIN public.vehicle_metadata AS v
+
+          ON e.event_vehicle_detected_plate_number = v.vehicle_registered_plate_number'
+        table_name: Vehicle by Make Model
+      - columns:
+          - column_name: total_pollution_fee_collection
+            type: INT
+        metrics:
+          - expression: count(*)
+            metric_name: count
+        schema: public
+        sql:
+          "select SUM(customer_pollution_fee_balance)  as Total_Pollution_Fee_Collection\n\
+          FROM vehicle_metadata \nwhere customer_pollution_fee_balance  > 0"
+        table_name: Total Pollution Fee Collection
+      - columns:
+          - column_name: total_toll_fee_collection
+        metrics:
+          - expression: count(*)
+            metric_name: count
+        schema: public
+        sql:
+          "select SUM(customer_toll_fee_balance)  as Total_Toll_Fee_Collection\nFROM\
+          \ vehicle_metadata \nwhere customer_toll_fee_balance  > 0"
+        table_name: Total_Toll_Fee_Collection
+      - columns:
+          - column_name: count
+            type: INT
+        metrics:
+          - expression: count(*)
+            metric_name: count
+        schema: public
+        sql: select COUNT(*) from public.event
+        table_name: Total_vehicle_passed_toll_stations
+  - database_name: hive
+    sqlalchemy_uri: trino://admin@trino-service:8080/hive
+    tables:
+      - columns:
+          - column_name: event_timestamp
+            is_dttm: true
+            type: TIMESTAMP
+          - column_name: Vehicle Make Model
+            type: VARCHAR
+          - column_name: License Plate
+            type: VARCHAR
+          - column_name: Vehicle Owner
+            type: VARCHAR
+          - column_name: Pollution Fee
+            type: INTEGER
+          - column_name: Toll Fee
+            type: INTEGER
+          - column_name: station
+            type: VARCHAR(12)
+        metrics:
+          - expression: count(*)
+            metric_name: count
+        schema: odf
+        sql:
+          "SELECT e.event_timestamp,\n  e.event_vehicle_detected_plate_number AS \"\
+          License Plate\",\n  v.vehicle_make_model AS \"Vehicle Make Model\",\n  v.vehicle_owner_name\
+          \ AS \"Vehicle Owner\",\n  v.customer_pollution_fee_balance AS \"Pollution Fee\"\
+          ,\n  v.customer_toll_fee_balance AS \"Toll Fee\",\n  CASE WHEN stationa1 = true\
+          \ THEN 'stationa1'\n       WHEN stationa13 = true THEN 'stationa13' \n     \
+          \  WHEN stationa2 = true THEN 'stationa2'\n       WHEN stationa23 = true THEN\
+          \ 'stationa23'\n       WHEN stationb313 = true THEN 'stationb313'\n       WHEN\
+          \ stationa4202 = true THEN 'stationa4202'\n       WHEN stationb504 = true THEN\
+          \ 'stationb504'\n       WHEN stationa41 = true THEN 'stationa41'\n       WHEN\
+          \ stationa5201 = true THEN 'stationa5201'\n       END AS station\nFROM hive.odf.event\
+          \ AS e\nLEFT JOIN \"postgresql-lpr\".public.vehicle_metadata AS v\nON e.event_vehicle_detected_plate_number\
+          \ = v.vehicle_registered_plate_number"
+        table_name: odf-pgsql-join_karan
+      - columns:
+          - column_name: event_timestamp
+            is_dttm: true
+            type: TIMESTAMP
+          - column_name: Vehicle Make Model
+            type: VARCHAR
+          - column_name: License Plate
+            type: VARCHAR
+          - column_name: Vehicle Owner
+            type: VARCHAR
+          - column_name: station
+            type: VARCHAR(12)
+        metrics:
+          - expression: count(*)
+            metric_name: count
+        schema: odf
+        sql:
+          "SELECT e.event_timestamp,\n  e.event_vehicle_detected_plate_number AS \"\
+          License Plate\",\n  v.vehicle_make_model AS \"Vehicle Make Model\",\n  v.vehicle_owner_name\
+          \ AS \"Vehicle Owner\",\n  CASE WHEN stationa1 = true THEN 'stationa1'\n   \
+          \    WHEN stationa13 = true THEN 'stationa13' \n       WHEN stationa2 = true\
+          \ THEN 'stationa2'\n       WHEN stationa23 = true THEN 'stationa23'\n      \
+          \ WHEN stationb313 = true THEN 'stationb313'\n       WHEN stationa4202 = true\
+          \ THEN 'stationa4202'\n       WHEN stationb504 = true THEN 'stationb504'\n \
+          \      WHEN stationa41 = true THEN 'stationa41'\n       WHEN stationa5201 =\
+          \ true THEN 'stationa5201'\n       END AS station\nFROM hive.odf.event AS e\n\
+          LEFT JOIN \"postgresql-lpr\".public.vehicle_metadata AS v\nON e.event_vehicle_detected_plate_number\
+          \ = v.vehicle_registered_plate_number"
+        table_name: Join_ODF_PGSQ_vehicle_by_station

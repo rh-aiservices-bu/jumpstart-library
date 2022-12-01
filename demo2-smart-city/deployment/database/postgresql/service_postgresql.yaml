@@ -1,0 +1,15 @@
+apiVersion: v1
+kind: Service
+metadata:
+  labels:
+    app: postgresql-db
+  name: smartcity-db-service
+  namespace: smartcity
+spec:
+  ports:
+    - port: 5432
+      protocol: TCP
+      targetPort: 5432
+  selector:
+    name: postgresql
+  type: ClusterIP

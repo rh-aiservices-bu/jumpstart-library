@@ -1,0 +1,120 @@
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+namespace: smartcity
+resources:
+- secret-superset.yaml
+- deployment.yaml
+- service.yaml
+- route.yaml
+- supersetdb-deployment.yaml
+- supersetdb-pvc.yaml
+- supersetdb-secret.yaml
+- supersetdb-service.yaml
+- superset-rbac-viewer-role.yaml
+- superset-rbac-viewer-rolebinding.yaml
+- superset-service-account.yaml
+
+commonLabels:
+  app: superset
+  app.kubernetes.io/part-of: superset
+
+configMapGenerator:
+  - name: superset-config
+    envs:
+      - params.env
+  - name: superset-config-py
+    files:
+      - superset_config.py
+
+vars:
+  - name: superset_secret
+    objref:
+      name: superset-config
+      kind: ConfigMap
+      apiVersion: v1
+    fieldref:
+      fieldpath: data.superset_secret
+  - name: superset_db_secret
+    objref:
+      name: superset-config
+      kind: ConfigMap
+      apiVersion: v1
+    fieldref:
+      fieldpath: data.superset_db_secret
+  - name: superset_memory_requests
+    objref:
+      name: superset-config
+      kind: ConfigMap
+      apiVersion: v1
+    fieldref:
+      fieldpath: data.superset_memory_requests
+  - name: superset_memory_limits
+    objref:
+      name: superset-config
+      kind: ConfigMap
+      apiVersion: v1
+    fieldref:
+      fieldpath: data.superset_memory_limits
+  - name: superset_cpu_requests
+    objref:
+      name: superset-config
+      kind: ConfigMap
+      apiVersion: v1
+    fieldref:
+      fieldpath: data.superset_cpu_requests
+  - name: superset_cpu_limits
+    objref:
+      name: superset-config
+      kind: ConfigMap
+      apiVersion: v1
+    fieldref:
+      fieldpath: data.superset_cpu_limits
+  - name: superset_db_memory_requests
+    objref:
+      name: superset-config
+      kind: ConfigMap
+      apiVersion: v1
+    fieldref:
+      fieldpath: data.superset_db_memory_requests
+  - name: superset_db_memory_limits
+    objref:
+      name: superset-config
+      kind: ConfigMap
+      apiVersion: v1
+    fieldref:
+      fieldpath: data.superset_db_memory_limits
+  - name: superset_db_cpu_requests
+    objref:
+      name: superset-config
+      kind: ConfigMap
+      apiVersion: v1
+    fieldref:
+      fieldpath: data.superset_db_cpu_requests
+  - name: superset_db_cpu_limits
+    objref:
+      name: superset-config
+      kind: ConfigMap
+      apiVersion: v1
+    fieldref:
+      fieldpath: data.superset_db_cpu_limits
+  - name: storage_class
+    objref:
+      name: superset-config
+      kind: ConfigMap
+      apiVersion: v1
+    fieldref:
+      fieldpath: data.storage_class
+
+configurations:
+  - params.yaml
+
+generatorOptions:
+  disableNameSuffixHash: true
+
+images:
+  - name: superset
+    newName: quay.io/opendatahub/superset
+    newTag: "1.5.0-ubi"
+  - name: supersetdb
+    newName: registry.redhat.io/rhel8/postgresql-12
+    newTag: latest

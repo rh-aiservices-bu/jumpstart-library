@@ -1,0 +1,52 @@
+apiVersion: apps.openshift.io/v1
+kind: DeploymentConfig
+metadata:
+  name: edge-kafdrop
+  namespace: smartcity
+spec:
+  selector:
+    app: edge-kafdrop
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: edge-kafdrop
+    spec:
+      containers:
+        - name: edge-kafdrop
+          image: obsidiandynamics/kafdrop:latest
+          ports:
+            - containerPort: 9000
+          env:
+            - name: KAFKA_BROKERCONNECT
+              value: "edge-kafka-kafka-bootstrap:9092"
+            - name: JVM_OPTS
+              value: "-Xms32M -Xmx64M"
+            - name: SERVER_SERVLET_CONTEXTPATH
+              value: "/"
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: edge-kafdrop
+spec:
+  selector:
+    app: edge-kafdrop
+  ports:
+    - protocol: TCP
+      port: 9000
+      targetPort: 9000
+---
+kind: Route
+apiVersion: route.openshift.io/v1
+metadata:
+  name: edge-kafdrop
+spec:
+  subdomain: ""
+  to:
+    kind: Service
+    name: edge-kafdrop
+    weight: 100
+  port:
+    targetPort: 9000
+  wildcardPolicy: None
