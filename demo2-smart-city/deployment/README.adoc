@@ -140,10 +140,10 @@ echo $(oc exec -n openshift-storage deployment/rook-ceph-tools -- radosgw-admin 
 
 ** Edit the file config.json
 
-In the file `config.json` you obtained, replace the first occurence of `"hostnames": [],` by `"hostnames": ["s3.data.local","*.s3.data.local"],`.
+In the file `config.json` you obtained, replace the first occurence of `"hostnames": [],` by `"hostnames": ["s3.data.local","*.s3.data.local", "replace here with the Route name for the RGW"],`.
 
 You can also use jq to do that:
-`jq '.hostnames = ["s3.data.local","*.s3.data.local"]' config.json > tmp.json && mv tmp.json config.json` (the complicated part with tmp.json is because json cannot edit in place...).
+`jq '.hostnames = ["s3.data.local","*.s3.data.local", "replace here with the Route name for the RGW"]' config.json > tmp.json && mv tmp.json config.json` (the complicated part with tmp.json is because json cannot edit in place...).
 
 ** Upload the modified file to the toolbox
 
