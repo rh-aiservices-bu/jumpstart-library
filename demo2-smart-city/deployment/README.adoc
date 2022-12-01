@@ -70,7 +70,7 @@ If not already available in your OpenShift deployment, install the following ope
 - Follow the standard operator deployment
 - Create a StorageSystem with a Full Deployment, using available storage class
 - You can create a small scale cluster (3 replicas of 0.5TB) as the demo does not require much
-- Depending on your OCP environment, you might need to manually deploy ODF RGW. For example, on AWS, the RGW is not deployed by default. https://red-hat-storage.github.io/ocs-training/training/ocs4/ocs4-enable-rgw.html[Read this procedure] to enable the RGW.
+- Depending on your OCP environment, you might need to manually deploy ODF RGW. For example, on AWS, the RGW is not deployed by default. https://red-hat-storage.github.io/ocs-training/training/ocs4/ocs4-enable-rgw.html[Read this procedure] to enable the RGW. Only the steps 1 to 4 are needed.
 
 **NOTE**: Please make sure that the `cephobjectstore.yaml` file provided in the referenced documentation uses the right `failureDomain` parameters (there are two instances of them). In the case of an RHPDS instance of OpenShift, this must be set to `host`.
 
