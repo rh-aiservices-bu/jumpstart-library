@@ -50,3 +50,6 @@ spec:
   port:
     targetPort: 9000
   wildcardPolicy: None
+  tls:
+    termination: edge
+    insecureEdgeTerminationPolicy: Redirect

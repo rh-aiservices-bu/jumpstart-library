@@ -18,14 +18,14 @@ objects:
     spec:
       name: lpr-dashboard.json
       plugins:
-        - name: pierosavi-imageit-panel
-          version: 1.0.2
-        - name: flant-statusmap-panel
-          version: 0.4.1
-        - name: grafana-clock-panel
-          version: 1.1.1
-        - name: ryantxu-ajax-panel
-          version: 0.0.7-dev
+      - name: pierosavi-imageit-panel
+        version: 1.0.7
+      - name: flant-statusmap-panel
+        version: 0.5.1
+      - name: grafana-clock-panel
+        version: 1.3.1
+      - name: ryantxu-ajax-panel
+        version: 0.1.0
       json: |
         {
           "annotations": {
@@ -44,16 +44,14 @@ objects:
           "editable": true,
           "gnetId": null,
           "graphTooltip": 0,
-          "id": 2,
+          "id": 3,
           "links": [],
           "panels": [
             {
               "datasource": null,
               "description": "",
               "fieldConfig": {
-                "defaults": {
-                  "custom": {}
-                },
+                "defaults": {},
                 "overrides": []
               },
               "gridPos": {
@@ -67,19 +65,16 @@ objects:
                 "content": "# London\n\n## Ultra Low Emissions Zone",
                 "mode": "markdown"
               },
-              "pluginVersion": "7.3.10",
+              "pluginVersion": "7.5.17",
               "timeFrom": null,
               "timeShift": null,
-              "title": "",
               "transparent": true,
               "type": "text"
             },
             {
               "datasource": null,
               "fieldConfig": {
-                "defaults": {
-                  "custom": {}
-                },
+                "defaults": {},
                 "overrides": []
               },
               "gridPos": {
@@ -96,13 +91,19 @@ objects:
                   "endCountdownTime": "2021-04-26T23:10:44-07:00",
                   "endText": "00:00:00"
                 },
+                "countupSettings": {
+                  "beginCountupTime": "2022-12-05T23:29:52-05:00",
+                  "beginText": "00:00:00"
+                },
                 "dateSettings": {
                   "dateFormat": "YYYY-MM-DD",
                   "fontSize": "20px",
                   "fontWeight": "normal",
+                  "locale": "",
                   "showDate": true
                 },
                 "mode": "time",
+                "refresh": "sec",
                 "timeSettings": {
                   "fontSize": "48pt",
                   "fontWeight": "bold"
@@ -115,10 +116,9 @@ objects:
                   "zoneFormat": "offsetAbbv"
                 }
               },
-              "pluginVersion": "7.3.10",
+              "pluginVersion": "1.3.1",
               "timeFrom": null,
               "timeShift": null,
-              "title": "",
               "transparent": true,
               "type": "grafana-clock-panel"
             },
@@ -168,6 +168,10 @@ objects:
                       {
                         "id": "custom.width",
                         "value": 103
+                      },
+                      {
+                        "id": "unit",
+                        "value": "none"
                       }
                     ]
                   },
@@ -180,6 +184,18 @@ objects:
                       {
                         "id": "unit",
                         "value": "dateTimeAsIso"
+                      }
+                    ]
+                  },
+                  {
+                    "matcher": {
+                      "id": "byName",
+                      "options": "station"
+                    },
+                    "properties": [
+                      {
+                        "id": "unit",
+                        "value": "none"
                       }
                     ]
                   }
@@ -196,7 +212,7 @@ objects:
                 "showHeader": true,
                 "sortBy": []
               },
-              "pluginVersion": "7.3.10",
+              "pluginVersion": "7.5.17",
               "targets": [
                 {
                   "format": "table",
@@ -248,9 +264,7 @@ objects:
               },
               "datasource": "PostgreSQL",
               "fieldConfig": {
-                "defaults": {
-                  "custom": {}
-                },
+                "defaults": {},
                 "overrides": []
               },
               "gridPos": {
@@ -259,6 +273,7 @@ objects:
                 "x": 14,
                 "y": 0
               },
+              "hideBranding": false,
               "highlightCards": true,
               "id": 12,
               "legend": {
@@ -542,9 +557,7 @@ objects:
             {
               "datasource": "PostgreSQL",
               "fieldConfig": {
-                "defaults": {
-                  "custom": {}
-                },
+                "defaults": {},
                 "overrides": []
               },
               "gridPos": {
@@ -568,6 +581,7 @@ objects:
                     "fontColor": "#FFF",
                     "link": "",
                     "mappingId": "",
+                    "mappingIds": [],
                     "name": "Station A23",
                     "position": {
                       "x": 54.55259026687598,
@@ -588,6 +602,7 @@ objects:
                     "fontColor": "#FFF",
                     "link": "",
                     "mappingId": "",
+                    "mappingIds": [],
                     "name": "Station A2",
                     "position": {
                       "x": 75.27472527472527,
@@ -608,6 +623,7 @@ objects:
                     "fontColor": "#FFF",
                     "link": "",
                     "mappingId": "",
+                    "mappingIds": [],
                     "name": "Station B313",
                     "position": {
                       "x": 20.38519681376824,
@@ -628,6 +644,7 @@ objects:
                     "fontColor": "#FFF",
                     "link": "",
                     "mappingId": "",
+                    "mappingIds": [],
                     "name": "Station B504",
                     "position": {
                       "x": 34.34095005523578,
@@ -648,6 +665,7 @@ objects:
                     "fontColor": "#FFF",
                     "link": "",
                     "mappingId": "",
+                    "mappingIds": [],
                     "name": "Station A4202",
                     "position": {
                       "x": 6.917698703412988,
@@ -668,6 +686,7 @@ objects:
                     "fontColor": "#FFF",
                     "link": "",
                     "mappingId": "",
+                    "mappingIds": [],
                     "name": "Station A1",
                     "position": {
                       "x": 59.89010989010989,
@@ -688,6 +707,7 @@ objects:
                     "fontColor": "#FFF",
                     "link": "",
                     "mappingId": "",
+                    "mappingIds": [],
                     "name": "Station A13",
                     "position": {
                       "x": 87.36263736263736,
@@ -708,6 +728,7 @@ objects:
                     "fontColor": "#FFF",
                     "link": "",
                     "mappingId": "",
+                    "mappingIds": [],
                     "name": "Station A41",
                     "position": {
                       "x": 8.338566195709053,
@@ -728,6 +749,7 @@ objects:
                     "fontColor": "#FFF",
                     "link": "",
                     "mappingId": "",
+                    "mappingIds": [],
                     "name": "Station A5201",
                     "position": {
                       "x": 74.80376766091052,
@@ -743,7 +765,7 @@ objects:
                 ],
                 "sensorsTextSize": 10
               },
-              "pluginVersion": "7.3.10",
+              "pluginVersion": "1.0.7",
               "targets": [
                 {
                   "format": "time_series",
@@ -1225,16 +1247,13 @@ objects:
               ],
               "timeFrom": null,
               "timeShift": null,
-              "title": "",
               "transparent": true,
               "type": "pierosavi-imageit-panel"
             },
             {
               "datasource": null,
               "fieldConfig": {
-                "defaults": {
-                  "custom": {}
-                },
+                "defaults": {},
                 "overrides": []
               },
               "gridPos": {
@@ -1290,7 +1309,7 @@ objects:
               "timeShift": null,
               "title": "Last detected car",
               "type": "ryantxu-ajax-panel",
-              "url": "https://${image_server_host}/last_image",
+              "url": "https://image-server-smartcity.apps.cluster-fg87k.fg87k.sandbox1022.opentlc.com/last_image",
               "withCredentials": false
             },
             {
@@ -1330,7 +1349,7 @@ objects:
                 "showHeader": true,
                 "sortBy": []
               },
-              "pluginVersion": "7.3.10",
+              "pluginVersion": "7.5.17",
               "targets": [
                 {
                   "format": "table",
@@ -1451,7 +1470,7 @@ objects:
                 "showHeader": true,
                 "sortBy": []
               },
-              "pluginVersion": "7.3.10",
+              "pluginVersion": "7.5.17",
               "targets": [
                 {
                   "format": "table",
@@ -1482,7 +1501,6 @@ objects:
               ],
               "timeFrom": null,
               "timeShift": null,
-              "title": "",
               "transparent": true,
               "type": "table"
             },
@@ -1560,7 +1578,7 @@ objects:
                 "showHeader": true,
                 "sortBy": []
               },
-              "pluginVersion": "7.3.10",
+              "pluginVersion": "7.5.17",
               "targets": [
                 {
                   "format": "table",
@@ -1591,13 +1609,12 @@ objects:
               ],
               "timeFrom": null,
               "timeShift": null,
-              "title": "",
               "transparent": true,
               "type": "table"
             }
           ],
           "refresh": "5s",
-          "schemaVersion": 26,
+          "schemaVersion": 27,
           "style": "dark",
           "tags": [],
           "templating": {
@@ -1611,5 +1628,5 @@ objects:
           "timezone": "",
           "title": "Smart City - ULEV London",
           "uid": "HQZA6drGz",
-          "version": 2
+          "version": 4
         }
