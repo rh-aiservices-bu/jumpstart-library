@@ -6,6 +6,7 @@
 == Requirements
 
 * A working OpenShift environment. Last tested version: 4.10
+* Proper SSL certificates must be in place for secured Routes
 * Cluster-admin access to OpenShift, or ability to deploy operators.
 * The image-registry Operator needs to be setup and working
 * The `oc` client.
@@ -126,10 +127,12 @@ IMPORTANT: The next command does everything in one step. If you want to understa
 .One line command
 [source,bash]
 ----
-oc exec -n openshift-storage deployment/rook-ceph-tools -- bash -c "radosgw-admin zonegroup get --rgw-zonegroup=ocs-storagecluster-cephobjectstore > /tmp/config.json && sed -i 's/\"hostnames\": \[],/\"hostnames\": \[\"s3\.data\.local\",\"*\.s3\.data\.local\",\""$(oc get routes -n openshift-storage | grep rgw | awk '{ print $2 }' | sed s/\\./\\\\./g)"\"],/' /tmp/config.json && radosgw-admin zonegroup set --rgw-zonegroup=ocs-storagecluster-cephobjectstore --infile=/tmp/config.json && radosgw-admin period update --commit"
+oc exec -n openshift-storage deployment/rook-ceph-tools -- bash -c "radosgw-admin zonegroup get --rgw-zonegroup=ocs-storagecluster-cephobjectstore > /tmp/config.json && sed -i 's/\"hostnames\": \[],/\"hostnames\": \[\"s3\.data\.local\",\"*\.s3\.data\.local\",\"rook-ceph-rgw-ocs-storagecluster-cephobjectstore\.openshift-storage\.svc\",\""$(oc get routes -n openshift-storage | grep rgw | awk '{ print $2 }' | sed s/\\./\\\\./g)"\"],/' /tmp/config.json && radosgw-admin zonegroup set --rgw-zonegroup=ocs-storagecluster-cephobjectstore --infile=/tmp/config.json && radosgw-admin period update --commit"
 ----
 
 === Manual steps to add the endpoint (Optional)
+
+IMPORTANT: skip this step if you have applied the one-liner configuration at the previous step.
 
 *** Get the current config
 
@@ -140,10 +143,10 @@ echo $(oc exec -n openshift-storage deployment/rook-ceph-tools -- radosgw-admin 
 
 ** Edit the file config.json
 
-In the file `config.json` you obtained, replace the first occurence of `"hostnames": [],` by `"hostnames": ["s3.data.local","*.s3.data.local", "replace here with the Route name for the RGW"],`.
+In the file `config.json` you obtained, replace the first occurence of `"hostnames": [],` by `"hostnames": ["s3.data.local","*.s3.data.local", "replace here with the Route name for the RGW","rook-ceph-rgw-ocs-storagecluster-cephobjectstore.openshift-storage.svc"],`.
 
 You can also use jq to do that:
-`jq '.hostnames = ["s3.data.local","*.s3.data.local", "replace here with the Route name for the RGW"]' config.json > tmp.json && mv tmp.json config.json` (the complicated part with tmp.json is because json cannot edit in place...).
+`jq '.hostnames = ["s3.data.local","*.s3.data.local", "replace here with the Route name for the RGW","rook-ceph-rgw-ocs-storagecluster-cephobjectstore.openshift-storage.svc"]' config.json > tmp.json && mv tmp.json config.json` (the complicated part with tmp.json is because json cannot edit in place...).
 
 ** Upload the modified file to the toolbox
 
@@ -157,6 +160,7 @@ oc rsync . $(oc get pods -n openshift-storage | grep rook-ceph-tools | grep Runn
 [source,bash]
 ----
 oc exec -n openshift-storage deploy/rook-ceph-tools -- radosgw-admin zonegroup set --rgw-zonegroup=ocs-storagecluster-cephobjectstore --infile=/tmp/config.json
+oc exec -n openshift-storage deploy/rook-ceph-tools -- radosgw-admin period update --commit
 ----
 
 === Namespace
@@ -465,12 +469,11 @@ oc apply -f secor/3_secor.yaml
 
 === Trino
 
-Deploy Trino. You must first substitute the named address of the RGW service for its IP as hive does not behave properly...
+Deploy Trino.
 
 [source,bash]
 ----
-export RGW_ENDPOINT=$(oc get service -n openshift-storage | grep rgw | awk '{ print $3 }')
-sed 's/s3\.data\.local/'$RGW_ENDPOINT'/' trino/trino.yaml | oc apply -f -
+oc apply -f trino/trino.yaml
 ----
 
 Once the components are running (check the pods!) you can connect to the Trino dashboard using its Route. It can be found in the OpenShift UI or like this:
@@ -507,7 +510,7 @@ oc exec $(oc get pod | grep superset- | awk '{print $1}') -- superset set_databa
 
 * Log into Superset with OpenShift authentication.
 
-* From the Settings menu (top right), import the example dashboard from the file `dashboard/dashboard.json`
+* From the Settings menu (top right), import the example dashboard from the file `dashboard/dashboard.json` into the PostgreSQL database.
 
 ==== Datasets creation with Trino
 
@@ -578,7 +581,7 @@ oc adm policy add-cluster-role-to-user cluster-monitoring-view -z grafana-servic
 .Retrieve the bearer token used to authenticate to Prometheus:
 [source,bash]
 ----
-export bearer_token=$(oc serviceaccounts get-token grafana-serviceaccount)
+export bearer_token=$(oc get secret $(oc get secret | grep grafana-serviceaccount-token | awk '{print $1}') -o go-template --template="{{.data.token|base64decode}}")
 ----
 
 .Deploy the Prometheus data source by using the template and substituting the bearer token:

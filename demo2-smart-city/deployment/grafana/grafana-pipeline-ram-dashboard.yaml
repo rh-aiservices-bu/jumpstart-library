@@ -11,13 +11,13 @@ spec:
   name: pipeline-ram-dashboard.json
   plugins:
     - name: pierosavi-imageit-panel
-      version: 1.0.2
+      version: 1.0.7
     - name: flant-statusmap-panel
-      version: 0.4.1
+      version: 0.5.1
     - name: grafana-clock-panel
-      version: 1.1.1
+      version: 1.3.1
     - name: ryantxu-ajax-panel
-      version: 0.0.7-dev
+      version: 0.1.0
   json: |
     {
       "annotations": {
@@ -42,9 +42,7 @@ spec:
         {
           "datasource": "prometheus",
           "fieldConfig": {
-            "defaults": {
-              "custom": {}
-            },
+            "defaults": {},
             "overrides": []
           },
           "gridPos": {
@@ -55,10 +53,10 @@ spec:
           },
           "id": 2,
           "options": {
+            "imageUrl": "https://jumpstart-library.s3.amazonaws.com/smartcity/mlops-panel.gif",
             "forceImageRefresh": false,
-            "imageUrl": "http://jumpstart-library.s3.amazonaws.com/smartcity/mlops-panel.gif",
             "lockSensors": false,
-            "mappings": [],
+            "sensorsTextSize": 12,
             "sensors": [
               {
                 "backgroundBlink": false,
@@ -68,6 +66,7 @@ spec:
                 "fontColor": "#FFF",
                 "link": "",
                 "mappingId": "",
+                "mappingIds": [],
                 "name": "",
                 "position": {
                   "x": 83.20494186046511,
@@ -89,6 +88,7 @@ spec:
                 "fontColor": "#FFF",
                 "link": "",
                 "mappingId": "",
+                "mappingIds": [],
                 "name": "",
                 "position": {
                   "x": 10.923076923076923,
@@ -110,6 +110,7 @@ spec:
                 "fontColor": "#FFF",
                 "link": "",
                 "mappingId": "",
+                "mappingIds": [],
                 "name": "",
                 "position": {
                   "x": 15.846153846153847,
@@ -131,6 +132,7 @@ spec:
                 "fontColor": "#FFF",
                 "link": "",
                 "mappingId": "",
+                "mappingIds": [],
                 "name": "",
                 "position": {
                   "x": 79.23076923076923,
@@ -152,6 +154,7 @@ spec:
                 "fontColor": "#FFF",
                 "link": "",
                 "mappingId": "",
+                "mappingIds": [],
                 "name": "",
                 "position": {
                   "x": 46.61538461538461,
@@ -166,40 +169,45 @@ spec:
                 "visible": true
               }
             ],
-            "sensorsTextSize": 12
+            "mappings": []
           },
-          "pluginVersion": "7.3.10",
+          "pluginVersion": "1.0.7",
           "targets": [
             {
-              "expr": "sum(pod:container_memory_usage_bytes:sum{namespace=\"smartcity\", pod=~\"core-kafka.*\"})",
+              "exemplar": true,
+              "expr": "sum(container_memory_working_set_bytes{namespace=\"smartcity\", pod=~\"core-kafka.*\"})",
               "instant": true,
               "interval": "",
               "legendFormat": "",
               "refId": "A"
             },
             {
-              "expr": "sum(pod:container_memory_usage_bytes:sum{namespace=\"smartcity\", pod=~\"edge-kafka.*\"})",
+              "exemplar": true,
+              "expr": "sum(container_memory_working_set_bytes{namespace=\"smartcity\", pod=~\"edge-kafka.*\"})",
               "instant": true,
               "interval": "",
               "legendFormat": "",
               "refId": "B"
             },
             {
-              "expr": "sum(pod:container_memory_usage_bytes:sum{namespace=\"smartcity\", pod=~\"lpr-service.*\"})",
+              "exemplar": true,
+              "expr": "sum(container_memory_working_set_bytes{namespace=\"smartcity\", pod=~\"lpr-service.*\"})",
               "instant": true,
               "interval": "",
               "legendFormat": "",
               "refId": "C"
             },
             {
-              "expr": "sum(pod:container_memory_usage_bytes:sum{namespace=\"smartcity\", pod=~\"secor.*\"})",
+              "exemplar": true,
+              "expr": "sum(container_memory_working_set_bytes{namespace=\"smartcity\", pod=~\"secor.*\"})",
               "instant": true,
               "interval": "",
               "legendFormat": "",
               "refId": "D"
             },
             {
-              "expr": "sum(pod:container_memory_usage_bytes:sum{namespace=\"smartcity\", pod=~\"mirror.*\"})",
+              "exemplar": true,
+              "expr": "sum(container_memory_working_set_bytes{namespace=\"smartcity\", pod=~\"mirror.*\"})",
               "instant": true,
               "interval": "",
               "legendFormat": "",
@@ -211,7 +219,7 @@ spec:
           "title": "Memory consumption",
           "type": "pierosavi-imageit-panel"
         }
-      ],
+        ],
       "refresh": "5s",
       "schemaVersion": 26,
       "style": "dark",
