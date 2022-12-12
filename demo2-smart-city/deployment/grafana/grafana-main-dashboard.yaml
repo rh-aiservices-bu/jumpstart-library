@@ -1309,7 +1309,7 @@ objects:
               "timeShift": null,
               "title": "Last detected car",
               "type": "ryantxu-ajax-panel",
-              "url": "https://image-server-smartcity.apps.cluster-fg87k.fg87k.sandbox1022.opentlc.com/last_image",
+              "url": "https://${image_server_host}/last_image",
               "withCredentials": false
             },
             {
