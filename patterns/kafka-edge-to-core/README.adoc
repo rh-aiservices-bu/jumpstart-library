@@ -2,7 +2,7 @@
 
 === Description
 
-This pattern is about using AMQ Streams (Kafka) MirrorMaker to move data across two kafka clusters geographically separated from each other. 
+This pattern is about using AMQ Streams (Kafka) MirrorMaker to move data across two kafka clusters geographically separated from each other.
 
 ==== Kafka MirrorMaker
 
@@ -13,7 +13,7 @@ Kafka MirrorMaker replicates data across two Kafka clusters, within or across da
 image::kafka-edge-to-core.png[Kafka-edge-to-Core]
 
 === Use cases
-**Data collection at the edge and shipping it to the Core** 
+**Data collection at the edge and shipping it to the Core**
 
 Multiple kafka clusters are becoming a norm. There can be many reasons to create more than just one Kafka cluster in your organization. For example, you might have a core Kafka cluster that receives data from multiple edge Kafka clusters. You might also have a core Kafka cluster that receives data from multiple data centers. In this case, you can use MirrorMaker to replicate data from the edge Kafka clusters to the core Kafka cluster. Edge Kafka cluster can help to store the data locally on-site in real-time at scale. Plus, Kafka MirrorMaker can help in replicating the data to the data center or cloud to do further processing and analytics with the aggregated data from different sites/edges.
 
