@@ -620,4 +620,3 @@ echo "https://$(oc get routes -n smartcity | grep grafana | awk '{ print $2 }')"
 ----
 
 The default login is admin / secret.
-

@@ -131,7 +131,7 @@ There are 2 parts to this:
 
 * The *KNative Serving* Service that will spawn the risk-assessment container. Deploy it by appplying the `10_service-risk-assessment.yaml` file. +
 Monitor the deployment in the OpenShift console under the Severless->Service menu (don't confuse it with Service under Netwoking!). It must reach the 3/3 or 2/3 state (last one meanining it's ready but scaled down to zero as there is nothing to process).
-* The *KNative Eventing* component that will listen to our Kafka Topic, and call the previously defined Service when there is something to process. 
+* The *KNative Eventing* component that will listen to our Kafka Topic, and call the previously defined Service when there is something to process.
 ** Edit the file: `11_kafkasource-risk-assessment.yaml`.
 ** Subsitute the `REPLACE_ME` part in the bootstrapServers parameter by the name of your namespace. If you have followed the instructions, it should be `xraylab-0001`.
 

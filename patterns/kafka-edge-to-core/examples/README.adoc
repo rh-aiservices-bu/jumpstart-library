@@ -24,12 +24,12 @@ oc get kafkamirrormaker2
 oc run kafkacat -i -t --image debezium/tooling --restart=Never
 ----
 
-* From the `kafkacat` container shell, generate a few kafka messages in the source Kafka cluster  `lpr` topic(`edge-kafka-kafka-bootstrap`) 
+* From the `kafkacat` container shell, generate a few kafka messages in the source Kafka cluster  `lpr` topic(`edge-kafka-kafka-bootstrap`)
 
 [source,bash]
 ----
 for i in {1..50} ; do sleep 5 ; \
-echo '{"message":"Hello Red Hat Message-'$i'"}' | kafkacat -P -b edge-kafka-kafka-bootstrap -t lpr ; done 
+echo '{"message":"Hello Red Hat Message-'$i'"}' | kafkacat -P -b edge-kafka-kafka-bootstrap -t lpr ; done
 ----
 * The above command will generate 50 Kafka messages every 5 seconds. The KafkaMirrorMaker2 which is configured to replicate topic messages from source (edge) to target (core) kafka topics, would move each message to the target kafka cluster.
 
@@ -38,7 +38,7 @@ echo '{"message":"Hello Red Hat Message-'$i'"}' | kafkacat -P -b edge-kafka-kafk
 [source,bash]
 ----
 oc rsh kafkacat
-kafkacat -b core-kafka-kafka-bootstrap -t lpr 
+kafkacat -b core-kafka-kafka-bootstrap -t lpr
 ----
 
 * On the target (core) Kafka cluster, you should able to consume every message pushed from source (edge) Kafka cluster.
